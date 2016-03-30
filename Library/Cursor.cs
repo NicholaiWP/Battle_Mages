@@ -57,8 +57,8 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
-            sprite[0] = content.Load<Texture2D>("apple");
-            sprite[1] = content.Load<Texture2D>("basket");
+            sprite[0] = content.Load<Texture2D>("Images/apple");
+            sprite[1] = content.Load<Texture2D>("Images/basket");
         }
 
         public void Draw(SpriteBatch spriteBatch, int integer)

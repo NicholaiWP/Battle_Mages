@@ -11,6 +11,46 @@ namespace Battle_Mages
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private Camera2D camera;
+        private Texture2D testTexture;
+        private float camMovespeed;
+        private float speed;
+        private float deltaTime;
+        private Cursor cursor;
+
+        public int CursorPictureNumber { get; set; } = 0;
+
+        public Cursor GetCursor
+        {
+            get
+            {
+                return cursor;
+            }
+        }
+
+        public Camera2D GetCamera
+        {
+            get
+            {
+                return camera;
+            }
+        }
+
+        public float GetDeltaTime
+        {
+            get { return deltaTime; }
+        }
+
+        public float GetHalfViewPortWidth
+        {
+            get { return GraphicsDevice.Viewport.Width * 0.5f; }
+        }
+
+        public float GetHalfViewPortHeight
+        {
+            get { return GraphicsDevice.Viewport.Height * 0.5f; }
+        }
+
         private static GameWorld instance;
 
         public static GameWorld GetInstance
@@ -29,6 +69,9 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            camera = new Camera2D();
+            cursor = Cursor.GetInstance;
+            speed = 150;
         }
 
         /// <summary>
@@ -52,7 +95,10 @@ namespace Battle_Mages
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            camera.LoadContent(Content);
+            cursor.LoadContent(Content);
+            testTexture = Content.Load<Texture2D>("Images/apple");
+            IsMouseVisible = true;
             // TODO: use this.Content to load your game content here
         }
 
@@ -72,10 +118,34 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
             // TODO: Add your update logic here
+            camMovespeed = speed * deltaTime;
+            CursorPictureNumber = 0;
+            Vector2 mousePos = cursor.GetPosition;
+            if (camera.GetTopRectangle.Contains(mousePos))
+            {
+                camera.Pos -= new Vector2(0, camMovespeed);
+                CursorPictureNumber = 1;
+            }
+            else if (camera.GetBottomRectangle.Contains(mousePos))
+            {
+                camera.Pos += new Vector2(0, camMovespeed);
+            }
+            if (camera.GetRightRectangle.Contains(mousePos))
+            {
+                camera.Pos += new Vector2(camMovespeed, 0);
+            }
+            else if (camera.GetLeftRectangle.Contains(mousePos))
+            {
+                camera.Pos -= new Vector2(camMovespeed, 0);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                camera.Pos = Vector2.Zero;
+            }
 
             base.Update(gameTime);
         }
@@ -89,7 +159,15 @@ namespace Battle_Mages
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
+               null, null, null, camera.GetViewMatrix);
 
+            cursor.Draw(spriteBatch, CursorPictureNumber);
+
+            spriteBatch.Draw(testTexture, new Vector2(-98.5f, -109), Color.White);
+            camera.Draw(spriteBatch);
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

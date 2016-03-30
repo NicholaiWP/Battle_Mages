@@ -57,6 +57,7 @@
     <Compile Include="Components\GoComponents\Animator.cs" />
     <Compile Include="Components\GoComponents\Player.cs" />
     <Compile Include="Components\GoComponents\SpriteRenderer.cs" />
+    <Compile Include="Library\Camera2D.cs" />
     <Compile Include="Library\Cursor.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\SoundManager.cs" />
@@ -75,6 +76,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\apple.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\basket.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\CollisionTexture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Backgrounds\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="Content\Sounds\" />
     <Folder Include="Database\" />
   </ItemGroup>
