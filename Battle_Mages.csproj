@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2916FD25-37C2-4226-B627-8EADCC946CF1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Battle_Mages</RootNamespace>
+    <AssemblyName>Battle_Mages</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
+    <MonoGameContentBuilderExe>
+    </MonoGameContentBuilderExe>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Windows\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Windows\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Builders\Director.cs" />
+    <Compile Include="Builders\EnemyBuilder.cs" />
+    <Compile Include="Builders\PlayerBuilder.cs" />
+    <Compile Include="Builders\SpellBuilder.cs" />
+    <Compile Include="Components\Component.cs" />
+    <Compile Include="Components\GameObject.cs" />
+    <Compile Include="Components\GoComponents\Collider.cs" />
+    <Compile Include="Components\GoComponents\Enemy.cs" />
+    <Compile Include="Components\GoComponents\Projectile.cs" />
+    <Compile Include="Components\GoComponents\Transform.cs" />
+    <Compile Include="Interfaces\ICanBeDrawn.cs" />
+    <Compile Include="Interfaces\ICanBeLoaded.cs" />
+    <Compile Include="Interfaces\ICanBeUpdated.cs" />
+    <Compile Include="Interfaces\ICanBuild.cs" />
+    <Compile Include="Interfaces\IStrategy.cs" />
+    <Compile Include="Library\Animation.cs" />
+    <Compile Include="Components\GoComponents\Animator.cs" />
+    <Compile Include="Components\GoComponents\Player.cs" />
+    <Compile Include="Components\GoComponents\SpriteRenderer.cs" />
+    <Compile Include="Library\Game1.cs" />
+    <Compile Include="Library\SoundManager.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\Attack.cs" />
+    <Compile Include="Strategies\Casting.cs" />
+    <Compile Include="Strategies\Jump.cs" />
+    <Compile Include="Strategies\Move.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Backgrounds\" />
+    <Folder Include="Content\Images\" />
+    <Folder Include="Content\Sounds\" />
+    <Folder Include="Database\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
