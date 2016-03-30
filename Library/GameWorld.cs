@@ -100,7 +100,7 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
-            IsMouseVisible = true;
+            
             // TODO: use this.Content to load your game content here
         }
 

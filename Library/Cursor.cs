@@ -30,9 +30,9 @@ namespace Battle_Mages
         {
             get
             {
-                rectangle = new Rectangle((int)(GetPosition.X - (sprite[integer].Width * 0.3f * 0.5f)),
-                    (int)(GetPosition.Y - (sprite[integer].Height * 0.3f * 0.5f)),
-                    (int)(sprite[integer].Width * 0.3f), (int)(sprite[integer].Height * 0.3f));
+                rectangle = new Rectangle((int)(GetPosition.X - (sprite[integer].Width * 0.5f)),
+                    (int)(GetPosition.Y - (sprite[integer].Height * 0.5f)),
+                    sprite[integer].Width, sprite[integer].Height);
                 return rectangle;
             }
         }
@@ -57,8 +57,8 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
-            sprite[0] = content.Load<Texture2D>("Images/apple");
-            sprite[1] = content.Load<Texture2D>("Images/basket");
+            sprite[0] = content.Load<Texture2D>("Images/battle-mages cursor");
+            sprite[1] = content.Load<Texture2D>("Images/battle-mages spell-cursor");
         }
 
         public void Draw(SpriteBatch spriteBatch, int integer)
