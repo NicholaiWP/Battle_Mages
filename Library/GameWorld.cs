@@ -17,7 +17,6 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         private Cursor cursor;
-
         public int CursorPictureNumber { get; set; } = 0;
 
         public Cursor GetCursor
@@ -69,11 +68,13 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            //graphics.IsFullScreen = true;
+            IsMouseVisible = true;
+            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 1366;
             camera = new Camera2D();
             cursor = Cursor.GetInstance;
             speed = 150;
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.PreferredBackBufferWidth = 1920;
         }
 
         /// <summary>
@@ -96,11 +97,12 @@ namespace Battle_Mages
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
-            
+
             // TODO: use this.Content to load your game content here
         }
 
