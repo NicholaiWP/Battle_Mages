@@ -57,7 +57,8 @@
     <Compile Include="Components\GoComponents\Animator.cs" />
     <Compile Include="Components\GoComponents\Player.cs" />
     <Compile Include="Components\GoComponents\SpriteRenderer.cs" />
-    <Compile Include="Library\Game1.cs" />
+    <Compile Include="Library\Cursor.cs" />
+    <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

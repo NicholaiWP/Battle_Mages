@@ -3,6 +3,7 @@
 namespace Battle_Mages
 {
 #if WINDOWS || LINUX
+
     /// <summary>
     /// The main class.
     /// </summary>
@@ -12,11 +13,12 @@ namespace Battle_Mages
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            using (var game = new Game1())
+            using (var game = GameWorld.GetInstance)
                 game.Run();
         }
     }
+
 #endif
 }

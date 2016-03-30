@@ -7,12 +7,25 @@ namespace Battle_Mages
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class GameWorld : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private static GameWorld instance;
 
-        public Game1()
+        public static GameWorld GetInstance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameWorld();
+                }
+                return instance;
+            }
+        }
+
+        private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
