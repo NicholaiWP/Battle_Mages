@@ -72,6 +72,8 @@ namespace Battle_Mages
             camera = new Camera2D();
             cursor = Cursor.GetInstance;
             speed = 150;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = 1920;
         }
 
         /// <summary>
