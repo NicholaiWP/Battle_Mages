@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    class SoundManager
+    internal class SoundManager
     {
     }
 }

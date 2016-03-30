@@ -64,7 +64,8 @@ namespace Battle_Mages
         public void Draw(SpriteBatch spriteBatch, int integer)
         {
             this.integer = integer;
-            spriteBatch.Draw(sprite[integer], GetRectangle, Color.White);
+            //spriteBatch.Draw(sprite[integer], GetRectangle, Color.White);
+            spriteBatch.Draw(sprite[integer], GetRectangle, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
         }
     }
 }
