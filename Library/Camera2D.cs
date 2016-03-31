@@ -60,9 +60,9 @@ namespace Battle_Mages
         {
             get
             {
-                topRectangle = new Rectangle((int)(pos.X - GameWorld.GetInstance.GetHalfViewPortWidth),
-                    (int)(pos.Y - GameWorld.GetInstance.GetHalfViewPortHeight),
-                    (int)GameWorld.GetInstance.GetHalfViewPortWidth * 2 - 2, 50);
+                topRectangle = new Rectangle((int)(pos.X - GameWorld.GetInstance.GetHalfViewPortWidth - 2),
+                    (int)(pos.Y - GameWorld.GetInstance.GetHalfViewPortHeight - 2),
+                    (int)GameWorld.GetInstance.GetHalfViewPortWidth * 2 + 2, 55);
                 return topRectangle;
             }
         }
@@ -71,9 +71,9 @@ namespace Battle_Mages
         {
             get
             {
-                rightRectangle = new Rectangle((int)(pos.X + GameWorld.GetInstance.GetHalfViewPortWidth - 50),
-                    (int)(pos.Y - GameWorld.GetInstance.GetHalfViewPortHeight),
-                    50, (int)GameWorld.GetInstance.GetHalfViewPortHeight * 2 - 2);
+                rightRectangle = new Rectangle((int)(pos.X + GameWorld.GetInstance.GetHalfViewPortWidth - 52),
+                    (int)(pos.Y - GameWorld.GetInstance.GetHalfViewPortHeight - 2),
+                    55, (int)GameWorld.GetInstance.GetHalfViewPortHeight * 2 + 2);
                 return rightRectangle;
             }
         }
@@ -82,9 +82,9 @@ namespace Battle_Mages
         {
             get
             {
-                bottomRectangle = new Rectangle((int)(pos.X - GameWorld.GetInstance.GetHalfViewPortWidth),
+                bottomRectangle = new Rectangle((int)(pos.X - GameWorld.GetInstance.GetHalfViewPortWidth - 2),
                    (int)(pos.Y + GameWorld.GetInstance.GetHalfViewPortHeight - 52),
-                   (int)GameWorld.GetInstance.GetHalfViewPortWidth * 2 - 2, 50);
+                   (int)GameWorld.GetInstance.GetHalfViewPortWidth * 2 + 2, 55);
 
                 return bottomRectangle;
             }
@@ -94,9 +94,9 @@ namespace Battle_Mages
         {
             get
             {
-                leftRectangle = new Rectangle((int)(pos.X - GameWorld.GetInstance.GetHalfViewPortWidth),
-                   (int)(pos.Y - GameWorld.GetInstance.GetHalfViewPortHeight),
-                   50, (int)GameWorld.GetInstance.GetHalfViewPortHeight * 2 - 2);
+                leftRectangle = new Rectangle((int)(pos.X - GameWorld.GetInstance.GetHalfViewPortWidth - 2),
+                   (int)(pos.Y - GameWorld.GetInstance.GetHalfViewPortHeight - 2),
+                   55, (int)GameWorld.GetInstance.GetHalfViewPortHeight * 2 + 2);
 
                 return leftRectangle;
             }

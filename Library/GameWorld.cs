@@ -9,7 +9,9 @@ namespace Battle_Mages
     /// </summary>
     public class GameWorld : Game
     {
+        //Fields
         private GraphicsDeviceManager graphics;
+
         private SpriteBatch spriteBatch;
         private Camera2D camera;
         private Texture2D testTexture;
@@ -17,6 +19,8 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         private Cursor cursor;
+
+        //Properties
         public int CursorPictureNumber { get; set; } = 0;
 
         public Cursor GetCursor
@@ -50,6 +54,7 @@ namespace Battle_Mages
             get { return GraphicsDevice.Viewport.Height * 0.5f; }
         }
 
+        //Singleton
         private static GameWorld instance;
 
         public static GameWorld GetInstance
@@ -64,6 +69,9 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// Constructor for the GameWorld
+        /// </summary>
         private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
