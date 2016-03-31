@@ -53,6 +53,9 @@
     <Compile Include="Interfaces\ICanBeLoaded.cs" />
     <Compile Include="Interfaces\ICanBeUpdated.cs" />
     <Compile Include="Interfaces\ICanBuild.cs" />
+    <Compile Include="Interfaces\IEnterCollision.cs" />
+    <Compile Include="Interfaces\IExitCollision.cs" />
+    <Compile Include="Interfaces\IStayOnCollision.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Library\Animation.cs" />
     <Compile Include="Components\GoComponents\Animator.cs" />

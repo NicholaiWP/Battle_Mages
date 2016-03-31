@@ -68,9 +68,9 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferHeight = 768;
-            graphics.PreferredBackBufferWidth = 1366;
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = Cursor.GetInstance;
             speed = 150;
