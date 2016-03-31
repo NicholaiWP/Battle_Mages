@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    interface IStrategy
+    public interface IStrategy
     {
     }
 }

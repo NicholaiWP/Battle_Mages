@@ -48,6 +48,7 @@
     <Compile Include="Components\GoComponents\Enemy.cs" />
     <Compile Include="Components\GoComponents\Projectile.cs" />
     <Compile Include="Components\GoComponents\Transform.cs" />
+    <Compile Include="Interfaces\ICanBeAnimated.cs" />
     <Compile Include="Interfaces\ICanBeDrawn.cs" />
     <Compile Include="Interfaces\ICanBeLoaded.cs" />
     <Compile Include="Interfaces\ICanBeUpdated.cs" />

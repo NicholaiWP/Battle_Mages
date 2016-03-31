@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    class GameObject: Component
+    public class GameObject : Component
     {
-
+        private List<Component> components = new List<Component>();
     }
 }
