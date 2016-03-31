@@ -81,7 +81,7 @@ namespace Battle_Mages
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = Cursor.GetInstance;
-            speed = 150;
+            speed = 250;
         }
 
         /// <summary>
@@ -130,32 +130,58 @@ namespace Battle_Mages
         protected override void Update(GameTime gameTime)
         {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+
             // TODO: Add your update logic here
             camMovespeed = speed * deltaTime;
             CursorPictureNumber = 0;
+
+            #region Camera Movement
+
             Vector2 mousePos = cursor.GetPosition;
-            if (camera.GetTopRectangle.Contains(mousePos))
+            if (camera.GetTopRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
             {
-                camera.Pos -= new Vector2(0, camMovespeed);
+                camera.Position += new Vector2(camMovespeed, -camMovespeed);
+            }
+            else if (camera.GetTopRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
+            {
+                camera.Position -= new Vector2(camMovespeed, camMovespeed);
+            }
+            else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
+            {
+                camera.Position += new Vector2(-camMovespeed, camMovespeed);
+            }
+            else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
+            {
+                camera.Position += new Vector2(camMovespeed, camMovespeed);
+            }
+            else if (camera.GetTopRectangle.Contains(mousePos))
+            {
+                camera.Position -= new Vector2(0, camMovespeed);
                 CursorPictureNumber = 1;
             }
             else if (camera.GetBottomRectangle.Contains(mousePos))
             {
-                camera.Pos += new Vector2(0, camMovespeed);
+                camera.Position += new Vector2(0, camMovespeed);
             }
-            if (camera.GetRightRectangle.Contains(mousePos))
+            else if (camera.GetRightRectangle.Contains(mousePos))
             {
-                camera.Pos += new Vector2(camMovespeed, 0);
+                camera.Position += new Vector2(camMovespeed, 0);
             }
             else if (camera.GetLeftRectangle.Contains(mousePos))
             {
-                camera.Pos -= new Vector2(camMovespeed, 0);
+                camera.Position -= new Vector2(camMovespeed, 0);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                camera.Pos = Vector2.Zero;
+                camera.Position = Vector2.Zero;
+            }
+
+            #endregion Camera Movement
+
+            //DONT DEBUG HERE
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Exit();
             }
 
             base.Update(gameTime);
