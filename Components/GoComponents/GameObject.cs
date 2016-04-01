@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public class GameObject : Component
+    public class GameObject
     {
         //Fields
         private bool isLoaded;

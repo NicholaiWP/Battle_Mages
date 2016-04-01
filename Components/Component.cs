@@ -20,14 +20,7 @@ namespace Battle_Mages
         }
 
         /// <summary>
-        /// One of the constructors for the component
-        /// </summary>
-        public Component()
-        {
-        }
-
-        /// <summary>
-        /// One of the constructors for the component with a gameObject
+        /// Constructor for the component with a gameObject
         /// </summary>
         /// <param name="gameObject"></param>
         public Component(GameObject gameObject)

@@ -60,7 +60,7 @@ namespace Battle_Mages
 
         /// <summary>
         /// Setting the topRectangle to be in the top corner of the screen, and moving it with 2% of the screen
-        /// and setting the
+        /// and setting height to 55
         /// </summary>
         public Rectangle GetTopRectangle
         {
@@ -78,6 +78,7 @@ namespace Battle_Mages
 
         /// <summary>
         /// Setting the rightRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// and setting width to 55
         /// </summary>
         public Rectangle GetRightRectangle
         {
@@ -94,6 +95,7 @@ namespace Battle_Mages
 
         /// <summary>
         /// Setting the bottomRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// and setting height to 55
         /// </summary>
         public Rectangle GetBottomRectangle
         {
@@ -111,6 +113,7 @@ namespace Battle_Mages
 
         /// <summary>
         /// Setting the leftRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// and setting width to 55
         /// </summary>
         public Rectangle GetLeftRectangle
         {
@@ -137,11 +140,19 @@ namespace Battle_Mages
             position = Vector2.Zero;
         }
 
+        /// <summary>
+        /// Loading the content of the camera so we can draw in rectangles while debugging
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("Images/CollisionTexture");
         }
 
+        /// <summary>
+        /// Drawing the rectangles while we debugg
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
 #if DEBUG
@@ -172,6 +183,8 @@ namespace Battle_Mages
 
             #endregion rightRectangle
 
+            #region bottomRectangle
+
             Rectangle bottomTopLine = new Rectangle(GetBottomRectangle.X, GetBottomRectangle.Y, GetBottomRectangle.Width, 1);
             Rectangle bottomBottomLine = new Rectangle(GetBottomRectangle.X, GetBottomRectangle.Y + GetBottomRectangle.Height, GetBottomRectangle.Width, 1);
             Rectangle bottomRightLine = new Rectangle(GetBottomRectangle.X + GetBottomRectangle.Width, GetBottomRectangle.Y, 1, GetBottomRectangle.Height);
@@ -181,7 +194,10 @@ namespace Battle_Mages
             spriteBatch.Draw(this.sprite, bottomRightLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, bottomLeftLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
 
-            //left
+            #endregion bottomRectangle
+
+            #region leftRectangle
+
             Rectangle leftTopLine = new Rectangle(GetLeftRectangle.X, GetLeftRectangle.Y, GetLeftRectangle.Width, 1);
             Rectangle leftBottomLine = new Rectangle(GetLeftRectangle.X, GetLeftRectangle.Y + GetLeftRectangle.Height, GetLeftRectangle.Width, 1);
             Rectangle leftRightLine = new Rectangle(GetLeftRectangle.X + GetLeftRectangle.Width, GetLeftRectangle.Y, 1, GetLeftRectangle.Height);
@@ -190,6 +206,9 @@ namespace Battle_Mages
             spriteBatch.Draw(this.sprite, leftBottomLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, leftRightLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, leftLeftLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
+
+            #endregion leftRectangle
+
 #endif
         }
     }
