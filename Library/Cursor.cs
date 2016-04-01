@@ -11,11 +11,18 @@ namespace Battle_Mages
 {
     public class Cursor
     {
+        //Fields
         private Texture2D[] sprite = new Texture2D[2];
+
         private Vector2 position;
         private Rectangle rectangle;
         private int integer = 0;
 
+        //Properties
+        /// <summary>
+        /// In this property the position is set equal to the transformed mouse position,
+        /// which has been inverted from world space to view space.
+        /// </summary>
         public Vector2 GetPosition
         {
             get
@@ -26,6 +33,10 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// In this property the rectangle is set to be a rectangle on the position,
+        /// with the current sprite midpoint being the position. (reason for multiplying with 0.5)
+        /// </summary>
         public Rectangle GetRectangle
         {
             get
@@ -37,6 +48,7 @@ namespace Battle_Mages
             }
         }
 
+        //Singleton
         private static Cursor instance;
 
         public static Cursor GetInstance
@@ -51,21 +63,35 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// Constructor for the cursor
+        /// </summary>
         private Cursor()
         {
         }
 
+        /// <summary>
+        /// Method for loading the content of the cursor, it is the pictures that are placed in an array
+        /// so we can change the pictures of the mouse when certain things happen
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             sprite[0] = content.Load<Texture2D>("Images/battle-mages cursor");
             sprite[1] = content.Load<Texture2D>("Images/battle-mages spell-cursor");
         }
 
+        /// <summary>
+        /// The drawing method for the cursor, with an int to choose what picture in the array that has
+        /// to be drawn
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="integer"></param>
         public void Draw(SpriteBatch spriteBatch, int integer)
         {
             this.integer = integer;
-            //spriteBatch.Draw(sprite[integer], GetRectangle, Color.White);
-            spriteBatch.Draw(sprite[integer], GetRectangle, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            spriteBatch.Draw(sprite[integer], GetRectangle, null, Color.White,
+                0f, Vector2.Zero, SpriteEffects.None, 0f);
         }
     }
 }

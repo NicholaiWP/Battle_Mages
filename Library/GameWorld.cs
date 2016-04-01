@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -20,23 +22,23 @@ namespace Battle_Mages
         private float deltaTime;
         private Cursor cursor;
 
+        //Lists
+        private List<GameObject> objectsToDraw = new List<GameObject>();
+
+        public List<GameObject> objectsToAdd = new List<GameObject>();
+        public List<GameObject> objectsToRemove = new List<GameObject>();
+
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
 
         public Cursor GetCursor
         {
-            get
-            {
-                return cursor;
-            }
+            get { return cursor; }
         }
 
         public Camera2D GetCamera
         {
-            get
-            {
-                return camera;
-            }
+            get { return camera; }
         }
 
         public float GetDeltaTime
@@ -178,13 +180,43 @@ namespace Battle_Mages
 
             #endregion Camera Movement
 
-            //DONT DEBUG HERE
+            //DONT DEBUGG HERE
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
 
             base.Update(gameTime);
+            TemplateControl();
+        }
+
+        /// <summary>
+        /// This method is for controlling our templates (lists)
+        /// </summary>
+        private void TemplateControl()
+        {
+            foreach (GameObject gameObject in objectsToAdd)
+            {
+                gameObject.LoadContent(Content);
+            }
+
+            objectsToDraw.AddRange(objectsToAdd);
+
+            foreach (GameObject gameObject in objectsToRemove)
+            {
+                objectsToDraw.Remove(gameObject);
+            }
+
+            ClearTemplates();
+        }
+
+        /// <summary>
+        /// Method for clearing the templates (lists)
+        /// </summary>
+        private void ClearTemplates()
+        {
+            objectsToAdd.Clear();
+            objectsToRemove.Clear();
         }
 
         /// <summary>

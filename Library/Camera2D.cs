@@ -11,7 +11,9 @@ namespace Battle_Mages
 {
     public class Camera2D
     {
+        //Fields
         private float zoom;
+
         private Texture2D sprite;
         private float rotation;
         private Vector2 position;
@@ -56,6 +58,10 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// Setting the topRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// and setting the
+        /// </summary>
         public Rectangle GetTopRectangle
         {
             get
@@ -70,6 +76,9 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// Setting the rightRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// </summary>
         public Rectangle GetRightRectangle
         {
             get
@@ -83,6 +92,9 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// Setting the bottomRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// </summary>
         public Rectangle GetBottomRectangle
         {
             get
@@ -97,6 +109,9 @@ namespace Battle_Mages
             }
         }
 
+        /// <summary>
+        /// Setting the leftRectangle to be in the top corner of the screen, and moving it with 2% of the screen
+        /// </summary>
         public Rectangle GetLeftRectangle
         {
             get
