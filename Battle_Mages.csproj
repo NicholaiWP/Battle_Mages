@@ -43,9 +43,9 @@
     <Compile Include="Builders\PlayerBuilder.cs" />
     <Compile Include="Builders\SpellBuilder.cs" />
     <Compile Include="Components\Component.cs" />
-    <Compile Include="Components\GameObject.cs" />
     <Compile Include="Components\GoComponents\Collider.cs" />
     <Compile Include="Components\GoComponents\Enemy.cs" />
+    <Compile Include="Components\GoComponents\GameObject.cs" />
     <Compile Include="Components\GoComponents\Projectile.cs" />
     <Compile Include="Components\GoComponents\Transform.cs" />
     <Compile Include="Interfaces\ICanBeAnimated.cs" />

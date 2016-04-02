@@ -25,8 +25,11 @@ namespace Battle_Mages
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
 
+        private List<Collider> colliders = new List<Collider>();
         public List<GameObject> objectsToAdd = new List<GameObject>();
         public List<GameObject> objectsToRemove = new List<GameObject>();
+        public List<Collider> collidersToAdd = new List<Collider>();
+        public List<Collider> collidersToRemove = new List<Collider>();
 
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
@@ -201,12 +204,16 @@ namespace Battle_Mages
             }
 
             objectsToDraw.AddRange(objectsToAdd);
-
+            colliders.AddRange(collidersToAdd);
             foreach (GameObject gameObject in objectsToRemove)
             {
                 objectsToDraw.Remove(gameObject);
             }
 
+            foreach (Collider collider in collidersToRemove)
+            {
+                colliders.Remove(collider);
+            }
             ClearTemplates();
         }
 
@@ -217,6 +224,8 @@ namespace Battle_Mages
         {
             objectsToAdd.Clear();
             objectsToRemove.Clear();
+            collidersToAdd.Clear();
+            collidersToRemove.Clear();
         }
 
         /// <summary>
