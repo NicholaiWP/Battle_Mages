@@ -10,38 +10,41 @@ namespace Battle_Mages
 {
     public class Button
     {
+        //fields
+
+        private int hoverNumber;
         public Vector2 vector;
-        public Texture2D texture;
+        public Texture2D[] sprite = new Texture2D[2];
         public Rectangle rectangle;
         public Vector2 position;
         public bool isClicked = false;
 
-        //white RGB color
-        private Color color = Color.White;
-
         /// <summary>
         /// Button class' constructor
         /// </summary>
-        /// <param name="newTexture"></param>
+        /// <param name="newSprite1"></param>
         /// <param name="graphics"></param>
-        public Button(Texture2D newTexture, GraphicsDevice graphics)
+        public Button(Texture2D newSprite1, Texture2D newSprite2, GraphicsDevice graphics)
         {
             //changes the size of the buttons
-            texture = newTexture;
+            sprite[0] = newSprite1;
+            sprite[1] = newSprite2;
+            hoverNumber = 0;
         }
 
         public void Update(MouseState mouse)
         {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            rectangle = new Rectangle((int)position.X, (int)position.Y, sprite[hoverNumber].Width,
+                sprite[hoverNumber].Height);
             //sets a mouseRectangle
-            Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y,1,1);
+            Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isDown".
             if (mouseRectangle.Intersects(rectangle))
             {
-                if (color == Color.White)
+                if (hoverNumber == 0)
                 {
-                    color = Color.Black;
+                    hoverNumber = 1;
                     isClicked = false;
                 }
 
@@ -50,9 +53,9 @@ namespace Battle_Mages
                     isClicked = true;
                 }
             }
-            else 
+            else
             {
-                color = Color.White;
+                hoverNumber = 0;
                 isClicked = false;
             }
         }
@@ -64,8 +67,8 @@ namespace Battle_Mages
 
         public void Load(Texture2D newTexture, Vector2 newPosition)
         {
-            texture = newTexture;
-            position = newPosition;
+            // sprite = newTexture;
+            //position = newPosition;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, null, color,
+            spriteBatch.Draw(sprite[hoverNumber], rectangle, null, Color.White,
                         0f, Vector2.Zero, SpriteEffects.None, 0.1f);
         }
     }

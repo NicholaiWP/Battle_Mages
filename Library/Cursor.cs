@@ -16,7 +16,7 @@ namespace Battle_Mages
 
         private Vector2 position;
         private Rectangle rectangle;
-        private int integer = 0;
+        private int spriteNumber = 0;
 
         //Properties
         /// <summary>
@@ -41,9 +41,9 @@ namespace Battle_Mages
         {
             get
             {
-                rectangle = new Rectangle((int)(GetPosition.X - (sprite[integer].Width * 0.5f)),
-                    (int)(GetPosition.Y - (sprite[integer].Height * 0.5f)),
-                    sprite[integer].Width, sprite[integer].Height);
+                rectangle = new Rectangle((int)(GetPosition.X - (sprite[spriteNumber].Width * 0.5f)),
+                    (int)(GetPosition.Y - (sprite[spriteNumber].Height * 0.5f)),
+                    sprite[spriteNumber].Width, sprite[spriteNumber].Height);
                 return rectangle;
             }
         }
@@ -86,19 +86,19 @@ namespace Battle_Mages
         /// to be drawn
         /// </summary>
         /// <param name="spriteBatch"></param>
-        /// <param name="integer"></param>
-        public void Draw(SpriteBatch spriteBatch, int integer)
+        /// <param name="spriteNumber"></param>
+        public void Draw(SpriteBatch spriteBatch, int spriteNumber)
         {
-            this.integer = integer;
+            this.spriteNumber = spriteNumber;
 
             switch (GameWorld.GetInstance.GetCurrentGameState)
             {
                 case GameState.MainMenu:
-                    spriteBatch.Draw(sprite[integer], new Rectangle(Mouse.GetState().Position, new Point(sprite[integer].Width, sprite[integer].Height)),null, Color.White,
+                    spriteBatch.Draw(sprite[spriteNumber], new Rectangle(Mouse.GetState().Position, new Point(sprite[spriteNumber].Width, sprite[spriteNumber].Height)),null, Color.White,
                         0f, Vector2.Zero, SpriteEffects.None, 0f);
                     break;
                 case GameState.InGame:
-                    spriteBatch.Draw(sprite[integer], GetRectangle, null, Color.White,
+                    spriteBatch.Draw(sprite[spriteNumber], GetRectangle, null, Color.White,
     0f, Vector2.Zero, SpriteEffects.None, 0f);
                     break;
                 case GameState.Settings:

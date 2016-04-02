@@ -26,7 +26,6 @@ namespace Battle_Mages
         private GameState currentGameState = GameState.MainMenu;
         public Button play;
 
-
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
 
@@ -84,7 +83,6 @@ namespace Battle_Mages
             }
         }
 
-
         /// <summary>
         /// Constructor for the GameWorld
         /// </summary>
@@ -124,7 +122,8 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
-            play = new Button(Content.Load<Texture2D>("Images/apple"), graphics.GraphicsDevice);
+            play = new Button(Content.Load<Texture2D>("Images/apple"), Content.Load<Texture2D>("Images/basket")
+                , graphics.GraphicsDevice);
             play.SetPosition(new Vector2(50, 100));
             // TODO: use this.Content to load your game content here
         }
@@ -268,7 +267,7 @@ namespace Battle_Mages
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
             {
                 case GameState.MainMenu:
@@ -285,7 +284,10 @@ namespace Battle_Mages
                     cursor.Draw(spriteBatch, CursorPictureNumber);
                     spriteBatch.Draw(testTexture, new Rectangle(-99, -109, testTexture.Width, testTexture.Height), null, Color.White,
                         0f, Vector2.Zero, SpriteEffects.None, 0.1f);
-
+                    foreach (GameObject gameObject in objectsToDraw)
+                    {
+                        gameObject.Draw(spriteBatch);
+                    }
                     camera.Draw(spriteBatch);
                     break;
 
