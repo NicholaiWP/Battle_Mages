@@ -6,6 +6,16 @@ using System.Collections.Generic;
 
 namespace Battle_Mages
 {
+    public enum GameState
+    {
+        MainMenu,
+        InGame,
+        Settings,
+        Shop,
+    }
+
+    
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -21,6 +31,11 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         private Cursor cursor;
+        private int menuScreenWith = 1600;
+        private int menuScreenheight = 900;
+        public Button play;
+       
+        
 
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
@@ -74,6 +89,9 @@ namespace Battle_Mages
             }
         }
 
+        GameState currentGameState = GameState.MainMenu;
+        
+
         /// <summary>
         /// Constructor for the GameWorld
         /// </summary>
@@ -114,7 +132,8 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
-
+            play = new Button(Content.Load<Texture2D>(""), graphics.GraphicsDevice);
+            play.SetPosition(new Vector2(300, 450));
             // TODO: use this.Content to load your game content here
         }
 
@@ -134,63 +153,85 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            switch (currentGameState)
+            {
+                case GameState.MainMenu:
+                    MouseState mouse = Mouse.GetState();
+                    play.Update(mouse);
+                    if(play.isClicked == true)
+                    {
+                        currentGameState = GameState.InGame;
+                    }
+                    break;
 
-            // TODO: Add your update logic here
-            camMovespeed = speed * deltaTime;
-            CursorPictureNumber = 0;
+                case GameState.InGame:
+                    deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            #region Camera Movement
+                    camMovespeed = speed * deltaTime;
+                    CursorPictureNumber = 0;
 
-            Vector2 mousePos = cursor.GetPosition;
-            if (camera.GetTopRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
-            {
-                camera.Position += new Vector2(camMovespeed, -camMovespeed);
-            }
-            else if (camera.GetTopRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
-            {
-                camera.Position -= new Vector2(camMovespeed, camMovespeed);
-            }
-            else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
-            {
-                camera.Position += new Vector2(-camMovespeed, camMovespeed);
-            }
-            else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
-            {
-                camera.Position += new Vector2(camMovespeed, camMovespeed);
-            }
-            else if (camera.GetTopRectangle.Contains(mousePos))
-            {
-                camera.Position -= new Vector2(0, camMovespeed);
-                CursorPictureNumber = 1;
-            }
-            else if (camera.GetBottomRectangle.Contains(mousePos))
-            {
-                camera.Position += new Vector2(0, camMovespeed);
-            }
-            else if (camera.GetRightRectangle.Contains(mousePos))
-            {
-                camera.Position += new Vector2(camMovespeed, 0);
-            }
-            else if (camera.GetLeftRectangle.Contains(mousePos))
-            {
-                camera.Position -= new Vector2(camMovespeed, 0);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                camera.Position = Vector2.Zero;
+                    #region Camera Movement
+
+                    Vector2 mousePos = cursor.GetPosition;
+                    if (camera.GetTopRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
+                    {
+                        camera.Position += new Vector2(camMovespeed, -camMovespeed);
+                    }
+                    else if (camera.GetTopRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
+                    {
+                        camera.Position -= new Vector2(camMovespeed, camMovespeed);
+                    }
+                    else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
+                    {
+                        camera.Position += new Vector2(-camMovespeed, camMovespeed);
+                    }
+                    else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
+                    {
+                        camera.Position += new Vector2(camMovespeed, camMovespeed);
+                    }
+                    else if (camera.GetTopRectangle.Contains(mousePos))
+                    {
+                        camera.Position -= new Vector2(0, camMovespeed);
+                        CursorPictureNumber = 1;
+                    }
+                    else if (camera.GetBottomRectangle.Contains(mousePos))
+                    {
+                        camera.Position += new Vector2(0, camMovespeed);
+                    }
+                    else if (camera.GetRightRectangle.Contains(mousePos))
+                    {
+                        camera.Position += new Vector2(camMovespeed, 0);
+                    }
+                    else if (camera.GetLeftRectangle.Contains(mousePos))
+                    {
+                        camera.Position -= new Vector2(camMovespeed, 0);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        camera.Position = Vector2.Zero;
+                    }
+
+                    #endregion Camera Movement
+
+                    //DONT DEBUGG HERE
+                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    {
+                        Exit();
+                    }
+                    TemplateControl();
+                    break;
+                case GameState.Settings:
+                    break;
+                case GameState.Shop:
+                    break;
+                default:
+                    break;
             }
 
-            #endregion Camera Movement
-
-            //DONT DEBUGG HERE
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
+          
 
             base.Update(gameTime);
-            TemplateControl();
+           
         }
 
         /// <summary>
@@ -235,16 +276,33 @@ namespace Battle_Mages
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+          
+            switch (currentGameState)
+            {
+                
+                case GameState.MainMenu:
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
+                    spriteBatch.Draw(Content.Load<Texture2D>(""), new Rectangle(0, 0, menuScreenWith, menuScreenheight), Color.White);
+                    play.Draw(spriteBatch);
+                    break;
+                case GameState.InGame:
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
+           null, null, null, camera.GetViewMatrix);
+                    cursor.Draw(spriteBatch, CursorPictureNumber);
+                    spriteBatch.Draw(testTexture, new Vector2(-98.5f, -109), Color.White);
+                    camera.Draw(spriteBatch);
+                    break;
+                case GameState.Settings:
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
-               null, null, null, camera.GetViewMatrix);
+                    break;
+                case GameState.Shop:
 
-            cursor.Draw(spriteBatch, CursorPictureNumber);
-
-            spriteBatch.Draw(testTexture, new Vector2(-98.5f, -109), Color.White);
-            camera.Draw(spriteBatch);
-
+                    break;
+                default:
+                    break;
+            }
+             // TODO: Add your drawing code here
+          
             spriteBatch.End();
             base.Draw(gameTime);
         }
