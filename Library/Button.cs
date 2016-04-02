@@ -13,13 +13,11 @@ namespace Battle_Mages
         public Vector2 vector;
         public Texture2D texture;
         public Rectangle rectangle;
-        public Vector2 size;
         public Vector2 position;
-        private bool isDown;
-        public bool isClicked;
+        public bool isClicked = false;
 
         //white RGB color
-        private Color color = new Color(255, 255, 255, 255);
+        private Color color = Color.White;
 
         /// <summary>
         /// Button class' constructor
@@ -30,40 +28,31 @@ namespace Battle_Mages
         {
             //changes the size of the buttons
             texture = newTexture;
-            size = new Vector2(graphics.Viewport.Width / 3, graphics.Viewport.Height / 15);
         }
 
         public void Update(MouseState mouse)
         {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             //sets a mouseRectangle
-            Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
+            Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y,1,1);
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isDown".
             if (mouseRectangle.Intersects(rectangle))
             {
-                if (color.A == 255)
+                if (color == Color.White)
                 {
-                    isDown = false;
-                }
-                else if (color.A == 0)
-                {
-                    isDown = true;
-                }
-                else if (isDown)
-                {
-                    color.A += 3;
-                }
-                else
-                {
-                    color.A -= 3;
+                    color = Color.Black;
+                    isClicked = false;
                 }
 
-                if (mouse.LeftButton == ButtonState.Pressed) isClicked = true;
+                if (mouse.LeftButton == ButtonState.Pressed)
+                {
+                    isClicked = true;
+                }
             }
-            else if (color.A < 255)
+            else 
             {
-                color.A += 3;
+                color = Color.White;
                 isClicked = false;
             }
         }
@@ -85,7 +74,8 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, color);
+            spriteBatch.Draw(texture, rectangle, null, color,
+                        0f, Vector2.Zero, SpriteEffects.None, 0.1f);
         }
     }
 }

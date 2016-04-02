@@ -23,7 +23,9 @@ namespace Battle_Mages
         private Cursor cursor;
         private int menuScreenWith = 400;
         private int menuScreenheight = 200;
+        private GameState currentGameState = GameState.MainMenu;
         public Button play;
+
 
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
@@ -36,6 +38,11 @@ namespace Battle_Mages
 
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
+
+        public GameState GetCurrentGameState
+        {
+            get { return currentGameState; }
+        }
 
         public Cursor GetCursor
         {
@@ -77,7 +84,6 @@ namespace Battle_Mages
             }
         }
 
-        private GameState currentGameState = GameState.MainMenu;
 
         /// <summary>
         /// Constructor for the GameWorld
@@ -86,9 +92,8 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            // graphics.IsFullScreen = true;
-            //graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = Cursor.GetInstance;
             speed = 250;
@@ -120,7 +125,7 @@ namespace Battle_Mages
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
             play = new Button(Content.Load<Texture2D>("Images/apple"), graphics.GraphicsDevice);
-            play.SetPosition(new Vector2(300, 450));
+            play.SetPosition(new Vector2(50, 100));
             // TODO: use this.Content to load your game content here
         }
 
@@ -268,15 +273,19 @@ namespace Battle_Mages
             {
                 case GameState.MainMenu:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
-                    spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0, menuScreenWith, menuScreenheight), Color.White);
+                    spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0, menuScreenWith, menuScreenheight), null, Color.White,
+                        0f, Vector2.Zero, SpriteEffects.None, 0.2f);
                     play.Draw(spriteBatch);
+                    cursor.Draw(spriteBatch, 0);
                     break;
 
                 case GameState.InGame:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
            null, null, null, camera.GetViewMatrix);
                     cursor.Draw(spriteBatch, CursorPictureNumber);
-                    spriteBatch.Draw(testTexture, new Vector2(-98.5f, -109), Color.White);
+                    spriteBatch.Draw(testTexture, new Rectangle(-99, -109, testTexture.Width, testTexture.Height), null, Color.White,
+                        0f, Vector2.Zero, SpriteEffects.None, 0.1f);
+
                     camera.Draw(spriteBatch);
                     break;
 

@@ -90,8 +90,24 @@ namespace Battle_Mages
         public void Draw(SpriteBatch spriteBatch, int integer)
         {
             this.integer = integer;
-            spriteBatch.Draw(sprite[integer], GetRectangle, null, Color.White,
-                0f, Vector2.Zero, SpriteEffects.None, 0f);
+
+            switch (GameWorld.GetInstance.GetCurrentGameState)
+            {
+                case GameState.MainMenu:
+                    spriteBatch.Draw(sprite[integer], new Rectangle(Mouse.GetState().Position, new Point(sprite[integer].Width, sprite[integer].Height)),null, Color.White,
+                        0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    break;
+                case GameState.InGame:
+                    spriteBatch.Draw(sprite[integer], GetRectangle, null, Color.White,
+    0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    break;
+                case GameState.Settings:
+                    break;
+                case GameState.Shop:
+                    break;
+
+            }
+
         }
     }
 }
