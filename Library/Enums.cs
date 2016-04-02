@@ -15,6 +15,11 @@ namespace Battle_Mages
         Left, Right, Up, Down
     }
 
+    public enum GameState
+    {
+        MainMenu, InGame, Settings, Shop,
+    }
+
     public class Enums
     {
     }

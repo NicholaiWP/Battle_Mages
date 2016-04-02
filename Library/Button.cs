@@ -29,7 +29,8 @@ namespace Battle_Mages
         public Button(Texture2D newTexture, GraphicsDevice graphics)
         {
             //changes the size of the buttons
-            size = new Vector2(graphics.Viewport.Width / 5, graphics.Viewport.Height / 20);
+            texture = newTexture;
+            size = new Vector2(graphics.Viewport.Width / 3, graphics.Viewport.Height / 15);
         }
 
         public void Update(MouseState mouse)

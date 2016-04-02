@@ -21,8 +21,8 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         private Cursor cursor;
-        private int menuScreenWith = 1600;
-        private int menuScreenheight = 900;
+        private int menuScreenWith = 400;
+        private int menuScreenheight = 200;
         public Button play;
 
         //Lists
@@ -86,9 +86,9 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            // graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = Cursor.GetInstance;
             speed = 250;
@@ -119,7 +119,7 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
-            play = new Button(Content.Load<Texture2D>(""), graphics.GraphicsDevice);
+            play = new Button(Content.Load<Texture2D>("Images/apple"), graphics.GraphicsDevice);
             play.SetPosition(new Vector2(300, 450));
             // TODO: use this.Content to load your game content here
         }
@@ -268,7 +268,7 @@ namespace Battle_Mages
             {
                 case GameState.MainMenu:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
-                    spriteBatch.Draw(Content.Load<Texture2D>(""), new Rectangle(0, 0, menuScreenWith, menuScreenheight), Color.White);
+                    spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0, menuScreenWith, menuScreenheight), Color.White);
                     play.Draw(spriteBatch);
                     break;
 
