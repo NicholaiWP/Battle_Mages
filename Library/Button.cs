@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
-   public class Button
+    public class Button
     {
         public Vector2 vector;
         public Texture2D texture;
@@ -17,8 +17,10 @@ namespace Battle_Mages
         public Vector2 position;
         private bool isDown;
         public bool isClicked;
+
         //white RGB color
         private Color color = new Color(255, 255, 255, 255);
+
         /// <summary>
         /// Button class' constructor
         /// </summary>
@@ -29,12 +31,13 @@ namespace Battle_Mages
             //changes the size of the buttons
             size = new Vector2(graphics.Viewport.Width / 5, graphics.Viewport.Height / 20);
         }
+
         public void Update(MouseState mouse)
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             //sets a mouseRectangle
             Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
-            //If the mouse's rectangle intersects with a rectangle check if the button is clicked 
+            //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isDown".
             if (mouseRectangle.Intersects(rectangle))
             {
@@ -56,7 +59,6 @@ namespace Battle_Mages
                 }
 
                 if (mouse.LeftButton == ButtonState.Pressed) isClicked = true;
-
             }
             else if (color.A < 255)
             {
@@ -64,11 +66,11 @@ namespace Battle_Mages
                 isClicked = false;
             }
         }
+
         public void SetPosition(Vector2 newPosition)
         {
             position = newPosition;
         }
-
 
         public void Load(Texture2D newTexture, Vector2 newPosition)
         {
@@ -85,5 +87,4 @@ namespace Battle_Mages
             spriteBatch.Draw(texture, rectangle, color);
         }
     }
- }
-
+}

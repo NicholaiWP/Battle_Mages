@@ -6,16 +6,6 @@ using System.Collections.Generic;
 
 namespace Battle_Mages
 {
-    public enum GameState
-    {
-        MainMenu,
-        InGame,
-        Settings,
-        Shop,
-    }
-
-    
-
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -34,8 +24,6 @@ namespace Battle_Mages
         private int menuScreenWith = 1600;
         private int menuScreenheight = 900;
         public Button play;
-       
-        
 
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
@@ -89,8 +77,7 @@ namespace Battle_Mages
             }
         }
 
-        GameState currentGameState = GameState.MainMenu;
-        
+        private GameState currentGameState = GameState.MainMenu;
 
         /// <summary>
         /// Constructor for the GameWorld
@@ -158,7 +145,7 @@ namespace Battle_Mages
                 case GameState.MainMenu:
                     MouseState mouse = Mouse.GetState();
                     play.Update(mouse);
-                    if(play.isClicked == true)
+                    if (play.isClicked == true)
                     {
                         currentGameState = GameState.InGame;
                     }
@@ -220,18 +207,18 @@ namespace Battle_Mages
                     }
                     TemplateControl();
                     break;
+
                 case GameState.Settings:
                     break;
+
                 case GameState.Shop:
                     break;
+
                 default:
                     break;
             }
 
-          
-
             base.Update(gameTime);
-           
         }
 
         /// <summary>
@@ -276,15 +263,15 @@ namespace Battle_Mages
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-          
+
             switch (currentGameState)
             {
-                
                 case GameState.MainMenu:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
                     spriteBatch.Draw(Content.Load<Texture2D>(""), new Rectangle(0, 0, menuScreenWith, menuScreenheight), Color.White);
                     play.Draw(spriteBatch);
                     break;
+
                 case GameState.InGame:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
            null, null, null, camera.GetViewMatrix);
@@ -292,17 +279,20 @@ namespace Battle_Mages
                     spriteBatch.Draw(testTexture, new Vector2(-98.5f, -109), Color.White);
                     camera.Draw(spriteBatch);
                     break;
+
                 case GameState.Settings:
 
                     break;
+
                 case GameState.Shop:
 
                     break;
+
                 default:
                     break;
             }
-             // TODO: Add your drawing code here
-          
+            // TODO: Add your drawing code here
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

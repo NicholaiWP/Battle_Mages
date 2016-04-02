@@ -61,9 +61,9 @@
     <Compile Include="Components\GoComponents\Animator.cs" />
     <Compile Include="Components\GoComponents\Player.cs" />
     <Compile Include="Components\GoComponents\SpriteRenderer.cs" />
-    <Compile Include="Library\Button.cs" />
     <Compile Include="Library\Camera2D.cs" />
     <Compile Include="Library\Cursor.cs" />
+    <Compile Include="Library\Enums.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />

@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Battle_Mages.Library
+namespace Battle_Mages
 {
-    class Enums
+    public enum MovingDirection
+    {
+        UpLeft, UpRight, Up, Left, Right, DownLeft, DownRight, Down
+    }
+
+    public enum FacingDirection
+    {
+        Left, Right, Up, Down
+    }
+
+    public class Enums
     {
     }
 }

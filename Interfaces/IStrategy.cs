@@ -7,5 +7,6 @@ namespace Battle_Mages
 {
     public interface IStrategy
     {
+        void Execute(MovingDirection moveDirection, FacingDirection direction);
     }
 }
