@@ -21,8 +21,6 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         private Cursor cursor;
-        private int menuScreenWith = 400;
-        private int menuScreenheight = 200;
         private GameState currentGameState = GameState.MainMenu;
         public Button play;
 
@@ -122,7 +120,7 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
-            play = new Button(Content.Load<Texture2D>("Images/apple"), Content.Load<Texture2D>("Images/basket")
+            play = new Button(Content.Load<Texture2D>("Images/playButton"), Content.Load<Texture2D>("Images/playButtonHL")
                 , graphics.GraphicsDevice);
             play.SetPosition(new Vector2(50, 100));
             // TODO: use this.Content to load your game content here
@@ -272,7 +270,8 @@ namespace Battle_Mages
             {
                 case GameState.MainMenu:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
-                    spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0, menuScreenWith, menuScreenheight), null, Color.White,
+                    spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0,
+                        (int)GetHalfViewPortWidth * 2, (int)GetHalfViewPortHeight * 2), null, Color.White,
                         0f, Vector2.Zero, SpriteEffects.None, 0.2f);
                     play.Draw(spriteBatch);
                     cursor.Draw(spriteBatch, 0);
