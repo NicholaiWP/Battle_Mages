@@ -121,6 +121,7 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             testTexture = Content.Load<Texture2D>("Images/apple");
+<<<<<<< HEAD
             play = new Button(Content.Load<Texture2D>("Images/playButton"), Content.Load<Texture2D>("Images/playButtonHL")
                 , graphics.GraphicsDevice);
             play.SetPosition(new Vector2(850, 200));
@@ -130,6 +131,11 @@ namespace Battle_Mages
 
             settings = new Button(Content.Load<Texture2D>("Images/settings_button"), Content.Load<Texture2D>("Images/settings_button"), graphics.GraphicsDevice);
             settings.SetPosition(new Vector2(800, 400));
+=======
+            play = new Button(Content.Load<Texture2D>("Images/playButton"), Content.Load<Texture2D>("Images/playButtonHL"),
+                graphics.GraphicsDevice);
+            play.SetPosition(new Vector2(50, 100));
+>>>>>>> origin/master
             // TODO: use this.Content to load your game content here
         }
 
