@@ -7,17 +7,17 @@ namespace Battle_Mages
 {
     public enum MovingDirection
     {
-        UpLeft, UpRight, Up, Left, Right, DownLeft, DownRight, Down
+        UpLeft, UpRight, Up, Left, Right, DownLeft, DownRight, Down, Idle
     }
 
     public enum FacingDirection
     {
-        Left, Right, Up, Down
+        Left, Right, Back, Front
     }
 
     public enum GameState
     {
-        MainMenu, InGame, Settings, Shop,
+        MainMenu, InGame, Settings, Shop
     }
 
     public class Enums
