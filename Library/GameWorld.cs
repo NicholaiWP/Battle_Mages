@@ -16,6 +16,8 @@ namespace Battle_Mages
 
         private SpriteBatch spriteBatch;
         private Camera2D camera;
+        private GameObject player;
+        private Director director;
         private Texture2D testTexture;
         private float camMovespeed;
         private float speed;
@@ -117,21 +119,24 @@ namespace Battle_Mages
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-
+            director = new Director(new PlayerBuilder());
+            player = director.Construct(Vector2.Zero);
+            objectsToAdd.Add(player);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
+
             testTexture = Content.Load<Texture2D>("Images/apple");
-            play = new Button(Content.Load<Texture2D>("Images/playButton"), Content.Load<Texture2D>("Images/playButtonHL"),
-                graphics.GraphicsDevice);
+            play = new Button(Content.Load<Texture2D>("Images/playButton"),
+                Content.Load<Texture2D>("Images/playButtonHL"), graphics.GraphicsDevice);
             play.SetPosition(new Vector2(850, 200));
 
-            quit = new Button(Content.Load<Texture2D>("Images/Quit_Game_Button"), Content.Load<Texture2D>("Images/Quit_Game_Button"),
+            quit = new Button(Content.Load<Texture2D>("Images/Quit"), Content.Load<Texture2D>("Images/Quit"),
                 graphics.GraphicsDevice);
             quit.SetPosition(new Vector2(800, 550));
 
-            settings = new Button(Content.Load<Texture2D>("Images/settings_button"), Content.Load<Texture2D>("Images/settings_button"),
-                graphics.GraphicsDevice);
+            settings = new Button(Content.Load<Texture2D>("Images/Settings"),
+                Content.Load<Texture2D>("Images/Settings"), graphics.GraphicsDevice);
             settings.SetPosition(new Vector2(800, 400));
             // TODO: use this.Content to load your game content here
         }
@@ -176,6 +181,10 @@ namespace Battle_Mages
                 case GameState.InGame:
                     deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+                    foreach (GameObject gameObjecgt in objectsToDraw)
+                    {
+                        gameObjecgt.Update();
+                    }
                     camMovespeed = speed * deltaTime;
                     CursorPictureNumber = 0;
 
@@ -217,7 +226,7 @@ namespace Battle_Mages
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.Space))
                     {
-                        camera.Position = Vector2.Zero;
+                        camera.Position = player.Transform.Position;
                     }
 
                     #endregion Camera Movement
@@ -308,9 +317,8 @@ namespace Battle_Mages
                 case GameState.InGame:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
            null, null, null, camera.GetViewMatrix);
+
                     cursor.Draw(spriteBatch, CursorPictureNumber);
-                    spriteBatch.Draw(testTexture, new Rectangle(-99, -109, testTexture.Width, testTexture.Height), null, Color.White,
-                        0f, Vector2.Zero, SpriteEffects.None, 0.1f);
                     foreach (GameObject gameObject in objectsToDraw)
                     {
                         gameObject.Draw(spriteBatch);

@@ -50,7 +50,7 @@ namespace Battle_Mages
         {
             animator = (Animator)GetGameObject.GetComponent("Animator");
             sprite = content.Load<Texture2D>(spriteName);
-            rectangle = new Rectangle(0, 0, 64, 64);
+            rectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
         }
 
         /// <summary>

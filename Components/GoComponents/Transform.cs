@@ -11,12 +11,8 @@ namespace Battle_Mages
         //Fields
         private Vector2 position;
 
-        private float speed;
-
         //Properties
         public Vector2 Position { get { return position; } set { position = value; } }
-
-        public float Speed { set { speed = value; } }
 
         /// <summary>
         /// The constructor for the transformer
@@ -34,7 +30,7 @@ namespace Battle_Mages
         /// <param name="tranlation"></param>
         public void Translate(Vector2 tranlation)
         {
-            this.position += tranlation * speed;
+            position += tranlation;
         }
     }
 }

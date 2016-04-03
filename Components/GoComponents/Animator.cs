@@ -49,7 +49,7 @@ namespace Battle_Mages
         /// </summary>
         public void Update()
         {
-            timeElapsed += GameWorld.GetInstance.GetDeltaTime;
+            /*timeElapsed += GameWorld.GetInstance.GetDeltaTime;
 
             currentIndex = (int)(timeElapsed * animations[animationName].GetFps);
 
@@ -61,6 +61,7 @@ namespace Battle_Mages
             }
 
             spriteRenderer.Rectangle = frames[currentIndex];
+            */
         }
 
         /// <summary>

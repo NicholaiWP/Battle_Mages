@@ -103,10 +103,10 @@
     <Content Include="Content\Images\playButtonHL.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Images\Quit_Game_Button.png">
+    <Content Include="Content\Images\Quit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Images\settings_button.png">
+    <Content Include="Content\Images\Settings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

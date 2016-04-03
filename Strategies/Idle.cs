@@ -19,19 +19,19 @@ namespace Battle_Mages
             switch (direction)
             {
                 case FacingDirection.Front:
-                    animator.PlayAnimation("IdleFront");
+                    //  animator.PlayAnimation("IdleFront");
                     break;
 
                 case FacingDirection.Back:
-                    animator.PlayAnimation("IdleBack");
+                    //  animator.PlayAnimation("IdleBack");
                     break;
 
                 case FacingDirection.Left:
-                    animator.PlayAnimation("IdleLeft");
+                    // animator.PlayAnimation("IdleLeft");
                     break;
 
                 case FacingDirection.Right:
-                    animator.PlayAnimation("IdleRight");
+                    //  animator.PlayAnimation("IdleRight");
                     break;
             }
         }
