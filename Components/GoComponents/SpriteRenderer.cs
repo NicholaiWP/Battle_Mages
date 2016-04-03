@@ -15,16 +15,17 @@ namespace Battle_Mages
 
         private Color color = Color.White;
         private float drawDepth;
-        private Texture2D sprite;
         private Rectangle rectangle;
         private Vector2 offset;
         private Animator animator;
+        private Texture2D sprite;
 
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
 
-        public Vector2 Offset { get { return offset; } set { offset = value; } }
         public Texture2D GetSprite { get { return sprite; } }
+
+        public Vector2 Offset { get { return offset; } set { offset = value; } }
 
         /// <summary>
         /// A constructor for the sprite renderer

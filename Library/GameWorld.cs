@@ -226,7 +226,8 @@ namespace Battle_Mages
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.Space))
                     {
-                        camera.Position = player.Transform.Position;
+                        camera.Position = new Vector2(player.Transform.Position.X + 80,
+                            player.Transform.Position.Y + 98);
                     }
 
                     #endregion Camera Movement
