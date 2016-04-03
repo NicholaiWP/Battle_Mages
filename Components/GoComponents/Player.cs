@@ -87,10 +87,16 @@ namespace Battle_Mages
                 mDirection = MovingDirection.Right;
                 fDirection = FacingDirection.Right;
             }
+            else
+            {
+                mDirection = MovingDirection.Idle;
+            }
 
             if (mDirection == MovingDirection.Idle)
             {
+                strategy = new Idle(animator);
             }
+            strategy.Execute(mDirection, fDirection);
         }
     }
 }

@@ -17,11 +17,7 @@ namespace Battle_Mages
 
     public enum GameState
     {
-<<<<<<< HEAD
-        MainMenu, InGame, Settings, Shop, quit,
-=======
-        MainMenu, InGame, Settings, Shop
->>>>>>> origin/master
+        MainMenu, InGame, Settings, Shop, quit
     }
 
     public class Enums
