@@ -71,7 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\Attack.cs" />
     <Compile Include="Strategies\Casting.cs" />
-    <Compile Include="Strategies\Jump.cs" />
+    <Compile Include="Strategies\Idle.cs" />
     <Compile Include="Strategies\Move.cs" />
   </ItemGroup>
   <ItemGroup>
