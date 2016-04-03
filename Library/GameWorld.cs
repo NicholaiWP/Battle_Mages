@@ -23,7 +23,8 @@ namespace Battle_Mages
         private Cursor cursor;
         private GameState currentGameState = GameState.MainMenu;
         public Button play;
-
+        public Button settings;
+        public Button quit;
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
 
@@ -122,7 +123,13 @@ namespace Battle_Mages
             testTexture = Content.Load<Texture2D>("Images/apple");
             play = new Button(Content.Load<Texture2D>("Images/playButton"), Content.Load<Texture2D>("Images/playButtonHL")
                 , graphics.GraphicsDevice);
-            play.SetPosition(new Vector2(50, 100));
+            play.SetPosition(new Vector2(850, 200));
+
+            quit = new Button(Content.Load<Texture2D>("Images/Quit_Game_Button"), Content.Load<Texture2D>("Images/Quit_Game_Button"), graphics.GraphicsDevice);
+            quit.SetPosition(new Vector2(800, 550));
+
+            settings = new Button(Content.Load<Texture2D>("Images/settings_button"), Content.Load<Texture2D>("Images/settings_button"), graphics.GraphicsDevice);
+            settings.SetPosition(new Vector2(800, 400));
             // TODO: use this.Content to load your game content here
         }
 
@@ -147,10 +154,22 @@ namespace Battle_Mages
                 case GameState.MainMenu:
                     MouseState mouse = Mouse.GetState();
                     play.Update(mouse);
+                    settings.Update(mouse);
+                    quit.Update(mouse);
                     if (play.isClicked == true)
                     {
                         currentGameState = GameState.InGame;
                     }
+                  
+                    else if (settings.isClicked == true)
+                        {
+                            currentGameState = GameState.Settings;
+                        }
+                  
+                    else if (quit.isClicked == true)
+                        {
+                            Environment.Exit(0);
+                        }
                     break;
 
                 case GameState.InGame:
@@ -210,12 +229,15 @@ namespace Battle_Mages
                     TemplateControl();
                     break;
 
-                case GameState.Settings:
+                case GameState.Settings:              
+                  
                     break;
 
                 case GameState.Shop:
                     break;
-
+                case GameState.quit:
+                               
+                    break;
                 default:
                     break;
             }
@@ -270,10 +292,13 @@ namespace Battle_Mages
             {
                 case GameState.MainMenu:
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
+                    //background
                     spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0,
                         (int)GetHalfViewPortWidth * 2, (int)GetHalfViewPortHeight * 2), null, Color.White,
                         0f, Vector2.Zero, SpriteEffects.None, 0.2f);
-                    play.Draw(spriteBatch);
+                    settings.Draw(spriteBatch);
+                    quit.Draw(spriteBatch);
+                    play.Draw(spriteBatch);                 
                     cursor.Draw(spriteBatch, 0);
                     break;
 
@@ -291,7 +316,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-
+                    
                     break;
 
                 case GameState.Shop:
