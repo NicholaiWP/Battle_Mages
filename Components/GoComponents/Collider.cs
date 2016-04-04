@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public class Collider
+    public class Collider : Component
     {
+        public Collider(GameObject gameObject) : base(gameObject)
+        {
+        }
     }
 }
