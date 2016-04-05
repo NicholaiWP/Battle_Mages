@@ -99,9 +99,11 @@ namespace Battle_Mages
                     break;
                 case GameState.InGame:
                     spriteBatch.Draw(sprite[spriteNumber], GetRectangle, null, Color.White,
-    0f, Vector2.Zero, SpriteEffects.None, 0f);
+                     0f, Vector2.Zero, SpriteEffects.None, 0f);
                     break;
                 case GameState.Settings:
+                    spriteBatch.Draw(sprite[spriteNumber], GetRectangle, null, Color.White,
+                    0f, Vector2.Zero, SpriteEffects.None, 0f);
                     break;
                 case GameState.Shop:
                     break;

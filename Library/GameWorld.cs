@@ -23,10 +23,18 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         private Cursor cursor;
+        public bool mouseCanClickButton;
         private GameState currentGameState = GameState.MainMenu;
+        //Buttons
         public Button play;
         public Button settings;
         public Button quit;
+        public Button oneRes;
+        public Button twoRes;
+        public Button threeRes;
+        public Button fourRes;
+        public Button back;
+
 
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
@@ -126,7 +134,31 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
 
+            //Resolution Buttons
+            oneRes = new Button(Content.Load<Texture2D>("Images/1366x768"),
+               Content.Load<Texture2D>("Images/1366x768"), graphics.GraphicsDevice);
+            oneRes.SetPosition(new Vector2(850, 200));
+
+            twoRes = new Button(Content.Load<Texture2D>("Images/1280x800"),
+               Content.Load<Texture2D>("Images/1280x800"), graphics.GraphicsDevice);
+            twoRes.SetPosition(new Vector2(850, 300));
+
+            threeRes = new Button(Content.Load<Texture2D>("Images/1024x768"),
+               Content.Load<Texture2D>("Images/1024x768"), graphics.GraphicsDevice);
+            threeRes.SetPosition(new Vector2(850, 400));
+
+            fourRes = new Button(Content.Load<Texture2D>("Images/800x600"),
+                Content.Load<Texture2D>("Images/800x600"), graphics.GraphicsDevice);
+            fourRes.SetPosition(new Vector2(850, 500));
+
+            back = new Button(Content.Load<Texture2D>("Images/Back"),
+               Content.Load<Texture2D>("Images/Back"), graphics.GraphicsDevice);
+            back.SetPosition(new Vector2(850, 600));
+
+            //background texture
             testTexture = Content.Load<Texture2D>("Images/apple");
+
+            //Menu butttons
             play = new Button(Content.Load<Texture2D>("Images/playButton"),
                 Content.Load<Texture2D>("Images/playButtonHL"), graphics.GraphicsDevice);
             play.SetPosition(new Vector2(850, 200));
@@ -157,10 +189,11 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            MouseState mouse = Mouse.GetState();
+
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    MouseState mouse = Mouse.GetState();
                     play.Update(mouse);
                     settings.Update(mouse);
                     quit.Update(mouse);
@@ -241,6 +274,44 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
+                    oneRes.Update(mouse);
+                    twoRes.Update(mouse);
+                    threeRes.Update(mouse);
+                    fourRes.Update(mouse);
+                    back.Update(mouse);
+
+                    if(oneRes.isClicked == true)
+                    {
+                        graphics.PreferredBackBufferHeight = 768;
+                        graphics.PreferredBackBufferWidth = 1366;
+                        graphics.ApplyChanges();
+
+                    }
+
+                  else  if(twoRes.isClicked == true)
+                    {
+                        graphics.PreferredBackBufferHeight = 800;
+                        graphics.PreferredBackBufferWidth = 1280;
+                        graphics.ApplyChanges();
+                    }
+
+                   else if (threeRes.isClicked == true)
+                    {
+                        graphics.PreferredBackBufferHeight = 768;
+                        graphics.PreferredBackBufferWidth = 1024;
+                        graphics.ApplyChanges();
+                    }
+
+                  else  if (fourRes.isClicked == true)
+                    {
+                        graphics.PreferredBackBufferHeight = 600;
+                        graphics.PreferredBackBufferWidth = 800;
+                        graphics.ApplyChanges();
+                    }
+                    else if(back.isClicked == true)
+                    {
+                        currentGameState = GameState.MainMenu;
+                    }
 
                     break;
 
@@ -254,7 +325,10 @@ namespace Battle_Mages
                 default:
                     break;
             }
-
+            if (Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                    mouseCanClickButton = true;
+            }
             base.Update(gameTime);
         }
 
@@ -304,7 +378,7 @@ namespace Battle_Mages
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null);
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
                     //background
                     spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0,
                         (int)GetHalfViewPortWidth * 2, (int)GetHalfViewPortHeight * 2), null, Color.White,
@@ -328,7 +402,14 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
+                    oneRes.Draw(spriteBatch);
+                    twoRes.Draw(spriteBatch);
+                    threeRes.Draw(spriteBatch);
+                    fourRes.Draw(spriteBatch);
+                    back.Draw(spriteBatch);
+                    cursor.Draw(spriteBatch, 0);
                     break;
 
                 case GameState.Shop:

@@ -18,6 +18,7 @@ namespace Battle_Mages
         public Rectangle rectangle;
         public Vector2 position;
         public bool isClicked = false;
+        
 
         /// <summary>
         /// Button class' constructor
@@ -39,7 +40,7 @@ namespace Battle_Mages
             //sets a mouseRectangle
             Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
-            //-by using the bool "isDown".
+            //-by using the bool "isClicked".
             if (mouseRectangle.Intersects(rectangle))
             {
                 if (hoverNumber == 0)
@@ -48,10 +49,13 @@ namespace Battle_Mages
                     isClicked = false;
                 }
 
-                if (mouse.LeftButton == ButtonState.Pressed)
+                if (mouse.LeftButton == ButtonState.Pressed && GameWorld.GetInstance.mouseCanClickButton == true)
                 {
                     isClicked = true;
+                    GameWorld.GetInstance.mouseCanClickButton = false;
+                    
                 }
+
             }
             else
             {
