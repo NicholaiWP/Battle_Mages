@@ -18,23 +18,10 @@ namespace Battle_Mages
         private Camera2D camera;
         private GameObject player;
         private Director director;
-        private Texture2D testTexture;
         private float camMovespeed;
         private float speed;
         private float deltaTime;
-        private Cursor cursor;
-        public bool mouseCanClickButton;
-        private GameState currentGameState = GameState.MainMenu;
-        //Buttons
-        public Button play;
-        public Button settings;
-        public Button quit;
-        public Button oneRes;
-        public Button twoRes;
-        public Button threeRes;
-        public Button fourRes;
-        public Button back;
-
+        public GameState currentGameState = GameState.MainMenu;
 
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
@@ -51,11 +38,6 @@ namespace Battle_Mages
         public GameState GetCurrentGameState
         {
             get { return currentGameState; }
-        }
-
-        public Cursor GetCursor
-        {
-            get { return cursor; }
         }
 
         public Camera2D GetCamera
@@ -100,10 +82,10 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            //graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
-            cursor = Cursor.GetInstance;
             speed = 250;
         }
 
@@ -132,44 +114,9 @@ namespace Battle_Mages
             objectsToAdd.Add(player);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera.LoadContent(Content);
-            cursor.LoadContent(Content);
+            Cursor.GetInstance.LoadContent(Content);
+            MenuScreenManager.GetInstance.LoadContent(Content);
 
-            //Resolution Buttons
-            oneRes = new Button(Content.Load<Texture2D>("Images/1366x768"),
-               Content.Load<Texture2D>("Images/1366x768"), graphics.GraphicsDevice);
-            oneRes.SetPosition(new Vector2(850, 200));
-
-            twoRes = new Button(Content.Load<Texture2D>("Images/1280x800"),
-               Content.Load<Texture2D>("Images/1280x800"), graphics.GraphicsDevice);
-            twoRes.SetPosition(new Vector2(850, 300));
-
-            threeRes = new Button(Content.Load<Texture2D>("Images/1024x768"),
-               Content.Load<Texture2D>("Images/1024x768"), graphics.GraphicsDevice);
-            threeRes.SetPosition(new Vector2(850, 400));
-
-            fourRes = new Button(Content.Load<Texture2D>("Images/800x600"),
-                Content.Load<Texture2D>("Images/800x600"), graphics.GraphicsDevice);
-            fourRes.SetPosition(new Vector2(850, 500));
-
-            back = new Button(Content.Load<Texture2D>("Images/Back"),
-               Content.Load<Texture2D>("Images/Back"), graphics.GraphicsDevice);
-            back.SetPosition(new Vector2(850, 600));
-
-            //background texture
-            testTexture = Content.Load<Texture2D>("Images/apple");
-
-            //Menu butttons
-            play = new Button(Content.Load<Texture2D>("Images/playButton"),
-                Content.Load<Texture2D>("Images/playButtonHL"), graphics.GraphicsDevice);
-            play.SetPosition(new Vector2(850, 200));
-
-            quit = new Button(Content.Load<Texture2D>("Images/Quit"), Content.Load<Texture2D>("Images/Quit"),
-                graphics.GraphicsDevice);
-            quit.SetPosition(new Vector2(800, 550));
-
-            settings = new Button(Content.Load<Texture2D>("Images/Settings"),
-                Content.Load<Texture2D>("Images/Settings"), graphics.GraphicsDevice);
-            settings.SetPosition(new Vector2(800, 400));
             // TODO: use this.Content to load your game content here
         }
 
@@ -189,26 +136,14 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            MouseState mouse = Mouse.GetState();
-
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    play.Update(mouse);
-                    settings.Update(mouse);
-                    quit.Update(mouse);
-                    if (play.isClicked == true)
-                    {
-                        currentGameState = GameState.InGame;
-                    }
-                    else if (settings.isClicked == true)
-                    {
-                        currentGameState = GameState.Settings;
-                    }
-                    else if (quit.isClicked == true)
-                    {
-                        Environment.Exit(0);
-                    }
+                    MenuScreenManager.GetInstance.UpdateMenu();
                     break;
 
                 case GameState.InGame:
@@ -223,7 +158,7 @@ namespace Battle_Mages
 
                     #region Camera Movement
 
-                    Vector2 mousePos = cursor.GetPosition;
+                    Vector2 mousePos = Cursor.GetInstance.GetPosition;
                     if (camera.GetTopRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(camMovespeed, -camMovespeed);
@@ -266,69 +201,23 @@ namespace Battle_Mages
                     #endregion Camera Movement
 
                     //DONT DEBUGG HERE
-                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    {
-                        Exit();
-                    }
+
                     TemplateControl();
+
                     break;
 
                 case GameState.Settings:
-                    oneRes.Update(mouse);
-                    twoRes.Update(mouse);
-                    threeRes.Update(mouse);
-                    fourRes.Update(mouse);
-                    back.Update(mouse);
-
-                    if(oneRes.isClicked == true)
-                    {
-                        graphics.PreferredBackBufferHeight = 768;
-                        graphics.PreferredBackBufferWidth = 1366;
-                        graphics.ApplyChanges();
-
-                    }
-
-                  else  if(twoRes.isClicked == true)
-                    {
-                        graphics.PreferredBackBufferHeight = 800;
-                        graphics.PreferredBackBufferWidth = 1280;
-                        graphics.ApplyChanges();
-                    }
-
-                   else if (threeRes.isClicked == true)
-                    {
-                        graphics.PreferredBackBufferHeight = 768;
-                        graphics.PreferredBackBufferWidth = 1024;
-                        graphics.ApplyChanges();
-                    }
-
-                  else  if (fourRes.isClicked == true)
-                    {
-                        graphics.PreferredBackBufferHeight = 600;
-                        graphics.PreferredBackBufferWidth = 800;
-                        graphics.ApplyChanges();
-                    }
-                    else if(back.isClicked == true)
-                    {
-                        currentGameState = GameState.MainMenu;
-                    }
-
+                    MenuScreenManager.GetInstance.UpdateSettingWindow(graphics);
                     break;
 
                 case GameState.Shop:
                     break;
-
-                case GameState.quit:
-
-                    break;
-
-                default:
-                    break;
             }
             if (Mouse.GetState().LeftButton == ButtonState.Released)
             {
-                    mouseCanClickButton = true;
+                MenuScreenManager.GetInstance.mouseCanClickButton = true;
             }
+
             base.Update(gameTime);
         }
 
@@ -374,26 +263,19 @@ namespace Battle_Mages
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
+            null, null, null, camera.GetViewMatrix);
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-                    //background
-                    spriteBatch.Draw(Content.Load<Texture2D>("Images/apple"), new Rectangle(0, 0,
-                        (int)GetHalfViewPortWidth * 2, (int)GetHalfViewPortHeight * 2), null, Color.White,
-                        0f, Vector2.Zero, SpriteEffects.None, 0.2f);
-                    settings.Draw(spriteBatch);
-                    quit.Draw(spriteBatch);
-                    play.Draw(spriteBatch);
-                    cursor.Draw(spriteBatch, 0);
+                    MenuScreenManager.GetInstance.DrawMenu(spriteBatch);
                     break;
 
                 case GameState.InGame:
-                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
-           null, null, null, camera.GetViewMatrix);
 
-                    cursor.Draw(spriteBatch, CursorPictureNumber);
+                    Cursor.GetInstance.Draw(spriteBatch, CursorPictureNumber);
                     foreach (GameObject gameObject in objectsToDraw)
                     {
                         gameObject.Draw(spriteBatch);
@@ -402,14 +284,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-
-                    oneRes.Draw(spriteBatch);
-                    twoRes.Draw(spriteBatch);
-                    threeRes.Draw(spriteBatch);
-                    fourRes.Draw(spriteBatch);
-                    back.Draw(spriteBatch);
-                    cursor.Draw(spriteBatch, 0);
+                    MenuScreenManager.GetInstance.DrawSettingsWindow(spriteBatch);
                     break;
 
                 case GameState.Shop:

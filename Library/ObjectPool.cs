@@ -10,9 +10,9 @@ namespace Battle_Mages
     {
         //Fields
         private static ICanBuild builder = new EnemyBuilder();
+
         private static List<GameObject> inactiveEnemies = new List<GameObject>();
         private static Director director = new Director(builder);
-        //for position use
         private static Random random = new Random();
         private static GameObject gameObject = new GameObject(Vector2.Zero);
         public static List<GameObject> activeEmemies = new List<GameObject>();
