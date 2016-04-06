@@ -11,6 +11,7 @@ namespace Battle_Mages
     public class MenuScreenManager
     {
         private Texture2D sprite;
+        private Vector2 fontPosition;
         public float scale;
         public bool mouseCanClickButton;
         public Button play;
@@ -21,6 +22,8 @@ namespace Battle_Mages
         public Button threeRes;
         public Button fourRes;
         public Button back;
+        public SpriteFont fontBM;
+
 
         private static MenuScreenManager instance;
 
@@ -43,22 +46,53 @@ namespace Battle_Mages
             {
                 scale = 1;
             }
+            else if(GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1920)
+            {
+                scale = 1.405f;
+            }
+            //1600x1200 resolution
+            else if(GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1600)
+            {
+                scale = 1.171f;
+            }
+            //1680x1050 resolution
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1680)
+            {
+                scale = 1.229f;
+            }
+            //1400x1050 resolution
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1400)
+            {
+                scale = 1.024f;
+            }
             else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1280)
             {
                 scale = 0.937f;
+            }
+            //1440x900 resolution
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1440)
+            {
+                scale = 1.054f;
             }
             else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1024)
             {
                 scale = 0.749f;
             }
+            //800x600 resolution
             else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 800)
             {
                 scale = 0.585f;
+            }
+            //if none of the above, default size.
+            else
+            {
+                scale = 0.5f;
             }
         }
 
         public void LoadContent(ContentManager content)
         {
+            fontBM = content.Load<SpriteFont>("FontBM");
             sprite = content.Load<Texture2D>("Images/apple");
 
             #region Resolution Buttons
@@ -192,7 +226,7 @@ namespace Battle_Mages
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
-        {
+        {         
             oneRes.Draw(spriteBatch);
             twoRes.Draw(spriteBatch);
             threeRes.Draw(spriteBatch);

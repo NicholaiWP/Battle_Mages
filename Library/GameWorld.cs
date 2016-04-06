@@ -86,7 +86,7 @@ namespace Battle_Mages
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
-            speed = 250;
+            speed = 250;         
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Battle_Mages
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera.LoadContent(Content);
             Cursor.GetInstance.LoadContent(Content);
-            MenuScreenManager.GetInstance.LoadContent(Content);
+            MenuScreenManager.GetInstance.LoadContent(Content);          
 
             // TODO: use this.Content to load your game content here
         }
