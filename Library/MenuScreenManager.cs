@@ -11,10 +11,9 @@ namespace Battle_Mages
     public class MenuScreenManager
     {
         private Texture2D sprite;
+        public float scale;
         public bool mouseCanClickButton;
-
         public Button play;
-
         public Button settings;
         public Button quit;
         public Button oneRes;
@@ -40,6 +39,22 @@ namespace Battle_Mages
         private MenuScreenManager()
         {
             mouseCanClickButton = true;
+            if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1366)
+            {
+                scale = 1;
+            }
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1280)
+            {
+                scale = 0.937f;
+            }
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1024)
+            {
+                scale = 0.749f;
+            }
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 800)
+            {
+                scale = 0.585f;
+            }
         }
 
         public void LoadContent(ContentManager content)
@@ -50,23 +65,18 @@ namespace Battle_Mages
 
             oneRes = new Button(content.Load<Texture2D>("Images/1366x768"),
                content.Load<Texture2D>("Images/1366x768"));
-            oneRes.SetPosition(new Vector2(-128, -350));
 
             twoRes = new Button(content.Load<Texture2D>("Images/1280x800"),
                content.Load<Texture2D>("Images/1280x800"));
-            twoRes.SetPosition(new Vector2(-128, -200));
 
             threeRes = new Button(content.Load<Texture2D>("Images/1024x768"),
                content.Load<Texture2D>("Images/1024x768"));
-            threeRes.SetPosition(new Vector2(-128, -50));
 
             fourRes = new Button(content.Load<Texture2D>("Images/800x600"),
                 content.Load<Texture2D>("Images/800x600"));
-            fourRes.SetPosition(new Vector2(-128, 100));
 
             back = new Button(content.Load<Texture2D>("Images/Back"),
                content.Load<Texture2D>("Images/Back"));
-            back.SetPosition(new Vector2(-128, 250));
 
             #endregion Resolution Buttons
 
@@ -74,14 +84,11 @@ namespace Battle_Mages
 
             play = new Button(content.Load<Texture2D>("Images/playButton"),
                 content.Load<Texture2D>("Images/playButtonHL"));
-            play.SetPosition(new Vector2(-128, -150));
 
             quit = new Button(content.Load<Texture2D>("Images/Quit"), content.Load<Texture2D>("Images/Quit"));
-            quit.SetPosition(new Vector2(-128, 0));
 
             settings = new Button(content.Load<Texture2D>("Images/Settings"),
                 content.Load<Texture2D>("Images/Settings"));
-            settings.SetPosition(new Vector2(-128, 150));
 
             #endregion Menu Buttons
         }
@@ -94,6 +101,10 @@ namespace Battle_Mages
             play.Update();
             settings.Update();
             quit.Update();
+            play.SetPosition(new Vector2(-play.rectangle.Width / 2, -play.rectangle.Height * 1.5f));
+            settings.SetPosition(new Vector2(-settings.rectangle.Width / 2, 0));
+            quit.SetPosition(new Vector2(-quit.rectangle.Width / 2, quit.rectangle.Height * 1.5f));
+
             if (play.isClicked == true)
             {
                 play.isClicked = false;
@@ -117,12 +128,18 @@ namespace Battle_Mages
             threeRes.Update();
             fourRes.Update();
             back.Update();
+            oneRes.SetPosition(new Vector2(-oneRes.rectangle.Width / 2, -oneRes.rectangle.Height * 3f));
+            twoRes.SetPosition(new Vector2(-twoRes.rectangle.Width / 2, -twoRes.rectangle.Height * 1.5f));
+            threeRes.SetPosition(new Vector2(-threeRes.rectangle.Width / 2, 0));
+            fourRes.SetPosition(new Vector2(-fourRes.rectangle.Width / 2, fourRes.rectangle.Height * 1.5f));
+            back.SetPosition(new Vector2(-back.rectangle.Width / 2, back.rectangle.Height * 3f));
 
             #region Button Is Clicked
 
             if (oneRes.isClicked == true)
             {
                 oneRes.isClicked = false;
+                scale = 1;
                 graphics.PreferredBackBufferHeight = 768;
                 graphics.PreferredBackBufferWidth = 1366;
                 graphics.ApplyChanges();
@@ -130,6 +147,7 @@ namespace Battle_Mages
             else if (twoRes.isClicked == true)
             {
                 twoRes.isClicked = false;
+                scale = 0.937f;
                 graphics.PreferredBackBufferHeight = 800;
                 graphics.PreferredBackBufferWidth = 1280;
                 graphics.ApplyChanges();
@@ -137,6 +155,7 @@ namespace Battle_Mages
             else if (threeRes.isClicked == true)
             {
                 threeRes.isClicked = false;
+                scale = 0.749f;
                 graphics.PreferredBackBufferHeight = 768;
                 graphics.PreferredBackBufferWidth = 1024;
                 graphics.ApplyChanges();
@@ -144,6 +163,7 @@ namespace Battle_Mages
             else if (fourRes.isClicked == true)
             {
                 fourRes.isClicked = false;
+                scale = 0.585f;
                 graphics.PreferredBackBufferHeight = 600;
                 graphics.PreferredBackBufferWidth = 800;
                 graphics.ApplyChanges();

@@ -43,7 +43,8 @@ namespace Battle_Mages
             {
                 rectangle = new Rectangle((int)(GetPosition.X - (sprite[spriteNumber].Width * 0.5f)),
                     (int)(GetPosition.Y - (sprite[spriteNumber].Height * 0.5f)),
-                    sprite[spriteNumber].Width, sprite[spriteNumber].Height);
+                    (int)(sprite[spriteNumber].Width * MenuScreenManager.GetInstance.scale),
+                    (int)(sprite[spriteNumber].Height * MenuScreenManager.GetInstance.scale));
                 return rectangle;
             }
         }
@@ -90,8 +91,8 @@ namespace Battle_Mages
         public void Draw(SpriteBatch spriteBatch, int spriteNumber)
         {
             this.spriteNumber = spriteNumber;
-            spriteBatch.Draw(sprite[spriteNumber], GetRectangle, null, Color.White,
-            0f, Vector2.Zero, SpriteEffects.None, 0f);
+            spriteBatch.Draw(sprite[spriteNumber], GetPosition, null, Color.White,
+            0f, Vector2.Zero, MenuScreenManager.GetInstance.scale, SpriteEffects.None, 0f);
         }
     }
 }
