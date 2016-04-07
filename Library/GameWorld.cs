@@ -14,7 +14,7 @@ namespace Battle_Mages
         //Fields
         private GraphicsDeviceManager graphics;
 
-        private SpriteBatch spriteBatch;
+        private Drawer drawer;
         private Camera2D camera;
         private GameObject player;
         private Director director;
@@ -108,11 +108,12 @@ namespace Battle_Mages
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            // Create a new Drawer, which can be used to draw textures.
+            drawer = new Drawer(GraphicsDevice);
+
             director = new Director(new PlayerBuilder());
             player = director.Construct(Vector2.Zero);
             objectsToAdd.Add(player);
-            spriteBatch = new SpriteBatch(GraphicsDevice);
             camera.LoadContent(Content);
             Cursor.GetInstance.LoadContent(Content);
             MenuScreenManager.GetInstance.LoadContent(Content);
@@ -264,27 +265,29 @@ namespace Battle_Mages
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
-            null, null, null, camera.GetViewMatrix);
+            //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
+            //null, null, null, camera.GetViewMatrix);
+            drawer.BeginBatches();
+            drawer.Matrix = camera.GetViewMatrix;
+
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    MenuScreenManager.GetInstance.DrawMenu(spriteBatch);
+                    MenuScreenManager.GetInstance.DrawMenu(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.InGame:
-
-                    Cursor.GetInstance.Draw(spriteBatch);
+                    Cursor.GetInstance.Draw(drawer[DrawLayer.AboveUI]);
                     foreach (GameObject gameObject in objectsToDraw)
                     {
-                        gameObject.Draw(spriteBatch);
+                        gameObject.Draw(drawer);
                     }
-                    camera.Draw(spriteBatch);
+                    camera.Draw(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.Settings:
-                    MenuScreenManager.GetInstance.DrawSettingsWindow(spriteBatch);
+                    MenuScreenManager.GetInstance.DrawSettingsWindow(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.Shop:
@@ -296,7 +299,7 @@ namespace Battle_Mages
             }
             // TODO: Add your drawing code here
 
-            spriteBatch.End();
+            drawer.EndBatches();
             base.Draw(gameTime);
         }
     }

@@ -85,15 +85,20 @@ namespace Battle_Mages
         }
 
         /// <summary>
-        /// The drawing method for the cursor, with an int to choose what picture in the array that has
-        /// to be drawn
+        /// Method for drawing the cursor
         /// </summary>
         /// <param name="spriteBatch"></param>
-        /// <param name="spriteNumber"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite[GameWorld.GetInstance.CursorPictureNumber], GetPosition, null, Color.White,
-            0f, Vector2.Zero, MenuScreenManager.GetInstance.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(sprite[GameWorld.GetInstance.CursorPictureNumber],
+                position: GetPosition,
+                destinationRectangle: GetRectangle,
+                sourceRectangle: null,
+                origin: Vector2.Zero,
+                rotation: 0f,
+                scale: new Vector2(MenuScreenManager.GetInstance.scale, MenuScreenManager.GetInstance.scale),
+                color: Color.White,
+                effects: SpriteEffects.None);
         }
     }
 }

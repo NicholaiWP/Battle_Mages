@@ -58,10 +58,16 @@ namespace Battle_Mages
         /// The method for drawing
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(Drawer drawer)
         {
-            spriteBatch.Draw(sprite, GetGameObject.Transform.Position + offset, rectangle, color,
-                0, Vector2.Zero, 1, SpriteEffects.None, drawDepth);
+            drawer[DrawLayer.Gameplay].Draw(sprite, position: GetGameObject.Transform.Position + offset,
+                destinationRectangle: null,
+                sourceRectangle: rectangle,
+                origin: Vector2.Zero,
+                rotation: 0f,
+                scale: new Vector2(MenuScreenManager.GetInstance.scale, MenuScreenManager.GetInstance.scale),
+                color: color,
+                effects: SpriteEffects.None);
         }
     }
 }
