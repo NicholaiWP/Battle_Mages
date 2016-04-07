@@ -22,7 +22,9 @@ namespace Battle_Mages
         private float speed;
         private float deltaTime;
         public GameState currentGameState = GameState.MainMenu;
-
+        //variables to test sound and to prevent the sound to be played more than once.
+        private KeyboardState currentKey;
+        private KeyboardState lastKey;
         //Lists
         private List<GameObject> objectsToDraw = new List<GameObject>();
 
@@ -117,6 +119,7 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             Cursor.Instance.LoadContent(Content);
             MenuScreenManager.Instance.LoadContent(Content);
+            SoundManager.Instance.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -137,6 +140,15 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Testing sound
+            lastKey = currentKey;
+            currentKey = Keyboard.GetState();
+            //Testing sound
+            if (currentKey.IsKeyDown(Keys.F) && lastKey.IsKeyUp(Keys.F))
+            {
+               SoundManager.Instance.PlaySound("FireBall");
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();

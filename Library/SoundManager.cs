@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +34,12 @@ namespace Battle_Mages
 
         private SoundManager()
         {
+            volume = 0.25f;
         }
 
         public void LoadContent(ContentManager content)
         {
-            sounds.Add("FireBall", content.Load<SoundEffect>(""));
+            sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound"));
         }
 
         public void LoopedSounds()
