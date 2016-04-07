@@ -64,6 +64,7 @@
     <Compile Include="Library\Button.cs" />
     <Compile Include="Library\Camera2D.cs" />
     <Compile Include="Library\Cursor.cs" />
+    <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\Enums.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\ObjectPool.cs" />

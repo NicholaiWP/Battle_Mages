@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -12,6 +12,6 @@ namespace Battle_Mages
         /// Method to draw a texture
         /// </summary>
         /// <param name="spriteBatch"></param>
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(Drawer drawer);
     }
 }
