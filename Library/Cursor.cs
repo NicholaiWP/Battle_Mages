@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -90,13 +90,8 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-<<<<<<< HEAD
             spriteBatch.Draw(sprite[GameWorld.Instance.CursorPictureNumber],
                 position: Position,
-=======
-            spriteBatch.Draw(sprite[GameWorld.GetInstance.CursorPictureNumber],
-                position: GetPosition,
->>>>>>> origin/master
                 origin: Vector2.Zero,
                 rotation: 0f,
                 scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
