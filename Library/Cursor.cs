@@ -16,7 +16,6 @@ namespace Battle_Mages
 
         private Vector2 position;
         private Rectangle rectangle;
-        private int spriteNumber = 0;
 
         //Properties
         /// <summary>
@@ -41,10 +40,13 @@ namespace Battle_Mages
         {
             get
             {
-                rectangle = new Rectangle((int)(GetPosition.X - (sprite[spriteNumber].Width * 0.5f)),
-                    (int)(GetPosition.Y - (sprite[spriteNumber].Height * 0.5f)),
-                    (int)(sprite[spriteNumber].Width * MenuScreenManager.GetInstance.scale),
-                    (int)(sprite[spriteNumber].Height * MenuScreenManager.GetInstance.scale));
+                rectangle = new Rectangle((int)(GetPosition.X -
+                    (sprite[GameWorld.GetInstance.CursorPictureNumber].Width * 0.5f)),
+                    (int)(GetPosition.Y - (sprite[GameWorld.GetInstance.CursorPictureNumber].Height * 0.5f)),
+                    (int)(sprite[GameWorld.GetInstance.CursorPictureNumber].Width *
+                    MenuScreenManager.GetInstance.scale),
+                    (int)(sprite[GameWorld.GetInstance.CursorPictureNumber].Height *
+                    MenuScreenManager.GetInstance.scale));
                 return rectangle;
             }
         }
@@ -88,10 +90,9 @@ namespace Battle_Mages
         /// </summary>
         /// <param name="spriteBatch"></param>
         /// <param name="spriteNumber"></param>
-        public void Draw(SpriteBatch spriteBatch, int spriteNumber)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            this.spriteNumber = spriteNumber;
-            spriteBatch.Draw(sprite[spriteNumber], GetPosition, null, Color.White,
+            spriteBatch.Draw(sprite[GameWorld.GetInstance.CursorPictureNumber], GetPosition, null, Color.White,
             0f, Vector2.Zero, MenuScreenManager.GetInstance.scale, SpriteEffects.None, 0f);
         }
     }

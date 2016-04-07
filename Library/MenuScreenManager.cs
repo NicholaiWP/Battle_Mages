@@ -24,7 +24,6 @@ namespace Battle_Mages
         public Button back;
         public SpriteFont fontBM;
 
-
         private static MenuScreenManager instance;
 
         public static MenuScreenManager GetInstance
@@ -46,12 +45,12 @@ namespace Battle_Mages
             {
                 scale = 1;
             }
-            else if(GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1920)
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1920)
             {
                 scale = 1.405f;
             }
             //1600x1200 resolution
-            else if(GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1600)
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1600)
             {
                 scale = 1.171f;
             }
@@ -222,17 +221,17 @@ namespace Battle_Mages
             settings.Draw(spriteBatch);
             quit.Draw(spriteBatch);
             play.Draw(spriteBatch);
-            Cursor.GetInstance.Draw(spriteBatch, 0);
+            Cursor.GetInstance.Draw(spriteBatch);
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
-        {         
+        {
             oneRes.Draw(spriteBatch);
             twoRes.Draw(spriteBatch);
             threeRes.Draw(spriteBatch);
             fourRes.Draw(spriteBatch);
             back.Draw(spriteBatch);
-            Cursor.GetInstance.Draw(spriteBatch, 0);
+            Cursor.GetInstance.Draw(spriteBatch);
         }
     }
 }
