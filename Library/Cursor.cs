@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -92,8 +92,6 @@ namespace Battle_Mages
         {
             spriteBatch.Draw(sprite[GameWorld.GetInstance.CursorPictureNumber],
                 position: GetPosition,
-                destinationRectangle: GetRectangle,
-                sourceRectangle: null,
                 origin: Vector2.Zero,
                 rotation: 0f,
                 scale: new Vector2(MenuScreenManager.GetInstance.scale, MenuScreenManager.GetInstance.scale),
