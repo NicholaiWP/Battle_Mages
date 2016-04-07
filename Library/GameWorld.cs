@@ -269,6 +269,7 @@ namespace Battle_Mages
             //null, null, null, camera.GetViewMatrix);
             drawer.BeginBatches();
             drawer.Matrix = camera.ViewMatrix;
+            Cursor.Instance.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
@@ -278,7 +279,6 @@ namespace Battle_Mages
                     break;
 
                 case GameState.InGame:
-                    Cursor.Instance.Draw(drawer[DrawLayer.AboveUI]);
                     foreach (GameObject gameObject in objectsToDraw)
                     {
                         gameObject.Draw(drawer);
