@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -58,9 +58,9 @@ namespace Battle_Mages
         /// The method for drawing
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(Drawer drawer)
         {
-            spriteBatch.Draw(sprite, GetGameObject.Transform.Position + offset, rectangle, color,
+            drawer[DrawLayer.Gameplay].Draw(sprite, GetGameObject.Transform.Position + offset, rectangle, color,
                 0, Vector2.Zero, 1, SpriteEffects.None, drawDepth);
         }
     }

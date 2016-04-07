@@ -10,7 +10,7 @@ namespace Battle_Mages
     /// <summary>
     /// Represents a layer that can be drawn to. Layers are ordered by their constant value.
     /// </summary>
-    internal enum DrawLayer
+    public enum DrawLayer
     {
         //The layers will be ordered by the order they are declared in here
         Background,
@@ -23,7 +23,7 @@ namespace Battle_Mages
     /// <summary>
     /// A "drawer" of SpriteBatches to "draw" to.
     /// </summary>
-    internal class Drawer
+    public class Drawer
     {
         private Dictionary<DrawLayer, SpriteBatch> layers;
         private GraphicsDevice graphics;

@@ -282,7 +282,7 @@ namespace Battle_Mages
                     Cursor.GetInstance.Draw(drawer[DrawLayer.AboveUI], CursorPictureNumber);
                     foreach (GameObject gameObject in objectsToDraw)
                     {
-                        gameObject.Draw(drawer[DrawLayer.Gameplay]);
+                        gameObject.Draw(drawer);
                     }
                     camera.Draw(drawer[DrawLayer.UI]);
                     break;
