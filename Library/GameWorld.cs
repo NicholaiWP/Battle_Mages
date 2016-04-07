@@ -40,22 +40,22 @@ namespace Battle_Mages
             get { return currentGameState; }
         }
 
-        public Camera2D GetCamera
+        public Camera2D Camera
         {
             get { return camera; }
         }
 
-        public float GetDeltaTime
+        public float DeltaTime
         {
             get { return deltaTime; }
         }
 
-        public float GetHalfViewPortWidth
+        public float HalfViewPortWidth
         {
             get { return GraphicsDevice.Viewport.Width * 0.5f; }
         }
 
-        public float GetHalfViewPortHeight
+        public float HalfViewPortHeight
         {
             get { return GraphicsDevice.Viewport.Height * 0.5f; }
         }

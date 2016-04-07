@@ -52,8 +52,8 @@ namespace Battle_Mages
                 viewMatrix = Matrix.CreateTranslation(new Vector3(-position, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
                     Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
-                    Matrix.CreateTranslation(new Vector3(GameWorld.Instance.GetHalfViewPortWidth,
-                    GameWorld.Instance.GetHalfViewPortHeight, 0));
+                    Matrix.CreateTranslation(new Vector3(GameWorld.Instance.HalfViewPortWidth,
+                    GameWorld.Instance.HalfViewPortHeight, 0));
                 return viewMatrix;
             }
         }
@@ -66,12 +66,12 @@ namespace Battle_Mages
         {
             get
             {
-                topRectangle = new Rectangle((int)(position.X - GameWorld.Instance.GetHalfViewPortWidth -
-                    (GameWorld.Instance.GetHalfViewPortWidth * 2 / 100)),
-                    (int)(position.Y - GameWorld.Instance.GetHalfViewPortHeight -
-                    (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)),
-                    (int)(GameWorld.Instance.GetHalfViewPortWidth * 2 +
-                    (GameWorld.Instance.GetHalfViewPortWidth * 2 / 100)), 55);
+                topRectangle = new Rectangle((int)(position.X - GameWorld.Instance.HalfViewPortWidth -
+                    (GameWorld.Instance.HalfViewPortWidth * 2 / 100)),
+                    (int)(position.Y - GameWorld.Instance.HalfViewPortHeight -
+                    (GameWorld.Instance.HalfViewPortHeight * 2 / 100)),
+                    (int)(GameWorld.Instance.HalfViewPortWidth * 2 +
+                    (GameWorld.Instance.HalfViewPortWidth * 2 / 100)), 55);
                 return topRectangle;
             }
         }
@@ -84,11 +84,11 @@ namespace Battle_Mages
         {
             get
             {
-                rightRectangle = new Rectangle((int)(position.X + GameWorld.Instance.GetHalfViewPortWidth - 55),
-                    (int)(position.Y - GameWorld.Instance.GetHalfViewPortHeight -
-                    (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)),
-                    55, (int)(GameWorld.Instance.GetHalfViewPortHeight * 2 +
-                    (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)));
+                rightRectangle = new Rectangle((int)(position.X + GameWorld.Instance.HalfViewPortWidth - 55),
+                    (int)(position.Y - GameWorld.Instance.HalfViewPortHeight -
+                    (GameWorld.Instance.HalfViewPortHeight * 2 / 100)),
+                    55, (int)(GameWorld.Instance.HalfViewPortHeight * 2 +
+                    (GameWorld.Instance.HalfViewPortHeight * 2 / 100)));
                 return rightRectangle;
             }
         }
@@ -101,11 +101,11 @@ namespace Battle_Mages
         {
             get
             {
-                bottomRectangle = new Rectangle((int)(position.X - GameWorld.Instance.GetHalfViewPortWidth -
-                   (GameWorld.Instance.GetHalfViewPortWidth * 2 / 100)),
-                   (int)(position.Y + GameWorld.Instance.GetHalfViewPortHeight - 55),
-                   (int)(GameWorld.Instance.GetHalfViewPortWidth * 2 +
-                   ((GameWorld.Instance.GetHalfViewPortWidth * 2 / 100))), 55);
+                bottomRectangle = new Rectangle((int)(position.X - GameWorld.Instance.HalfViewPortWidth -
+                   (GameWorld.Instance.HalfViewPortWidth * 2 / 100)),
+                   (int)(position.Y + GameWorld.Instance.HalfViewPortHeight - 55),
+                   (int)(GameWorld.Instance.HalfViewPortWidth * 2 +
+                   ((GameWorld.Instance.HalfViewPortWidth * 2 / 100))), 55);
 
                 return bottomRectangle;
             }
@@ -119,12 +119,12 @@ namespace Battle_Mages
         {
             get
             {
-                leftRectangle = new Rectangle((int)(position.X - GameWorld.Instance.GetHalfViewPortWidth -
-                   ((GameWorld.Instance.GetHalfViewPortWidth * 2 / 100))),
-                   (int)(position.Y - GameWorld.Instance.GetHalfViewPortHeight -
-                   ((GameWorld.Instance.GetHalfViewPortHeight * 2 / 100))),
-                   55, (int)(GameWorld.Instance.GetHalfViewPortHeight * 2 +
-                   (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)));
+                leftRectangle = new Rectangle((int)(position.X - GameWorld.Instance.HalfViewPortWidth -
+                   ((GameWorld.Instance.HalfViewPortWidth * 2 / 100))),
+                   (int)(position.Y - GameWorld.Instance.HalfViewPortHeight -
+                   ((GameWorld.Instance.HalfViewPortHeight * 2 / 100))),
+                   55, (int)(GameWorld.Instance.HalfViewPortHeight * 2 +
+                   (GameWorld.Instance.HalfViewPortHeight * 2 / 100)));
 
                 return leftRectangle;
             }

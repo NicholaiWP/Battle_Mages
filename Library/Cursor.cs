@@ -27,7 +27,7 @@ namespace Battle_Mages
             get
             {
                 position = Vector2.Transform(Mouse.GetState().Position.ToVector2(),
-                    Matrix.Invert(GameWorld.Instance.GetCamera.ViewMatrix));
+                    Matrix.Invert(GameWorld.Instance.Camera.ViewMatrix));
                 return position;
             }
         }

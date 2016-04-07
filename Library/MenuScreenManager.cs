@@ -12,6 +12,10 @@ namespace Battle_Mages
     {
         private Texture2D sprite;
         private Vector2 fontPosition;
+        private int elemenAtNumber;
+        private string currentResolutionString;
+        private DisplayMode currentResolution;
+        private List<DisplayMode> resolutions = new List<DisplayMode>();
         public float scale;
         public bool mouseCanClickButton;
         public Button play;
@@ -40,6 +44,8 @@ namespace Battle_Mages
 
         private MenuScreenManager()
         {
+            scale = 1;
+            fontPosition = new Vector2(-100, -50);
             /*
             mouseCanClickButton = true;
             if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1366)
@@ -93,32 +99,35 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
+            DisplayMode lastResolution = null;
             fontBM = content.Load<SpriteFont>("FontBM");
             sprite = content.Load<Texture2D>("Images/apple");
 
-            #region Resolution Buttons
-
             foreach (DisplayMode dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
-                System.Diagnostics.Debug.WriteLine(dmode.Width + "x" + dmode.Height + "(" + dmode.RefreshRate + "hz)");
-            }
+                if (dmode.Height == GameWorld.Instance.HalfViewPortHeight * 2 &&
+                    dmode.Width == GameWorld.Instance.HalfViewPortWidth * 2)
+                {
+                    currentResolution = dmode;
+                    currentResolutionString = (dmode.Width + "x" + dmode.Height);
+                }
 
-            /*
+                if (lastResolution != dmode)
+                {
+                    resolutions.Add(dmode);
+                }
+                lastResolution = dmode;
+            }
+            back = new Button(content.Load<Texture2D>("Images/Back"),
+            content.Load<Texture2D>("Images/Back"));
+
+            #region Resolution Buttons
+
             oneRes = new Button(content.Load<Texture2D>("Images/1366x768"),
-               content.Load<Texture2D>("Images/1366x768"));
+              content.Load<Texture2D>("Images/1366x768"));
 
             twoRes = new Button(content.Load<Texture2D>("Images/1280x800"),
                content.Load<Texture2D>("Images/1280x800"));
-
-            threeRes = new Button(content.Load<Texture2D>("Images/1024x768"),
-               content.Load<Texture2D>("Images/1024x768"));
-
-            fourRes = new Button(content.Load<Texture2D>("Images/800x600"),
-                content.Load<Texture2D>("Images/800x600"));
-
-            back = new Button(content.Load<Texture2D>("Images/Back"),
-               content.Load<Texture2D>("Images/Back"));
-               */
 
             #endregion Resolution Buttons
 
@@ -165,81 +174,61 @@ namespace Battle_Mages
 
         public void UpdateSettingWindow(GraphicsDeviceManager graphics)
         {
+            back.Update();
+            back.SetPosition(new Vector2(-back.rectangle.Width / 2, back.rectangle.Height * 3f));
             oneRes.Update();
             twoRes.Update();
-            threeRes.Update();
-            fourRes.Update();
-            back.Update();
-            oneRes.SetPosition(new Vector2(-oneRes.rectangle.Width / 2, -oneRes.rectangle.Height * 3f));
-            twoRes.SetPosition(new Vector2(-twoRes.rectangle.Width / 2, -twoRes.rectangle.Height * 1.5f));
-            threeRes.SetPosition(new Vector2(-threeRes.rectangle.Width / 2, 0));
-            fourRes.SetPosition(new Vector2(-fourRes.rectangle.Width / 2, fourRes.rectangle.Height * 1.5f));
-            back.SetPosition(new Vector2(-back.rectangle.Width / 2, back.rectangle.Height * 3f));
-
-            #region Button Is Clicked
-
             if (oneRes.isClicked == true)
             {
                 oneRes.isClicked = false;
-                scale = 1;
-                graphics.PreferredBackBufferHeight = 768;
-                graphics.PreferredBackBufferWidth = 1366;
-                graphics.ApplyChanges();
             }
             else if (twoRes.isClicked == true)
             {
                 twoRes.isClicked = false;
-                scale = 0.937f;
-                graphics.PreferredBackBufferHeight = 800;
-                graphics.PreferredBackBufferWidth = 1280;
-                graphics.ApplyChanges();
             }
-            else if (threeRes.isClicked == true)
-            {
-                threeRes.isClicked = false;
-                scale = 0.749f;
-                graphics.PreferredBackBufferHeight = 768;
-                graphics.PreferredBackBufferWidth = 1024;
-                graphics.ApplyChanges();
-            }
-            else if (fourRes.isClicked == true)
-            {
-                fourRes.isClicked = false;
-                scale = 0.585f;
-                graphics.PreferredBackBufferHeight = 600;
-                graphics.PreferredBackBufferWidth = 800;
-                graphics.ApplyChanges();
-            }
-            else if (back.isClicked == true)
+            if (back.isClicked == true)
             {
                 back.isClicked = false;
                 GameWorld.Instance.currentGameState = GameState.MainMenu;
             }
 
-            #endregion Button Is Clicked
+            for (int i = 0; i < resolutions.Count; i++)
+            {
+                if (currentResolution == resolutions.ElementAt(i))
+                {
+                    elemenAtNumber = i;
+                }
+            }
         }
 
         public void DrawMenu(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, new Rectangle(
-                        (int)(0 - GameWorld.Instance.GetHalfViewPortWidth),
-                        (int)(0 - GameWorld.Instance.GetHalfViewPortHeight),
-                        (int)GameWorld.Instance.GetHalfViewPortWidth * 2,
-                        (int)GameWorld.Instance.GetHalfViewPortHeight * 2), null, Color.White,
-                        0f, Vector2.Zero, SpriteEffects.None, 0.2f);
+            spriteBatch.Draw(sprite,
+            destinationRectangle: new Rectangle((int)(0 - GameWorld.Instance.HalfViewPortWidth),
+               (int)(0 - GameWorld.Instance.HalfViewPortHeight),
+               (int)GameWorld.Instance.HalfViewPortWidth * 2,
+               (int)GameWorld.Instance.HalfViewPortHeight * 2),
+            color: Color.White,
+            origin: Vector2.Zero,
+            effects: SpriteEffects.None);
             settings.Draw(spriteBatch);
             quit.Draw(spriteBatch);
             play.Draw(spriteBatch);
+
             Cursor.Instance.Draw(spriteBatch);
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
         {
+            /*
             oneRes.Draw(spriteBatch);
             twoRes.Draw(spriteBatch);
             threeRes.Draw(spriteBatch);
             fourRes.Draw(spriteBatch);
+            */
+            spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
             back.Draw(spriteBatch);
+
             Cursor.Instance.Draw(spriteBatch);
         }
     }

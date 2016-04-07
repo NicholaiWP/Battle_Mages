@@ -81,9 +81,12 @@ namespace Battle_Mages
         {
             /* spriteBatch.Draw(sprite[hoverNumber], rectangle, null, Color.White,
              0f, Vector2.Zero, SpriteEffects.None, 0.1f);*/
-
-            spriteBatch.Draw(sprite[hoverNumber], position, null, Color.White, 0f, Vector2.Zero,
-                MenuScreenManager.Instance.scale, SpriteEffects.None, 0.1f);
+            spriteBatch.Draw(sprite[hoverNumber],
+                destinationRectangle: rectangle,
+                origin: Vector2.Zero,
+                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
+                effects: SpriteEffects.None,
+                color: Color.White);
         }
     }
 }
