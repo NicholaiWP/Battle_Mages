@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -23,7 +23,6 @@ namespace Battle_Mages
         public Button fourRes;
         public Button back;
         public SpriteFont fontBM;
-
 
         private static MenuScreenManager instance;
 
@@ -46,12 +45,12 @@ namespace Battle_Mages
             {
                 scale = 1;
             }
-            else if(GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1920)
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1920)
             {
                 scale = 1.405f;
             }
             //1600x1200 resolution
-            else if(GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1600)
+            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1600)
             {
                 scale = 1.171f;
             }
@@ -96,6 +95,11 @@ namespace Battle_Mages
             sprite = content.Load<Texture2D>("Images/apple");
 
             #region Resolution Buttons
+
+            foreach (var dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+            {
+                System.Diagnostics.Debug.WriteLine(dmode.Width + "x" + dmode.Height + "(" + dmode.RefreshRate + "hz)");
+            }
 
             oneRes = new Button(content.Load<Texture2D>("Images/1366x768"),
                content.Load<Texture2D>("Images/1366x768"));
@@ -226,7 +230,7 @@ namespace Battle_Mages
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
-        {         
+        {
             oneRes.Draw(spriteBatch);
             twoRes.Draw(spriteBatch);
             threeRes.Draw(spriteBatch);
