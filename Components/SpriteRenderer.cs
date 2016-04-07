@@ -23,7 +23,7 @@ namespace Battle_Mages
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
 
-        public Texture2D GetSprite { get { return sprite; } }
+        public Texture2D Sprite { get { return sprite; } }
 
         public Vector2 Offset { get { return offset; } set { offset = value; } }
 
@@ -61,11 +61,10 @@ namespace Battle_Mages
         public void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Gameplay].Draw(sprite, position: GetGameObject.Transform.Position + offset,
-                destinationRectangle: null,
                 sourceRectangle: rectangle,
                 origin: Vector2.Zero,
                 rotation: 0f,
-                scale: new Vector2(MenuScreenManager.GetInstance.scale, MenuScreenManager.GetInstance.scale),
+                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
                 color: color,
                 effects: SpriteEffects.None);
         }

@@ -45,15 +45,15 @@ namespace Battle_Mages
         /// <summary>
         /// This is the matrix which the spriteBatch draws through, so it is our camera so to say
         /// </summary>
-        public Matrix GetViewMatrix
+        public Matrix ViewMatrix
         {
             get
             {
                 viewMatrix = Matrix.CreateTranslation(new Vector3(-position, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
                     Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
-                    Matrix.CreateTranslation(new Vector3(GameWorld.GetInstance.GetHalfViewPortWidth,
-                    GameWorld.GetInstance.GetHalfViewPortHeight, 0));
+                    Matrix.CreateTranslation(new Vector3(GameWorld.Instance.GetHalfViewPortWidth,
+                    GameWorld.Instance.GetHalfViewPortHeight, 0));
                 return viewMatrix;
             }
         }
@@ -62,16 +62,16 @@ namespace Battle_Mages
         /// Setting the topRectangle to be in the top corner of the screen, and moving it with 2% of the screen
         /// and setting height to 55
         /// </summary>
-        public Rectangle GetTopRectangle
+        public Rectangle TopRectangle
         {
             get
             {
-                topRectangle = new Rectangle((int)(position.X - GameWorld.GetInstance.GetHalfViewPortWidth -
-                    (GameWorld.GetInstance.GetHalfViewPortWidth * 2 / 100)),
-                    (int)(position.Y - GameWorld.GetInstance.GetHalfViewPortHeight -
-                    (GameWorld.GetInstance.GetHalfViewPortHeight * 2 / 100)),
-                    (int)(GameWorld.GetInstance.GetHalfViewPortWidth * 2 +
-                    (GameWorld.GetInstance.GetHalfViewPortWidth * 2 / 100)), 55);
+                topRectangle = new Rectangle((int)(position.X - GameWorld.Instance.GetHalfViewPortWidth -
+                    (GameWorld.Instance.GetHalfViewPortWidth * 2 / 100)),
+                    (int)(position.Y - GameWorld.Instance.GetHalfViewPortHeight -
+                    (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)),
+                    (int)(GameWorld.Instance.GetHalfViewPortWidth * 2 +
+                    (GameWorld.Instance.GetHalfViewPortWidth * 2 / 100)), 55);
                 return topRectangle;
             }
         }
@@ -80,15 +80,15 @@ namespace Battle_Mages
         /// Setting the rightRectangle to be in the top corner of the screen, and moving it with 2% of the screen
         /// and setting width to 55
         /// </summary>
-        public Rectangle GetRightRectangle
+        public Rectangle RightRectangle
         {
             get
             {
-                rightRectangle = new Rectangle((int)(position.X + GameWorld.GetInstance.GetHalfViewPortWidth - 55),
-                    (int)(position.Y - GameWorld.GetInstance.GetHalfViewPortHeight -
-                    (GameWorld.GetInstance.GetHalfViewPortHeight * 2 / 100)),
-                    55, (int)(GameWorld.GetInstance.GetHalfViewPortHeight * 2 +
-                    (GameWorld.GetInstance.GetHalfViewPortHeight * 2 / 100)));
+                rightRectangle = new Rectangle((int)(position.X + GameWorld.Instance.GetHalfViewPortWidth - 55),
+                    (int)(position.Y - GameWorld.Instance.GetHalfViewPortHeight -
+                    (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)),
+                    55, (int)(GameWorld.Instance.GetHalfViewPortHeight * 2 +
+                    (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)));
                 return rightRectangle;
             }
         }
@@ -97,15 +97,15 @@ namespace Battle_Mages
         /// Setting the bottomRectangle to be in the top corner of the screen, and moving it with 2% of the screen
         /// and setting height to 55
         /// </summary>
-        public Rectangle GetBottomRectangle
+        public Rectangle BottomRectangle
         {
             get
             {
-                bottomRectangle = new Rectangle((int)(position.X - GameWorld.GetInstance.GetHalfViewPortWidth -
-                   (GameWorld.GetInstance.GetHalfViewPortWidth * 2 / 100)),
-                   (int)(position.Y + GameWorld.GetInstance.GetHalfViewPortHeight - 55),
-                   (int)(GameWorld.GetInstance.GetHalfViewPortWidth * 2 +
-                   ((GameWorld.GetInstance.GetHalfViewPortWidth * 2 / 100))), 55);
+                bottomRectangle = new Rectangle((int)(position.X - GameWorld.Instance.GetHalfViewPortWidth -
+                   (GameWorld.Instance.GetHalfViewPortWidth * 2 / 100)),
+                   (int)(position.Y + GameWorld.Instance.GetHalfViewPortHeight - 55),
+                   (int)(GameWorld.Instance.GetHalfViewPortWidth * 2 +
+                   ((GameWorld.Instance.GetHalfViewPortWidth * 2 / 100))), 55);
 
                 return bottomRectangle;
             }
@@ -115,16 +115,16 @@ namespace Battle_Mages
         /// Setting the leftRectangle to be in the top corner of the screen, and moving it with 2% of the screen
         /// and setting width to 55
         /// </summary>
-        public Rectangle GetLeftRectangle
+        public Rectangle LeftRectangle
         {
             get
             {
-                leftRectangle = new Rectangle((int)(position.X - GameWorld.GetInstance.GetHalfViewPortWidth -
-                   ((GameWorld.GetInstance.GetHalfViewPortWidth * 2 / 100))),
-                   (int)(position.Y - GameWorld.GetInstance.GetHalfViewPortHeight -
-                   ((GameWorld.GetInstance.GetHalfViewPortHeight * 2 / 100))),
-                   55, (int)(GameWorld.GetInstance.GetHalfViewPortHeight * 2 +
-                   (GameWorld.GetInstance.GetHalfViewPortHeight * 2 / 100)));
+                leftRectangle = new Rectangle((int)(position.X - GameWorld.Instance.GetHalfViewPortWidth -
+                   ((GameWorld.Instance.GetHalfViewPortWidth * 2 / 100))),
+                   (int)(position.Y - GameWorld.Instance.GetHalfViewPortHeight -
+                   ((GameWorld.Instance.GetHalfViewPortHeight * 2 / 100))),
+                   55, (int)(GameWorld.Instance.GetHalfViewPortHeight * 2 +
+                   (GameWorld.Instance.GetHalfViewPortHeight * 2 / 100)));
 
                 return leftRectangle;
             }
@@ -159,10 +159,10 @@ namespace Battle_Mages
 
             #region topRectangle
 
-            Rectangle topLine = new Rectangle(GetTopRectangle.X, GetTopRectangle.Y, GetTopRectangle.Width, 1);
-            Rectangle bottomLine = new Rectangle(GetTopRectangle.X, GetTopRectangle.Y + GetTopRectangle.Height, GetTopRectangle.Width, 1);
-            Rectangle rightLine = new Rectangle(GetTopRectangle.X + GetTopRectangle.Width, GetTopRectangle.Y, 1, GetTopRectangle.Height);
-            Rectangle leftLine = new Rectangle(GetTopRectangle.X, GetTopRectangle.Y, 1, GetTopRectangle.Height);
+            Rectangle topLine = new Rectangle(TopRectangle.X, TopRectangle.Y, TopRectangle.Width, 1);
+            Rectangle bottomLine = new Rectangle(TopRectangle.X, TopRectangle.Y + TopRectangle.Height, TopRectangle.Width, 1);
+            Rectangle rightLine = new Rectangle(TopRectangle.X + TopRectangle.Width, TopRectangle.Y, 1, TopRectangle.Height);
+            Rectangle leftLine = new Rectangle(TopRectangle.X, TopRectangle.Y, 1, TopRectangle.Height);
             spriteBatch.Draw(texture: this.sprite, destinationRectangle: topLine, sourceRectangle: null, color: Color.Black, rotation: 0, origin: Vector2.Zero, effects: SpriteEffects.None, layerDepth: 1);
             spriteBatch.Draw(this.sprite, bottomLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, rightLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
@@ -172,10 +172,10 @@ namespace Battle_Mages
 
             #region rightRectangle
 
-            Rectangle rightTopLine = new Rectangle(GetRightRectangle.X, GetRightRectangle.Y, GetRightRectangle.Width, 1);
-            Rectangle rightBottomLine = new Rectangle(GetRightRectangle.X, GetRightRectangle.Y + GetRightRectangle.Height, GetRightRectangle.Width, 1);
-            Rectangle rightRightLine = new Rectangle(GetRightRectangle.X + GetRightRectangle.Width, GetRightRectangle.Y, 1, GetRightRectangle.Height);
-            Rectangle rightLeftLine = new Rectangle(GetRightRectangle.X, GetRightRectangle.Y, 1, GetRightRectangle.Height);
+            Rectangle rightTopLine = new Rectangle(RightRectangle.X, RightRectangle.Y, RightRectangle.Width, 1);
+            Rectangle rightBottomLine = new Rectangle(RightRectangle.X, RightRectangle.Y + RightRectangle.Height, RightRectangle.Width, 1);
+            Rectangle rightRightLine = new Rectangle(RightRectangle.X + RightRectangle.Width, RightRectangle.Y, 1, RightRectangle.Height);
+            Rectangle rightLeftLine = new Rectangle(RightRectangle.X, RightRectangle.Y, 1, RightRectangle.Height);
             spriteBatch.Draw(texture: this.sprite, destinationRectangle: rightTopLine, sourceRectangle: null, color: Color.Black, rotation: 0, origin: Vector2.Zero, effects: SpriteEffects.None, layerDepth: 1);
             spriteBatch.Draw(this.sprite, rightBottomLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, rightRightLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
@@ -185,10 +185,10 @@ namespace Battle_Mages
 
             #region bottomRectangle
 
-            Rectangle bottomTopLine = new Rectangle(GetBottomRectangle.X, GetBottomRectangle.Y, GetBottomRectangle.Width, 1);
-            Rectangle bottomBottomLine = new Rectangle(GetBottomRectangle.X, GetBottomRectangle.Y + GetBottomRectangle.Height, GetBottomRectangle.Width, 1);
-            Rectangle bottomRightLine = new Rectangle(GetBottomRectangle.X + GetBottomRectangle.Width, GetBottomRectangle.Y, 1, GetBottomRectangle.Height);
-            Rectangle bottomLeftLine = new Rectangle(GetBottomRectangle.X, GetBottomRectangle.Y, 1, GetBottomRectangle.Height);
+            Rectangle bottomTopLine = new Rectangle(BottomRectangle.X, BottomRectangle.Y, BottomRectangle.Width, 1);
+            Rectangle bottomBottomLine = new Rectangle(BottomRectangle.X, BottomRectangle.Y + BottomRectangle.Height, BottomRectangle.Width, 1);
+            Rectangle bottomRightLine = new Rectangle(BottomRectangle.X + BottomRectangle.Width, BottomRectangle.Y, 1, BottomRectangle.Height);
+            Rectangle bottomLeftLine = new Rectangle(BottomRectangle.X, BottomRectangle.Y, 1, BottomRectangle.Height);
             spriteBatch.Draw(texture: this.sprite, destinationRectangle: bottomTopLine, sourceRectangle: null, color: Color.Black, rotation: 0, origin: Vector2.Zero, effects: SpriteEffects.None, layerDepth: 1);
             spriteBatch.Draw(this.sprite, bottomBottomLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, bottomRightLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
@@ -198,10 +198,10 @@ namespace Battle_Mages
 
             #region leftRectangle
 
-            Rectangle leftTopLine = new Rectangle(GetLeftRectangle.X, GetLeftRectangle.Y, GetLeftRectangle.Width, 1);
-            Rectangle leftBottomLine = new Rectangle(GetLeftRectangle.X, GetLeftRectangle.Y + GetLeftRectangle.Height, GetLeftRectangle.Width, 1);
-            Rectangle leftRightLine = new Rectangle(GetLeftRectangle.X + GetLeftRectangle.Width, GetLeftRectangle.Y, 1, GetLeftRectangle.Height);
-            Rectangle leftLeftLine = new Rectangle(GetLeftRectangle.X, GetLeftRectangle.Y, 1, GetLeftRectangle.Height);
+            Rectangle leftTopLine = new Rectangle(LeftRectangle.X, LeftRectangle.Y, LeftRectangle.Width, 1);
+            Rectangle leftBottomLine = new Rectangle(LeftRectangle.X, LeftRectangle.Y + LeftRectangle.Height, LeftRectangle.Width, 1);
+            Rectangle leftRightLine = new Rectangle(LeftRectangle.X + LeftRectangle.Width, LeftRectangle.Y, 1, LeftRectangle.Height);
+            Rectangle leftLeftLine = new Rectangle(LeftRectangle.X, LeftRectangle.Y, 1, LeftRectangle.Height);
             spriteBatch.Draw(texture: this.sprite, destinationRectangle: leftTopLine, sourceRectangle: null, color: Color.Black, rotation: 0, origin: Vector2.Zero, effects: SpriteEffects.None, layerDepth: 1);
             spriteBatch.Draw(this.sprite, leftBottomLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.Draw(this.sprite, leftRightLine, null, Color.Black, 0, Vector2.Zero, SpriteEffects.None, 1);

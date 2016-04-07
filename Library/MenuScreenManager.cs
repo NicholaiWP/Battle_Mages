@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -26,7 +26,7 @@ namespace Battle_Mages
 
         private static MenuScreenManager instance;
 
-        public static MenuScreenManager GetInstance
+        public static MenuScreenManager Instance
         {
             get
             {
@@ -40,45 +40,46 @@ namespace Battle_Mages
 
         private MenuScreenManager()
         {
+            /*
             mouseCanClickButton = true;
-            if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1366)
+            if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1366)
             {
                 scale = 1;
             }
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1920)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1920)
             {
                 scale = 1.405f;
             }
             //1600x1200 resolution
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1600)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1600)
             {
                 scale = 1.171f;
             }
             //1680x1050 resolution
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1680)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1680)
             {
                 scale = 1.229f;
             }
             //1400x1050 resolution
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1400)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1400)
             {
                 scale = 1.024f;
             }
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1280)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1280)
             {
                 scale = 0.937f;
             }
             //1440x900 resolution
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1440)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1440)
             {
                 scale = 1.054f;
             }
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 1024)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1024)
             {
                 scale = 0.749f;
             }
             //800x600 resolution
-            else if (GameWorld.GetInstance.GetHalfViewPortWidth * 2 == 800)
+            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 800)
             {
                 scale = 0.585f;
             }
@@ -87,6 +88,7 @@ namespace Battle_Mages
             {
                 scale = 0.5f;
             }
+            */
         }
 
         public void LoadContent(ContentManager content)
@@ -96,11 +98,12 @@ namespace Battle_Mages
 
             #region Resolution Buttons
 
-            foreach (var dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+            foreach (DisplayMode dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
                 System.Diagnostics.Debug.WriteLine(dmode.Width + "x" + dmode.Height + "(" + dmode.RefreshRate + "hz)");
             }
 
+            /*
             oneRes = new Button(content.Load<Texture2D>("Images/1366x768"),
                content.Load<Texture2D>("Images/1366x768"));
 
@@ -115,6 +118,7 @@ namespace Battle_Mages
 
             back = new Button(content.Load<Texture2D>("Images/Back"),
                content.Load<Texture2D>("Images/Back"));
+               */
 
             #endregion Resolution Buttons
 
@@ -146,12 +150,12 @@ namespace Battle_Mages
             if (play.isClicked == true)
             {
                 play.isClicked = false;
-                GameWorld.GetInstance.currentGameState = GameState.InGame;
+                GameWorld.Instance.currentGameState = GameState.InGame;
             }
             else if (settings.isClicked == true)
             {
                 settings.isClicked = false;
-                GameWorld.GetInstance.currentGameState = GameState.Settings;
+                GameWorld.Instance.currentGameState = GameState.Settings;
             }
             else if (quit.isClicked == true)
             {
@@ -209,7 +213,7 @@ namespace Battle_Mages
             else if (back.isClicked == true)
             {
                 back.isClicked = false;
-                GameWorld.GetInstance.currentGameState = GameState.MainMenu;
+                GameWorld.Instance.currentGameState = GameState.MainMenu;
             }
 
             #endregion Button Is Clicked
@@ -218,15 +222,15 @@ namespace Battle_Mages
         public void DrawMenu(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, new Rectangle(
-                        (int)(0 - GameWorld.GetInstance.GetHalfViewPortWidth),
-                        (int)(0 - GameWorld.GetInstance.GetHalfViewPortHeight),
-                        (int)GameWorld.GetInstance.GetHalfViewPortWidth * 2,
-                        (int)GameWorld.GetInstance.GetHalfViewPortHeight * 2), null, Color.White,
+                        (int)(0 - GameWorld.Instance.GetHalfViewPortWidth),
+                        (int)(0 - GameWorld.Instance.GetHalfViewPortHeight),
+                        (int)GameWorld.Instance.GetHalfViewPortWidth * 2,
+                        (int)GameWorld.Instance.GetHalfViewPortHeight * 2), null, Color.White,
                         0f, Vector2.Zero, SpriteEffects.None, 0.2f);
             settings.Draw(spriteBatch);
             quit.Draw(spriteBatch);
             play.Draw(spriteBatch);
-            Cursor.GetInstance.Draw(spriteBatch);
+            Cursor.Instance.Draw(spriteBatch);
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
@@ -236,7 +240,7 @@ namespace Battle_Mages
             threeRes.Draw(spriteBatch);
             fourRes.Draw(spriteBatch);
             back.Draw(spriteBatch);
-            Cursor.GetInstance.Draw(spriteBatch);
+            Cursor.Instance.Draw(spriteBatch);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Battle_Mages
                     translation += new Vector2(0, 1);
                     break;
             }
-            transform.Translate(translation * GameWorld.GetInstance.GetDeltaTime * speed);
+            transform.Translate(translation * GameWorld.Instance.GetDeltaTime * speed);
         }
     }
 }

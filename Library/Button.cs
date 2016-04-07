@@ -35,12 +35,12 @@ namespace Battle_Mages
         public void Update()
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y,
-                (int)(sprite[hoverNumber].Width * MenuScreenManager.GetInstance.scale),
-                (int)(sprite[hoverNumber].Height * MenuScreenManager.GetInstance.scale));
+                (int)(sprite[hoverNumber].Width * MenuScreenManager.Instance.scale),
+                (int)(sprite[hoverNumber].Height * MenuScreenManager.Instance.scale));
             //sets a mouseRectangle
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isClicked".
-            if (Cursor.GetInstance.GetRectangle.Intersects(rectangle))
+            if (Cursor.Instance.Rectangle.Intersects(rectangle))
             {
                 if (hoverNumber == 0)
                 {
@@ -49,10 +49,10 @@ namespace Battle_Mages
                 }
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    MenuScreenManager.GetInstance.mouseCanClickButton)
+                    MenuScreenManager.Instance.mouseCanClickButton)
                 {
                     isClicked = true;
-                    MenuScreenManager.GetInstance.mouseCanClickButton = false;
+                    MenuScreenManager.Instance.mouseCanClickButton = false;
                 }
             }
             else
@@ -83,7 +83,7 @@ namespace Battle_Mages
              0f, Vector2.Zero, SpriteEffects.None, 0.1f);*/
 
             spriteBatch.Draw(sprite[hoverNumber], position, null, Color.White, 0f, Vector2.Zero,
-                MenuScreenManager.GetInstance.scale, SpriteEffects.None, 0.1f);
+                MenuScreenManager.Instance.scale, SpriteEffects.None, 0.1f);
         }
     }
 }

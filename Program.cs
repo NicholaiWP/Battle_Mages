@@ -15,7 +15,7 @@ namespace Battle_Mages
         [STAThread]
         private static void Main()
         {
-            using (var game = GameWorld.GetInstance)
+            using (var game = GameWorld.Instance)
                 game.Run();
         }
     }

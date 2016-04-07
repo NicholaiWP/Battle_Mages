@@ -63,7 +63,7 @@ namespace Battle_Mages
         //Singleton
         private static GameWorld instance;
 
-        public static GameWorld GetInstance
+        public static GameWorld Instance
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = true;
+            // graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
@@ -115,8 +115,8 @@ namespace Battle_Mages
             player = director.Construct(Vector2.Zero);
             objectsToAdd.Add(player);
             camera.LoadContent(Content);
-            Cursor.GetInstance.LoadContent(Content);
-            MenuScreenManager.GetInstance.LoadContent(Content);
+            Cursor.Instance.LoadContent(Content);
+            MenuScreenManager.Instance.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -144,7 +144,7 @@ namespace Battle_Mages
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    MenuScreenManager.GetInstance.UpdateMenu();
+                    MenuScreenManager.Instance.UpdateMenu();
                     break;
 
                 case GameState.InGame:
@@ -159,37 +159,37 @@ namespace Battle_Mages
 
                     #region Camera Movement
 
-                    Vector2 mousePos = Cursor.GetInstance.GetPosition;
-                    if (camera.GetTopRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
+                    Vector2 mousePos = Cursor.Instance.Position;
+                    if (camera.TopRectangle.Contains(mousePos) && camera.RightRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(camMovespeed, -camMovespeed);
                     }
-                    else if (camera.GetTopRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
+                    else if (camera.TopRectangle.Contains(mousePos) && camera.LeftRectangle.Contains(mousePos))
                     {
                         camera.Position -= new Vector2(camMovespeed, camMovespeed);
                     }
-                    else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetLeftRectangle.Contains(mousePos))
+                    else if (camera.BottomRectangle.Contains(mousePos) && camera.LeftRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(-camMovespeed, camMovespeed);
                     }
-                    else if (camera.GetBottomRectangle.Contains(mousePos) && camera.GetRightRectangle.Contains(mousePos))
+                    else if (camera.BottomRectangle.Contains(mousePos) && camera.RightRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(camMovespeed, camMovespeed);
                     }
-                    else if (camera.GetTopRectangle.Contains(mousePos))
+                    else if (camera.TopRectangle.Contains(mousePos))
                     {
                         camera.Position -= new Vector2(0, camMovespeed);
                         CursorPictureNumber = 1;
                     }
-                    else if (camera.GetBottomRectangle.Contains(mousePos))
+                    else if (camera.BottomRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(0, camMovespeed);
                     }
-                    else if (camera.GetRightRectangle.Contains(mousePos))
+                    else if (camera.RightRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(camMovespeed, 0);
                     }
-                    else if (camera.GetLeftRectangle.Contains(mousePos))
+                    else if (camera.LeftRectangle.Contains(mousePos))
                     {
                         camera.Position -= new Vector2(camMovespeed, 0);
                     }
@@ -208,7 +208,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    MenuScreenManager.GetInstance.UpdateSettingWindow(graphics);
+                    MenuScreenManager.Instance.UpdateSettingWindow(graphics);
                     break;
 
                 case GameState.Shop:
@@ -216,7 +216,7 @@ namespace Battle_Mages
             }
             if (Mouse.GetState().LeftButton == ButtonState.Released)
             {
-                MenuScreenManager.GetInstance.mouseCanClickButton = true;
+                MenuScreenManager.Instance.mouseCanClickButton = true;
             }
 
             base.Update(gameTime);
@@ -268,17 +268,17 @@ namespace Battle_Mages
             //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
             //null, null, null, camera.GetViewMatrix);
             drawer.BeginBatches();
-            drawer.Matrix = camera.GetViewMatrix;
+            drawer.Matrix = camera.ViewMatrix;
 
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    MenuScreenManager.GetInstance.DrawMenu(drawer[DrawLayer.UI]);
+                    MenuScreenManager.Instance.DrawMenu(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.InGame:
-                    Cursor.GetInstance.Draw(drawer[DrawLayer.AboveUI]);
+                    Cursor.Instance.Draw(drawer[DrawLayer.AboveUI]);
                     foreach (GameObject gameObject in objectsToDraw)
                     {
                         gameObject.Draw(drawer);
@@ -287,7 +287,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    MenuScreenManager.GetInstance.DrawSettingsWindow(drawer[DrawLayer.UI]);
+                    MenuScreenManager.Instance.DrawSettingsWindow(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.Shop:

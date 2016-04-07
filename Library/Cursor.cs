@@ -22,12 +22,12 @@ namespace Battle_Mages
         /// In this property the position is set equal to the transformed mouse position,
         /// which has been inverted from world space to view space.
         /// </summary>
-        public Vector2 GetPosition
+        public Vector2 Position
         {
             get
             {
                 position = Vector2.Transform(Mouse.GetState().Position.ToVector2(),
-                    Matrix.Invert(GameWorld.GetInstance.GetCamera.GetViewMatrix));
+                    Matrix.Invert(GameWorld.Instance.GetCamera.ViewMatrix));
                 return position;
             }
         }
@@ -36,17 +36,17 @@ namespace Battle_Mages
         /// In this property the rectangle is set to be a rectangle on the position,
         /// with the current sprite midpoint being the position. (reason for multiplying with 0.5)
         /// </summary>
-        public Rectangle GetRectangle
+        public Rectangle Rectangle
         {
             get
             {
-                rectangle = new Rectangle((int)(GetPosition.X -
-                    (sprite[GameWorld.GetInstance.CursorPictureNumber].Width * 0.5f)),
-                    (int)(GetPosition.Y - (sprite[GameWorld.GetInstance.CursorPictureNumber].Height * 0.5f)),
-                    (int)(sprite[GameWorld.GetInstance.CursorPictureNumber].Width *
-                    MenuScreenManager.GetInstance.scale),
-                    (int)(sprite[GameWorld.GetInstance.CursorPictureNumber].Height *
-                    MenuScreenManager.GetInstance.scale));
+                rectangle = new Rectangle((int)(Position.X -
+                    (sprite[GameWorld.Instance.CursorPictureNumber].Width * 0.5f)),
+                    (int)(Position.Y - (sprite[GameWorld.Instance.CursorPictureNumber].Height * 0.5f)),
+                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Width *
+                    MenuScreenManager.Instance.scale),
+                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Height *
+                    MenuScreenManager.Instance.scale));
                 return rectangle;
             }
         }
@@ -54,7 +54,7 @@ namespace Battle_Mages
         //Singleton
         private static Cursor instance;
 
-        public static Cursor GetInstance
+        public static Cursor Instance
         {
             get
             {
@@ -90,13 +90,11 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite[GameWorld.GetInstance.CursorPictureNumber],
-                position: GetPosition,
-                destinationRectangle: GetRectangle,
-                sourceRectangle: null,
+            spriteBatch.Draw(sprite[GameWorld.Instance.CursorPictureNumber],
+                position: Position,
                 origin: Vector2.Zero,
                 rotation: 0f,
-                scale: new Vector2(MenuScreenManager.GetInstance.scale, MenuScreenManager.GetInstance.scale),
+                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
                 color: Color.White,
                 effects: SpriteEffects.None);
         }
