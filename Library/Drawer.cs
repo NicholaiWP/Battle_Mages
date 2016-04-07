@@ -56,7 +56,7 @@ namespace Battle_Mages
         {
             foreach (SpriteBatch batch in layers.Values)
             {
-                batch.Begin(SpriteSortMode.Deferred, transformMatrix: Matrix);
+                batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: Matrix);
             }
         }
 
