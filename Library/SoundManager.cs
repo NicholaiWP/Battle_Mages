@@ -88,13 +88,13 @@ namespace Battle_Mages
 
         /// <summary>
         /// Method for updating the SoundManager, here all sound-durations are subtracted by
-        /// the deltatime of the GameWorld unless the duration is less than -5
+        /// the deltatime of the GameWorld unless the duration is less than 0
         /// </summary>
         public void Update()
         {
             foreach (string nameOfSound in soundsDurationKeys)
             {
-                if (soundsDuration[nameOfSound] > -5)
+                if (soundsDuration[nameOfSound] >= 0)
                 {
                     soundsDuration[nameOfSound] -= GameWorld.Instance.DeltaTime;
                 }
