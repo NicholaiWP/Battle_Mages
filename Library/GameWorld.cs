@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -146,7 +146,7 @@ namespace Battle_Mages
             //Testing sound
             if (currentKey.IsKeyDown(Keys.F) && lastKey.IsKeyUp(Keys.F))
             {
-               SoundManager.Instance.PlaySound("FireBall");
+                SoundManager.PlaySound("FireBall");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))

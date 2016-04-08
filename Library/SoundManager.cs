@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -46,13 +46,13 @@ namespace Battle_Mages
         {
         }
 
-        public void PlaySound(string soundName)
+        public static void PlaySound(string soundName)
         {
-            if (sounds.ContainsKey(soundName))
+            if (Instance.sounds.ContainsKey(soundName))
             {
-                SoundEffect currentSound = sounds[soundName];
+                SoundEffect currentSound = Instance.sounds[soundName];
                 SoundEffectInstance currentSoundInstance = currentSound.CreateInstance();
-                currentSoundInstance.Volume = volume;
+                currentSoundInstance.Volume = Instance.volume;
                 currentSound.Play();
             }
         }
