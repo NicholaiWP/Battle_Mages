@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -24,7 +24,7 @@ namespace Battle_Mages
         public GameState currentGameState = GameState.MainMenu;
 
         //Lists
-        private List<GameObject> objectsToDraw = new List<GameObject>();
+        private List<GameObject> activeObjects = new List<GameObject>();
 
         private List<Collider> colliders = new List<Collider>();
         public List<GameObject> objectsToAdd = new List<GameObject>();
@@ -150,9 +150,9 @@ namespace Battle_Mages
                 case GameState.InGame:
                     deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    foreach (GameObject gameObjecgt in objectsToDraw)
+                    foreach (GameObject go in activeObjects)
                     {
-                        gameObjecgt.Update();
+                        go.Update();
                     }
                     camMovespeed = speed * deltaTime;
                     CursorPictureNumber = 0;
@@ -232,11 +232,11 @@ namespace Battle_Mages
                 gameObject.LoadContent(Content);
             }
 
-            objectsToDraw.AddRange(objectsToAdd);
+            activeObjects.AddRange(objectsToAdd);
             colliders.AddRange(collidersToAdd);
             foreach (GameObject gameObject in objectsToRemove)
             {
-                objectsToDraw.Remove(gameObject);
+                activeObjects.Remove(gameObject);
             }
 
             foreach (Collider collider in collidersToRemove)
@@ -267,8 +267,8 @@ namespace Battle_Mages
 
             //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
             //null, null, null, camera.GetViewMatrix);
-            drawer.BeginBatches();
             drawer.Matrix = camera.ViewMatrix;
+            drawer.BeginBatches();
 
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
@@ -279,7 +279,7 @@ namespace Battle_Mages
 
                 case GameState.InGame:
                     Cursor.Instance.Draw(drawer[DrawLayer.AboveUI]);
-                    foreach (GameObject gameObject in objectsToDraw)
+                    foreach (GameObject gameObject in activeObjects)
                     {
                         gameObject.Draw(drawer);
                     }
