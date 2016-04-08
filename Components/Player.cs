@@ -40,7 +40,7 @@ namespace Battle_Mages
 
         public void Update()
         {
-            MoveInformation();         
+            MoveInformation();
         }
 
         private void MoveInformation()
@@ -68,7 +68,8 @@ namespace Battle_Mages
                 fDirection = FacingDirection.Left;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {            
+            {
+                SoundManager.Instance.PlaySound("FireBall");
                 mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
@@ -96,7 +97,7 @@ namespace Battle_Mages
             {
                 strategy = new Idle(animator);
             }
-            strategy.Execute(mDirection, fDirection);            
+            strategy.Execute(mDirection, fDirection);
         }
     }
 }
