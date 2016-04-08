@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -67,14 +67,19 @@ namespace Battle_Mages
         {
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// Method for playing a sound by the soundName with a specific duration
         /// </summary>
         /// <param name="soundName"></param>
         public void PlaySound(string soundName)
+=======
+        public static void PlaySound(string soundName)
+>>>>>>> origin/master
         {
-            if (sounds.ContainsKey(soundName))
+            if (Instance.sounds.ContainsKey(soundName))
             {
+<<<<<<< HEAD
                 if (soundsDuration[soundName] <= 0)
                 {
                     SoundEffect currentSound = sounds[soundName];
@@ -98,6 +103,12 @@ namespace Battle_Mages
                 {
                     soundsDuration[nameOfSound] -= GameWorld.Instance.DeltaTime;
                 }
+=======
+                SoundEffect currentSound = Instance.sounds[soundName];
+                SoundEffectInstance currentSoundInstance = currentSound.CreateInstance();
+                currentSoundInstance.Volume = Instance.volume;
+                currentSound.Play();
+>>>>>>> origin/master
             }
         }
     }
