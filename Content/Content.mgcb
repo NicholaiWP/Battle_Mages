@@ -19,3 +19,9 @@
 /processorParam:TextureFormat=Compressed
 /build:FontBM.spritefont
 
+#begin Sounds/JumpSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/JumpSound.wav
+

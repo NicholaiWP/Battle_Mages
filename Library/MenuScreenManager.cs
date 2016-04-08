@@ -176,15 +176,29 @@ namespace Battle_Mages
         {
             back.Update();
             back.SetPosition(new Vector2(-back.rectangle.Width / 2, back.rectangle.Height * 3f));
+            oneRes.SetPosition(new Vector2(0, 100));
+            twoRes.SetPosition(new Vector2(0, -300));
             oneRes.Update();
             twoRes.Update();
             if (oneRes.isClicked == true)
             {
                 oneRes.isClicked = false;
+                elemenAtNumber++;
+                if (elemenAtNumber >= resolutions.Count) elemenAtNumber = 0;
+                currentResolution = resolutions[elemenAtNumber];
+                graphics.PreferredBackBufferWidth = currentResolution.Width;
+                graphics.PreferredBackBufferHeight = currentResolution.Height;
+                graphics.ApplyChanges();
             }
             else if (twoRes.isClicked == true)
             {
                 twoRes.isClicked = false;
+                elemenAtNumber--;
+                if (elemenAtNumber <= 0) elemenAtNumber = resolutions.Count;
+                currentResolution = resolutions[elemenAtNumber];
+                graphics.PreferredBackBufferWidth = currentResolution.Width;
+                graphics.PreferredBackBufferHeight = currentResolution.Height;
+                graphics.ApplyChanges();
             }
             if (back.isClicked == true)
             {
@@ -197,6 +211,7 @@ namespace Battle_Mages
                 if (currentResolution == resolutions.ElementAt(i))
                 {
                     elemenAtNumber = i;
+                    currentResolutionString = (currentResolution.Width + "x" + currentResolution.Height);
                 }
             }
         }
@@ -214,22 +229,14 @@ namespace Battle_Mages
             settings.Draw(spriteBatch);
             quit.Draw(spriteBatch);
             play.Draw(spriteBatch);
-
-            Cursor.Instance.Draw(spriteBatch);
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
         {
-            /*
             oneRes.Draw(spriteBatch);
             twoRes.Draw(spriteBatch);
-            threeRes.Draw(spriteBatch);
-            fourRes.Draw(spriteBatch);
-            */
             spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
             back.Draw(spriteBatch);
-
-            Cursor.Instance.Draw(spriteBatch);
         }
     }
 }

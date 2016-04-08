@@ -69,6 +69,7 @@ namespace Battle_Mages
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
+                SoundManager.Instance.PlaySound("FireBall");
                 mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
