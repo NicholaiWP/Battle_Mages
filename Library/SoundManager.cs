@@ -73,7 +73,7 @@ namespace Battle_Mages
         /// <param name="soundName"></param>
         public void PlaySound(string soundName)
         {
-            if (Instance.sounds.ContainsKey(soundName))
+            if (sounds.ContainsKey(soundName))
             {
                 if (soundsDuration[soundName] <= 0)
                 {
