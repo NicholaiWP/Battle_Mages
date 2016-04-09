@@ -28,9 +28,9 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
-            animator = (Animator)GetGameObject.GetComponent("Animator");
-            spriteRenderer = (SpriteRenderer)GetGameObject.GetComponent("SpirteRenderer");
-            transform = GetGameObject.Transform;
+            animator = (Animator)GameObject.GetComponent("Animator");
+            spriteRenderer = (SpriteRenderer)GameObject.GetComponent("SpirteRenderer");
+            transform = GameObject.Transform;
             CreateAnimation();
         }
 

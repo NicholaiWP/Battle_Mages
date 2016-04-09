@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -19,6 +17,11 @@ namespace Battle_Mages
 
         //Properteis
         public Transform Transform { get; set; }
+
+        public List<Component> Components
+        {
+            get { return components; }
+        }
 
         /// <summary>
         /// Constructer of the gameobject
@@ -111,9 +114,10 @@ namespace Battle_Mages
         {
             foreach (Component component in components)
             {
-                if (component is ICanBeAnimated) //Checks if any components are IAnimateable
+                //Checks if any components are ICanBeAnimated
+                if (component is ICanBeAnimated)
                 {
-                    //If a component is IAnimateable we call the local implementation of the method
+                    //If a component is ICanBeAnimated we call the local implementation of the method
                     (component as ICanBeAnimated).OnAnimationDone(animationName);
                 }
             }

@@ -55,8 +55,12 @@ namespace Battle_Mages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
+            //Adding sounds by name to the dictionary of sounds
             sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound"));
+            //Adding soundNames to the dictionary with a float to evaluate the duration of the sound
             soundsDuration.Add("FireBall", 0);
+            //Adding all soundNames from the duration dictionary so the dictionary´s values can be changed
+            //when the list is iterated with a foreach loop
             soundsDurationKeys = new List<string>(soundsDuration.Keys);
         }
 

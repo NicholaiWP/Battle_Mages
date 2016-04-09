@@ -14,7 +14,7 @@ namespace Battle_Mages
         private GameObject gameObject;
 
         //Property
-        public GameObject GetGameObject
+        public GameObject GameObject
         {
             get
             {

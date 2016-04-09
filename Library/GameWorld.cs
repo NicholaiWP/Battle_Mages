@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -40,9 +40,9 @@ namespace Battle_Mages
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
 
-        public GameState GetCurrentGameState
+        public List<GameObject> ActiveObjects
         {
-            get { return currentGameState; }
+            get { return activeObjects; }
         }
 
         public Camera2D Camera
@@ -285,7 +285,7 @@ namespace Battle_Mages
             //null, null, null, camera.GetViewMatrix);
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
-			
+
             Cursor.Instance.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens

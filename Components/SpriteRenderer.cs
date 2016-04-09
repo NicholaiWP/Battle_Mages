@@ -49,7 +49,7 @@ namespace Battle_Mages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            animator = (Animator)GetGameObject.GetComponent("Animator");
+            animator = (Animator)GameObject.GetComponent("Animator");
             sprite = content.Load<Texture2D>(spriteName);
             rectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
         }
@@ -60,7 +60,7 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, position: GetGameObject.Transform.Position + offset,
+            drawer[DrawLayer.Gameplay].Draw(sprite, position: GameObject.Transform.Position + offset,
                 sourceRectangle: rectangle,
                 origin: Vector2.Zero,
                 rotation: 0f,
