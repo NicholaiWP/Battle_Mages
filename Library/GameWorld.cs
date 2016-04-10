@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -23,19 +23,14 @@ namespace Battle_Mages
         private float deltaTime;
         public GameState currentGameState = GameState.MainMenu;
 
-        //variables to test sound and to prevent the sound to be played more than once.
         private KeyboardState currentKey;
-
         private KeyboardState lastKey;
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
 
-        private List<Collider> colliders = new List<Collider>();
         public List<GameObject> objectsToAdd = new List<GameObject>();
         public List<GameObject> objectsToRemove = new List<GameObject>();
-        public List<Collider> collidersToAdd = new List<Collider>();
-        public List<Collider> collidersToRemove = new List<Collider>();
 
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
@@ -246,31 +241,15 @@ namespace Battle_Mages
             foreach (GameObject gameObject in objectsToAdd)
             {
                 gameObject.LoadContent(Content);
+                activeObjects.Add(gameObject);
             }
+            objectsToAdd.Clear();
 
-            activeObjects.AddRange(objectsToAdd);
-            colliders.AddRange(collidersToAdd);
             foreach (GameObject gameObject in objectsToRemove)
             {
                 activeObjects.Remove(gameObject);
             }
-
-            foreach (Collider collider in collidersToRemove)
-            {
-                colliders.Remove(collider);
-            }
-            ClearTemplates();
-        }
-
-        /// <summary>
-        /// Method for clearing the templates (lists)
-        /// </summary>
-        private void ClearTemplates()
-        {
-            objectsToAdd.Clear();
             objectsToRemove.Clear();
-            collidersToAdd.Clear();
-            collidersToRemove.Clear();
         }
 
         /// <summary>
