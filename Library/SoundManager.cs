@@ -15,7 +15,6 @@ namespace Battle_Mages
         private SoundEffectInstance soundEngine;
 
         private SoundEffect loopedsound;
-        private SoundEffectInstance currentSoundInstance;
         public float volume;
 
         //Lists
@@ -77,14 +76,22 @@ namespace Battle_Mages
         /// <param name="soundName"></param>
         public void PlaySound(string soundName)
         {
+            //Checks if the dictionary called sounds contains the key soundName
             if (sounds.ContainsKey(soundName))
             {
+                //Checks if the float value at the string key is less than or equal to zero in the dictionary soundsDuration
                 if (soundsDuration[soundName] <= 0)
                 {
+                    //Making a SoundEffect called currentSound and sets it to be the SoundEffect at the string key
+                    //in the dictionary called sounds
                     SoundEffect currentSound = sounds[soundName];
-                    currentSoundInstance = currentSound.CreateInstance();
+                    //Making an instance of the currentSound
+                    SoundEffectInstance currentSoundInstance = currentSound.CreateInstance();
+                    //Setting the volume
                     currentSoundInstance.Volume = volume;
+                    //Changing the float value at the key string to the currentSound duration
                     soundsDuration[soundName] = (float)currentSound.Duration.TotalSeconds;
+                    //Playing the sound
                     currentSound.Play();
                 }
             }
@@ -96,10 +103,13 @@ namespace Battle_Mages
         /// </summary>
         public void Update()
         {
+            //Iterating through the list soundsDurationKeys so we can check and change the values in the dictionary
             foreach (string nameOfSound in soundsDurationKeys)
             {
+                //Checking if the float value at the string key is more or equal to zero in the dictionary soundsDuration
                 if (soundsDuration[nameOfSound] >= 0)
                 {
+                    //Subtracting the float value at the string key by the DeltaTime in GameWorld
                     soundsDuration[nameOfSound] -= GameWorld.Instance.DeltaTime;
                 }
             }
