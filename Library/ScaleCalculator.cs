@@ -15,7 +15,7 @@ namespace Battle_Mages
 
         public static float HeightSclaeCalculate(float resolutionHeight)
         {
-            float heightScale = resolutionHeight / 766;
+            float heightScale = resolutionHeight / 768;
             return heightScale;
         }
     }
