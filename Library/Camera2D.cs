@@ -12,9 +12,8 @@ namespace Battle_Mages
     public class Camera2D
     {
         //Fields
-        private float zoom;
-
         private Texture2D sprite;
+
         private float rotation;
         private Vector2 position;
         private Matrix viewMatrix;
@@ -24,12 +23,6 @@ namespace Battle_Mages
         private Rectangle leftRectangle;
 
         //Properties
-        public float Zoom
-        {
-            get { return zoom; }
-            set { zoom = value; if (zoom < 0.1f) zoom = 0.1f; }
-        }
-
         public float Rotation
         {
             get { return rotation; }
@@ -51,7 +44,7 @@ namespace Battle_Mages
             {
                 viewMatrix = Matrix.CreateTranslation(new Vector3(-position, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
+                    Matrix.CreateScale(new Vector3(MenuScreenManager.Instance.scale, 1)) *
                     Matrix.CreateTranslation(new Vector3(GameWorld.Instance.HalfViewPortWidth,
                     GameWorld.Instance.HalfViewPortHeight, 0));
                 return viewMatrix;
@@ -135,7 +128,6 @@ namespace Battle_Mages
         /// </summary>
         public Camera2D()
         {
-            zoom = 1.0f;
             rotation = 0.0f;
             position = Vector2.Zero;
         }

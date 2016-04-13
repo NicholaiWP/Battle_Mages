@@ -16,7 +16,7 @@ namespace Battle_Mages
         private string currentResolutionString;
         private DisplayMode currentResolution;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
-        public float scale;
+        public Vector2 scale;
         public bool mouseCanClickButton;
         public Button play;
         public Button settings;
@@ -44,57 +44,7 @@ namespace Battle_Mages
 
         private MenuScreenManager()
         {
-            scale = 1;
             fontPosition = new Vector2(-100, -50);
-            /*
-            mouseCanClickButton = true;
-            if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1366)
-            {
-                scale = 1;
-            }
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1920)
-            {
-                scale = 1.405f;
-            }
-            //1600x1200 resolution
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1600)
-            {
-                scale = 1.171f;
-            }
-            //1680x1050 resolution
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1680)
-            {
-                scale = 1.229f;
-            }
-            //1400x1050 resolution
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1400)
-            {
-                scale = 1.024f;
-            }
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1280)
-            {
-                scale = 0.937f;
-            }
-            //1440x900 resolution
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1440)
-            {
-                scale = 1.054f;
-            }
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 1024)
-            {
-                scale = 0.749f;
-            }
-            //800x600 resolution
-            else if (GameWorld.Instance.GetHalfViewPortWidth * 2 == 800)
-            {
-                scale = 0.585f;
-            }
-            //if none of the above, default size.
-            else
-            {
-                scale = 0.5f;
-            }
-            */
         }
 
         public void LoadContent(ContentManager content)
@@ -118,6 +68,9 @@ namespace Battle_Mages
                 }
                 lastResolution = dmode;
             }
+            scale = new Vector2(ScaleCalculator.WidthScaleCalculate(currentResolution.Width),
+                ScaleCalculator.HeightSclaeCalculate(currentResolution.Height));
+
             back = new Button(content.Load<Texture2D>("Images/Back"),
             content.Load<Texture2D>("Images/Back"));
 
@@ -168,7 +121,7 @@ namespace Battle_Mages
             }
             else if (quit.isClicked == true)
             {
-                Environment.Exit(0);
+                GameWorld.Instance.Exit();
             }
         }
 
@@ -176,8 +129,8 @@ namespace Battle_Mages
         {
             back.Update();
             back.SetPosition(new Vector2(-back.rectangle.Width / 2, back.rectangle.Height * 3f));
-            oneRes.SetPosition(new Vector2(0, 100));
-            twoRes.SetPosition(new Vector2(0, -300));
+            oneRes.SetPosition(new Vector2(150, -50));
+            twoRes.SetPosition(new Vector2(-550, -50));
             oneRes.Update();
             twoRes.Update();
             if (oneRes.isClicked == true)
@@ -189,16 +142,20 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
+                scale = new Vector2(ScaleCalculator.WidthScaleCalculate(currentResolution.Width),
+                    ScaleCalculator.HeightSclaeCalculate(currentResolution.Height));
             }
             else if (twoRes.isClicked == true)
             {
                 twoRes.isClicked = false;
                 elemenAtNumber--;
-                if (elemenAtNumber <= 0) elemenAtNumber = resolutions.Count;
+                if (elemenAtNumber <= 0) elemenAtNumber = resolutions.Count - 1;
                 currentResolution = resolutions[elemenAtNumber];
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
+                scale = new Vector2(ScaleCalculator.WidthScaleCalculate(currentResolution.Width),
+                    ScaleCalculator.HeightSclaeCalculate(currentResolution.Height));
             }
             if (back.isClicked == true)
             {

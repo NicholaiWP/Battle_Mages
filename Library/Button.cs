@@ -35,8 +35,7 @@ namespace Battle_Mages
         public void Update()
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y,
-                (int)(sprite[hoverNumber].Width * MenuScreenManager.Instance.scale),
-                (int)(sprite[hoverNumber].Height * MenuScreenManager.Instance.scale));
+                sprite[hoverNumber].Width, sprite[hoverNumber].Height);
             //sets a mouseRectangle
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isClicked".
@@ -84,7 +83,7 @@ namespace Battle_Mages
             spriteBatch.Draw(sprite[hoverNumber],
                 destinationRectangle: rectangle,
                 origin: Vector2.Zero,
-                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
+                scale: MenuScreenManager.Instance.scale,
                 effects: SpriteEffects.None,
                 color: Color.White);
         }

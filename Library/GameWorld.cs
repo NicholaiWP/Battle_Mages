@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -260,8 +260,6 @@ namespace Battle_Mages
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
-            //null, null, null, camera.GetViewMatrix);
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
 

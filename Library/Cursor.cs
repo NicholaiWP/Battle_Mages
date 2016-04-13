@@ -43,10 +43,8 @@ namespace Battle_Mages
                 rectangle = new Rectangle((int)(Position.X -
                     (sprite[GameWorld.Instance.CursorPictureNumber].Width * 0.5f)),
                     (int)(Position.Y - (sprite[GameWorld.Instance.CursorPictureNumber].Height * 0.5f)),
-                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Width *
-                    MenuScreenManager.Instance.scale),
-                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Height *
-                    MenuScreenManager.Instance.scale));
+                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Width),
+                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Height));
                 return rectangle;
             }
         }
@@ -94,7 +92,6 @@ namespace Battle_Mages
                 position: Position,
                 origin: Vector2.Zero,
                 rotation: 0f,
-                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
                 color: Color.White,
                 effects: SpriteEffects.None);
         }
