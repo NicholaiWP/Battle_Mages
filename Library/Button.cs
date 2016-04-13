@@ -83,7 +83,6 @@ namespace Battle_Mages
             spriteBatch.Draw(sprite[hoverNumber],
                 destinationRectangle: rectangle,
                 origin: Vector2.Zero,
-                scale: MenuScreenManager.Instance.scale,
                 effects: SpriteEffects.None,
                 color: Color.White);
         }
