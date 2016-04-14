@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -47,43 +47,49 @@ namespace Battle_Mages
         {
             strategy = new Move(animator, transform, moveSpeed);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.D))
+            KeyboardState kbState = Keyboard.GetState();
+            bool up = kbState.IsKeyDown(Keys.W);
+            bool down = kbState.IsKeyDown(Keys.S);
+            bool left = kbState.IsKeyDown(Keys.A);
+            bool right = kbState.IsKeyDown(Keys.D);
+
+            if (up && right)
             {
                 mDirection = MovingDirection.UpRight;
                 fDirection = FacingDirection.Right;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W) && Keyboard.GetState().IsKeyDown(Keys.A))
+            else if (up && left)
             {
                 mDirection = MovingDirection.UpLeft;
                 fDirection = FacingDirection.Left;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.D))
+            else if (down && right)
             {
                 mDirection = MovingDirection.DownRight;
                 fDirection = FacingDirection.Right;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S) && Keyboard.GetState().IsKeyDown(Keys.A))
+            else if (down && left)
             {
                 mDirection = MovingDirection.DownLeft;
                 fDirection = FacingDirection.Left;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W))
+            else if (up)
             {
                 SoundManager.Instance.PlaySound("FireBall");
                 mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            else if (left)
             {
                 mDirection = MovingDirection.Left;
                 fDirection = FacingDirection.Left;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S))
+            else if (down)
             {
                 mDirection = MovingDirection.Down;
                 fDirection = FacingDirection.Front;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            else if (right)
             {
                 mDirection = MovingDirection.Right;
                 fDirection = FacingDirection.Right;
