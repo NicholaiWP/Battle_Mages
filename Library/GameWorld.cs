@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Battle_Mages
 {
@@ -21,10 +21,12 @@ namespace Battle_Mages
         private float camMovespeed;
         private float speed;
         private float deltaTime;
-        public GameState currentGameState = GameState.MainMenu;
-
         private KeyboardState currentKey;
         private KeyboardState lastKey;
+        private Cursor cursor;
+        private MenuScreenManager menuScreenManager;
+        private Calculator calculator;
+        public GameState currentGameState = GameState.MainMenu;
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
@@ -34,6 +36,10 @@ namespace Battle_Mages
 
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
+
+        public Cursor Cursor { get { return cursor; } }
+        public MenuScreenManager MenuScreenManager { get { return menuScreenManager; } }
+        public Calculator Calculator { get { return calculator; } }
 
         public List<GameObject> ActiveObjects
         {
@@ -82,10 +88,13 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            // graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
+            cursor = new Cursor();
+            calculator = new Calculator();
+            menuScreenManager = new MenuScreenManager();
             speed = 250;
         }
 
@@ -115,8 +124,8 @@ namespace Battle_Mages
             player = director.Construct(Vector2.Zero);
             objectsToAdd.Add(player);
             camera.LoadContent(Content);
-            Cursor.Instance.LoadContent(Content);
-            MenuScreenManager.Instance.LoadContent(Content);
+            cursor.LoadContent(Content);
+            menuScreenManager.LoadContent(Content);
             SoundManager.Instance.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
@@ -155,7 +164,7 @@ namespace Battle_Mages
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    MenuScreenManager.Instance.UpdateMenu();
+                    menuScreenManager.UpdateMenu();
                     break;
 
                 case GameState.InGame:
@@ -170,7 +179,7 @@ namespace Battle_Mages
 
                     #region Camera Movement
 
-                    Vector2 mousePos = Cursor.Instance.Position;
+                    Vector2 mousePos = cursor.Position;
                     if (camera.TopRectangle.Contains(mousePos) && camera.RightRectangle.Contains(mousePos))
                     {
                         camera.Position += new Vector2(camMovespeed, -camMovespeed);
@@ -219,7 +228,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    MenuScreenManager.Instance.UpdateSettingWindow(graphics);
+                    menuScreenManager.UpdateSettingWindow(graphics);
                     break;
 
                 case GameState.Shop:
@@ -227,7 +236,7 @@ namespace Battle_Mages
             }
             if (Mouse.GetState().LeftButton == ButtonState.Released)
             {
-                MenuScreenManager.Instance.mouseCanClickButton = true;
+                menuScreenManager.mouseCanClickButton = true;
             }
 
             base.Update(gameTime);
@@ -260,18 +269,16 @@ namespace Battle_Mages
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null,
-            //null, null, null, camera.GetViewMatrix);
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
 
-            Cursor.Instance.Draw(drawer[DrawLayer.AboveUI]);
+            cursor.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    MenuScreenManager.Instance.DrawMenu(drawer[DrawLayer.UI]);
+                    menuScreenManager.DrawMenu(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.InGame:
@@ -283,7 +290,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    MenuScreenManager.Instance.DrawSettingsWindow(drawer[DrawLayer.UI]);
+                    menuScreenManager.DrawSettingsWindow(drawer[DrawLayer.UI]);
                     break;
 
                 case GameState.Shop:

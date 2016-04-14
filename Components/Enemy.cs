@@ -39,9 +39,9 @@ namespace Battle_Mages
 
         public void Update()
         {
-            foreach (GameObject go in GameWorld.Instance.ActiveObjects)
+            foreach (GameObject gameObject in GameWorld.Instance.ActiveObjects)
             {
-                if (go.Components.Contains((Player)go.GetComponent("Player")))
+                if (gameObject.Components.Contains((Player)gameObject.GetComponent("Player")))
                 {
                 }
             }

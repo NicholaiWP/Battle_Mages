@@ -15,7 +15,6 @@ namespace Battle_Mages
         private Texture2D[] sprite = new Texture2D[2];
 
         private Vector2 position;
-        private Rectangle rectangle;
 
         //Properties
         /// <summary>
@@ -33,43 +32,9 @@ namespace Battle_Mages
         }
 
         /// <summary>
-        /// In this property the rectangle is set to be a rectangle on the position,
-        /// with the current sprite midpoint being the position. (reason for multiplying with 0.5)
-        /// </summary>
-        public Rectangle Rectangle
-        {
-            get
-            {
-                rectangle = new Rectangle((int)(Position.X -
-                    (sprite[GameWorld.Instance.CursorPictureNumber].Width * 0.5f)),
-                    (int)(Position.Y - (sprite[GameWorld.Instance.CursorPictureNumber].Height * 0.5f)),
-                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Width *
-                    MenuScreenManager.Instance.scale),
-                    (int)(sprite[GameWorld.Instance.CursorPictureNumber].Height *
-                    MenuScreenManager.Instance.scale));
-                return rectangle;
-            }
-        }
-
-        //Singleton
-        private static Cursor instance;
-
-        public static Cursor Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new Cursor();
-                }
-                return instance;
-            }
-        }
-
-        /// <summary>
         /// Constructor for the cursor
         /// </summary>
-        private Cursor()
+        public Cursor()
         {
         }
 
@@ -94,7 +59,6 @@ namespace Battle_Mages
                 position: Position,
                 origin: Vector2.Zero,
                 rotation: 0f,
-                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
                 color: Color.White,
                 effects: SpriteEffects.None);
         }

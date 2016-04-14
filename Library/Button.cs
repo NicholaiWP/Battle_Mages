@@ -35,12 +35,11 @@ namespace Battle_Mages
         public void Update()
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y,
-                (int)(sprite[hoverNumber].Width * MenuScreenManager.Instance.scale),
-                (int)(sprite[hoverNumber].Height * MenuScreenManager.Instance.scale));
+                sprite[hoverNumber].Width, sprite[hoverNumber].Height);
             //sets a mouseRectangle
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isClicked".
-            if (Cursor.Instance.Rectangle.Intersects(rectangle))
+            if (rectangle.Contains(GameWorld.Instance.Cursor.Position))
             {
                 if (hoverNumber == 0)
                 {
@@ -49,10 +48,10 @@ namespace Battle_Mages
                 }
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    MenuScreenManager.Instance.mouseCanClickButton)
+                    GameWorld.Instance.MenuScreenManager.mouseCanClickButton)
                 {
                     isClicked = true;
-                    MenuScreenManager.Instance.mouseCanClickButton = false;
+                    GameWorld.Instance.MenuScreenManager.mouseCanClickButton = false;
                 }
             }
             else
@@ -84,7 +83,6 @@ namespace Battle_Mages
             spriteBatch.Draw(sprite[hoverNumber],
                 destinationRectangle: rectangle,
                 origin: Vector2.Zero,
-                scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
                 effects: SpriteEffects.None,
                 color: Color.White);
         }
