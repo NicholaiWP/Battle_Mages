@@ -44,7 +44,7 @@ namespace Battle_Mages
             {
                 viewMatrix = Matrix.CreateTranslation(new Vector3(-position, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(new Vector3(MenuScreenManager.Instance.scale, 1)) *
+                    Matrix.CreateScale(new Vector3(GameWorld.Instance.MenuScreenManager.scale, 1)) *
                     Matrix.CreateTranslation(new Vector3(GameWorld.Instance.HalfViewPortWidth,
                     GameWorld.Instance.HalfViewPortHeight, 0));
                 return viewMatrix;

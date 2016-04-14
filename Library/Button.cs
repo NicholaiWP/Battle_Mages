@@ -39,7 +39,7 @@ namespace Battle_Mages
             //sets a mouseRectangle
             //If the mouse's rectangle intersects with a rectangle check if the button is clicked
             //-by using the bool "isClicked".
-            if (Cursor.Instance.Rectangle.Intersects(rectangle))
+            if (rectangle.Contains(GameWorld.Instance.Cursor.Position))
             {
                 if (hoverNumber == 0)
                 {
@@ -48,10 +48,10 @@ namespace Battle_Mages
                 }
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    MenuScreenManager.Instance.mouseCanClickButton)
+                    GameWorld.Instance.MenuScreenManager.mouseCanClickButton)
                 {
                     isClicked = true;
-                    MenuScreenManager.Instance.mouseCanClickButton = false;
+                    GameWorld.Instance.MenuScreenManager.mouseCanClickButton = false;
                 }
             }
             else

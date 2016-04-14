@@ -28,21 +28,7 @@ namespace Battle_Mages
         public Button back;
         public SpriteFont fontBM;
 
-        private static MenuScreenManager instance;
-
-        public static MenuScreenManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new MenuScreenManager();
-                }
-                return instance;
-            }
-        }
-
-        private MenuScreenManager()
+        public MenuScreenManager()
         {
             fontPosition = new Vector2(-100, -50);
         }
@@ -68,8 +54,8 @@ namespace Battle_Mages
                 }
                 lastResolution = dmode;
             }
-            scale = new Vector2(ScaleCalculator.WidthScaleCalculate(currentResolution.Width),
-                ScaleCalculator.HeightSclaeCalculate(currentResolution.Height));
+            scale = new Vector2(GameWorld.Instance.Calculator.WidthScaleCalculate(currentResolution.Width),
+                GameWorld.Instance.Calculator.HeightScaleCalculate(currentResolution.Height));
 
             back = new Button(content.Load<Texture2D>("Images/Back"),
             content.Load<Texture2D>("Images/Back"));
@@ -142,8 +128,8 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scale = new Vector2(ScaleCalculator.WidthScaleCalculate(currentResolution.Width),
-                    ScaleCalculator.HeightSclaeCalculate(currentResolution.Height));
+                scale = new Vector2(GameWorld.Instance.Calculator.WidthScaleCalculate(currentResolution.Width),
+                    GameWorld.Instance.Calculator.HeightScaleCalculate(currentResolution.Height));
             }
             else if (twoRes.isClicked == true)
             {
@@ -154,8 +140,8 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scale = new Vector2(ScaleCalculator.WidthScaleCalculate(currentResolution.Width),
-                    ScaleCalculator.HeightSclaeCalculate(currentResolution.Height));
+                scale = new Vector2(GameWorld.Instance.Calculator.WidthScaleCalculate(currentResolution.Width),
+                    GameWorld.Instance.Calculator.HeightScaleCalculate(currentResolution.Height));
             }
             if (back.isClicked == true)
             {

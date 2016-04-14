@@ -68,7 +68,7 @@
     <Compile Include="Library\Enums.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\MenuScreenManager.cs" />
-    <Compile Include="Library\ScaleCalculator.cs" />
+    <Compile Include="Library\Calculator.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
