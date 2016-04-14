@@ -25,7 +25,7 @@ namespace Battle_Mages
         private KeyboardState lastKey;
         private Cursor cursor;
         private MenuScreenManager menuScreenManager;
-        private Calculator calculator;
+        private ViewCalculator viewCalculator;
         public GameState currentGameState = GameState.MainMenu;
 
         //Lists
@@ -39,7 +39,7 @@ namespace Battle_Mages
 
         public Cursor Cursor { get { return cursor; } }
         public MenuScreenManager MenuScreenManager { get { return menuScreenManager; } }
-        public Calculator Calculator { get { return calculator; } }
+        public ViewCalculator ViewCalculator { get { return viewCalculator; } }
 
         public List<GameObject> ActiveObjects
         {
@@ -88,12 +88,12 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = new Cursor();
-            calculator = new Calculator();
+            viewCalculator = new ViewCalculator();
             menuScreenManager = new MenuScreenManager();
             speed = 250;
         }

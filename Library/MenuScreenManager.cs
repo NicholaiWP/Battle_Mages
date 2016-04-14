@@ -54,8 +54,8 @@ namespace Battle_Mages
                 }
                 lastResolution = dmode;
             }
-            scale = new Vector2(GameWorld.Instance.Calculator.WidthScaleCalculate(currentResolution.Width),
-                GameWorld.Instance.Calculator.HeightScaleCalculate(currentResolution.Height));
+            scale = new Vector2(GameWorld.Instance.ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                GameWorld.Instance.ViewCalculator.CalculateHeightScale(currentResolution.Height));
 
             back = new Button(content.Load<Texture2D>("Images/Back"),
             content.Load<Texture2D>("Images/Back"));
@@ -128,8 +128,8 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scale = new Vector2(GameWorld.Instance.Calculator.WidthScaleCalculate(currentResolution.Width),
-                    GameWorld.Instance.Calculator.HeightScaleCalculate(currentResolution.Height));
+                scale = new Vector2(GameWorld.Instance.ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                    GameWorld.Instance.ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
             else if (twoRes.isClicked == true)
             {
@@ -140,8 +140,8 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scale = new Vector2(GameWorld.Instance.Calculator.WidthScaleCalculate(currentResolution.Width),
-                    GameWorld.Instance.Calculator.HeightScaleCalculate(currentResolution.Height));
+                scale = new Vector2(GameWorld.Instance.ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                    GameWorld.Instance.ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
             if (back.isClicked == true)
             {
