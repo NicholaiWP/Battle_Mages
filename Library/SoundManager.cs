@@ -12,40 +12,16 @@ namespace Battle_Mages
     public class SoundManager
     {
         //Fields
-        private SoundEffectInstance soundEngine;
+        private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
 
-        private SoundEffect loopedsound;
-        public float volume;
-
-        //Lists
-        private List<string> soundsDurationKeys;
-
-        //Dictionaries
-        private Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
-
-        private Dictionary<string, float> soundsDuration = new Dictionary<string, float>();
-
-        //For the singleton
-        private static SoundManager instance;
-
-        public static SoundManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new SoundManager();
-                }
-                return instance;
-            }
-        }
+        public float Volume { get; set; }
 
         /// <summary>
         /// Constructor for the SoundManager
         /// </summary>
-        private SoundManager()
+        public SoundManager()
         {
-            volume = 0.25f;
+            Volume = 1f;
         }
 
         /// <summary>
@@ -54,65 +30,50 @@ namespace Battle_Mages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            //Adding sounds by name to the dictionary of sounds
-            sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound"));
-            //Adding soundNames to the dictionary with a float to evaluate the duration of the sound
-            soundsDuration.Add("FireBall", 0);
-            //Adding all soundNames from the duration dictionary so the dictionary´s values can be changed
-            //when the list is iterated with a foreach loop
-            soundsDurationKeys = new List<string>(soundsDuration.Keys);
+            sounds.Add("Music", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
+            sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
         }
 
         /// <summary>
         /// Method for playing music that have to be looped
         /// </summary>
-        public void LoopedSounds()
+        public void Music(string soundName)
         {
+            if (sounds.ContainsKey(soundName))
+            {
+                sounds[soundName].IsLooped = true;
+                sounds[soundName].Volume = Volume;
+                sounds[soundName].Play();
+            }
         }
 
         /// <summary>
-        /// Method for playing a sound by the soundName with a specific duration
+        /// Method for playing a sound by the soundName
         /// </summary>
         /// <param name="soundName"></param>
         public void PlaySound(string soundName)
         {
-            //Checks if the dictionary called sounds contains the key soundName
             if (sounds.ContainsKey(soundName))
             {
-                //Checks if the float value at the string key is less than or equal to zero in the dictionary soundsDuration
-                if (soundsDuration[soundName] <= 0)
+                if (sounds[soundName].State == SoundState.Stopped)
                 {
-                    //Making a SoundEffect called currentSound and sets it to be the SoundEffect at the string key
-                    //in the dictionary called sounds
-                    SoundEffect currentSound = sounds[soundName];
-                    //Making an instance of the currentSound
-                    SoundEffectInstance currentSoundInstance = currentSound.CreateInstance();
-                    //Setting the volume
-                    currentSoundInstance.Volume = volume;
-                    //Changing the float value at the key string to the currentSound duration
-                    soundsDuration[soundName] = (float)currentSound.Duration.TotalSeconds;
-                    //Playing the sound
-                    currentSound.Play();
+                    sounds[soundName].Volume = Volume;
+                    sounds[soundName].Play();
                 }
             }
         }
 
-        /// <summary>
-        /// Method for updating the SoundManager, here all sound-durations are subtracted by
-        /// the deltatime of the GameWorld unless the duration is less than 0
-        /// </summary>
-        public void Update()
+        public void UpdateMusicVolume()
         {
-            //Iterating through the list soundsDurationKeys so we can check and change the values in the dictionary
-            foreach (string nameOfSound in soundsDurationKeys)
+            if (Volume < 0)
             {
-                //Checking if the float value at the string key is more or equal to zero in the dictionary soundsDuration
-                if (soundsDuration[nameOfSound] >= 0)
-                {
-                    //Subtracting the float value at the string key by the DeltaTime in GameWorld
-                    soundsDuration[nameOfSound] -= GameWorld.Instance.DeltaTime;
-                }
+                Volume = 0;
             }
+            else if (Volume > 1)
+            {
+                Volume = 1;
+            }
+            sounds["Music"].Volume = Volume;
         }
     }
 }

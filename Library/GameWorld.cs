@@ -26,6 +26,7 @@ namespace Battle_Mages
         private Cursor cursor;
         private MenuScreenManager menuScreenManager;
         private ViewCalculator viewCalculator;
+        private SoundManager soundManager;
         public GameState currentGameState = GameState.MainMenu;
 
         //Lists
@@ -37,6 +38,7 @@ namespace Battle_Mages
         //Properties
         public int CursorPictureNumber { get; set; } = 0;
 
+        public SoundManager SoundManager { get { return soundManager; } }
         public Cursor Cursor { get { return cursor; } }
         public MenuScreenManager MenuScreenManager { get { return menuScreenManager; } }
         public ViewCalculator ViewCalculator { get { return viewCalculator; } }
@@ -95,6 +97,7 @@ namespace Battle_Mages
             cursor = new Cursor();
             viewCalculator = new ViewCalculator();
             menuScreenManager = new MenuScreenManager();
+            soundManager = new SoundManager();
             speed = 250;
         }
 
@@ -126,8 +129,8 @@ namespace Battle_Mages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             menuScreenManager.LoadContent(Content);
-            SoundManager.Instance.LoadContent(Content);
-
+            soundManager.LoadContent(Content);
+            soundManager.Music("Music");
             // TODO: use this.Content to load your game content here
         }
 
@@ -147,16 +150,19 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //Testing sound
-            SoundManager.Instance.Update();
             lastKey = currentKey;
             currentKey = Keyboard.GetState();
-            //Testing sound
-            if (currentKey.IsKeyDown(Keys.F) && lastKey.IsKeyUp(Keys.F))
-            {
-                SoundManager.Instance.PlaySound("FireBall");
-            }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Z))
+            {
+                soundManager.Volume -= 0.01f;
+                soundManager.UpdateMusicVolume();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.X))
+            {
+                soundManager.Volume += 0.01f;
+                soundManager.UpdateMusicVolume();
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();

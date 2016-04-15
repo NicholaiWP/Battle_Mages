@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -75,7 +75,7 @@ namespace Battle_Mages
             }
             else if (up)
             {
-                SoundManager.Instance.PlaySound("FireBall");
+                GameWorld.Instance.SoundManager.PlaySound("FireBall");
                 mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
