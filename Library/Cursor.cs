@@ -26,7 +26,7 @@ namespace Battle_Mages
             get
             {
                 position = Vector2.Transform(Mouse.GetState().Position.ToVector2(),
-                    Matrix.Invert(GameWorld.Instance.Camera.ViewMatrix));
+                    GameWorld.Instance.Camera.WorldMatrix);
                 return position;
             }
         }
@@ -58,7 +58,6 @@ namespace Battle_Mages
             spriteBatch.Draw(sprite[GameWorld.Instance.CursorPictureNumber],
                 position: Position,
                 origin: Vector2.Zero,
-                rotation: 0f,
                 color: Color.White,
                 effects: SpriteEffects.None);
         }

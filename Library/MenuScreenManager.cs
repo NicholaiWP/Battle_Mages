@@ -179,6 +179,8 @@ namespace Battle_Mages
             oneRes.Draw(spriteBatch);
             twoRes.Draw(spriteBatch);
             spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
+            spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
+                new Vector2(0, -150), Color.White);
             back.Draw(spriteBatch);
         }
     }

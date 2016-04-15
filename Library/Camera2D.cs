@@ -17,6 +17,7 @@ namespace Battle_Mages
         private float rotation;
         private Vector2 position;
         private Matrix viewMatrix;
+        private Matrix worldMatrix;
         private Rectangle topRectangle;
         private Rectangle rightRectangle;
         private Rectangle bottomRectangle;
@@ -48,6 +49,15 @@ namespace Battle_Mages
                     Matrix.CreateTranslation(new Vector3(GameWorld.Instance.HalfViewPortWidth,
                     GameWorld.Instance.HalfViewPortHeight, 0));
                 return viewMatrix;
+            }
+        }
+
+        public Matrix WorldMatrix
+        {
+            get
+            {
+                worldMatrix = Matrix.Invert(viewMatrix);
+                return worldMatrix;
             }
         }
 

@@ -130,7 +130,7 @@ namespace Battle_Mages
             cursor.LoadContent(Content);
             menuScreenManager.LoadContent(Content);
             soundManager.LoadContent(Content);
-            soundManager.Music("Music");
+            //soundManager.Music("Music");
             // TODO: use this.Content to load your game content here
         }
 

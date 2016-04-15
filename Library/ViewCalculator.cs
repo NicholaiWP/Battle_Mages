@@ -11,13 +11,13 @@ namespace Battle_Mages
     {
         public float CalculateWidthScale(float resolutionWidth)
         {
-            float widthScale = resolutionWidth / 1366;
+            float widthScale = resolutionWidth / 640;
             return widthScale;
         }
 
         public float CalculateHeightScale(float resolutionHeight)
         {
-            float heightScale = resolutionHeight / 768;
+            float heightScale = resolutionHeight / 480;
             return heightScale;
         }
 
@@ -32,7 +32,7 @@ namespace Battle_Mages
 
         private Vector2 CalculatePosition(Vector2 position)
         {
-            Vector2 realPosition = Vector2.Transform(position, Matrix.Invert(GameWorld.Instance.Camera.ViewMatrix));
+            Vector2 realPosition = Vector2.Transform(position, GameWorld.Instance.Camera.WorldMatrix);
             return realPosition;
         }
 
