@@ -25,9 +25,10 @@ namespace Battle_Mages
         private KeyboardState lastKey;
         private Cursor cursor;
         private MenuScreenManager menuScreenManager;
-        private ViewCalculator viewCalculator;
         private SoundManager soundManager;
         public GameState currentGameState = GameState.MainMenu;
+        public const int GameWidth = 1366;
+        public const int GameHeight = 768;
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
@@ -41,7 +42,6 @@ namespace Battle_Mages
         public SoundManager SoundManager { get { return soundManager; } }
         public Cursor Cursor { get { return cursor; } }
         public MenuScreenManager MenuScreenManager { get { return menuScreenManager; } }
-        public ViewCalculator ViewCalculator { get { return viewCalculator; } }
 
         public List<GameObject> ActiveObjects
         {
@@ -90,12 +90,11 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = new Cursor();
-            viewCalculator = new ViewCalculator();
             menuScreenManager = new MenuScreenManager();
             soundManager = new SoundManager();
             speed = 250;

@@ -16,7 +16,7 @@ namespace Battle_Mages
         private string currentResolutionString;
         private DisplayMode currentResolution;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
-        public Vector2 scale;
+        public Vector2 scalingVector;
         public bool mouseCanClickButton;
         public Button play;
         public Button settings;
@@ -54,8 +54,8 @@ namespace Battle_Mages
                 }
                 lastResolution = dmode;
             }
-            scale = new Vector2(GameWorld.Instance.ViewCalculator.CalculateWidthScale(currentResolution.Width),
-                GameWorld.Instance.ViewCalculator.CalculateHeightScale(currentResolution.Height));
+            scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                ViewCalculator.CalculateHeightScale(currentResolution.Height));
 
             back = new Button(content.Load<Texture2D>("Images/Back"),
             content.Load<Texture2D>("Images/Back"));
@@ -128,8 +128,8 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scale = new Vector2(GameWorld.Instance.ViewCalculator.CalculateWidthScale(currentResolution.Width),
-                    GameWorld.Instance.ViewCalculator.CalculateHeightScale(currentResolution.Height));
+                scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                    ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
             else if (twoRes.isClicked == true)
             {
@@ -140,8 +140,8 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scale = new Vector2(GameWorld.Instance.ViewCalculator.CalculateWidthScale(currentResolution.Width),
-                    GameWorld.Instance.ViewCalculator.CalculateHeightScale(currentResolution.Height));
+                scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                    ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
             if (back.isClicked == true)
             {
@@ -162,10 +162,9 @@ namespace Battle_Mages
         public void DrawMenu(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,
-            destinationRectangle: new Rectangle((int)(0 - GameWorld.Instance.HalfViewPortWidth),
-               (int)(0 - GameWorld.Instance.HalfViewPortHeight),
-               (int)GameWorld.Instance.HalfViewPortWidth * 2,
-               (int)GameWorld.Instance.HalfViewPortHeight * 2),
+            destinationRectangle: new Rectangle(-GameWorld.GameWidth / 2,
+               -GameWorld.GameHeight / 2,
+               GameWorld.GameWidth, GameWorld.GameHeight),
             color: Color.White,
             origin: Vector2.Zero,
             effects: SpriteEffects.None);

@@ -27,6 +27,14 @@ namespace Battle_Mages
             {
                 position = Vector2.Transform(Mouse.GetState().Position.ToVector2(),
                     GameWorld.Instance.Camera.WorldMatrix);
+                if (position.X > 674 + GameWorld.Instance.Camera.Position.X)
+                {
+                    position.X = 674 + GameWorld.Instance.Camera.Position.X;
+                }
+                if (position.Y > 375 + GameWorld.Instance.Camera.Position.Y)
+                {
+                    position.Y = 375 + GameWorld.Instance.Camera.Position.Y;
+                }
                 return position;
             }
         }

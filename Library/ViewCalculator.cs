@@ -7,21 +7,21 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public class ViewCalculator
+    public static class ViewCalculator
     {
-        public float CalculateWidthScale(float resolutionWidth)
+        public static float CalculateWidthScale(float resolutionWidth)
         {
-            float widthScale = resolutionWidth / 640;
+            float widthScale = resolutionWidth / GameWorld.GameWidth;
             return widthScale;
         }
 
-        public float CalculateHeightScale(float resolutionHeight)
+        public static float CalculateHeightScale(float resolutionHeight)
         {
-            float heightScale = resolutionHeight / 480;
+            float heightScale = resolutionHeight / GameWorld.GameHeight;
             return heightScale;
         }
 
-        public Rectangle CalculateRectangle(Vector2 position, int width, int height)
+        public static Rectangle CalculateRectangle(Vector2 position, int width, int height)
         {
             Vector2 realPosition = CalculatePosition(position);
             int realWidth = CalculateRectangleWidth(width);
@@ -30,21 +30,21 @@ namespace Battle_Mages
             return rectangle;
         }
 
-        private Vector2 CalculatePosition(Vector2 position)
+        private static Vector2 CalculatePosition(Vector2 position)
         {
             Vector2 realPosition = Vector2.Transform(position, GameWorld.Instance.Camera.WorldMatrix);
             return realPosition;
         }
 
-        private int CalculateRectangleWidth(int width)
+        private static int CalculateRectangleWidth(int width)
         {
-            float realWidth = width / GameWorld.Instance.MenuScreenManager.scale.X;
+            float realWidth = width / GameWorld.Instance.MenuScreenManager.scalingVector.X;
             return (int)realWidth;
         }
 
-        private int CalculateRectangleHeight(int height)
+        private static int CalculateRectangleHeight(int height)
         {
-            float realHeight = height / GameWorld.Instance.MenuScreenManager.scale.Y;
+            float realHeight = height / GameWorld.Instance.MenuScreenManager.scalingVector.Y;
             return (int)realHeight;
         }
     }
