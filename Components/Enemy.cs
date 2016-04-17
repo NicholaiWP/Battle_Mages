@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,12 @@ namespace Battle_Mages
         private Transform transform;
         private FacingDirection fDirection;
         private MovingDirection mDirection;
+        private float targetingRange;
+        private float attackingRange;
+        private float attackSpeed;
+        private Strategy strategy;
 
-        public Enemy(GameObject gameObject) : base(gameObject)
+        public Enemy(GameObject gameObject, int lvl, bool isRanged) : base(gameObject)
         {
             moveSpeed = 100;
             mDirection = MovingDirection.Idle;
@@ -28,6 +33,7 @@ namespace Battle_Mages
             animator = (Animator)GameObject.GetComponent("Animator");
             spriteRenderer = (SpriteRenderer)GameObject.GetComponent("SpirteRenderer");
             transform = GameObject.Transform;
+            strategy = new Strategy(animator, transform, moveSpeed);
             CreateAnimation();
         }
 
@@ -38,10 +44,31 @@ namespace Battle_Mages
 
         public void Update()
         {
-            foreach (GameObject gameObject in GameWorld.Instance.ActiveObjects)
+            foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
             {
-                if (gameObject.Components.Contains((Player)gameObject.GetComponent("Player")))
+                if (potentialTarget.Components.Contains((Player)potentialTarget.GetComponent("Player")))
                 {
+                    Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
+                    float lengthToTarget = vecToTarget.Length();
+                    if (lengthToTarget <= attackingRange)
+                    {
+                        strategy.Attack(fDirection, attackingRange);
+                    }
+                    else if (lengthToTarget <= targetingRange)
+                    {
+                        if (potentialTarget.Transform.Position.X > transform.Position.X &&
+                        potentialTarget.Transform.Position.Y > transform.Position.Y)
+                        {
+                            mDirection = MovingDirection.DownRight;
+                            fDirection = FacingDirection.Right;
+                        }
+                        strategy.Move(mDirection);
+                    }
+                    else
+                    {
+                        strategy.Idle(fDirection);
+                    }
+                    break;
                 }
             }
         }

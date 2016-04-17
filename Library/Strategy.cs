@@ -71,11 +71,7 @@ namespace Battle_Mages
         {
         }
 
-        public void MeleeAttack(FacingDirection direction)
-        {
-        }
-
-        public void RangedAttack(FacingDirection direction)
+        public void Attack(FacingDirection direction, float attackingRange)
         {
         }
 

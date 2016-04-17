@@ -38,7 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Builders\Director.cs" />
+    <Compile Include="Library\Director.cs" />
     <Compile Include="Builders\EnemyBuilder.cs" />
     <Compile Include="Builders\PlayerBuilder.cs" />
     <Compile Include="Builders\SpellBuilder.cs" />
