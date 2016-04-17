@@ -13,7 +13,6 @@ namespace Battle_Mages
         private SpriteRenderer spriteRenderer;
         private Animator animator;
         private Transform transform;
-        private IStrategy strategy;
         private FacingDirection fDirection;
         private MovingDirection mDirection;
 

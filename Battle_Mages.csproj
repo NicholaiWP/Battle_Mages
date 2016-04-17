@@ -56,7 +56,6 @@
     <Compile Include="Interfaces\IEnterCollision.cs" />
     <Compile Include="Interfaces\IExitCollision.cs" />
     <Compile Include="Interfaces\IStayOnCollision.cs" />
-    <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Library\Animation.cs" />
     <Compile Include="Components\Animator.cs" />
     <Compile Include="Components\Player.cs" />
@@ -68,14 +67,11 @@
     <Compile Include="Library\Enums.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\MenuScreenManager.cs" />
+    <Compile Include="Library\Strategy.cs" />
     <Compile Include="Library\ViewCalculator.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\Attack.cs" />
-    <Compile Include="Strategies\Casting.cs" />
-    <Compile Include="Strategies\Idle.cs" />
-    <Compile Include="Strategies\Move.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

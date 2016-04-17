@@ -17,7 +17,7 @@ namespace Battle_Mages
         private Transform transform;
         private MovingDirection mDirection;
         private FacingDirection fDirection;
-        private IStrategy strategy;
+        private Strategy strategy;
 
         public Player(GameObject gameObject) : base(gameObject)
         {
@@ -31,6 +31,7 @@ namespace Battle_Mages
             animator = (Animator)GameObject.GetComponent("Animator");
             spriteRenderer = (SpriteRenderer)GameObject.GetComponent("SpirteRenderer");
             transform = GameObject.Transform;
+            strategy = new Strategy(animator, transform, moveSpeed);
             CreateAnimation();
         }
 
@@ -45,8 +46,6 @@ namespace Battle_Mages
 
         private void MoveInformation()
         {
-            strategy = new Move(animator, transform, moveSpeed);
-
             KeyboardState kbState = Keyboard.GetState();
             bool up = kbState.IsKeyDown(Keys.W);
             bool down = kbState.IsKeyDown(Keys.S);
@@ -75,7 +74,6 @@ namespace Battle_Mages
             }
             else if (up)
             {
-                GameWorld.Instance.SoundManager.PlaySound("FireBall");
                 mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
@@ -101,9 +99,9 @@ namespace Battle_Mages
 
             if (mDirection == MovingDirection.Idle)
             {
-                strategy = new Idle(animator);
+                strategy.Idle(fDirection);
             }
-            strategy.Execute(mDirection, fDirection);
+            strategy.Move(mDirection);
         }
     }
 }
