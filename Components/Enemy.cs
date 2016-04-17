@@ -19,6 +19,8 @@ namespace Battle_Mages
         private float targetingRange;
         private float attackingRange;
         private float attackSpeed;
+        private float attackDamage;
+        private float health;
         private Strategy strategy;
 
         public Enemy(GameObject gameObject, int lvl, bool isRanged) : base(gameObject)
