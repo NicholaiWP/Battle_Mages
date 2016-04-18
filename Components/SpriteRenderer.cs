@@ -64,7 +64,6 @@ namespace Battle_Mages
                 sourceRectangle: rectangle,
                 origin: Vector2.Zero,
                 rotation: 0f,
-                //scale: new Vector2(MenuScreenManager.Instance.scale, MenuScreenManager.Instance.scale),
                 color: color,
                 effects: SpriteEffects.None);
         }

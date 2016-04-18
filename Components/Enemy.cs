@@ -44,6 +44,14 @@ namespace Battle_Mages
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// in this method the enemy searches in the if statement after its potential target,
+        /// which in this case is the gameobject with the component "player".
+        /// When found the distance between the enemy and the player is calculated.
+        /// If the distance is less or equal to the corresponding enemy attack range,
+        /// the enemy will attempt to attack the player,
+        /// if the player isnt in the enemy's range the enemy will be put into its idle state.
+        /// </summary>
         public void Update()
         {
             foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
@@ -54,10 +62,22 @@ namespace Battle_Mages
                     float lengthToTarget = vecToTarget.Length();
                     if (lengthToTarget <= attackingRange)
                     {
-                        strategy.Attack(fDirection, attackingRange);
+                        if (attackSpeed <= 0)
+                        {
+                            attackSpeed = 5;
+                            strategy.Attack(fDirection, attackingRange);
+                        }
+                        else
+                        {
+                            attackSpeed -= GameWorld.Instance.DeltaTime;
+                            strategy.Idle(fDirection);
+                        }
                     }
                     else if (lengthToTarget <= targetingRange)
                     {
+                        bool up = transform.Position.Y > potentialTarget.Transform.Position.Y;
+                        bool down = transform.Position.Y < potentialTarget.Transform.Position.Y;
+
                         if (potentialTarget.Transform.Position.X > transform.Position.X &&
                         potentialTarget.Transform.Position.Y > transform.Position.Y)
                         {
@@ -68,6 +88,7 @@ namespace Battle_Mages
                     }
                     else
                     {
+                        attackSpeed -= GameWorld.Instance.DeltaTime;
                         strategy.Idle(fDirection);
                     }
                     break;
