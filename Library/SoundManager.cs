@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,17 @@ namespace Battle_Mages
         //Fields
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
 
-        public float Volume { get; set; }
+        private Song backgroundMusic;
+        public float SoundVolume { get; set; }
+        public float MusicVolume { get; set; }
 
         /// <summary>
         /// Constructor for the SoundManager
         /// </summary>
         public SoundManager()
         {
-            Volume = 1f;
+            SoundVolume = 0.25f;
+            MusicVolume = 0.10f;
         }
 
         /// <summary>
@@ -28,8 +32,10 @@ namespace Battle_Mages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            sounds.Add("Music", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
             sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
+            backgroundMusic = content.Load<Song>("Sounds/backgroundMusic");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = MusicVolume;
         }
 
         /// <summary>
@@ -37,12 +43,7 @@ namespace Battle_Mages
         /// </summary>
         public void Music(string soundName)
         {
-            if (sounds.ContainsKey(soundName))
-            {
-                sounds[soundName].IsLooped = true;
-                sounds[soundName].Volume = Volume;
-                sounds[soundName].Play();
-            }
+            MediaPlayer.Play(backgroundMusic);
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Battle_Mages
             {
                 if (sounds[soundName].State == SoundState.Stopped)
                 {
-                    sounds[soundName].Volume = Volume;
+                    sounds[soundName].Volume = SoundVolume;
                     sounds[soundName].Play();
                 }
             }
@@ -63,15 +64,15 @@ namespace Battle_Mages
 
         public void UpdateMusicVolume()
         {
-            if (Volume < 0)
+            if (SoundVolume < 0)
             {
-                Volume = 0;
+                SoundVolume = 0;
             }
-            else if (Volume > 1)
+            else if (SoundVolume > 1)
             {
-                Volume = 1;
+                SoundVolume = 1;
             }
-            sounds["Music"].Volume = Volume;
+            sounds["Music"].Volume = SoundVolume;
         }
     }
 }

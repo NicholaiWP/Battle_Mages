@@ -90,7 +90,7 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
@@ -129,7 +129,7 @@ namespace Battle_Mages
             cursor.LoadContent(Content);
             menuScreenManager.LoadContent(Content);
             soundManager.LoadContent(Content);
-            //soundManager.Music("Music");
+            soundManager.Music("hey");
             // TODO: use this.Content to load your game content here
         }
 
@@ -154,12 +154,12 @@ namespace Battle_Mages
 
             if (Keyboard.GetState().IsKeyDown(Keys.Z))
             {
-                soundManager.Volume -= 0.01f;
+                soundManager.SoundVolume -= 0.01f;
                 soundManager.UpdateMusicVolume();
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.X))
             {
-                soundManager.Volume += 0.01f;
+                soundManager.SoundVolume += 0.01f;
                 soundManager.UpdateMusicVolume();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))

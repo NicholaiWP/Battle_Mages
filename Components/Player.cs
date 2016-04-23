@@ -91,14 +91,11 @@ namespace Battle_Mages
             {
                 mDirection = MovingDirection.Right;
                 fDirection = FacingDirection.Right;
+                GameWorld.Instance.SoundManager.PlaySound("FireBall");
             }
             else
             {
                 mDirection = MovingDirection.Idle;
-            }
-
-            if (mDirection == MovingDirection.Idle)
-            {
                 strategy.Idle(fDirection);
             }
             strategy.Move(mDirection);

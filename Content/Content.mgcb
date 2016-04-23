@@ -25,3 +25,9 @@
 /processorParam:Quality=Best
 /build:Sounds/JumpSound.wav
 
+#begin Sounds/backgroundMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/backgroundMusic.mp3
+
