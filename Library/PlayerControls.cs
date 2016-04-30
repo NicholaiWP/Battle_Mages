@@ -23,6 +23,7 @@ namespace Battle_Mages
             PlayerKeys.Add("Spell3", Keys.D3);
             PlayerKeys.Add("Spell4", Keys.D4);
             currentBindings = new List<string>(PlayerKeys.Keys);
+
             foreach (Keys key in Enum.GetValues(typeof(Keys)))
             {
                 if (key == Keys.Enter || key == Keys.Space || key == Keys.Tab ||
