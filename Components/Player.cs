@@ -47,13 +47,13 @@ namespace Battle_Mages
         private void MoveInformation()
         {
             KeyboardState kbState = Keyboard.GetState();
-            Keys[] keyPressed = kbState.GetPressedKeys();
+            /*Keys[] keyPressed = kbState.GetPressedKeys();
             if (keyPressed.Length == 1)
             {
                 GameWorld.Instance.playerControls.PlayerKeys["UpKey"] =
                     GameWorld.Instance.playerControls.ChangeBinding(GameWorld.Instance.playerControls.PlayerKeys["UpKey"],
                     keyPressed[0]);
-            }
+            }*/
             bool up = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["UpKey"]);
             bool down = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["DownKey"]);
             bool left = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["LeftKey"]);
