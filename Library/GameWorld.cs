@@ -29,6 +29,7 @@ namespace Battle_Mages
         public GameState currentGameState = GameState.MainMenu;
         public const int GameWidth = 1366;
         public const int GameHeight = 768;
+        public PlayerControls playerControls;
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
@@ -90,13 +91,13 @@ namespace Battle_Mages
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = true;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             camera = new Camera2D();
             cursor = new Cursor();
             menuScreenManager = new MenuScreenManager();
             soundManager = new SoundManager();
+            playerControls = new PlayerControls();
             speed = 250;
         }
 

@@ -47,10 +47,17 @@ namespace Battle_Mages
         private void MoveInformation()
         {
             KeyboardState kbState = Keyboard.GetState();
-            bool up = kbState.IsKeyDown(Keys.W);
-            bool down = kbState.IsKeyDown(Keys.S);
-            bool left = kbState.IsKeyDown(Keys.A);
-            bool right = kbState.IsKeyDown(Keys.D);
+            Keys[] keyPressed = kbState.GetPressedKeys();
+            if (keyPressed.Length == 1)
+            {
+                GameWorld.Instance.playerControls.PlayerKeys["UpKey"] =
+                    GameWorld.Instance.playerControls.ChangeBinding(GameWorld.Instance.playerControls.PlayerKeys["UpKey"],
+                    keyPressed[0]);
+            }
+            bool up = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["UpKey"]);
+            bool down = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["DownKey"]);
+            bool left = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["LeftKey"]);
+            bool right = kbState.IsKeyDown(GameWorld.Instance.playerControls.PlayerKeys["RightKey"]);
 
             if (up && right)
             {
@@ -91,7 +98,6 @@ namespace Battle_Mages
             {
                 mDirection = MovingDirection.Right;
                 fDirection = FacingDirection.Right;
-                GameWorld.Instance.SoundManager.PlaySound("FireBall");
             }
             else
             {

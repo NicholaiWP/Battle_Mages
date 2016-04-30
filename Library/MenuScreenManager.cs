@@ -12,7 +12,7 @@ namespace Battle_Mages
     {
         private Texture2D sprite;
         private Vector2 fontPosition;
-        private int elemenAtNumber;
+        private int elementAtNumber;
         private string currentResolutionString;
         private DisplayMode currentResolution;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
@@ -122,9 +122,9 @@ namespace Battle_Mages
             if (oneRes.isClicked == true)
             {
                 oneRes.isClicked = false;
-                elemenAtNumber++;
-                if (elemenAtNumber >= resolutions.Count) elemenAtNumber = 0;
-                currentResolution = resolutions[elemenAtNumber];
+                elementAtNumber++;
+                if (elementAtNumber >= resolutions.Count) elementAtNumber = 0;
+                currentResolution = resolutions[elementAtNumber];
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
@@ -134,9 +134,9 @@ namespace Battle_Mages
             else if (twoRes.isClicked == true)
             {
                 twoRes.isClicked = false;
-                elemenAtNumber--;
-                if (elemenAtNumber <= 0) elemenAtNumber = resolutions.Count - 1;
-                currentResolution = resolutions[elemenAtNumber];
+                elementAtNumber--;
+                if (elementAtNumber <= 0) elementAtNumber = resolutions.Count - 1;
+                currentResolution = resolutions[elementAtNumber];
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
@@ -153,7 +153,7 @@ namespace Battle_Mages
             {
                 if (currentResolution == resolutions.ElementAt(i))
                 {
-                    elemenAtNumber = i;
+                    elementAtNumber = i;
                     currentResolutionString = (currentResolution.Width + "x" + currentResolution.Height);
                 }
             }
@@ -180,6 +180,8 @@ namespace Battle_Mages
             spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
             spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
+            spriteBatch.DrawString(fontBM, GameWorld.Instance.playerControls.PlayerKeys["UpKey"].ToString(),
+                new Vector2(50, 50), Color.Black);
             back.Draw(spriteBatch);
         }
     }

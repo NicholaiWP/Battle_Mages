@@ -64,15 +64,6 @@ namespace Battle_Mages
 
         public void UpdateMusicVolume()
         {
-            if (SoundVolume < 0)
-            {
-                SoundVolume = 0;
-            }
-            else if (SoundVolume > 1)
-            {
-                SoundVolume = 1;
-            }
-            sounds["Music"].Volume = SoundVolume;
         }
     }
 }

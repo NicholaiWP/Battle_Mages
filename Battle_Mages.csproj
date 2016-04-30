@@ -66,6 +66,7 @@
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\Enums.cs" />
     <Compile Include="Library\GameWorld.cs" />
+    <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\MenuScreenManager.cs" />
     <Compile Include="Library\Strategy.cs" />
     <Compile Include="Library\ViewCalculator.cs" />
