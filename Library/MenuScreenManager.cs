@@ -180,7 +180,8 @@ namespace Battle_Mages
             spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
             spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
-            spriteBatch.DrawString(fontBM, GameWorld.Instance.playerControls.PlayerKeys["UpKey"].ToString(),
+            spriteBatch.DrawString(fontBM,
+                GameWorld.Instance.playerControls.KeyToString(GameWorld.Instance.playerControls.PlayerKeys["Spell1"]),
                 new Vector2(50, 50), Color.Black);
             back.Draw(spriteBatch);
         }
