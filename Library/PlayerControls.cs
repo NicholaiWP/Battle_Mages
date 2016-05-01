@@ -1,28 +1,38 @@
-﻿using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
+    public enum PlayerBind
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        Spell1,
+        Spell2,
+        Spell3,
+        Spell4,
+    }
+
     public class PlayerControls
     {
-        private List<string> currentBindings;
         private List<Keys> usableKeys = new List<Keys>();
-        public Dictionary<string, Keys> PlayerKeys = new Dictionary<string, Keys>();
+        public Dictionary<PlayerBind, Keys> PlayerKeys = new Dictionary<PlayerBind, Keys>();
 
         public PlayerControls()
         {
-            PlayerKeys.Add("UpKey", Keys.W);
-            PlayerKeys.Add("DownKey", Keys.S);
-            PlayerKeys.Add("LeftKey", Keys.A);
-            PlayerKeys.Add("RightKey", Keys.D);
-            PlayerKeys.Add("Spell1", Keys.D1);
-            PlayerKeys.Add("Spell2", Keys.D2);
-            PlayerKeys.Add("Spell3", Keys.D3);
-            PlayerKeys.Add("Spell4", Keys.D4);
-            currentBindings = new List<string>(PlayerKeys.Keys);
+            PlayerKeys.Add(PlayerBind.Up, Keys.W);
+            PlayerKeys.Add(PlayerBind.Down, Keys.S);
+            PlayerKeys.Add(PlayerBind.Left, Keys.A);
+            PlayerKeys.Add(PlayerBind.Right, Keys.D);
+            PlayerKeys.Add(PlayerBind.Spell1, Keys.D1);
+            PlayerKeys.Add(PlayerBind.Spell2, Keys.D2);
+            PlayerKeys.Add(PlayerBind.Spell3, Keys.D3);
+            PlayerKeys.Add(PlayerBind.Spell4, Keys.D4);
 
             foreach (Keys key in Enum.GetValues(typeof(Keys)))
             {
@@ -40,7 +50,7 @@ namespace Battle_Mages
         {
             if (usableKeys.Contains(newBind))
             {
-                foreach (string keyBind in currentBindings)
+                foreach (PlayerBind keyBind in Enum.GetValues(typeof(PlayerBind)))
                 {
                     if (PlayerKeys[keyBind] == newBind)
                     {

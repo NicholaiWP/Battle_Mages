@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -181,7 +181,7 @@ namespace Battle_Mages
             spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
             spriteBatch.DrawString(fontBM,
-                GameWorld.Instance.playerControls.KeyToString(GameWorld.Instance.playerControls.PlayerKeys["Spell1"]),
+                GameWorld.Instance.playerControls.KeyToString(GameWorld.Instance.playerControls.PlayerKeys[PlayerBind.Spell1]),
                 new Vector2(50, 50), Color.Black);
             back.Draw(spriteBatch);
         }
