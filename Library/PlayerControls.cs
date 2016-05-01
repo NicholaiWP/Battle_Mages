@@ -21,18 +21,18 @@ namespace Battle_Mages
     public class PlayerControls
     {
         private List<Keys> usableKeys = new List<Keys>();
-        public Dictionary<PlayerBind, Keys> PlayerKeys = new Dictionary<PlayerBind, Keys>();
+        private Dictionary<PlayerBind, Keys> playerKeys = new Dictionary<PlayerBind, Keys>();
 
         public PlayerControls()
         {
-            PlayerKeys.Add(PlayerBind.Up, Keys.W);
-            PlayerKeys.Add(PlayerBind.Down, Keys.S);
-            PlayerKeys.Add(PlayerBind.Left, Keys.A);
-            PlayerKeys.Add(PlayerBind.Right, Keys.D);
-            PlayerKeys.Add(PlayerBind.Spell1, Keys.D1);
-            PlayerKeys.Add(PlayerBind.Spell2, Keys.D2);
-            PlayerKeys.Add(PlayerBind.Spell3, Keys.D3);
-            PlayerKeys.Add(PlayerBind.Spell4, Keys.D4);
+            playerKeys.Add(PlayerBind.Up, Keys.W);
+            playerKeys.Add(PlayerBind.Down, Keys.S);
+            playerKeys.Add(PlayerBind.Left, Keys.A);
+            playerKeys.Add(PlayerBind.Right, Keys.D);
+            playerKeys.Add(PlayerBind.Spell1, Keys.D1);
+            playerKeys.Add(PlayerBind.Spell2, Keys.D2);
+            playerKeys.Add(PlayerBind.Spell3, Keys.D3);
+            playerKeys.Add(PlayerBind.Spell4, Keys.D4);
 
             foreach (Keys key in Enum.GetValues(typeof(Keys)))
             {
@@ -46,21 +46,25 @@ namespace Battle_Mages
             }
         }
 
-        public Keys ChangeBinding(Keys currentBind, Keys newBind)
+        public Keys GetBinding(PlayerBind targetBind)
         {
-            if (usableKeys.Contains(newBind))
+            return playerKeys[targetBind];
+        }
+
+        public void ChangeBinding(PlayerBind targetBind, Keys newKey)
+        {
+            if (usableKeys.Contains(newKey))
             {
-                foreach (PlayerBind keyBind in Enum.GetValues(typeof(PlayerBind)))
+                foreach (PlayerBind keyBind in playerKeys.Keys)
                 {
-                    if (PlayerKeys[keyBind] == newBind)
+                    if (playerKeys[keyBind] == newKey)
                     {
-                        PlayerKeys[keyBind] = currentBind;
+                        playerKeys[keyBind] = playerKeys[targetBind];
                         break;
                     }
                 }
-                return newBind;
+                playerKeys[targetBind] = newKey;
             }
-            return currentBind;
         }
 
         public string KeyToString(Keys key)

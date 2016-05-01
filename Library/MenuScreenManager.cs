@@ -181,7 +181,7 @@ namespace Battle_Mages
             spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
             spriteBatch.DrawString(fontBM,
-                GameWorld.Instance.playerControls.KeyToString(GameWorld.Instance.playerControls.PlayerKeys[PlayerBind.Spell1]),
+                GameWorld.Instance.playerControls.KeyToString(GameWorld.Instance.playerControls.GetBinding(PlayerBind.Spell1)),
                 new Vector2(50, 50), Color.Black);
             back.Draw(spriteBatch);
         }
