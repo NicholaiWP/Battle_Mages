@@ -98,12 +98,12 @@ namespace Battle_Mages
             if (play.isClicked == true)
             {
                 play.isClicked = false;
-                GameWorld.Instance.SetState(GameState.InGame);
+                GameWorld.SetState(GameState.InGame);
             }
             else if (settings.isClicked == true)
             {
                 settings.isClicked = false;
-                GameWorld.Instance.SetState(GameState.Settings);
+                GameWorld.SetState(GameState.Settings);
             }
             else if (quit.isClicked == true)
             {
@@ -146,7 +146,7 @@ namespace Battle_Mages
             if (back.isClicked == true)
             {
                 back.isClicked = false;
-                GameWorld.Instance.SetState(GameState.MainMenu);
+                GameWorld.SetState(GameState.MainMenu);
             }
 
             for (int i = 0; i < resolutions.Count; i++)

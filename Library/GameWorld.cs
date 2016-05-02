@@ -112,9 +112,9 @@ namespace Battle_Mages
             PlayerControls = new PlayerControls();
         }
 
-        public void SetState(GameState newState)
+        public static void SetState(GameState newState)
         {
-            currentGameState = newState;
+            Instance.currentGameState = newState;
         }
 
         /// <summary>
