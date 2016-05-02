@@ -18,12 +18,10 @@ namespace Battle_Mages
         private Drawer drawer;
         private GameObject player;
         private Director director;
-        private KeyboardState currentKey;
-        private KeyboardState lastKey;
-        public GameState currentGameState = GameState.MainMenu;
-        public const int GameWidth = 1366;
-        public const int GameHeight = 768;
-        public PlayerControls playerControls;
+        private GameState currentGameState = GameState.MainMenu;
+        private const int gameWidth = 1366;
+        private const int gameHeight = 768;
+        private PlayerControls playerControls;
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
@@ -32,6 +30,12 @@ namespace Battle_Mages
         public List<GameObject> objectsToRemove = new List<GameObject>();
 
         //Properties
+        public GameState CurrentGameState
+        {
+            get { return currentGameState; }
+            set { currentGameState = value; }
+        }
+
         public ReadOnlyCollection<GameObject> ActiveObjects
         {
             get { return activeObjects.AsReadOnly(); }
@@ -59,6 +63,14 @@ namespace Battle_Mages
             get { return GraphicsDevice.Viewport.Height * 0.5f; }
         }
 
+        public static int GameWidth
+        {
+            get
+            {
+                return gameWidth;
+            }
+        }
+
         //Singleton pattern
         private static GameWorld instance;
 
@@ -74,6 +86,27 @@ namespace Battle_Mages
             }
         }
 
+        public static int GameHeight
+        {
+            get
+            {
+                return gameHeight;
+            }
+        }
+
+        public PlayerControls PlayerControls
+        {
+            get
+            {
+                return playerControls;
+            }
+
+            set
+            {
+                playerControls = value;
+            }
+        }
+
         /// <summary>
         /// Constructor for the GameWorld
         /// </summary>
@@ -83,7 +116,7 @@ namespace Battle_Mages
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            playerControls = new PlayerControls();
+            PlayerControls = new PlayerControls();
         }
 
         /// <summary>
@@ -135,9 +168,6 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            lastKey = currentKey;
-            currentKey = Keyboard.GetState();
-
             if (Keyboard.GetState().IsKeyDown(Keys.Z))
             {
                 soundManager.SoundVolume -= 0.01f;
@@ -152,7 +182,7 @@ namespace Battle_Mages
             {
                 Exit();
             }
-            switch (currentGameState)
+            switch (CurrentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.UpdateMenu();
@@ -232,7 +262,7 @@ namespace Battle_Mages
             cursor.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens
-            switch (currentGameState)
+            switch (CurrentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.DrawMenu(drawer[DrawLayer.UI]);

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -54,10 +54,10 @@ namespace Battle_Mages
                     GameWorld.Instance.playerControls.ChangeBinding(GameWorld.Instance.playerControls.PlayerKeys["UpKey"],
                     keyPressed[0]);
             }*/
-            bool up = kbState.IsKeyDown(GameWorld.Instance.playerControls.GetBinding(PlayerBind.Up));
-            bool down = kbState.IsKeyDown(GameWorld.Instance.playerControls.GetBinding(PlayerBind.Down));
-            bool left = kbState.IsKeyDown(GameWorld.Instance.playerControls.GetBinding(PlayerBind.Left));
-            bool right = kbState.IsKeyDown(GameWorld.Instance.playerControls.GetBinding(PlayerBind.Right));
+            bool up = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Up));
+            bool down = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Down));
+            bool left = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Left));
+            bool right = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Right));
 
             if (up && right)
             {
