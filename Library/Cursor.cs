@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -26,18 +26,20 @@ namespace Battle_Mages
             get
             {
                 position = Vector2.Transform(Mouse.GetState().Position.ToVector2(),
-                    GameWorld.Instance.Camera.WorldMatrix);
-                if (position.X > 674 + GameWorld.Instance.Camera.Position.X)
+                    GameWorld.Camera.WorldMatrix);
+                if (position.X > 674 + GameWorld.Camera.Position.X)
                 {
-                    position.X = 674 + GameWorld.Instance.Camera.Position.X;
+                    position.X = 674 + GameWorld.Camera.Position.X;
                 }
-                if (position.Y > 375 + GameWorld.Instance.Camera.Position.Y)
+                if (position.Y > 375 + GameWorld.Camera.Position.Y)
                 {
-                    position.Y = 375 + GameWorld.Instance.Camera.Position.Y;
+                    position.Y = 375 + GameWorld.Camera.Position.Y;
                 }
                 return position;
             }
         }
+
+        public int CursorPictureNumber { get; set; } = 0;
 
         /// <summary>
         /// Method for loading the content of the cursor, it is the pictures that are placed in an array
@@ -56,7 +58,7 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite[GameWorld.Instance.CursorPictureNumber],
+            spriteBatch.Draw(sprite[CursorPictureNumber],
                 position: Position,
                 origin: Vector2.Zero,
                 color: Color.White,

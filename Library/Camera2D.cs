@@ -45,7 +45,7 @@ namespace Battle_Mages
             {
                 viewMatrix = Matrix.CreateTranslation(new Vector3(-position, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(new Vector3(GameWorld.Instance.MenuScreenManager.ScalingVector, 1)) *
+                    Matrix.CreateScale(new Vector3(GameWorld.MenuScreenManager.ScalingVector, 1)) *
                     Matrix.CreateTranslation(new Vector3(GameWorld.Instance.HalfViewPortWidth,
                     GameWorld.Instance.HalfViewPortHeight, 0));
                 return viewMatrix;
@@ -142,6 +142,48 @@ namespace Battle_Mages
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("Images/CollisionTexture");
+        }
+
+        public void Update(float dt)
+        {
+            var camMovespeed = 250 * dt;
+
+            GameWorld.Cursor.CursorPictureNumber = 0;
+
+            Vector2 mousePos = GameWorld.Cursor.Position;
+            if (TopRectangle.Contains(mousePos) && RightRectangle.Contains(mousePos))
+            {
+                Position += new Vector2(camMovespeed, -camMovespeed);
+            }
+            else if (TopRectangle.Contains(mousePos) && LeftRectangle.Contains(mousePos))
+            {
+                Position -= new Vector2(camMovespeed, camMovespeed);
+            }
+            else if (BottomRectangle.Contains(mousePos) && LeftRectangle.Contains(mousePos))
+            {
+                Position += new Vector2(-camMovespeed, camMovespeed);
+            }
+            else if (BottomRectangle.Contains(mousePos) && RightRectangle.Contains(mousePos))
+            {
+                Position += new Vector2(camMovespeed, camMovespeed);
+            }
+            else if (TopRectangle.Contains(mousePos))
+            {
+                Position -= new Vector2(0, camMovespeed);
+                GameWorld.Cursor.CursorPictureNumber = 1;
+            }
+            else if (BottomRectangle.Contains(mousePos))
+            {
+                Position += new Vector2(0, camMovespeed);
+            }
+            else if (RightRectangle.Contains(mousePos))
+            {
+                Position += new Vector2(camMovespeed, 0);
+            }
+            else if (LeftRectangle.Contains(mousePos))
+            {
+                Position -= new Vector2(camMovespeed, 0);
+            }
         }
 
         /// <summary>

@@ -240,13 +240,13 @@ namespace Battle_Mages
 
             if (Play.isClicked == true)
             {
-                Play.isClicked = false;
-                GameWorld.Instance.CurrentGameState = GameState.InGame;
+                play.isClicked = false;
+                GameWorld.SetState(GameState.InGame);
             }
             else if (Settings.isClicked == true)
             {
-                Settings.isClicked = false;
-                GameWorld.Instance.CurrentGameState = GameState.Settings;
+                settings.isClicked = false;
+                GameWorld.SetState(GameState.Settings);
             }
             else if (Quit.isClicked == true)
             {
@@ -288,8 +288,8 @@ namespace Battle_Mages
             }
             if (Back.isClicked == true)
             {
-                Back.isClicked = false;
-                GameWorld.Instance.CurrentGameState = GameState.MainMenu;
+                back.isClicked = false;
+                GameWorld.SetState(GameState.MainMenu);
             }
 
             for (int i = 0; i < resolutions.Count; i++)
@@ -318,10 +318,10 @@ namespace Battle_Mages
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
         {
-            OneRes.Draw(spriteBatch);
-            TwoRes.Draw(spriteBatch);
-            spriteBatch.DrawString(FontBM, currentResolutionString, fontPosition, Color.White);
-            spriteBatch.DrawString(FontBM, GameWorld.Instance.Cursor.Position.ToString(),
+            oneRes.Draw(spriteBatch);
+            twoRes.Draw(spriteBatch);
+            spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
+            spriteBatch.DrawString(fontBM, GameWorld.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
             spriteBatch.DrawString(FontBM,
                 GameWorld.Instance.PlayerControls.KeyToString(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Spell1)),

@@ -38,7 +38,7 @@ namespace Battle_Mages
                 (int)(sprite[hoverNumber].Width),
                 (int)(sprite[hoverNumber].Height));
 
-            if (rectangle.Contains(GameWorld.Instance.Cursor.Position))
+            if (rectangle.Contains(GameWorld.Cursor.Position))
             {
                 if (hoverNumber == 0)
                 {
@@ -47,16 +47,16 @@ namespace Battle_Mages
                 }
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    GameWorld.Instance.MenuScreenManager.MouseCanClickButton)
+                    GameWorld.MenuScreenManager.MouseCanClickButton)
                 {
                     isClicked = true;
-                    GameWorld.Instance.MenuScreenManager.MouseCanClickButton = false;
+                    GameWorld.MenuScreenManager.MouseCanClickButton = false;
                 }
-            }
-            else
-            {
-                hoverNumber = 0;
-                isClicked = false;
+                else
+                {
+                    hoverNumber = 0;
+                    isClicked = false;
+                }
             }
         }
 

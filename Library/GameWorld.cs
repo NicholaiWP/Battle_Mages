@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Battle_Mages
 {
@@ -15,15 +16,8 @@ namespace Battle_Mages
         private GraphicsDeviceManager graphics;
 
         private Drawer drawer;
-        private Camera2D camera;
         private GameObject player;
         private Director director;
-        private float camMovespeed;
-        private float speedOfCam;
-        private float deltaTime;
-        private Cursor cursor;
-        private MenuScreenManager menuScreenManager;
-        private SoundManager soundManager;
         private GameState currentGameState = GameState.MainMenu;
         private const int gameWidth = 1366;
         private const int gameHeight = 768;
@@ -35,33 +29,22 @@ namespace Battle_Mages
         private List<GameObject> objectsToAdd = new List<GameObject>();
         private List<GameObject> objectsToRemove = new List<GameObject>();
 
-        //Properties
-        public GameState CurrentGameState
+        public ReadOnlyCollection<GameObject> ActiveObjects
         {
-            get { return currentGameState; }
-            set { currentGameState = value; }
+            get { return activeObjects.AsReadOnly(); }
         }
 
-        public int CursorPictureNumber { get; set; } = 0;
+        private SoundManager soundManager = new SoundManager();
+        private MenuScreenManager menuScreenManager = new MenuScreenManager();
+        private Cursor cursor = new Cursor();
+        private Camera2D camera = new Camera2D();
 
-        public SoundManager SoundManager { get { return soundManager; } }
-        public Cursor Cursor { get { return cursor; } }
-        public MenuScreenManager MenuScreenManager { get { return menuScreenManager; } }
+        public static SoundManager SoundManager { get { return Instance.soundManager; } }
+        public static MenuScreenManager MenuScreenManager { get { return Instance.menuScreenManager; } }
+        public static Cursor Cursor { get { return Instance.cursor; } }
+        public static Camera2D Camera { get { return Instance.camera; } }
 
-        public List<GameObject> ActiveObjects
-        {
-            get { return activeObjects; }
-        }
-
-        public Camera2D Camera
-        {
-            get { return camera; }
-        }
-
-        public float DeltaTime
-        {
-            get { return deltaTime; }
-        }
+        public float DeltaTime { get; private set; }
 
         public float HalfViewPortWidth
         {
@@ -94,11 +77,6 @@ namespace Battle_Mages
             get
             {
                 return playerControls;
-            }
-
-            set
-            {
-                playerControls = value;
             }
         }
 
@@ -142,12 +120,12 @@ namespace Battle_Mages
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            camera = new Camera2D();
-            cursor = new Cursor();
-            menuScreenManager = new MenuScreenManager();
-            soundManager = new SoundManager();
-            PlayerControls = new PlayerControls();
-            speedOfCam = 250;
+            playerControls = new PlayerControls();
+        }
+
+        public static void SetState(GameState newState)
+        {
+            Instance.currentGameState = newState;
         }
 
         /// <summary>
@@ -213,58 +191,24 @@ namespace Battle_Mages
             {
                 Exit();
             }
-            switch (CurrentGameState)
+            switch (currentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.UpdateMenu();
                     break;
 
                 case GameState.InGame:
-                    deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     foreach (GameObject go in activeObjects)
                     {
                         go.Update();
                     }
-                    camMovespeed = speedOfCam * deltaTime;
-                    CursorPictureNumber = 0;
 
                     #region Camera Movement
 
-                    Vector2 mousePos = cursor.Position;
-                    if (camera.TopRectangle.Contains(mousePos) && camera.RightRectangle.Contains(mousePos))
-                    {
-                        camera.Position += new Vector2(camMovespeed, -camMovespeed);
-                    }
-                    else if (camera.TopRectangle.Contains(mousePos) && camera.LeftRectangle.Contains(mousePos))
-                    {
-                        camera.Position -= new Vector2(camMovespeed, camMovespeed);
-                    }
-                    else if (camera.BottomRectangle.Contains(mousePos) && camera.LeftRectangle.Contains(mousePos))
-                    {
-                        camera.Position += new Vector2(-camMovespeed, camMovespeed);
-                    }
-                    else if (camera.BottomRectangle.Contains(mousePos) && camera.RightRectangle.Contains(mousePos))
-                    {
-                        camera.Position += new Vector2(camMovespeed, camMovespeed);
-                    }
-                    else if (camera.TopRectangle.Contains(mousePos))
-                    {
-                        camera.Position -= new Vector2(0, camMovespeed);
-                        CursorPictureNumber = 1;
-                    }
-                    else if (camera.BottomRectangle.Contains(mousePos))
-                    {
-                        camera.Position += new Vector2(0, camMovespeed);
-                    }
-                    else if (camera.RightRectangle.Contains(mousePos))
-                    {
-                        camera.Position += new Vector2(camMovespeed, 0);
-                    }
-                    else if (camera.LeftRectangle.Contains(mousePos))
-                    {
-                        camera.Position -= new Vector2(camMovespeed, 0);
-                    }
+                    camera.Update(DeltaTime);
+
                     if (Keyboard.GetState().IsKeyDown(Keys.Space))
                     {
                         camera.Position = new Vector2(player.Transform.Position.X + 80,
@@ -327,7 +271,7 @@ namespace Battle_Mages
             cursor.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens
-            switch (CurrentGameState)
+            switch (currentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.DrawMenu(drawer[DrawLayer.UI]);
