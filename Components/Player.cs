@@ -54,10 +54,10 @@ namespace Battle_Mages
                     GameWorld.Instance.playerControls.ChangeBinding(GameWorld.Instance.playerControls.PlayerKeys["UpKey"],
                     keyPressed[0]);
             }*/
-            bool up = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Up));
-            bool down = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Down));
-            bool left = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Left));
-            bool right = kbState.IsKeyDown(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Right));
+            bool up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
+            bool down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
+            bool left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
+            bool right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
 
             if (up && right)
             {

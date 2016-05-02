@@ -21,7 +21,11 @@ namespace Battle_Mages
         private GameState currentGameState = GameState.MainMenu;
         private const int gameWidth = 1366;
         private const int gameHeight = 768;
-        private PlayerControls playerControls;
+        private PlayerControls playerControls = new PlayerControls();
+        private SoundManager soundManager = new SoundManager();
+        private MenuScreenManager menuScreenManager = new MenuScreenManager();
+        private Cursor cursor = new Cursor();
+        private Camera2D camera = new Camera2D();
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
@@ -34,16 +38,11 @@ namespace Battle_Mages
             get { return activeObjects.AsReadOnly(); }
         }
 
-        private SoundManager soundManager = new SoundManager();
-        private MenuScreenManager menuScreenManager = new MenuScreenManager();
-        private Cursor cursor = new Cursor();
-        private Camera2D camera = new Camera2D();
-
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
         public static MenuScreenManager MenuScreenManager { get { return Instance.menuScreenManager; } }
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
-
+        public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public float DeltaTime { get; private set; }
 
         public float HalfViewPortWidth
@@ -69,14 +68,6 @@ namespace Battle_Mages
             get
             {
                 return gameHeight;
-            }
-        }
-
-        public PlayerControls PlayerControls
-        {
-            get
-            {
-                return playerControls;
             }
         }
 
@@ -120,7 +111,6 @@ namespace Battle_Mages
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            playerControls = new PlayerControls();
         }
 
         public static void SetState(GameState newState)
