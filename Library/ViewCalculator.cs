@@ -38,13 +38,13 @@ namespace Battle_Mages
 
         private static int CalculateRectangleWidth(int width)
         {
-            float realWidth = width / GameWorld.Instance.MenuScreenManager.scalingVector.X;
+            float realWidth = width / GameWorld.Instance.MenuScreenManager.ScalingVector.X;
             return (int)realWidth;
         }
 
         private static int CalculateRectangleHeight(int height)
         {
-            float realHeight = height / GameWorld.Instance.MenuScreenManager.scalingVector.Y;
+            float realHeight = height / GameWorld.Instance.MenuScreenManager.ScalingVector.Y;
             return (int)realHeight;
         }
     }

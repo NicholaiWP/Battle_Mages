@@ -47,10 +47,10 @@ namespace Battle_Mages
                 }
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    GameWorld.Instance.MenuScreenManager.mouseCanClickButton)
+                    GameWorld.Instance.MenuScreenManager.MouseCanClickButton)
                 {
                     isClicked = true;
-                    GameWorld.Instance.MenuScreenManager.mouseCanClickButton = false;
+                    GameWorld.Instance.MenuScreenManager.MouseCanClickButton = false;
                 }
             }
             else

@@ -16,8 +16,8 @@ namespace Battle_Mages
         private string currentResolutionString;
         private DisplayMode currentResolution;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
-        public Vector2 scalingVector;
-        public bool mouseCanClickButton;
+        private Vector2 scalingVector;
+        private bool mouseCanClickButton;
         public Button play;
         public Button settings;
         public Button quit;
@@ -27,6 +27,32 @@ namespace Battle_Mages
         public Button fourRes;
         public Button back;
         public SpriteFont fontBM;
+
+        public Vector2 ScalingVector
+        {
+            get
+            {
+                return scalingVector;
+            }
+
+            set
+            {
+                scalingVector = value;
+            }
+        }
+
+        public bool MouseCanClickButton
+        {
+            get
+            {
+                return mouseCanClickButton;
+            }
+
+            set
+            {
+                mouseCanClickButton = value;
+            }
+        }
 
         public MenuScreenManager()
         {
@@ -54,7 +80,7 @@ namespace Battle_Mages
                 }
                 lastResolution = dmode;
             }
-            scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
+            ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
                 ViewCalculator.CalculateHeightScale(currentResolution.Height));
 
             back = new Button(content.Load<Texture2D>("Images/Back"),
@@ -128,7 +154,7 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
                     ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
             else if (twoRes.isClicked == true)
@@ -140,7 +166,7 @@ namespace Battle_Mages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
-                scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
+                ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
                     ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
             if (back.isClicked == true)

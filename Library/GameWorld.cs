@@ -32,8 +32,8 @@ namespace Battle_Mages
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
 
-        public List<GameObject> objectsToAdd = new List<GameObject>();
-        public List<GameObject> objectsToRemove = new List<GameObject>();
+        private List<GameObject> objectsToAdd = new List<GameObject>();
+        private List<GameObject> objectsToRemove = new List<GameObject>();
 
         //Properties
         public GameState CurrentGameState
@@ -81,21 +81,6 @@ namespace Battle_Mages
             }
         }
 
-        //Singleton
-        private static GameWorld instance;
-
-        public static GameWorld Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new GameWorld();
-                }
-                return instance;
-            }
-        }
-
         public static int GameHeight
         {
             get
@@ -114,6 +99,37 @@ namespace Battle_Mages
             set
             {
                 playerControls = value;
+            }
+        }
+
+        public List<GameObject> ObjectsToAdd
+        {
+            get
+            {
+                return objectsToAdd;
+            }
+        }
+
+        public List<GameObject> ObjectsToRemove
+        {
+            get
+            {
+                return objectsToRemove;
+            }
+        }
+
+        //Singleton
+        private static GameWorld instance;
+
+        public static GameWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameWorld();
+                }
+                return instance;
             }
         }
 
@@ -158,7 +174,7 @@ namespace Battle_Mages
 
             director = new Director(new PlayerBuilder());
             player = director.Construct(Vector2.Zero);
-            objectsToAdd.Add(player);
+            ObjectsToAdd.Add(player);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             menuScreenManager.LoadContent(Content);
@@ -272,7 +288,7 @@ namespace Battle_Mages
             }
             if (Mouse.GetState().LeftButton == ButtonState.Released)
             {
-                menuScreenManager.mouseCanClickButton = true;
+                menuScreenManager.MouseCanClickButton = true;
             }
 
             base.Update(gameTime);
@@ -283,18 +299,18 @@ namespace Battle_Mages
         /// </summary>
         private void TemplateControl()
         {
-            foreach (GameObject gameObject in objectsToAdd)
+            foreach (GameObject gameObject in ObjectsToAdd)
             {
                 gameObject.LoadContent(Content);
                 activeObjects.Add(gameObject);
             }
-            objectsToAdd.Clear();
+            ObjectsToAdd.Clear();
 
-            foreach (GameObject gameObject in objectsToRemove)
+            foreach (GameObject gameObject in ObjectsToRemove)
             {
                 activeObjects.Remove(gameObject);
             }
-            objectsToRemove.Clear();
+            ObjectsToRemove.Clear();
         }
 
         /// <summary>
