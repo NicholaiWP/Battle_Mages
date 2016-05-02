@@ -43,49 +43,13 @@ namespace Battle_Mages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
+        public static int GameWidth { get { return gameWidth; } }
+        public static int GameHeight { get { return gameHeight; } }
         public float DeltaTime { get; private set; }
-
-        public float HalfViewPortWidth
-        {
-            get { return GraphicsDevice.Viewport.Width * 0.5f; }
-        }
-
-        public float HalfViewPortHeight
-        {
-            get { return GraphicsDevice.Viewport.Height * 0.5f; }
-        }
-
-        public static int GameWidth
-        {
-            get
-            {
-                return gameWidth;
-            }
-        }
-
-        public static int GameHeight
-        {
-            get
-            {
-                return gameHeight;
-            }
-        }
-
-        public List<GameObject> ObjectsToAdd
-        {
-            get
-            {
-                return objectsToAdd;
-            }
-        }
-
-        public List<GameObject> ObjectsToRemove
-        {
-            get
-            {
-                return objectsToRemove;
-            }
-        }
+        public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
+        public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
+        public List<GameObject> ObjectsToAdd { get { return objectsToAdd; } }
+        public List<GameObject> ObjectsToRemove { get { return objectsToRemove; } }
 
         //Singleton
         private static GameWorld instance;
@@ -167,15 +131,9 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Z))
+            if (currentGameState == GameState.Quit)
             {
-                soundManager.SoundVolume -= 0.01f;
-                soundManager.UpdateMusicVolume();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.X))
-            {
-                soundManager.SoundVolume += 0.01f;
-                soundManager.UpdateMusicVolume();
+                Exit();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -184,7 +142,7 @@ namespace Battle_Mages
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    menuScreenManager.UpdateMenu();
+                    menuScreenManager.Update(graphics, currentGameState);
                     break;
 
                 case GameState.InGame:
@@ -214,7 +172,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    menuScreenManager.UpdateSettingWindow(graphics);
+                    menuScreenManager.Update(graphics, currentGameState);
                     break;
 
                 case GameState.Shop:
@@ -264,7 +222,7 @@ namespace Battle_Mages
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    menuScreenManager.DrawMenu(drawer[DrawLayer.UI]);
+                    menuScreenManager.Draw(drawer[DrawLayer.UI], currentGameState);
                     break;
 
                 case GameState.InGame:
@@ -276,7 +234,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    menuScreenManager.DrawSettingsWindow(drawer[DrawLayer.UI]);
+                    menuScreenManager.Draw(drawer[DrawLayer.UI], currentGameState);
                     break;
 
                 case GameState.Shop:
