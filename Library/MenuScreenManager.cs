@@ -18,15 +18,15 @@ namespace Battle_Mages
         private List<DisplayMode> resolutions = new List<DisplayMode>();
         private Vector2 scalingVector;
         private bool mouseCanClickButton;
-        public Button play;
-        public Button settings;
-        public Button quit;
-        public Button oneRes;
-        public Button twoRes;
-        public Button threeRes;
-        public Button fourRes;
-        public Button back;
-        public SpriteFont fontBM;
+        private Button play;
+        private Button settings;
+        private Button quit;
+        private Button oneRes;
+        private Button twoRes;
+        private Button threeRes;
+        private Button fourRes;
+        private Button back;
+        private SpriteFont fontBM;
 
         public Vector2 ScalingVector
         {
@@ -54,6 +54,123 @@ namespace Battle_Mages
             }
         }
 
+        public Button Play
+        {
+            get
+            {
+                return play;
+            }
+
+            set
+            {
+                play = value;
+            }
+        }
+
+        public Button Settings
+        {
+            get
+            {
+                return settings;
+            }
+
+            set
+            {
+                settings = value;
+            }
+        }
+
+        public Button Quit
+        {
+            get
+            {
+                return quit;
+            }
+
+            set
+            {
+                quit = value;
+            }
+        }
+
+        public Button OneRes
+        {
+            get
+            {
+                return oneRes;
+            }
+
+            set
+            {
+                oneRes = value;
+            }
+        }
+
+        public Button TwoRes
+        {
+            get
+            {
+                return twoRes;
+            }
+
+            set
+            {
+                twoRes = value;
+            }
+        }
+
+        public Button ThreeRes
+        {
+            get
+            {
+                return threeRes;
+            }
+
+            set
+            {
+                threeRes = value;
+            }
+        }
+
+        public Button FourRes
+        {
+            get
+            {
+                return fourRes;
+            }
+
+            set
+            {
+                fourRes = value;
+            }
+        }
+
+        public Button Back
+        {
+            get
+            {
+                return back;
+            }
+
+            set
+            {
+                back = value;
+            }
+        }
+
+        public SpriteFont FontBM
+        {
+            get
+            {
+                return fontBM;
+            }
+
+            set
+            {
+                fontBM = value;
+            }
+        }
+
         public MenuScreenManager()
         {
             fontPosition = new Vector2(-100, -50);
@@ -62,7 +179,7 @@ namespace Battle_Mages
         public void LoadContent(ContentManager content)
         {
             DisplayMode lastResolution = null;
-            fontBM = content.Load<SpriteFont>("FontBM");
+            FontBM = content.Load<SpriteFont>("FontBM");
             sprite = content.Load<Texture2D>("Images/apple");
 
             foreach (DisplayMode dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
@@ -83,27 +200,27 @@ namespace Battle_Mages
             ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
                 ViewCalculator.CalculateHeightScale(currentResolution.Height));
 
-            back = new Button(content.Load<Texture2D>("Images/Back"),
+            Back = new Button(content.Load<Texture2D>("Images/Back"),
             content.Load<Texture2D>("Images/Back"));
 
             #region Resolution Buttons
 
-            oneRes = new Button(content.Load<Texture2D>("Images/1366x768"),
+            OneRes = new Button(content.Load<Texture2D>("Images/1366x768"),
               content.Load<Texture2D>("Images/1366x768"));
 
-            twoRes = new Button(content.Load<Texture2D>("Images/1280x800"),
+            TwoRes = new Button(content.Load<Texture2D>("Images/1280x800"),
                content.Load<Texture2D>("Images/1280x800"));
 
             #endregion Resolution Buttons
 
             #region Menu Buttons
 
-            play = new Button(content.Load<Texture2D>("Images/playButton"),
+            Play = new Button(content.Load<Texture2D>("Images/playButton"),
                 content.Load<Texture2D>("Images/playButtonHL"));
 
-            quit = new Button(content.Load<Texture2D>("Images/Quit"), content.Load<Texture2D>("Images/Quit"));
+            Quit = new Button(content.Load<Texture2D>("Images/Quit"), content.Load<Texture2D>("Images/Quit"));
 
-            settings = new Button(content.Load<Texture2D>("Images/Settings"),
+            Settings = new Button(content.Load<Texture2D>("Images/Settings"),
                 content.Load<Texture2D>("Images/Settings"));
 
             #endregion Menu Buttons
@@ -114,24 +231,24 @@ namespace Battle_Mages
         /// </summary>
         public void UpdateMenu()
         {
-            play.Update();
-            settings.Update();
-            quit.Update();
-            play.SetPosition(new Vector2(-play.rectangle.Width / 2, -play.rectangle.Height * 1.5f));
-            settings.SetPosition(new Vector2(-settings.rectangle.Width / 2, 0));
-            quit.SetPosition(new Vector2(-quit.rectangle.Width / 2, quit.rectangle.Height * 1.5f));
+            Play.Update();
+            Settings.Update();
+            Quit.Update();
+            Play.SetPosition(new Vector2(-Play.rectangle.Width / 2, -Play.rectangle.Height * 1.5f));
+            Settings.SetPosition(new Vector2(-Settings.rectangle.Width / 2, 0));
+            Quit.SetPosition(new Vector2(-Quit.rectangle.Width / 2, Quit.rectangle.Height * 1.5f));
 
-            if (play.isClicked == true)
+            if (Play.isClicked == true)
             {
-                play.isClicked = false;
+                Play.isClicked = false;
                 GameWorld.Instance.CurrentGameState = GameState.InGame;
             }
-            else if (settings.isClicked == true)
+            else if (Settings.isClicked == true)
             {
-                settings.isClicked = false;
+                Settings.isClicked = false;
                 GameWorld.Instance.CurrentGameState = GameState.Settings;
             }
-            else if (quit.isClicked == true)
+            else if (Quit.isClicked == true)
             {
                 GameWorld.Instance.Exit();
             }
@@ -139,15 +256,15 @@ namespace Battle_Mages
 
         public void UpdateSettingWindow(GraphicsDeviceManager graphics)
         {
-            back.Update();
-            back.SetPosition(new Vector2(-back.rectangle.Width / 2, back.rectangle.Height * 3f));
-            oneRes.SetPosition(new Vector2(150, -50));
-            twoRes.SetPosition(new Vector2(-550, -50));
-            oneRes.Update();
-            twoRes.Update();
-            if (oneRes.isClicked == true)
+            Back.Update();
+            Back.SetPosition(new Vector2(-Back.rectangle.Width / 2, Back.rectangle.Height * 3f));
+            OneRes.SetPosition(new Vector2(150, -50));
+            TwoRes.SetPosition(new Vector2(-550, -50));
+            OneRes.Update();
+            TwoRes.Update();
+            if (OneRes.isClicked == true)
             {
-                oneRes.isClicked = false;
+                OneRes.isClicked = false;
                 elementAtNumber++;
                 if (elementAtNumber >= resolutions.Count) elementAtNumber = 0;
                 currentResolution = resolutions[elementAtNumber];
@@ -157,9 +274,9 @@ namespace Battle_Mages
                 ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
                     ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
-            else if (twoRes.isClicked == true)
+            else if (TwoRes.isClicked == true)
             {
-                twoRes.isClicked = false;
+                TwoRes.isClicked = false;
                 elementAtNumber--;
                 if (elementAtNumber <= 0) elementAtNumber = resolutions.Count - 1;
                 currentResolution = resolutions[elementAtNumber];
@@ -169,9 +286,9 @@ namespace Battle_Mages
                 ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
                     ViewCalculator.CalculateHeightScale(currentResolution.Height));
             }
-            if (back.isClicked == true)
+            if (Back.isClicked == true)
             {
-                back.isClicked = false;
+                Back.isClicked = false;
                 GameWorld.Instance.CurrentGameState = GameState.MainMenu;
             }
 
@@ -194,22 +311,22 @@ namespace Battle_Mages
             color: Color.White,
             origin: Vector2.Zero,
             effects: SpriteEffects.None);
-            settings.Draw(spriteBatch);
-            quit.Draw(spriteBatch);
-            play.Draw(spriteBatch);
+            Settings.Draw(spriteBatch);
+            Quit.Draw(spriteBatch);
+            Play.Draw(spriteBatch);
         }
 
         public void DrawSettingsWindow(SpriteBatch spriteBatch)
         {
-            oneRes.Draw(spriteBatch);
-            twoRes.Draw(spriteBatch);
-            spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
-            spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
+            OneRes.Draw(spriteBatch);
+            TwoRes.Draw(spriteBatch);
+            spriteBatch.DrawString(FontBM, currentResolutionString, fontPosition, Color.White);
+            spriteBatch.DrawString(FontBM, GameWorld.Instance.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
-            spriteBatch.DrawString(fontBM,
+            spriteBatch.DrawString(FontBM,
                 GameWorld.Instance.PlayerControls.KeyToString(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Spell1)),
                 new Vector2(50, 50), Color.Black);
-            back.Draw(spriteBatch);
+            Back.Draw(spriteBatch);
         }
     }
 }

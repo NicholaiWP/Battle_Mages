@@ -40,13 +40,6 @@ namespace Battle_Mages
         }
 
         /// <summary>
-        /// Constructor for the cursor
-        /// </summary>
-        public Cursor()
-        {
-        }
-
-        /// <summary>
         /// Method for loading the content of the cursor, it is the pictures that are placed in an array
         /// so we can change the pictures of the mouse when certain things happen
         /// </summary>
