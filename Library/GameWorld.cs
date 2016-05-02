@@ -19,17 +19,15 @@ namespace Battle_Mages
         private GameObject player;
         private Director director;
         private float camMovespeed;
-        private float speed;
+        private float speedOfCam;
         private float deltaTime;
-        private KeyboardState currentKey;
-        private KeyboardState lastKey;
         private Cursor cursor;
         private MenuScreenManager menuScreenManager;
         private SoundManager soundManager;
-        public GameState currentGameState = GameState.MainMenu;
-        public const int GameWidth = 1366;
-        public const int GameHeight = 768;
-        public PlayerControls playerControls;
+        private GameState currentGameState = GameState.MainMenu;
+        private const int gameWidth = 1366;
+        private const int gameHeight = 768;
+        private PlayerControls playerControls;
 
         //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
@@ -38,6 +36,12 @@ namespace Battle_Mages
         public List<GameObject> objectsToRemove = new List<GameObject>();
 
         //Properties
+        public GameState CurrentGameState
+        {
+            get { return currentGameState; }
+            set { currentGameState = value; }
+        }
+
         public int CursorPictureNumber { get; set; } = 0;
 
         public SoundManager SoundManager { get { return soundManager; } }
@@ -69,6 +73,14 @@ namespace Battle_Mages
             get { return GraphicsDevice.Viewport.Height * 0.5f; }
         }
 
+        public static int GameWidth
+        {
+            get
+            {
+                return gameWidth;
+            }
+        }
+
         //Singleton
         private static GameWorld instance;
 
@@ -81,6 +93,27 @@ namespace Battle_Mages
                     instance = new GameWorld();
                 }
                 return instance;
+            }
+        }
+
+        public static int GameHeight
+        {
+            get
+            {
+                return gameHeight;
+            }
+        }
+
+        public PlayerControls PlayerControls
+        {
+            get
+            {
+                return playerControls;
+            }
+
+            set
+            {
+                playerControls = value;
             }
         }
 
@@ -97,8 +130,8 @@ namespace Battle_Mages
             cursor = new Cursor();
             menuScreenManager = new MenuScreenManager();
             soundManager = new SoundManager();
-            playerControls = new PlayerControls();
-            speed = 250;
+            PlayerControls = new PlayerControls();
+            speedOfCam = 250;
         }
 
         /// <summary>
@@ -150,9 +183,6 @@ namespace Battle_Mages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            lastKey = currentKey;
-            currentKey = Keyboard.GetState();
-
             if (Keyboard.GetState().IsKeyDown(Keys.Z))
             {
                 soundManager.SoundVolume -= 0.01f;
@@ -167,7 +197,7 @@ namespace Battle_Mages
             {
                 Exit();
             }
-            switch (currentGameState)
+            switch (CurrentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.UpdateMenu();
@@ -180,7 +210,7 @@ namespace Battle_Mages
                     {
                         go.Update();
                     }
-                    camMovespeed = speed * deltaTime;
+                    camMovespeed = speedOfCam * deltaTime;
                     CursorPictureNumber = 0;
 
                     #region Camera Movement
@@ -281,7 +311,7 @@ namespace Battle_Mages
             cursor.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens
-            switch (currentGameState)
+            switch (CurrentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.DrawMenu(drawer[DrawLayer.UI]);

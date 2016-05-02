@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -98,12 +98,12 @@ namespace Battle_Mages
             if (play.isClicked == true)
             {
                 play.isClicked = false;
-                GameWorld.Instance.currentGameState = GameState.InGame;
+                GameWorld.Instance.CurrentGameState = GameState.InGame;
             }
             else if (settings.isClicked == true)
             {
                 settings.isClicked = false;
-                GameWorld.Instance.currentGameState = GameState.Settings;
+                GameWorld.Instance.CurrentGameState = GameState.Settings;
             }
             else if (quit.isClicked == true)
             {
@@ -146,7 +146,7 @@ namespace Battle_Mages
             if (back.isClicked == true)
             {
                 back.isClicked = false;
-                GameWorld.Instance.currentGameState = GameState.MainMenu;
+                GameWorld.Instance.CurrentGameState = GameState.MainMenu;
             }
 
             for (int i = 0; i < resolutions.Count; i++)
@@ -181,7 +181,7 @@ namespace Battle_Mages
             spriteBatch.DrawString(fontBM, GameWorld.Instance.Cursor.Position.ToString(),
                 new Vector2(0, -150), Color.White);
             spriteBatch.DrawString(fontBM,
-                GameWorld.Instance.playerControls.KeyToString(GameWorld.Instance.playerControls.GetBinding(PlayerBind.Spell1)),
+                GameWorld.Instance.PlayerControls.KeyToString(GameWorld.Instance.PlayerControls.GetBinding(PlayerBind.Spell1)),
                 new Vector2(50, 50), Color.Black);
             back.Draw(spriteBatch);
         }
