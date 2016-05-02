@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -98,12 +98,12 @@ namespace Battle_Mages
             if (play.isClicked == true)
             {
                 play.isClicked = false;
-                GameWorld.Instance.CurrentGameState = GameState.InGame;
+                GameWorld.Instance.SetState(GameState.InGame);
             }
             else if (settings.isClicked == true)
             {
                 settings.isClicked = false;
-                GameWorld.Instance.CurrentGameState = GameState.Settings;
+                GameWorld.Instance.SetState(GameState.Settings);
             }
             else if (quit.isClicked == true)
             {
@@ -146,7 +146,7 @@ namespace Battle_Mages
             if (back.isClicked == true)
             {
                 back.isClicked = false;
-                GameWorld.Instance.CurrentGameState = GameState.MainMenu;
+                GameWorld.Instance.SetState(GameState.MainMenu);
             }
 
             for (int i = 0; i < resolutions.Count; i++)

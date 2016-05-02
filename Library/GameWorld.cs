@@ -29,13 +29,6 @@ namespace Battle_Mages
         public List<GameObject> objectsToAdd = new List<GameObject>();
         public List<GameObject> objectsToRemove = new List<GameObject>();
 
-        //Properties
-        public GameState CurrentGameState
-        {
-            get { return currentGameState; }
-            set { currentGameState = value; }
-        }
-
         public ReadOnlyCollection<GameObject> ActiveObjects
         {
             get { return activeObjects.AsReadOnly(); }
@@ -119,6 +112,11 @@ namespace Battle_Mages
             PlayerControls = new PlayerControls();
         }
 
+        public void SetState(GameState newState)
+        {
+            currentGameState = newState;
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -182,7 +180,7 @@ namespace Battle_Mages
             {
                 Exit();
             }
-            switch (CurrentGameState)
+            switch (currentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.UpdateMenu();
@@ -262,7 +260,7 @@ namespace Battle_Mages
             cursor.Draw(drawer[DrawLayer.AboveUI]);
 
             //Switch case for checking the current game state, in each case something different happens
-            switch (CurrentGameState)
+            switch (currentGameState)
             {
                 case GameState.MainMenu:
                     menuScreenManager.DrawMenu(drawer[DrawLayer.UI]);
