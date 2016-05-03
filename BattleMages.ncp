@@ -55,23 +55,39 @@
       <Entity type="Class">
         <Name>Animation</Name>
         <Access>Public</Access>
-        <Location left="1353" top="520" />
+        <Location left="1210" top="230" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private float fps</Member>
+        <Member type="Field">private Rectangle[] frames</Member>
+        <Member type="Property">public float GetFps { get; set; }</Member>
+        <Member type="Property">public Vector2 GetOffse { get; set; }</Member>
+        <Member type="Property">public Rectangle[] GetFrames { get; set; }</Member>
+        <Member type="Constructor">public Animation(int framesCount, int yPos, int xStartFrame, int width, int height, float fps, Vector2 offset)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Button</Name>
         <Access>Public</Access>
-        <Location left="1192" top="763" />
-        <Size width="162" height="216" />
+        <Location left="1662" top="490" />
+        <Size width="162" height="247" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private int hoverNumbe</Member>
+        <Member type="Field">private MenuButtons thisButton</Member>
+        <Member type="Field">private Texture2D[] sprites</Member>
+        <Member type="Field">private Rectangle rectangle</Member>
+        <Member type="Field">private Vector2 position</Member>
+        <Member type="Constructor">public Button(MenuButtons thisButton)</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">private void ButtonIsClicked()</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Camera2D</Name>
         <Access>Public</Access>
-        <Location left="869" top="155" />
+        <Location left="976" top="830" />
         <Size width="258" height="400" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Texture2D sprite</Member>
@@ -98,13 +114,13 @@
       <Entity type="Comment">
         <Text>Library folder classes
 </Text>
-        <Location left="634" top="376" />
+        <Location left="861" top="230" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Class">
         <Name>Component</Name>
         <Access>Public</Access>
-        <Location left="940" top="630" />
+        <Location left="960" top="367" />
         <Size width="223" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private GameObject gameObject</Member>
@@ -128,7 +144,7 @@
       <Entity type="Class">
         <Name>Director</Name>
         <Access>Public</Access>
-        <Location left="1486" top="750" />
+        <Location left="1564" top="830" />
         <Size width="240" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private ICanBuild builder</Member>
@@ -139,7 +155,7 @@
       <Entity type="Class">
         <Name>Drawer</Name>
         <Access>Public</Access>
-        <Location left="1575" top="1019" />
+        <Location left="1342" top="1206" />
         <Size width="241" height="196" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Dictionary&lt;DrawLayer, SpriteBatch&gt; layers</Member>
@@ -234,131 +250,208 @@
       <Entity type="Class">
         <Name>SoundManager</Name>
         <Access>Public</Access>
-        <Location left="969" top="1019" />
-        <Size width="162" height="216" />
+        <Location left="1441" top="230" />
+        <Size width="162" height="230" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private Dictionary&lt;string, SoundEffectInstance&gt; sounds</Member>
+        <Member type="Field">private Song backgroundMusic</Member>
+        <Member type="Property">public float SoundVolume { get; set; }</Member>
+        <Member type="Property">public float MusicVolume { get; set; }</Member>
+        <Member type="Constructor">public SoundManager()</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">public void Music(string soundName)</Member>
+        <Member type="Method">public void PlaySound(string soundName)</Member>
+        <Member type="Method">public void UpdateMusicVolume()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Strategy</Name>
         <Access>Public</Access>
-        <Location left="1166" top="1008" />
-        <Size width="162" height="216" />
+        <Location left="1297" top="912" />
+        <Size width="162" height="230" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private Animator animator</Member>
+        <Member type="Field">private Transform transform</Member>
+        <Member type="Field">private float speed</Member>
+        <Member type="Constructor">public Strategy(Animator animator, Transform transform, float speed)</Member>
+        <Member type="Method">public void Move(MovingDirection moveDirection)</Member>
+        <Member type="Method">public void Idle(FacingDirection direction)</Member>
+        <Member type="Method">public void Attack(FacingDirection direction, float attackingRange)</Member>
+        <Member type="Method">public void SpellProjectile(FacingDirection direction)</Member>
+        <Member type="Method">public void Spell(FacingDirection direction)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>ViewCalculator</Name>
         <Access>Public</Access>
-        <Location left="1353" top="1008" />
-        <Size width="162" height="216" />
+        <Location left="1195" top="545" />
+        <Size width="391" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
+        <Member type="Method">public static float CalculateWidthScale(float resolutionWidth)</Member>
+        <Member type="Method">public static float CalculateHeightScale(float resolutionHeight)</Member>
+        <Member type="Method">public static Rectangle CalculateRectangle(Vector2 position, int width, int height)</Member>
+        <Member type="Method">private static Vector2 CalculatePosition(Vector2 position)</Member>
+        <Member type="Method">private static int CalculateRectangleWidth(int width)</Member>
+        <Member type="Method">private static int CalculateRectangleHeight(int height)</Member>
+        <Modifier>Static</Modifier>
       </Entity>
       <Entity type="Comment">
         <Text>Interfaces class folder
 </Text>
-        <Location left="2115" top="329" />
+        <Location left="2730" top="306" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Interface">
         <Name>ICanBeAnimated</Name>
         <Access>Public</Access>
-        <Location left="1900" top="478" />
+        <Location left="2483" top="495" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void OnAnimationDone(string animationsName)</Member>
       </Entity>
       <Entity type="Interface">
         <Name>ICanBeDrawn</Name>
         <Access>Public</Access>
-        <Location left="2115" top="478" />
+        <Location left="2730" top="478" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void Draw(Drawer drawer)</Member>
       </Entity>
       <Entity type="Interface">
         <Name>ICanBeLoaded</Name>
         <Access>Public</Access>
-        <Location left="1900" top="750" />
+        <Location left="2509" top="778" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void LoadContent(ContentManager content)</Member>
       </Entity>
       <Entity type="Interface">
-        <Name>ICanbeUpdated</Name>
+        <Name>ICanUpdate</Name>
         <Access>Public</Access>
-        <Location left="2115" top="750" />
+        <Location left="2730" top="778" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void Update()</Member>
       </Entity>
       <Entity type="Interface">
         <Name>ICanBuild</Name>
         <Access>Public</Access>
-        <Location left="2334" top="478" />
+        <Location left="2980" top="478" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">GameObject GetResult()</Member>
+        <Member type="Method">void BuildGameObject(Vector2 position)</Member>
       </Entity>
       <Entity type="Interface">
         <Name>IEnterCollision</Name>
         <Access>Public</Access>
-        <Location left="2334" top="750" />
+        <Location left="2999" top="778" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void OnCollisionEnter(Collider other)</Member>
       </Entity>
       <Entity type="Interface">
         <Name>IExitCollision</Name>
         <Access>Public</Access>
-        <Location left="1900" top="1032" />
+        <Location left="2681" top="1057" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void OnCollisionExit(Collider other)</Member>
       </Entity>
       <Entity type="Interface">
         <Name>IStayOnCollision</Name>
         <Access>Public</Access>
-        <Location left="2323" top="1020" />
+        <Location left="2921" top="1057" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">void OnCollisionStay(Collider other)</Member>
       </Entity>
       <Entity type="Comment">
         <Text>Component class  folder
 </Text>
-        <Location left="1498" top="1330" />
+        <Location left="1869" top="1355" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Class">
         <Name>Animator</Name>
         <Access>Public</Access>
-        <Location left="1248" top="1476" />
-        <Size width="162" height="216" />
+        <Location left="1527" top="1477" />
+        <Size width="162" height="264" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private float timeElapsed</Member>
+        <Member type="Field">private int currentIndex</Member>
+        <Member type="Field">private string animationName</Member>
+        <Member type="Field">private float fps</Member>
+        <Member type="Field">private SpriteRenderer spriteRenderer</Member>
+        <Member type="Field">private Dictionary&lt;string, Animation&gt; animations</Member>
+        <Member type="Field">private Rectangle[] frames</Member>
+        <Member type="Constructor">public Animator(GameObject gameObject)</Member>
+        <Member type="Method">public void CreateAnimation(string name, Animation animation)</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void PlayAnimation(string animationName)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Collider</Name>
         <Access>Public</Access>
-        <Location left="1466" top="1476" />
-        <Size width="162" height="216" />
+        <Location left="1739" top="1488" />
+        <Size width="198" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Collider(GameObject gameObject)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Enemy</Name>
         <Access>Public</Access>
-        <Location left="1722" top="1494" />
-        <Size width="162" height="216" />
+        <Location left="2012" top="1529" />
+        <Size width="162" height="421" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private float moveSpeed</Member>
+        <Member type="Field">private SpriteRenderer spriteRenderer</Member>
+        <Member type="Field">private Animator animator</Member>
+        <Member type="Field">private Transform transform</Member>
+        <Member type="Field">private FacingDirection fDirection</Member>
+        <Member type="Field">private MovingDirection mDirection</Member>
+        <Member type="Field">private float targetingRange</Member>
+        <Member type="Field">private float attackingRange</Member>
+        <Member type="Field">private float attackSpeed</Member>
+        <Member type="Field">private float attackDamage</Member>
+        <Member type="Field">private float health</Member>
+        <Member type="Field">private Strategy strategy</Member>
+        <Member type="Constructor">public Enemy(GameObject gameObject, int lvl, bool isRanged)</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">private void CreateAnimation()</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void OnAnimationDone(string animationsName)</Member>
+        <Member type="Method">public void OnCollisionEnter(Collider other)</Member>
+        <Member type="Method">public void OnCollisionStay(Collider other)</Member>
+        <Member type="Method">public void OnCollisionExit(Collider other)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Player</Name>
         <Access>Public</Access>
-        <Location left="1196" top="1726" />
-        <Size width="162" height="216" />
+        <Location left="1500" top="1803" />
+        <Size width="162" height="286" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private float moveSpeed</Member>
+        <Member type="Field">private Animator animator</Member>
+        <Member type="Field">private SpriteRenderer spriteRenderer</Member>
+        <Member type="Field">private Transform transform</Member>
+        <Member type="Field">private MovingDirection mDirection</Member>
+        <Member type="Field">private FacingDirection fDirection</Member>
+        <Member type="Field">private Strategy strategy</Member>
+        <Member type="Constructor">public Player(GameObject gameObject)</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">private void CreateAnimation()</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">private void MoveInformation()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Projectile</Name>
         <Access>Public</Access>
-        <Location left="1472" top="1750" />
+        <Location left="1757" top="1741" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -366,28 +459,45 @@
       <Entity type="Class">
         <Name>SpriteRenderer</Name>
         <Access>Public</Access>
-        <Location left="1716" top="1762" />
-        <Size width="162" height="216" />
+        <Location left="1798" top="2017" />
+        <Size width="162" height="298" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private string spriteName</Member>
+        <Member type="Field">private Color color</Member>
+        <Member type="Field">private float drawDepth</Member>
+        <Member type="Field">private Rectangle rectangl</Member>
+        <Member type="Field">private Vector2 offset</Member>
+        <Member type="Field">private Animator animator</Member>
+        <Member type="Field">private Texture2D sprite</Member>
+        <Member type="Property">public Rectangle Rectangle { get; set; }</Member>
+        <Member type="Property">public Texture2D Sprite { get; set; }</Member>
+        <Member type="Property">public Vector2 Offset { get; set; }</Member>
+        <Member type="Constructor">public SpriteRenderer(GameObject gameObject, string spriteName, float drawDepth)</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">public void Draw(Drawer drawer)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Transform</Name>
         <Access>Public</Access>
-        <Location left="1466" top="2040" />
-        <Size width="162" height="216" />
+        <Location left="1500" top="2166" />
+        <Size width="162" height="150" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private Vector2 position</Member>
+        <Member type="Property">public Vector2 Position { get; set; }</Member>
+        <Member type="Constructor">public Transform(GameObject gameObject, Vector2 position)</Member>
+        <Member type="Method">public void Translate(Vector2 tranlation)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Comment">
         <Text>Builder class folder</Text>
-        <Location left="851" top="1972" />
+        <Location left="948" top="2166" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Class">
         <Name>EnemyBuilder</Name>
         <Access>Public</Access>
-        <Location left="649" top="2086" />
+        <Location left="729" top="2303" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public void BuildGameObject(Vector2 position)</Member>
@@ -397,7 +507,7 @@
       <Entity type="Class">
         <Name>PlayerBuilder</Name>
         <Access>Public</Access>
-        <Location left="1037" top="2055" />
+        <Location left="1155" top="2288" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private GameObject gameObject</Member>
@@ -409,7 +519,7 @@
       <Entity type="Class">
         <Name>SpellBuilder</Name>
         <Access>Public</Access>
-        <Location left="851" top="2323" />
+        <Location left="948" top="2495" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -417,9 +527,10 @@
       <Entity type="Class">
         <Name>Program</Name>
         <Access>Public</Access>
-        <Location left="2107" top="2132" />
+        <Location left="1899" top="2520" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">private static void Main()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Enum">
@@ -440,7 +551,7 @@
       <Entity type="Enum">
         <Name>MovingDirection</Name>
         <Access>Public</Access>
-        <Location left="245" top="2146" />
+        <Location left="534" top="1957" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Value>UpLeft</Value>
@@ -456,7 +567,7 @@
       <Entity type="Enum">
         <Name>FacingDirection</Name>
         <Access>Public</Access>
-        <Location left="507" top="1821" />
+        <Location left="926" top="1717" />
         <Size width="162" height="129" />
         <Collapsed>False</Collapsed>
         <Value>Left</Value>
@@ -467,7 +578,7 @@
       <Entity type="Enum">
         <Name>GameState</Name>
         <Access>Public</Access>
-        <Location left="50" top="1983" />
+        <Location left="221" top="1793" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Value>MainMenu</Value>
@@ -479,14 +590,47 @@
       <Entity type="Class">
         <Name>Enums</Name>
         <Access>Public</Access>
-        <Location left="262" top="1761" />
+        <Location left="624" top="1655" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>MainMenuWindow</Name>
+        <Access>Public</Access>
+        <Location left="525" top="278" />
+        <Size width="162" height="178" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private List&lt;Button&gt; mainMenuButtons</Member>
+        <Member type="Constructor">public MainMenuWindow()</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SettingsWindow</Name>
+        <Access>Public</Access>
+        <Location left="732" top="354" />
+        <Size width="162" height="186" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private List&lt;Button&gt; settingsButtons</Member>
+        <Member type="Constructor">public SettingsWindow()</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Forever alone program :D</Text>
+        <Location left="1890" top="2418" />
+        <Size width="160" height="75" />
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Association" first="11" second="37">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -495,24 +639,18 @@
         <EndMultiplicity>0..*</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="41" second="40">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="41" second="38">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="41" second="39">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
