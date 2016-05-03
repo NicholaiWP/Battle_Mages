@@ -597,7 +597,7 @@
       <Entity type="Class">
         <Name>SettingsWindow</Name>
         <Access>Public</Access>
-        <Location left="692" top="367" />
+        <Location left="695" top="367" />
         <Size width="260" height="186" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private List&lt;Button&gt; settingsButtons</Member>
@@ -605,6 +605,7 @@
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
         <Member type="Method">public void Update()</Member>
         <Member type="Method">public void Draw(SpriteBatch spriteBatch)</Member>
+        <Member type="Method">public void DrawStrings(SpriteBatch spriteBatch)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Comment">

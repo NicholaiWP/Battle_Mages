@@ -18,7 +18,8 @@ namespace Battle_Mages
         Gameplay,
         Foreground,
         UI,
-        AboveUI
+        AboveUI,
+        Mouse
     }
 
     /// <summary>

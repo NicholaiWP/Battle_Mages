@@ -11,7 +11,6 @@ namespace Battle_Mages
 {
     public class MenuScreenManager
     {
-        private Texture2D sprite;
         private Vector2 fontPosition;
         private string currentResolutionString;
         private DisplayMode currentResolution;
@@ -27,6 +26,7 @@ namespace Battle_Mages
         public int ElementAtNumber { get; set; }
         public bool SwappingKeyBind { get; set; } = false;
         public PlayerBind ChosenKeyToRebind { get; set; }
+        public SettingsWindow SettingsWindow { get { return settingsWindow; } }
 
         public MenuScreenManager()
         {

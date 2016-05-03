@@ -212,7 +212,7 @@ namespace Battle_Mages
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
 
-            cursor.Draw(drawer[DrawLayer.AboveUI]);
+            cursor.Draw(drawer[DrawLayer.Mouse]);
 
             //Switch case for checking the current game state, in each case something different happens
             switch (currentGameState)
@@ -231,6 +231,7 @@ namespace Battle_Mages
 
                 case GameState.Settings:
                     menuScreenManager.Draw(drawer[DrawLayer.UI], currentGameState);
+                    menuScreenManager.SettingsWindow.DrawStrings(drawer[DrawLayer.AboveUI]);
                     break;
 
                 case GameState.Shop:

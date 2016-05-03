@@ -45,12 +45,19 @@ namespace Battle_Mages
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(fontBM, GameWorld.MenuScreenManager.CurrentResolutionString, fontPosition,
-                Color.Black);
             foreach (Button button in settingsButtons)
             {
                 button.Draw(spriteBatch);
             }
+        }
+
+        public void DrawStrings(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(fontBM, GameWorld.MenuScreenManager.CurrentResolutionString, fontPosition,
+                Color.Black);
+            spriteBatch.DrawString(fontBM,
+                GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),
+                new Vector2(100, -250), Color.Black);
         }
     }
 }
