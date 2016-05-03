@@ -87,7 +87,7 @@
       <Entity type="Class">
         <Name>Camera2D</Name>
         <Access>Public</Access>
-        <Location left="1012" top="799" />
+        <Location left="1050" top="776" />
         <Size width="258" height="400" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Texture2D sprite</Member>
@@ -193,8 +193,8 @@
       <Entity type="Class">
         <Name>MenuScreenManager</Name>
         <Access>Public</Access>
-        <Location left="572" top="599" />
-        <Size width="395" height="419" />
+        <Location left="550" top="572" />
+        <Size width="472" height="419" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Vector2 fontPosition</Member>
         <Member type="Field">private string currentResolutionString</Member>
@@ -215,7 +215,7 @@
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
         <Member type="Method">public void Update(GraphicsDeviceManager graphics, GameState currentState)</Member>
         <Member type="Method">private void ReadNewKey()</Member>
-        <Member type="Method">public void Draw(SpriteBatch spriteBatch, GameState currentState)</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch1, SpriteBatch spriteBatch2, GameState currentState)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -253,7 +253,7 @@
       <Entity type="Class">
         <Name>Strategy</Name>
         <Access>Public</Access>
-        <Location left="1297" top="912" />
+        <Location left="1342" top="901" />
         <Size width="162" height="230" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Animator animator</Member>
