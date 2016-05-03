@@ -35,19 +35,19 @@ namespace Battle_Mages
             switch (thisButton)
             {
                 case MenuButtons.Play:
-                    sprites[0] = content.Load<Texture2D>("Images/playButton");
+                    sprites[0] = content.Load<Texture2D>("Images/BMPlayGameButton");
                     sprites[1] = content.Load<Texture2D>("Images/playButtonHL");
                     position = new Vector2(-sprites[0].Width / 2, -sprites[0].Height * 1.5f);
                     break;
 
                 case MenuButtons.Settings:
-                    sprites[0] = content.Load<Texture2D>("Images/Settings");
+                    sprites[0] = content.Load<Texture2D>("Images/BMSettingsButton");
                     sprites[1] = content.Load<Texture2D>("Images/Settings");
                     position = new Vector2(-sprites[0].Width / 2, 0);
                     break;
 
                 case MenuButtons.Quit:
-                    sprites[0] = content.Load<Texture2D>("Images/Quit");
+                    sprites[0] = content.Load<Texture2D>("Images/BMQuitButton");
                     sprites[1] = content.Load<Texture2D>("Images/Quit");
                     position = new Vector2(-sprites[0].Width / 2, sprites[0].Height * 1.5f);
                     break;
@@ -82,6 +82,12 @@ namespace Battle_Mages
                 case MenuButtons.Back:
                     sprites[0] = content.Load<Texture2D>("Images/Back");
                     sprites[1] = content.Load<Texture2D>("Images/Back");
+                    position = new Vector2(-sprites[0].Width / 2, sprites[0].Height * 3f);
+                    break;
+
+                case MenuButtons.LoadGame:
+                    sprites[0] = content.Load<Texture2D>("Images/BMLoadGameButton");
+                    sprites[1] = content.Load<Texture2D>("Images/BMLoadGameButton");
                     position = new Vector2(-sprites[0].Width / 2, sprites[0].Height * 3f);
                     break;
             }

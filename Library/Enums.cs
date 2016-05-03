@@ -22,7 +22,7 @@ namespace Battle_Mages
 
     public enum MenuButtons
     {
-        Play, Settings, Quit, ResUp, ResDown, KeyBindUp, KeyBindLeft, KeyBindDown, KeyBindRight, Back
+        Play, Settings, Quit, ResUp, ResDown, KeyBindUp, KeyBindLeft, KeyBindDown, KeyBindRight, Back, LoadGame
     }
 
     public class Enums

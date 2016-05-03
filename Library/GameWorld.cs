@@ -72,7 +72,6 @@ namespace Battle_Mages
         private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
