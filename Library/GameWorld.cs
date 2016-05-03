@@ -19,8 +19,8 @@ namespace Battle_Mages
         private GameObject player;
         private Director director;
         private GameState currentGameState = GameState.MainMenu;
-        private const int gameWidth = 1366;
-        private const int gameHeight = 768;
+        private const int gameWidth = 1280;
+        private const int gameHeight = 720;
         private PlayerControls playerControls = new PlayerControls();
         private SoundManager soundManager = new SoundManager();
         private MenuScreenManager menuScreenManager = new MenuScreenManager();
@@ -72,6 +72,7 @@ namespace Battle_Mages
         private GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
