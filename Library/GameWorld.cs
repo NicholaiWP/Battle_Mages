@@ -178,10 +178,6 @@ namespace Battle_Mages
                 case GameState.Shop:
                     break;
             }
-            if (Mouse.GetState().LeftButton == ButtonState.Released)
-            {
-                menuScreenManager.MouseCanClickButton = true;
-            }
 
             base.Update(gameTime);
         }

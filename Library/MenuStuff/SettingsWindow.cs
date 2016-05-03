@@ -11,20 +11,24 @@ namespace Battle_Mages
     public class SettingsWindow
     {
         private List<Button> settingsButtons = new List<Button>();
+        private SpriteFont fontBM;
+        private Vector2 fontPosition;
 
         public SettingsWindow()
         {
+            fontPosition = Vector2.Zero;
             settingsButtons.Add(new Button(MenuButtons.Back));
             /* settingsButtons.Add(new Button(MenuButtons.KeyBindDown));
              settingsButtons.Add(new Button(MenuButtons.KeyBindLeft));
-             settingsButtons.Add(new Button(MenuButtons.KeyBindRight));
-             settingsButtons.Add(new Button(MenuButtons.KeyBindUp));*/
+             settingsButtons.Add(new Button(MenuButtons.KeyBindRight));*/
+            settingsButtons.Add(new Button(MenuButtons.KeyBindUp));
             settingsButtons.Add(new Button(MenuButtons.ResDown));
             settingsButtons.Add(new Button(MenuButtons.ResUp));
         }
 
         public void LoadContent(ContentManager content)
         {
+            fontBM = content.Load<SpriteFont>("FontBM");
             foreach (Button button in settingsButtons)
             {
                 button.LoadContent(content);
@@ -41,6 +45,8 @@ namespace Battle_Mages
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.DrawString(fontBM, GameWorld.MenuScreenManager.CurrentResolutionString, fontPosition,
+                Color.Black);
             foreach (Button button in settingsButtons)
             {
                 button.Draw(spriteBatch);

@@ -65,6 +65,9 @@ namespace Battle_Mages
                     break;
 
                 case MenuButtons.KeyBindUp:
+                    sprites[0] = content.Load<Texture2D>("Images/1366x768");
+                    sprites[1] = content.Load<Texture2D>("Images/1366x768");
+                    position = new Vector2(-sprites[0].Width / 2, -250);
                     break;
 
                 case MenuButtons.KeyBindLeft:
@@ -135,6 +138,8 @@ namespace Battle_Mages
                     break;
 
                 case MenuButtons.KeyBindUp:
+                    GameWorld.MenuScreenManager.SwappingKeyBind = true;
+                    GameWorld.MenuScreenManager.ChosenKeyToRebind = PlayerBind.Up;
                     break;
 
                 case MenuButtons.KeyBindLeft:

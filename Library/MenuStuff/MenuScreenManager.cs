@@ -22,9 +22,11 @@ namespace Battle_Mages
         private SettingsWindow settingsWindow;
         private MainMenuWindow mainMenuWindow;
         public Vector2 ScalingVector { get { return scalingVector; } set { scalingVector = value; } }
-
+        public string CurrentResolutionString { get { return currentResolutionString; } }
         public bool MouseCanClickButton { get { return mouseCanClickButton; } set { mouseCanClickButton = value; } }
         public int ElementAtNumber { get; set; }
+        public bool SwappingKeyBind { get; set; } = false;
+        public PlayerBind ChosenKeyToRebind { get; set; }
 
         public MenuScreenManager()
         {
@@ -66,6 +68,11 @@ namespace Battle_Mages
         /// </summary>
         public void Update(GraphicsDeviceManager graphics, GameState currentState)
         {
+            if (SwappingKeyBind)
+            {
+                mouseCanClickButton = false;
+                ReadNewKey();
+            }
             switch (currentState)
             {
                 case GameState.MainMenu:
@@ -104,6 +111,18 @@ namespace Battle_Mages
                     ElementAtNumber = i;
                     currentResolutionString = (currentResolution.Width + "x" + currentResolution.Height);
                 }
+            }
+        }
+
+        private void ReadNewKey()
+        {
+            KeyboardState kbState = Keyboard.GetState();
+            Keys[] keyPressed = kbState.GetPressedKeys();
+            if (keyPressed.Length == 1)
+            {
+                GameWorld.PlayerControls.ChangeBinding(ChosenKeyToRebind, keyPressed[0]);
+                SwappingKeyBind = false;
+                mouseCanClickButton = true;
             }
         }
 
