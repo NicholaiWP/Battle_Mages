@@ -26,7 +26,6 @@ namespace Battle_Mages
         public int ElementAtNumber { get; set; }
         public bool SwappingKeyBind { get; set; } = false;
         public PlayerBind ChosenKeyToRebind { get; set; }
-        public SettingsWindow SettingsWindow { get { return settingsWindow; } }
 
         public MenuScreenManager()
         {
@@ -126,16 +125,17 @@ namespace Battle_Mages
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameState currentState)
+        public void Draw(SpriteBatch spriteBatch1, SpriteBatch spriteBatch2, GameState currentState)
         {
             switch (currentState)
             {
                 case GameState.MainMenu:
-                    mainMenuWindow.Draw(spriteBatch);
+                    mainMenuWindow.Draw(spriteBatch1);
                     break;
 
                 case GameState.Settings:
-                    settingsWindow.Draw(spriteBatch);
+                    settingsWindow.Draw(spriteBatch1);
+                    settingsWindow.DrawStrings(spriteBatch2);
                     break;
             }
         }
