@@ -70,7 +70,7 @@
         <Name>Button</Name>
         <Access>Public</Access>
         <Location left="1662" top="490" />
-        <Size width="162" height="247" />
+        <Size width="261" height="247" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private int hoverNumbe</Member>
         <Member type="Field">private MenuButtons thisButton</Member>
@@ -87,7 +87,7 @@
       <Entity type="Class">
         <Name>Camera2D</Name>
         <Access>Public</Access>
-        <Location left="976" top="830" />
+        <Location left="1012" top="799" />
         <Size width="258" height="400" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Texture2D sprite</Member>
@@ -131,7 +131,7 @@
       <Entity type="Class">
         <Name>Cursor</Name>
         <Access>Public</Access>
-        <Location left="958" top="1263" />
+        <Location left="1012" top="1295" />
         <Size width="255" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Texture2D[] sprite</Member>
@@ -193,43 +193,29 @@
       <Entity type="Class">
         <Name>MenuScreenManager</Name>
         <Access>Public</Access>
-        <Location left="573" top="602" />
-        <Size width="357" height="672" />
+        <Location left="572" top="599" />
+        <Size width="395" height="419" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">private Texture2D sprite</Member>
         <Member type="Field">private Vector2 fontPosition</Member>
-        <Member type="Field">private int elementAtNumber</Member>
         <Member type="Field">private string currentResolutionString</Member>
         <Member type="Field">private DisplayMode currentResolution</Member>
+        <Member type="Field">private DisplayMode resolutionHolder</Member>
         <Member type="Field">private List&lt;DisplayMode&gt; resolutions</Member>
         <Member type="Field">private Vector2 scalingVector</Member>
         <Member type="Field">private bool mouseCanClickButton</Member>
-        <Member type="Field">private Button play</Member>
-        <Member type="Field">private Button setting</Member>
-        <Member type="Field">private Button quit</Member>
-        <Member type="Field">private Button oneRes</Member>
-        <Member type="Field">private Button twoRes</Member>
-        <Member type="Field">private Button threeRes</Member>
-        <Member type="Field">private Button fourRes</Member>
-        <Member type="Field">private Button back</Member>
-        <Member type="Field">private SpriteFont fontBM</Member>
+        <Member type="Field">private SettingsWindow settingsWindow</Member>
+        <Member type="Field">private MainMenuWindow mainMenuWindow</Member>
         <Member type="Property">public Vector2 ScalingVector { get; set; }</Member>
+        <Member type="Property">public string CurrentResolutionString { get; }</Member>
         <Member type="Property">public bool MouseCanClickButton { get; set; }</Member>
-        <Member type="Property">public Button Play { get; set; }</Member>
-        <Member type="Property">public Button Settings { get; set; }</Member>
-        <Member type="Property">public Button Quit { get; set; }</Member>
-        <Member type="Property">public Button OneRes { get; set; }</Member>
-        <Member type="Property">public Button TwoRes { get; set; }</Member>
-        <Member type="Property">public Button ThreeRes { get; set; }</Member>
-        <Member type="Property">public Button FourRes { get; set; }</Member>
-        <Member type="Property">public Button Back { get; set; }</Member>
-        <Member type="Property">public SpriteFont FontBM { get; set; }</Member>
+        <Member type="Property">public int ElementAtNumber { get; set; }</Member>
+        <Member type="Property">public bool SwappingKeyBind { get; set; }</Member>
+        <Member type="Property">public PlayerBind ChosenKeyToRebind { get; set; }</Member>
         <Member type="Constructor">public MenuScreenManager()</Member>
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
-        <Member type="Method">public void UpdateMenu()</Member>
-        <Member type="Method">public void UpdateSettingWindow(GraphicsDeviceManager graphics)</Member>
-        <Member type="Method">public void DrawMenu(SpriteBatch spriteBatch)</Member>
-        <Member type="Method">public void DrawSettingsWindow(SpriteBatch spriteBatch)</Member>
+        <Member type="Method">public void Update(GraphicsDeviceManager graphics, GameState currentState)</Member>
+        <Member type="Method">private void ReadNewKey()</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch, GameState currentState)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -590,7 +576,7 @@
       <Entity type="Class">
         <Name>Enums</Name>
         <Access>Public</Access>
-        <Location left="624" top="1655" />
+        <Location left="622" top="1652" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -598,8 +584,8 @@
       <Entity type="Class">
         <Name>MainMenuWindow</Name>
         <Access>Public</Access>
-        <Location left="525" top="278" />
-        <Size width="162" height="178" />
+        <Location left="337" top="213" />
+        <Size width="265" height="178" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private List&lt;Button&gt; mainMenuButtons</Member>
         <Member type="Constructor">public MainMenuWindow()</Member>
@@ -611,8 +597,8 @@
       <Entity type="Class">
         <Name>SettingsWindow</Name>
         <Access>Public</Access>
-        <Location left="732" top="354" />
-        <Size width="162" height="186" />
+        <Location left="692" top="367" />
+        <Size width="260" height="186" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private List&lt;Button&gt; settingsButtons</Member>
         <Member type="Constructor">public SettingsWindow()</Member>
@@ -626,11 +612,26 @@
         <Location left="1890" top="2418" />
         <Size width="160" height="75" />
       </Entity>
+      <Entity type="Enum">
+        <Name>MenuButtons</Name>
+        <Access>Public</Access>
+        <Location left="741" top="1973" />
+        <Size width="162" height="231" />
+        <Collapsed>False</Collapsed>
+        <Value>Play</Value>
+        <Value>Settings</Value>
+        <Value>Quit</Value>
+        <Value>ResUp</Value>
+        <Value>ResDown</Value>
+        <Value>KeyBindUp</Value>
+        <Value>KeyBindLeft</Value>
+        <Value>KeyBindDown</Value>
+        <Value>KeyBindRight</Value>
+        <Value>Back</Value>
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Association" first="11" second="37">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -639,18 +640,24 @@
         <EndMultiplicity>0..*</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="41" second="40">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="41" second="38">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="41" second="39">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
