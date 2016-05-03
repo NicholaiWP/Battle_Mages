@@ -139,17 +139,5 @@ namespace Battle_Mages
                     break;
             }
         }
-
-        /* public void DrawSettingsWindow(SpriteBatch spriteBatch)
-         {
-             oneRes.Draw(spriteBatch);
-             twoRes.Draw(spriteBatch);
-             spriteBatch.DrawString(fontBM, currentResolutionString, fontPosition, Color.White);
-             spriteBatch.DrawString(fontBM, GameWorld.Cursor.Position.ToString(),
-                 new Vector2(0, -150), Color.White);
-             spriteBatch.DrawString(fontBM,
-                 GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell1)),
-                 new Vector2(50, 50), Color.Black);
-         }*/
     }
 }

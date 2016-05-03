@@ -37,6 +37,7 @@ namespace Battle_Mages
 
         private void CreateAnimation()
         {
+            //animator.CreateAnimation("MoveUp", new Animation())
         }
 
         public void Update()
