@@ -19,17 +19,14 @@ namespace Battle_Mages
         private GameObject player;
         private Director director;
         private GameState currentGameState = GameState.MainMenu;
-        private const int gameWidth = 1280;
-        private const int gameHeight = 720;
+
         private PlayerControls playerControls = new PlayerControls();
         private SoundManager soundManager = new SoundManager();
         private MenuScreenManager menuScreenManager = new MenuScreenManager();
         private Cursor cursor = new Cursor();
         private Camera2D camera = new Camera2D();
 
-        //Lists
         private List<GameObject> activeObjects = new List<GameObject>();
-
         private List<GameObject> objectsToAdd = new List<GameObject>();
         private List<GameObject> objectsToRemove = new List<GameObject>();
 
@@ -43,13 +40,13 @@ namespace Battle_Mages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
-        public static int GameWidth { get { return gameWidth; } }
-        public static int GameHeight { get { return gameHeight; } }
         public float DeltaTime { get; private set; }
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public List<GameObject> ObjectsToAdd { get { return objectsToAdd; } }
         public List<GameObject> ObjectsToRemove { get { return objectsToRemove; } }
+        public const int GameWidth = 1280;
+        public const int GameHeight = 720;
 
         //Singleton
         private static GameWorld instance;
