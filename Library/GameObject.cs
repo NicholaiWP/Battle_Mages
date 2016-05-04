@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battle_Mages
 {
@@ -47,9 +47,9 @@ namespace Battle_Mages
         /// Method for removing a component from the list
         /// </summary>
         /// <param name="componentName"></param>
-        public void RemoveComponent(string componentName)
+        public void RemoveComponent<T>() where T : Component
         {
-            components.Remove(GetComponent(componentName));
+            components.Remove(GetComponent<T>());
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Battle_Mages
         /// </summary>
         /// <param name="componentName"></param>
         /// <returns></returns>
-        public Component GetComponent(string componentName)
+        public T GetComponent<T>() where T : Component
         {
-            return components.Find(componentInList => componentInList.GetType().Name == componentName);
+            return components.OfType<T>().FirstOrDefault();
         }
 
         /// <summary>
