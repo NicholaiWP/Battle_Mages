@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -20,11 +20,11 @@ namespace Battle_Mages
         private Director director;
         private GameState currentGameState = GameState.MainMenu;
 
-        private PlayerControls playerControls = new PlayerControls();
-        private SoundManager soundManager = new SoundManager();
-        private MenuScreenManager menuScreenManager = new MenuScreenManager();
-        private Cursor cursor = new Cursor();
-        private Camera2D camera = new Camera2D();
+        private PlayerControls playerControls;
+        private SoundManager soundManager;
+        private MenuScreenManager menuScreenManager;
+        private Cursor cursor;
+        private Camera2D camera;
 
         private List<GameObject> activeObjects = new List<GameObject>();
         private List<GameObject> objectsToAdd = new List<GameObject>();
@@ -88,6 +88,12 @@ namespace Battle_Mages
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            playerControls = new PlayerControls();
+            soundManager = new SoundManager();
+            menuScreenManager = new MenuScreenManager();
+            cursor = new Cursor();
+            camera = new Camera2D();
 
             base.Initialize();
         }

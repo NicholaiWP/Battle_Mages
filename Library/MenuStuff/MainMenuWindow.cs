@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -17,10 +17,43 @@ namespace Battle_Mages
         public MainMenuWindow()
         {
             bgStartPos = new Vector2(-GameWorld.GameWidth / 2, -GameWorld.GameHeight / 2);
-            mainMenuButtons.Add(new Button(MenuButtons.Play));
-            mainMenuButtons.Add(new Button(MenuButtons.Settings));
-            mainMenuButtons.Add(new Button(MenuButtons.Quit));
-            mainMenuButtons.Add(new Button(MenuButtons.LoadGame));
+            var content = GameWorld.Instance.Content;
+            //Play button
+            var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");
+            var playSpr2 = content.Load<Texture2D>("Images/playButtonHL");
+            mainMenuButtons.Add(new Button(
+                playSpr1,
+                playSpr2,
+                new Vector2(-playSpr1.Width / 2, -playSpr2.Height * 1.5f),
+                () => { GameWorld.SetState(GameState.InGame); }
+                ));
+            //Settings button
+            var settingsSpr1 = content.Load<Texture2D>("Images/BMSettingsButton");
+            var settingsSpr2 = content.Load<Texture2D>("Images/Settings");
+            mainMenuButtons.Add(new Button(
+                settingsSpr1,
+                settingsSpr2,
+                new Vector2(-settingsSpr1.Width / 2, 0),
+                () => { GameWorld.SetState(GameState.Settings); }
+                ));
+            //Quit button
+            var quitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
+            var quitSpr2 = content.Load<Texture2D>("Images/Quit");
+            mainMenuButtons.Add(new Button(
+                quitSpr1,
+                quitSpr2,
+                new Vector2(-quitSpr1.Width / 2, quitSpr1.Height * 1.5f),
+                () => { GameWorld.SetState(GameState.Quit); }
+                ));
+            //Load game button
+            var loadSpr1 = content.Load<Texture2D>("Images/BMLoadGameButton");
+            var loadSpr2 = content.Load<Texture2D>("Images/BMLoadGameButton");
+            mainMenuButtons.Add(new Button(
+                loadSpr1,
+                loadSpr2,
+                new Vector2(-loadSpr1.Width / 2, loadSpr2.Height * 3f),
+                () => { }
+                ));
         }
 
         public void LoadContent(ContentManager content)

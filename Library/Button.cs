@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -13,84 +13,29 @@ namespace Battle_Mages
     {
         //fields
 
-        private int hoverNumber;
-        private MenuButtons thisButton;
+        private int hoverNumber = 0;
         private Texture2D[] sprites = new Texture2D[2];
         private Rectangle rectangle;
         private Vector2 position;
+        private ClickDelegate onClick;
+
+        public delegate void ClickDelegate();
 
         /// <summary>
         /// Button class' constructor
         /// </summary>
         /// <param name="newSprite1"></param>
         /// <param name="graphics"></param>
-        public Button(MenuButtons thisButton)
+        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick)
         {
-            this.thisButton = thisButton;
-            hoverNumber = 0;
+            sprites[0] = normalTex;
+            sprites[1] = hoverTex;
+            this.position = position;
+            this.onClick = onClick;
         }
 
         public void LoadContent(ContentManager content)
         {
-            switch (thisButton)
-            {
-                case MenuButtons.Play:
-                    sprites[0] = content.Load<Texture2D>("Images/BMPlayGameButton");
-                    sprites[1] = content.Load<Texture2D>("Images/playButtonHL");
-                    position = new Vector2(-sprites[0].Width / 2, -sprites[0].Height * 1.5f);
-                    break;
-
-                case MenuButtons.Settings:
-                    sprites[0] = content.Load<Texture2D>("Images/BMSettingsButton");
-                    sprites[1] = content.Load<Texture2D>("Images/Settings");
-                    position = new Vector2(-sprites[0].Width / 2, 0);
-                    break;
-
-                case MenuButtons.Quit:
-                    sprites[0] = content.Load<Texture2D>("Images/BMQuitButton");
-                    sprites[1] = content.Load<Texture2D>("Images/Quit");
-                    position = new Vector2(-sprites[0].Width / 2, sprites[0].Height * 1.5f);
-                    break;
-
-                case MenuButtons.ResUp:
-                    sprites[0] = content.Load<Texture2D>("Images/800x600");
-                    sprites[1] = content.Load<Texture2D>("Images/800x600");
-                    position = new Vector2(150, -50);
-                    break;
-
-                case MenuButtons.ResDown:
-                    sprites[0] = content.Load<Texture2D>("Images/800x600");
-                    sprites[1] = content.Load<Texture2D>("Images/800x600");
-                    position = new Vector2(-550, -50);
-                    break;
-
-                case MenuButtons.KeyBindUp:
-                    sprites[0] = content.Load<Texture2D>("Images/1366x768");
-                    sprites[1] = content.Load<Texture2D>("Images/1366x768");
-                    position = new Vector2(-sprites[0].Width / 2, -250);
-                    break;
-
-                case MenuButtons.KeyBindLeft:
-                    break;
-
-                case MenuButtons.KeyBindDown:
-                    break;
-
-                case MenuButtons.KeyBindRight:
-                    break;
-
-                case MenuButtons.Back:
-                    sprites[0] = content.Load<Texture2D>("Images/Back");
-                    sprites[1] = content.Load<Texture2D>("Images/Back");
-                    position = new Vector2(-sprites[0].Width / 2, sprites[0].Height * 3f);
-                    break;
-
-                case MenuButtons.LoadGame:
-                    sprites[0] = content.Load<Texture2D>("Images/BMLoadGameButton");
-                    sprites[1] = content.Load<Texture2D>("Images/BMLoadGameButton");
-                    position = new Vector2(-sprites[0].Width / 2, sprites[0].Height * 3f);
-                    break;
-            }
         }
 
         public void Update()
@@ -110,56 +55,13 @@ namespace Battle_Mages
                     GameWorld.MenuScreenManager.MouseCanClickButton)
                 {
                     GameWorld.MenuScreenManager.MouseCanClickButton = false;
-                    ButtonIsClicked();
+                    //Invoke the onClick delegate when the button is clicked
+                    onClick();
                 }
             }
             else
             {
                 hoverNumber = 0;
-            }
-        }
-
-        private void ButtonIsClicked()
-        {
-            switch (thisButton)
-            {
-                case MenuButtons.Play:
-                    GameWorld.SetState(GameState.InGame);
-                    break;
-
-                case MenuButtons.Settings:
-                    GameWorld.SetState(GameState.Settings);
-                    break;
-
-                case MenuButtons.Quit:
-                    GameWorld.SetState(GameState.Quit);
-                    break;
-
-                case MenuButtons.ResUp:
-                    GameWorld.MenuScreenManager.ElementAtNumber++;
-                    break;
-
-                case MenuButtons.ResDown:
-                    GameWorld.MenuScreenManager.ElementAtNumber--;
-                    break;
-
-                case MenuButtons.KeyBindUp:
-                    GameWorld.MenuScreenManager.SwappingKeyBind = true;
-                    GameWorld.MenuScreenManager.ChosenKeyToRebind = PlayerBind.Up;
-                    break;
-
-                case MenuButtons.KeyBindLeft:
-                    break;
-
-                case MenuButtons.KeyBindDown:
-                    break;
-
-                case MenuButtons.KeyBindRight:
-                    break;
-
-                case MenuButtons.Back:
-                    GameWorld.SetState(GameState.MainMenu);
-                    break;
             }
         }
 

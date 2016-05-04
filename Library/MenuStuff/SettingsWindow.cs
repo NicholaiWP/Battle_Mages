@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -17,13 +17,44 @@ namespace Battle_Mages
         public SettingsWindow()
         {
             fontPosition = Vector2.Zero;
-            settingsButtons.Add(new Button(MenuButtons.Back));
+            var content = GameWorld.Instance.Content;
+            var backSpr = content.Load<Texture2D>("Images/Back");
+            settingsButtons.Add(new Button(
+                    backSpr,
+                    backSpr,
+                    new Vector2(-backSpr.Width / 2, backSpr.Height * 3f),
+                    () => { GameWorld.SetState(GameState.MainMenu); }
+                ));
             /* settingsButtons.Add(new Button(MenuButtons.KeyBindDown));
              settingsButtons.Add(new Button(MenuButtons.KeyBindLeft));
              settingsButtons.Add(new Button(MenuButtons.KeyBindRight));*/
-            settingsButtons.Add(new Button(MenuButtons.KeyBindUp));
-            settingsButtons.Add(new Button(MenuButtons.ResDown));
-            settingsButtons.Add(new Button(MenuButtons.ResUp));
+            //Keybind up
+            var keyBindUpSpr = content.Load<Texture2D>("Images/1366x768");
+            settingsButtons.Add(new Button(
+                keyBindUpSpr,
+                keyBindUpSpr,
+                new Vector2(-keyBindUpSpr.Width / 2, -250),
+                () =>
+                {
+                    GameWorld.MenuScreenManager.SwappingKeyBind = true;
+                    GameWorld.MenuScreenManager.ChosenKeyToRebind = PlayerBind.Up;
+                }));
+            //Res down
+            var resDown = content.Load<Texture2D>("Images/800x600");
+            settingsButtons.Add(new Button(
+                resDown,
+                resDown,
+                new Vector2(-550, -50),
+                () => { GameWorld.MenuScreenManager.ElementAtNumber--; }
+                ));
+            //Res up
+            var resUp = content.Load<Texture2D>("Images/800x600");
+            settingsButtons.Add(new Button(
+                resUp,
+                resUp,
+                new Vector2(150, -50),
+                () => { GameWorld.MenuScreenManager.ElementAtNumber++; }
+                ));
         }
 
         public void LoadContent(ContentManager content)

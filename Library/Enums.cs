@@ -19,13 +19,4 @@ namespace Battle_Mages
     {
         MainMenu, InGame, Settings, Shop, Quit
     }
-
-    public enum MenuButtons
-    {
-        Play, Settings, Quit, ResUp, ResDown, KeyBindUp, KeyBindLeft, KeyBindDown, KeyBindRight, Back, LoadGame
-    }
-
-    public class Enums
-    {
-    }
 }
