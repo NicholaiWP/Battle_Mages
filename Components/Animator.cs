@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Battle_Mages
 {
@@ -30,7 +30,7 @@ namespace Battle_Mages
         /// <param name="gameObject"></param>
         public Animator(GameObject gameObject) : base(gameObject)
         {
-            this.spriteRenderer = (SpriteRenderer)gameObject.GetComponent("SpriteRenderer");
+            this.spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             animations = new Dictionary<string, Animation>();
         }
 

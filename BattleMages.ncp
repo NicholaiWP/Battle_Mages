@@ -7,22 +7,20 @@
       <Entity type="Class">
         <Name>GameWorld</Name>
         <Access>Public</Access>
-        <Location left="927" top="675" />
-        <Size width="352" height="757" />
+        <Location left="925" top="673" />
+        <Size width="352" height="711" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private GraphicsDeviceManager graphics</Member>
         <Member type="Field">private Draw drawer</Member>
         <Member type="Field">private Camera2D camera</Member>
         <Member type="Field">private Director director</Member>
-        <Member type="Field">private float camMovespeed</Member>
-        <Member type="Field">private float speedOfCam</Member>
         <Member type="Field">private float deltaTime</Member>
         <Member type="Field">private Cursor cursor</Member>
         <Member type="Field">private MenuScreenManager menuScreenManager</Member>
         <Member type="Field">private SoundManager soundManager</Member>
         <Member type="Field">private GameState currentGameState</Member>
-        <Member type="Field">private const int gameWidth = 1366</Member>
-        <Member type="Field">private const int gameHeight = 768</Member>
+        <Member type="Field">public const int GameWidth = 1280</Member>
+        <Member type="Field">public const int GameHeight = 720</Member>
         <Member type="Field">private PlayerControls playerControls</Member>
         <Member type="Field">private List&lt;GameObject&gt; activeObjects</Member>
         <Member type="Field">private List&lt;GameObject&gt; objectsToAdd</Member>
@@ -37,8 +35,6 @@
         <Member type="Property">public float DeltaTime { get; }</Member>
         <Member type="Property">public float HalfViewPortWidth { get; }</Member>
         <Member type="Property">public float HalfViewPortHeight { get; }</Member>
-        <Member type="Property">public static int GameWidth { get; }</Member>
-        <Member type="Property">public static int GameHeight { get; }</Member>
         <Member type="Property">public PlayerControls PlayerControls { get; set; }</Member>
         <Member type="Property">public List&lt;GameObject&gt; ObjectsToAdd { get; }</Member>
         <Member type="Property">public List&lt;GameObject&gt; ObjectsToRemove { get; }</Member>
@@ -150,7 +146,7 @@
         <Name>Drawer</Name>
         <Access>Public</Access>
         <Location left="448" top="807" />
-        <Size width="241" height="196" />
+        <Size width="250" height="196" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private Dictionary&lt;DrawLayer, SpriteBatch&gt; layers</Member>
         <Member type="Field">private GraphicsDevice graphics</Member>
@@ -164,7 +160,7 @@
       <Entity type="Class">
         <Name>GameObject</Name>
         <Access>Public</Access>
-        <Location left="1774" top="508" />
+        <Location left="1774" top="507" />
         <Size width="316" height="334" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private bool isLoaded</Member>
@@ -173,8 +169,8 @@
         <Member type="Property">public List&lt;Component&gt; Components { get; set; }</Member>
         <Member type="Constructor">public GameObject(Vector2 position)</Member>
         <Member type="Method">public void AddComponent(Component component)</Member>
-        <Member type="Method">public void RemoveComponent(string componentName)</Member>
-        <Member type="Method">public Component GetComponent(string componentName)</Member>
+        <Member type="Method">public void RemoveComponent&lt;T&gt;()</Member>
+        <Member type="Method">public T GetComponent&lt;T&gt;()</Member>
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
         <Member type="Method">public void Update()</Member>
         <Member type="Method">public void Draw(Drawer drawer)</Member>
@@ -874,8 +870,8 @@
           <Y>2210</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>1042</X>
-          <Y>1457</Y>
+          <X>1040</X>
+          <Y>1409</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
@@ -886,8 +882,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="False">
-          <X>1075</X>
-          <Y>1457</Y>
+          <X>1073</X>
+          <Y>1409</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
@@ -898,8 +894,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1128</X>
-          <Y>1457</Y>
+          <X>1126</X>
+          <Y>1409</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>867</X>
@@ -914,8 +910,8 @@
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="False">
-          <X>1520</X>
-          <Y>804</Y>
+          <X>1518</X>
+          <Y>802</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Aggregation</AssociationType>

@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battle_Mages
 {
@@ -32,8 +32,8 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
-            animator = (Animator)GameObject.GetComponent("Animator");
-            spriteRenderer = (SpriteRenderer)GameObject.GetComponent("SpirteRenderer");
+            animator = GameObject.GetComponent<Animator>();
+            spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             transform = GameObject.Transform;
             strategy = new Strategy(animator, transform, moveSpeed);
             CreateAnimation();
@@ -56,7 +56,7 @@ namespace Battle_Mages
         {
             foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
             {
-                if (potentialTarget.Components.Contains((Player)potentialTarget.GetComponent("Player")))
+                if (potentialTarget.Components.Contains(potentialTarget.GetComponent<Player>()))
                 {
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();
