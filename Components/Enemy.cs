@@ -56,7 +56,7 @@ namespace Battle_Mages
         {
             foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
             {
-                if (potentialTarget.Components.Contains(potentialTarget.GetComponent<Player>()))
+                if (potentialTarget.GetComponent<Player>() != null)
                 {
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();

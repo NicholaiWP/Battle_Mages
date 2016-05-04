@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battle_Mages
 {
@@ -18,11 +18,6 @@ namespace Battle_Mages
 
         //Properteis
         public Transform Transform { get; set; }
-
-        public ReadOnlyCollection<Component> Components
-        {
-            get { return components.AsReadOnly(); }
-        }
 
         /// <summary>
         /// Constructer of the gameobject
