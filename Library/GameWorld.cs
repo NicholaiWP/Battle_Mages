@@ -192,7 +192,6 @@ namespace Battle_Mages
         {
             foreach (GameObject gameObject in ObjectsToAdd)
             {
-                gameObject.LoadContent(Content);
                 activeObjects.Add(gameObject);
             }
             ObjectsToAdd.Clear();
