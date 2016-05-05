@@ -59,10 +59,6 @@ namespace Battle_Mages
         public void LoadContent(ContentManager content)
         {
             background = content.Load<Texture2D>("Images/BMmenu");
-            foreach (Button button in mainMenuButtons)
-            {
-                button.LoadContent(content);
-            }
         }
 
         public void Update()

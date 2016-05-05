@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -125,17 +125,16 @@ namespace Battle_Mages
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch1, SpriteBatch spriteBatch2, GameState currentState)
+        public void Draw(SpriteBatch spriteBatch, GameState currentState)
         {
             switch (currentState)
             {
                 case GameState.MainMenu:
-                    mainMenuWindow.Draw(spriteBatch1);
+                    mainMenuWindow.Draw(spriteBatch);
                     break;
 
                 case GameState.Settings:
-                    settingsWindow.Draw(spriteBatch1);
-                    settingsWindow.DrawStrings(spriteBatch2);
+                    settingsWindow.Draw(spriteBatch);
                     break;
             }
         }

@@ -60,10 +60,6 @@ namespace Battle_Mages
         public void LoadContent(ContentManager content)
         {
             fontBM = content.Load<SpriteFont>("FontBM");
-            foreach (Button button in settingsButtons)
-            {
-                button.LoadContent(content);
-            }
         }
 
         public void Update()
@@ -80,10 +76,7 @@ namespace Battle_Mages
             {
                 button.Draw(spriteBatch);
             }
-        }
 
-        public void DrawStrings(SpriteBatch spriteBatch)
-        {
             spriteBatch.DrawString(fontBM, GameWorld.MenuScreenManager.CurrentResolutionString, fontPosition,
                 Color.Black);
             spriteBatch.DrawString(fontBM,
