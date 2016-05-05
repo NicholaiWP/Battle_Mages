@@ -20,30 +20,12 @@ namespace Battle_Mages
             var content = GameWorld.Instance.Content;
             //Play button
             var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");
-            var playSpr2 = content.Load<Texture2D>("Images/playButtonHL");
+            var playSpr2 = content.Load<Texture2D>("Images/BMPlayGameButton");
             mainMenuButtons.Add(new Button(
                 playSpr1,
                 playSpr2,
-                new Vector2(-playSpr1.Width / 2, -playSpr2.Height * 1.5f),
+                new Vector2(-playSpr1.Width / 2, playSpr1.Height * -1f),
                 () => { GameWorld.SetState(GameState.InGame); }
-                ));
-            //Settings button
-            var settingsSpr1 = content.Load<Texture2D>("Images/BMSettingsButton");
-            var settingsSpr2 = content.Load<Texture2D>("Images/Settings");
-            mainMenuButtons.Add(new Button(
-                settingsSpr1,
-                settingsSpr2,
-                new Vector2(-settingsSpr1.Width / 2, 0),
-                () => { GameWorld.SetState(GameState.Settings); }
-                ));
-            //Quit button
-            var quitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
-            var quitSpr2 = content.Load<Texture2D>("Images/Quit");
-            mainMenuButtons.Add(new Button(
-                quitSpr1,
-                quitSpr2,
-                new Vector2(-quitSpr1.Width / 2, quitSpr1.Height * 1.5f),
-                () => { GameWorld.SetState(GameState.Quit); }
                 ));
             //Load game button
             var loadSpr1 = content.Load<Texture2D>("Images/BMLoadGameButton");
@@ -51,8 +33,26 @@ namespace Battle_Mages
             mainMenuButtons.Add(new Button(
                 loadSpr1,
                 loadSpr2,
-                new Vector2(-loadSpr1.Width / 2, loadSpr2.Height * 3f),
+                new Vector2(-loadSpr1.Width / 2, 0),
                 () => { }
+                ));
+            //Settings button
+            var settingsSpr1 = content.Load<Texture2D>("Images/BMSettingsButton");
+            var settingsSpr2 = content.Load<Texture2D>("Images/BMSettingsButton");
+            mainMenuButtons.Add(new Button(
+                settingsSpr1,
+                settingsSpr2,
+                new Vector2(-settingsSpr1.Width / 2, settingsSpr1.Height * 1f),
+                () => { GameWorld.SetState(GameState.Settings); }
+                ));
+            //Quit button
+            var quitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
+            var quitSpr2 = content.Load<Texture2D>("Images/BMQuitButton");
+            mainMenuButtons.Add(new Button(
+                quitSpr1,
+                quitSpr2,
+                new Vector2(-quitSpr1.Width / 2, quitSpr1.Height * 2f),
+                () => { GameWorld.SetState(GameState.Quit); }
                 ));
         }
 
