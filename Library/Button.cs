@@ -34,10 +34,6 @@ namespace Battle_Mages
             this.onClick = onClick;
         }
 
-        public void LoadContent(ContentManager content)
-        {
-        }
-
         public void Update()
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y,

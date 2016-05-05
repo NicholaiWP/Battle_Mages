@@ -195,7 +195,6 @@ namespace Battle_Mages
         {
             foreach (GameObject gameObject in ObjectsToAdd)
             {
-                gameObject.LoadContent(Content);
                 activeObjects.Add(gameObject);
             }
             ObjectsToAdd.Clear();
@@ -224,7 +223,7 @@ namespace Battle_Mages
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    menuScreenManager.Draw(drawer[DrawLayer.UI], drawer[DrawLayer.AboveUI], currentGameState);
+                    menuScreenManager.Draw(drawer[DrawLayer.UI], currentGameState);
                     break;
 
                 case GameState.InGame:
@@ -236,7 +235,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Settings:
-                    menuScreenManager.Draw(drawer[DrawLayer.UI], drawer[DrawLayer.AboveUI], currentGameState);
+                    menuScreenManager.Draw(drawer[DrawLayer.UI], currentGameState);
                     break;
 
                 case GameState.Shop:

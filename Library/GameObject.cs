@@ -10,14 +10,10 @@ namespace Battle_Mages
 {
     public class GameObject
     {
-        //Fields
-        private bool isLoaded;
-
-        //Lists
         private List<Component> components = new List<Component>();
 
-        //Properteis
-        public Transform Transform { get; set; }
+        //Transform component is cached in a property for easy access because all GameObjects have one
+        public Transform Transform { get; private set; }
 
         /// <summary>
         /// Constructer of the gameobject
@@ -26,8 +22,7 @@ namespace Battle_Mages
         public GameObject(Vector2 position)
         {
             Transform = new Transform(this, position);
-            components.Add(Transform);
-            isLoaded = false;
+            AddComponent(Transform);
         }
 
         /// <summary>
@@ -36,7 +31,12 @@ namespace Battle_Mages
         /// <param name="component"></param>
         public void AddComponent(Component component)
         {
-            components.Add(component);
+            if (!components.Any(a => a.GetType() == component.GetType()))
+            {
+                components.Add(component);
+                if (component is ICanBeLoaded)
+                    (component as ICanBeLoaded).LoadContent(GameWorld.Instance.Content);
+            }
         }
 
         /// <summary>
@@ -49,32 +49,13 @@ namespace Battle_Mages
         }
 
         /// <summary>
-        /// Method for getting a specific component by its name
+        /// Method for getting a specific component by its type
         /// </summary>
         /// <param name="componentName"></param>
         /// <returns></returns>
         public T GetComponent<T>() where T : Component
         {
             return components.OfType<T>().FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Method to load starting information only components only load once
-        /// </summary>
-        /// <param name="content"></param>
-        public void LoadContent(ContentManager content)
-        {
-            if (!isLoaded)
-            {
-                foreach (Component comp in components)
-                {
-                    if (comp is ICanBeLoaded)
-                    {
-                        (comp as ICanBeLoaded).LoadContent(content);
-                    }
-                }
-                isLoaded = true;
-            }
         }
 
         /// <summary>
