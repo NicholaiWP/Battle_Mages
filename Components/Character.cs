@@ -8,33 +8,35 @@ namespace Battle_Mages
 {
     public class Character : Component
     {
-        private EnemyAI aI;
+        private EnemyAI enemyAI;
         private MovingDirection mDirection;
         private FacingDirection fDirection;
         private Strategy strategy;
 
         public Character(GameObject gameObject) : base(gameObject)
         {
-            Animator animator = GameObject.GetComponent<Animator>();
-            Transform transform = GameObject.Transform;
-            float moveSpeed = 100;
-            strategy = new Strategy(animator, transform, moveSpeed);
-        }
-
-        public Character(GameObject gameObject, EnemyAI aI) : base(gameObject)
-        {
-            this.aI = aI;
         }
 
         public void Move()
         {
             if (GameObject.GetComponent<Player>() != null)
             {
+                if (strategy == null)
+                {
+                    strategy = new Strategy(GameObject.GetComponent<Animator>(),
+                        GameObject.Transform, 100);
+                }
                 PlayerMovement();
             }
             else if (GameObject.GetComponent<Enemy>() != null)
             {
-                aI.Targeting();
+                if (enemyAI == null)
+                {
+                    enemyAI = new EnemyRanged(GameObject.GetComponent<Animator>(),
+                        GameObject.GetComponent<Enemy>(),
+                        GameObject.Transform);
+                }
+                enemyAI.Targeting();
             }
         }
 

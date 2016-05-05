@@ -16,14 +16,14 @@ namespace Battle_Mages
         private Character character;
         private SpriteRenderer spriteRenderer;
         private Transform transform;
-        private MovingDirection mDirection;
-        private FacingDirection fDirection;
+        public MovingDirection MDirection { get; set; }
+        public FacingDirection FDirection { get; set; }
 
         public Player(GameObject gameObject) : base(gameObject)
         {
             moveSpeed = 100;
-            mDirection = MovingDirection.Idle;
-            fDirection = FacingDirection.Front;
+            MDirection = MovingDirection.Idle;
+            FDirection = FacingDirection.Front;
         }
 
         public void LoadContent(ContentManager content)

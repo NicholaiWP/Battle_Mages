@@ -18,9 +18,9 @@ namespace Battle_Mages
         {
             gameObject = new GameObject(position);
             gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/apple", 0));
-            gameObject.AddComponent(new Player(gameObject));
-            gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject));
+            gameObject.AddComponent(new Animator(gameObject));
+            gameObject.AddComponent(new Player(gameObject));
             //go.AddComponent(new Collider(go));
         }
 

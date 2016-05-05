@@ -7,15 +7,13 @@ namespace Battle_Mages
 {
     public class EnemyRanged : EnemyAI
     {
-        public EnemyRanged()
+        public EnemyRanged(Animator animator, Enemy enemy, Transform transform) : base(animator, enemy, transform)
         {
+            attackRange = 200 * enemy.Level;
+            targetingRange = 500 * enemy.Level;
         }
 
         public override void Attack()
-        {
-        }
-
-        public override void Targeting()
         {
         }
     }

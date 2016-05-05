@@ -10,17 +10,17 @@ namespace Battle_Mages
     public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated, IEnterCollision, IExitCollision,
         IStayOnCollision
     {
-        private float moveSpeed;
+        private int level;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
         private Transform transform;
         private FacingDirection fDirection;
         private MovingDirection mDirection;
         private Character character;
+        public int Level { get { return level; } }
 
         public Enemy(GameObject gameObject) : base(gameObject)
         {
-            moveSpeed = 100;
             mDirection = MovingDirection.Idle;
             fDirection = FacingDirection.Front;
         }

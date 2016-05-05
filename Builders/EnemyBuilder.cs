@@ -14,9 +14,9 @@ namespace Battle_Mages
         {
             gameObject = new GameObject(position);
             gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/basket", 0));
-            gameObject.AddComponent(new Enemy(gameObject));
             gameObject.AddComponent(new Animator(gameObject));
-            gameObject.AddComponent(new Character(gameObject, new EnemyRanged()));
+            gameObject.AddComponent(new Character(gameObject));
+            gameObject.AddComponent(new Enemy(gameObject));
         }
 
         public GameObject GetResult()
