@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Battle_Mages
 {
@@ -109,7 +109,10 @@ namespace Battle_Mages
 
             director = new Director(new PlayerBuilder());
             player = director.Construct(Vector2.Zero);
-            ObjectsToAdd.Add(player);
+            director = new Director(new EnemyBuilder());
+            GameObject enemy = director.Construct(new Vector2(50, 50));
+            objectsToAdd.Add(player);
+            objectsToAdd.Add(enemy);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             menuScreenManager.LoadContent(Content);

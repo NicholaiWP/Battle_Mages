@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\Character.cs" />
     <Compile Include="Library\Director.cs" />
     <Compile Include="Builders\EnemyBuilder.cs" />
     <Compile Include="Builders\PlayerBuilder.cs" />
@@ -45,6 +46,9 @@
     <Compile Include="Library\Component.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Enemy.cs" />
+    <Compile Include="Library\EnemyAI\EnemyAI.cs" />
+    <Compile Include="Library\EnemyAI\EnemyCloseRange.cs" />
+    <Compile Include="Library\EnemyAI\EnemyRanged.cs" />
     <Compile Include="Library\GameObject.cs" />
     <Compile Include="Components\Projectile.cs" />
     <Compile Include="Components\Transform.cs" />

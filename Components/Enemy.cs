@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 
 namespace Battle_Mages
 {
@@ -16,14 +16,9 @@ namespace Battle_Mages
         private Transform transform;
         private FacingDirection fDirection;
         private MovingDirection mDirection;
-        private float targetingRange;
-        private float attackingRange;
-        private float attackSpeed;
-        private float attackDamage;
-        private float health;
-        private Strategy strategy;
+        private Character character;
 
-        public Enemy(GameObject gameObject, int lvl, bool isRanged) : base(gameObject)
+        public Enemy(GameObject gameObject) : base(gameObject)
         {
             moveSpeed = 100;
             mDirection = MovingDirection.Idle;
@@ -34,14 +29,14 @@ namespace Battle_Mages
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
+            character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-            strategy = new Strategy(animator, transform, moveSpeed);
             CreateAnimation();
         }
 
         private void CreateAnimation()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -54,7 +49,8 @@ namespace Battle_Mages
         /// </summary>
         public void Update()
         {
-            foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
+            character.Move();
+            /*foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
                 {
@@ -98,7 +94,7 @@ namespace Battle_Mages
                     }
                     break;
                 }
-            }
+            }*/
         }
 
         public void OnAnimationDone(string animationsName)
