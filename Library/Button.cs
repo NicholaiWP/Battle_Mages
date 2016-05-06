@@ -18,6 +18,9 @@ namespace Battle_Mages
         private Rectangle rectangle;
         private Vector2 position;
         private ClickDelegate onClick;
+        private Vector2 startPos;
+        private float offset;
+        private bool wiggle;
 
         public delegate void ClickDelegate();
 
@@ -26,16 +29,25 @@ namespace Battle_Mages
         /// </summary>
         /// <param name="newSprite1"></param>
         /// <param name="graphics"></param>
-        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick)
+        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false)
         {
             sprites[0] = normalTex;
             sprites[1] = hoverTex;
             this.position = position;
+            startPos = position;
+            offset = position.Y * 0.02f;
             this.onClick = onClick;
+            this.wiggle = wiggle;
         }
 
         public void Update()
         {
+            if (wiggle)
+            {
+                offset += 0.02f;
+                position = startPos + new Vector2((float)Math.Sin(offset) * 8, 0);
+            }
+
             rectangle = new Rectangle((int)position.X, (int)position.Y,
                 (sprites[hoverNumber].Width),
                 (sprites[hoverNumber].Height));

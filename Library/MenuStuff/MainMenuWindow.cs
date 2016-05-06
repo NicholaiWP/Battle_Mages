@@ -25,7 +25,8 @@ namespace Battle_Mages
                 playSpr1,
                 playSpr2,
                 new Vector2(-playSpr1.Width / 2, playSpr1.Height * -1f),
-                () => { GameWorld.SetState(GameState.InGame); }
+                () => { GameWorld.SetState(GameState.InGame); },
+                true
                 ));
             //Load game button
             var loadSpr1 = content.Load<Texture2D>("Images/BMLoadGameButton");
@@ -34,7 +35,8 @@ namespace Battle_Mages
                 loadSpr1,
                 loadSpr2,
                 new Vector2(-loadSpr1.Width / 2, 0),
-                () => { }
+                () => { },
+                true
                 ));
             //Settings button
             var settingsSpr1 = content.Load<Texture2D>("Images/BMSettingsButton");
@@ -43,7 +45,8 @@ namespace Battle_Mages
                 settingsSpr1,
                 settingsSpr2,
                 new Vector2(-settingsSpr1.Width / 2, settingsSpr1.Height * 1f),
-                () => { GameWorld.SetState(GameState.Settings); }
+                () => { GameWorld.SetState(GameState.Settings); },
+                true
                 ));
             //Quit button
             var quitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
@@ -52,7 +55,8 @@ namespace Battle_Mages
                 quitSpr1,
                 quitSpr2,
                 new Vector2(-quitSpr1.Width / 2, quitSpr1.Height * 2f),
-                () => { GameWorld.SetState(GameState.Quit); }
+                () => { GameWorld.SetState(GameState.Quit); },
+                true
                 ));
         }
 
