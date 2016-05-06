@@ -11,12 +11,9 @@ namespace Battle_Mages
     public class MainMenuWindow
     {
         private List<Button> mainMenuButtons = new List<Button>();
-        private Texture2D background;
-        private Vector2 bgStartPos;
 
         public MainMenuWindow()
         {
-            bgStartPos = new Vector2(-GameWorld.GameWidth / 2, -GameWorld.GameHeight / 2);
             var content = GameWorld.Instance.Content;
             //Play button
             var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");
@@ -62,7 +59,6 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
-            background = content.Load<Texture2D>("Images/BMmenu");
         }
 
         public void Update()
@@ -75,7 +71,6 @@ namespace Battle_Mages
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, position: bgStartPos, color: Color.White);
             foreach (Button button in mainMenuButtons)
             {
                 button.Draw(spriteBatch);
