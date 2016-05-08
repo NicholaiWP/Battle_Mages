@@ -12,79 +12,89 @@ namespace Battle_Mages
         private MovingDirection mDirection;
         private FacingDirection fDirection;
         private Strategy strategy;
+        public bool Up { get; set; }
+        public bool Down { get; set; }
+        public bool Left { get; set; }
+        public bool Right { get; set; }
 
         public Character(GameObject gameObject) : base(gameObject)
         {
         }
 
-        public void Move()
+        public void Load()
         {
-            if (GameObject.GetComponent<Player>() != null)
+            strategy = new Strategy(GameObject.GetComponent<Animator>(),
+                GameObject.Transform, 100);
+
+            if (GameObject.GetComponent<Enemy>() != null)
             {
-                if (strategy == null)
                 {
-                    strategy = new Strategy(GameObject.GetComponent<Animator>(),
-                        GameObject.Transform, 100);
-                }
-                PlayerMovement();
-            }
-            else if (GameObject.GetComponent<Enemy>() != null)
-            {
-                if (enemyAI == null)
-                {
-                    enemyAI = new EnemyRanged(GameObject.GetComponent<Animator>(),
-                        GameObject.GetComponent<Enemy>(),
+                    enemyAI = new EnemyRanged(this, GameObject.GetComponent<Enemy>(),
                         GameObject.Transform);
                 }
-                enemyAI.Targeting();
             }
         }
 
-        private void PlayerMovement()
+        public void PlayerMove()
         {
             KeyboardState kbState = Keyboard.GetState();
 
-            bool up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
-            bool down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
-            bool left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
-            bool right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
+            Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
+            Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
+            Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
+            Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
 
-            if (up && right)
+            Movement();
+        }
+
+        public void EnemyMove()
+        {
+            enemyAI.Targeting();
+            Movement();
+            Up = false;
+            Down = false;
+            Right = false;
+            Left = false;
+        }
+
+        private void Movement()
+        {
+            if (Up && Right)
             {
                 mDirection = MovingDirection.UpRight;
                 fDirection = FacingDirection.Right;
             }
-            else if (up && left)
+            else if (Up && Left)
             {
                 mDirection = MovingDirection.UpLeft;
                 fDirection = FacingDirection.Left;
             }
-            else if (down && right)
+            else if (Down && Right)
             {
                 mDirection = MovingDirection.DownRight;
                 fDirection = FacingDirection.Right;
             }
-            else if (down && left)
+            else if (Down && Left)
             {
                 mDirection = MovingDirection.DownLeft;
                 fDirection = FacingDirection.Left;
             }
-            else if (up)
+            else if (Up)
             {
                 mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
-            else if (left)
+            else if (Left)
             {
                 mDirection = MovingDirection.Left;
                 fDirection = FacingDirection.Left;
             }
-            else if (down)
+            else if (Down)
             {
                 mDirection = MovingDirection.Down;
                 fDirection = FacingDirection.Front;
             }
-            else if (right)
+            else if (Right)
             {
                 mDirection = MovingDirection.Right;
                 fDirection = FacingDirection.Right;

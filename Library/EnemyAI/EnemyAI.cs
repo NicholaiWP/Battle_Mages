@@ -8,15 +8,15 @@ namespace Battle_Mages
 {
     public abstract class EnemyAI
     {
-        protected Animator animator;
+        protected Character character;
         protected Enemy enemy;
         protected Transform transform;
         protected float attackRange;
         protected float targetingRange;
 
-        protected EnemyAI(Animator animator, Enemy enemy, Transform transform)
+        protected EnemyAI(Character character, Enemy enemy, Transform transform)
         {
-            this.animator = animator;
+            this.character = character;
             this.enemy = enemy;
             this.transform = transform;
         }
@@ -33,6 +33,10 @@ namespace Battle_Mages
                     float lengthToTarget = vecToTarget.Length();
                     if (lengthToTarget <= targetingRange && lengthToTarget >= attackRange)
                     {
+                        character.Up = transform.Position.Y > potentialTarget.Transform.Position.Y;
+                        character.Down = transform.Position.Y < potentialTarget.Transform.Position.Y;
+                        character.Left = transform.Position.X > potentialTarget.Transform.Position.X;
+                        character.Right = transform.Position.X < potentialTarget.Transform.Position.X;
                     }
                     break;
                 }

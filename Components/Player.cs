@@ -21,7 +21,7 @@ namespace Battle_Mages
 
         public Player(GameObject gameObject) : base(gameObject)
         {
-            moveSpeed = 100;
+            moveSpeed = 30;
             MDirection = MovingDirection.Idle;
             FDirection = FacingDirection.Front;
         }
@@ -32,6 +32,7 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
+            character.Load();
             CreateAnimation();
         }
 
@@ -42,7 +43,7 @@ namespace Battle_Mages
 
         public void Update()
         {
-            character.Move();
+            character.PlayerMove();
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Battle_Mages
 {
     public class EnemyCloseRange : EnemyAI
     {
-        public EnemyCloseRange(Animator animator, Enemy enemy, Transform transform) : base(animator, enemy, transform)
+        public EnemyCloseRange(Character character, Enemy enemy, Transform transform) :
+            base(character, enemy, transform)
         {
         }
 

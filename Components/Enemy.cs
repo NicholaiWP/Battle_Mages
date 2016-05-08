@@ -23,6 +23,7 @@ namespace Battle_Mages
         {
             mDirection = MovingDirection.Idle;
             fDirection = FacingDirection.Front;
+            level = 1;
         }
 
         public void LoadContent(ContentManager content)
@@ -31,6 +32,7 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
+            character.Load();
             CreateAnimation();
         }
 
@@ -49,7 +51,7 @@ namespace Battle_Mages
         /// </summary>
         public void Update()
         {
-            character.Move();
+            character.EnemyMove();
             /*foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
