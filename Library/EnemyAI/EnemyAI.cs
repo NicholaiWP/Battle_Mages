@@ -25,7 +25,7 @@ namespace Battle_Mages
 
         public virtual void Targeting()
         {
-            foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
+            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
                 {
