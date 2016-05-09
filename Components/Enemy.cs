@@ -51,52 +51,17 @@ namespace Battle_Mages
         /// </summary>
         public void Update()
         {
-            character.EnemyMove();
-            /*foreach (GameObject potentialTarget in GameWorld.Instance.ActiveObjects)
-            {
-                if (potentialTarget.GetComponent<Player>() != null)
-                {
-                    Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
-                    float lengthToTarget = vecToTarget.Length();
-                    if (lengthToTarget <= attackingRange)
-                    {
-                        if (attackSpeed <= 0)
-                        {
-                            attackSpeed = 5;
-                            strategy.Attack(fDirection, attackingRange);
-                        }
-                        else
-                        {
-                            attackSpeed -= GameWorld.Instance.DeltaTime;
-                            strategy.Idle(fDirection);
-                        }
-                    }
-                    else if (lengthToTarget <= targetingRange)
-                    {
-                        bool up = transform.Position.Y > potentialTarget.Transform.Position.Y;
-                        bool down = transform.Position.Y < potentialTarget.Transform.Position.Y;
+            Move();
+        }
 
-                        if (potentialTarget.Transform.Position.X > transform.Position.X &&
-                        potentialTarget.Transform.Position.Y > transform.Position.Y)
-                        {
-                            mDirection = MovingDirection.DownRight;
-                            fDirection = FacingDirection.Right;
-                        }
-                        else
-                        {
-                            mDirection = MovingDirection.Idle;
-                            strategy.Idle(fDirection);
-                        }
-                        strategy.Move(mDirection);
-                    }
-                    else
-                    {
-                        attackSpeed -= GameWorld.Instance.DeltaTime;
-                        strategy.Idle(fDirection);
-                    }
-                    break;
-                }
-            }*/
+        private void Move()
+        {
+            character.EnemyAI.Targeting();
+            character.Movement();
+            character.Up = false;
+            character.Down = false;
+            character.Right = false;
+            character.Left = false;
         }
 
         public void OnAnimationDone(string animationsName)

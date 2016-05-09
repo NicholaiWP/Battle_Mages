@@ -16,6 +16,7 @@ namespace Battle_Mages
         public bool Down { get; set; }
         public bool Left { get; set; }
         public bool Right { get; set; }
+        public EnemyAI EnemyAI { get { return enemyAI; } }
 
         public Character(GameObject gameObject) : base(gameObject)
         {
@@ -35,29 +36,7 @@ namespace Battle_Mages
             }
         }
 
-        public void PlayerMove()
-        {
-            KeyboardState kbState = Keyboard.GetState();
-
-            Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
-            Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
-            Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
-            Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
-
-            Movement();
-        }
-
-        public void EnemyMove()
-        {
-            enemyAI.Targeting();
-            Movement();
-            Up = false;
-            Down = false;
-            Right = false;
-            Left = false;
-        }
-
-        private void Movement()
+        public void Movement()
         {
             if (Up && Right)
             {
