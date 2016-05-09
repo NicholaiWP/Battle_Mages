@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
@@ -45,8 +45,8 @@ namespace Battle_Mages
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public List<GameObject> ObjectsToAdd { get { return objectsToAdd; } }
         public List<GameObject> ObjectsToRemove { get { return objectsToRemove; } }
-        public const int GameWidth = 1280;
-        public const int GameHeight = 720;
+        public const int GameWidth = 320;
+        public const int GameHeight = 180;
 
         //Singleton
         private static GameWorld instance;

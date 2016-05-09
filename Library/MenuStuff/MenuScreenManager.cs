@@ -27,8 +27,12 @@ namespace Battle_Mages
         public bool SwappingKeyBind { get; set; } = false;
         public PlayerBind ChosenKeyToRebind { get; set; }
 
+        private Texture2D background;
+        private Vector2 bgStartPos;
+
         public MenuScreenManager()
         {
+            bgStartPos = new Vector2(-GameWorld.GameWidth / 2, -GameWorld.GameHeight / 2);
             fontPosition = new Vector2(-100, -50);
             mouseCanClickButton = true;
             settingsWindow = new SettingsWindow();
@@ -37,6 +41,7 @@ namespace Battle_Mages
 
         public void LoadContent(ContentManager content)
         {
+            background = content.Load<Texture2D>("Images/BMmenu");
             settingsWindow.LoadContent(content);
             mainMenuWindow.LoadContent(content);
             DisplayMode lastResolution = null;
@@ -127,6 +132,7 @@ namespace Battle_Mages
 
         public void Draw(SpriteBatch spriteBatch, GameState currentState)
         {
+            spriteBatch.Draw(background, position: bgStartPos, color: Color.White);
             switch (currentState)
             {
                 case GameState.MainMenu:
