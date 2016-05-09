@@ -156,11 +156,7 @@ namespace Battle_Mages
                     {
                         paused = !paused;
                         pGS.Update();
-                        if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
-                        {
-                            paused = !paused;
-                        }
-
+                    }
                         if (!paused)
                         {
                             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -186,7 +182,7 @@ namespace Battle_Mages
                         }
 
                         oldKeyState = keyState;
-                    }
+                    
                     break;
 
                 case GameState.Settings:
