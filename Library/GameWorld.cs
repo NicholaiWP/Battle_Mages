@@ -28,6 +28,7 @@ namespace Battle_Mages
         private Cursor cursor;
         private Camera2D camera;
         private Scene scene;
+        private PausedGameScreen pGS;
 
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -113,6 +114,7 @@ namespace Battle_Mages
             menuScreenManager.LoadContent(Content);
             soundManager.LoadContent(Content);
             soundManager.Music("hey");
+            pGS = new PausedGameScreen();
             // TODO: use this.Content to load your game content here
         }
 
@@ -149,11 +151,12 @@ namespace Battle_Mages
                 case GameState.InGame:
 
                     keyState = Keyboard.GetState();
-                    
 
+                   
                   if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
                     {                     	        
                          paused = !paused;
+                        pGS.Update();                      
                     }
                   
 
@@ -218,11 +221,18 @@ namespace Battle_Mages
                     break;
 
                 case GameState.InGame:
+
                     foreach (GameObject gameObject in scene.ActiveObjects)
                     {
                         gameObject.Draw(drawer);
                     }
                     camera.Draw(drawer[DrawLayer.UI]);
+
+                    if (paused)
+                    {
+                        pGS.DrawPause(drawer[DrawLayer.UI]);
+                    }
+                   
                     break;
 
                 case GameState.Settings:
