@@ -6,23 +6,27 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public class Strategy
+    public class Walk : IStrategy
     {
         private Animator animator;
         private Transform transform;
         private float speed;
 
-        public Strategy(Animator animator, Transform transform, float speed)
+        public Walk(Animator animator, Transform transform, float speed)
         {
             this.animator = animator;
             this.transform = transform;
             this.speed = speed;
         }
 
-        public void Move(MovingDirection moveDirection)
+        public void Execute(FacingDirection fDirection)
+        {
+        }
+
+        public void Execute(MovingDirection mDirection)
         {
             Vector2 translation = Vector2.Zero;
-            switch (moveDirection)
+            switch (mDirection)
             {
                 case MovingDirection.UpLeft:
                     //animator.PlayAnimation("WalkLeft");
@@ -65,22 +69,6 @@ namespace Battle_Mages
                     break;
             }
             transform.Translate(translation * GameWorld.Instance.DeltaTime * speed);
-        }
-
-        public void Idle(FacingDirection direction)
-        {
-        }
-
-        public void Attack(FacingDirection direction, float attackingRange)
-        {
-        }
-
-        public void SpellProjectile(FacingDirection direction)
-        {
-        }
-
-        public void Spell(FacingDirection direction)
-        {
         }
     }
 }

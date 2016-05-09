@@ -11,7 +11,8 @@ namespace Battle_Mages
         private EnemyAI enemyAI;
         private MovingDirection mDirection;
         private FacingDirection fDirection;
-        private Strategy strategy;
+        private IStrategy walkStrategy;
+        private IStrategy idleStrategy;
         public bool Up { get; set; }
         public bool Down { get; set; }
         public bool Left { get; set; }
@@ -20,13 +21,13 @@ namespace Battle_Mages
 
         public Character(GameObject gameObject) : base(gameObject)
         {
+            walkStrategy = new Walk(GameObject.GetComponent<Animator>(),
+                GameObject.Transform, 100);
+            idleStrategy = new Idle(GameObject.GetComponent<Animator>());
         }
 
         public void Load()
         {
-            strategy = new Strategy(GameObject.GetComponent<Animator>(),
-                GameObject.Transform, 100);
-
             if (GameObject.GetComponent<Enemy>() != null)
             {
                 {
@@ -81,9 +82,9 @@ namespace Battle_Mages
             else
             {
                 mDirection = MovingDirection.Idle;
-                strategy.Idle(fDirection);
+                idleStrategy.Execute(fDirection);
             }
-            strategy.Move(mDirection);
+            walkStrategy.Execute(mDirection);
         }
     }
 }

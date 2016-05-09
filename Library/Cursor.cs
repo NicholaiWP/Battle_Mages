@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -15,6 +15,7 @@ namespace Battle_Mages
         private Texture2D[] sprite = new Texture2D[2];
 
         private Vector2 position;
+        private bool canClick = true;
 
         //Properties
         /// <summary>
@@ -40,6 +41,8 @@ namespace Battle_Mages
         }
 
         public int CursorPictureNumber { get; set; } = 0;
+
+        public bool CanClick { get { return canClick; } set { canClick = value; } }
 
         /// <summary>
         /// Method for loading the content of the cursor, it is the pictures that are placed in an array
