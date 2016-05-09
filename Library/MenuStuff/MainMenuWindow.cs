@@ -17,7 +17,7 @@ namespace Battle_Mages
             var content = GameWorld.Instance.Content;
             //Play button
             var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");
-            var playSpr2 = content.Load<Texture2D>("Images/BMPlayGameButton");
+            var playSpr2 = content.Load<Texture2D>("Images/BMPlayGameButton_Hover");
             mainMenuButtons.Add(new Button(
                 playSpr1,
                 playSpr2,
@@ -27,7 +27,7 @@ namespace Battle_Mages
                 ));
             //Load game button
             var loadSpr1 = content.Load<Texture2D>("Images/BMLoadGameButton");
-            var loadSpr2 = content.Load<Texture2D>("Images/BMLoadGameButton");
+            var loadSpr2 = content.Load<Texture2D>("Images/BMLoadGameButton_Hover");
             mainMenuButtons.Add(new Button(
                 loadSpr1,
                 loadSpr2,
@@ -37,7 +37,7 @@ namespace Battle_Mages
                 ));
             //Settings button
             var settingsSpr1 = content.Load<Texture2D>("Images/BMSettingsButton");
-            var settingsSpr2 = content.Load<Texture2D>("Images/BMSettingsButton");
+            var settingsSpr2 = content.Load<Texture2D>("Images/BMSettingsButton_Hover");
             mainMenuButtons.Add(new Button(
                 settingsSpr1,
                 settingsSpr2,
@@ -47,7 +47,7 @@ namespace Battle_Mages
                 ));
             //Quit button
             var quitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
-            var quitSpr2 = content.Load<Texture2D>("Images/BMQuitButton");
+            var quitSpr2 = content.Load<Texture2D>("Images/BMQuitButton_Hover");
             mainMenuButtons.Add(new Button(
                 quitSpr1,
                 quitSpr2,
