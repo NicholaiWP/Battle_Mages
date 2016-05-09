@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
@@ -58,7 +58,7 @@ namespace Battle_Mages
         {
             foreach (SpriteBatch batch in layers.Values)
             {
-                batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: Matrix);
+                batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, transformMatrix: Matrix);
             }
         }
 
