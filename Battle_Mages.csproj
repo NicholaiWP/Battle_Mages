@@ -93,6 +93,12 @@
     <Content Include="Content\Images\BMcursor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\Bmcursor1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Bmcursor2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\BMLoadGameButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
