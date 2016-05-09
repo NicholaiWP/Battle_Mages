@@ -51,8 +51,8 @@ namespace Battle_Mages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            sprites[0] = content.Load<Texture2D>("Images/BMcursor");
-            sprites[1] = content.Load<Texture2D>("Images/battle-mages spell-cursor");
+            sprites[0] = content.Load<Texture2D>("Images/Bmcursor2");
+            sprites[1] = content.Load<Texture2D>("Images/Bmcursor1");
         }
 
         /// <summary>
