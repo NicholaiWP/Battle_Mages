@@ -23,6 +23,9 @@ namespace Battle_Mages
         private Rectangle bottomRectangle;
         private Rectangle leftRectangle;
 
+        //Latest position of the target if it's been set, defaults to 0,0
+        private Vector2 latestTargetPosition = Vector2.Zero;
+
         //Properties
         public float Rotation
         {
@@ -35,6 +38,11 @@ namespace Battle_Mages
             get { return position; }
             set { position = value; }
         }
+
+        /// <summary>
+        /// The camera will position itself between this target and the mouse
+        /// </summary>
+        public Transform Target { get; set; }
 
         /// <summary>
         /// This is the matrix which the spriteBatch draws through, so it is our camera so to say
@@ -146,12 +154,19 @@ namespace Battle_Mages
 
         public void Update(float dt)
         {
+            if (Target != null)
+                latestTargetPosition = Target.Position;
+
             var camMovespeed = 250 * dt;
 
             GameWorld.Cursor.CursorPictureNumber = 0;
 
             Vector2 mousePos = GameWorld.Cursor.Position;
-            if (TopRectangle.Contains(mousePos) && RightRectangle.Contains(mousePos))
+
+            Vector2 pos = (GameWorld.Cursor.Position + latestTargetPosition) / 2;
+            position = pos;
+
+            /*if (TopRectangle.Contains(mousePos) && RightRectangle.Contains(mousePos))
             {
                 Position += new Vector2(camMovespeed, -camMovespeed);
             }
@@ -183,7 +198,7 @@ namespace Battle_Mages
             else if (LeftRectangle.Contains(mousePos))
             {
                 Position -= new Vector2(camMovespeed, 0);
-            }
+            }*/
         }
 
         /// <summary>
@@ -192,7 +207,7 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-#if DEBUG
+#if FALSE
 
             #region topRectangle
 
