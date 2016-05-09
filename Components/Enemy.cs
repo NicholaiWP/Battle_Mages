@@ -66,22 +66,18 @@ namespace Battle_Mages
 
         public void OnAnimationDone(string animationsName)
         {
-            throw new NotImplementedException();
         }
 
         public void OnCollisionEnter(Collider other)
         {
-            throw new NotImplementedException();
         }
 
         public void OnCollisionStay(Collider other)
         {
-            throw new NotImplementedException();
         }
 
         public void OnCollisionExit(Collider other)
         {
-            throw new NotImplementedException();
         }
     }
 }

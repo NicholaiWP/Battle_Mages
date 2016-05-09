@@ -9,7 +9,8 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public class Player : Component, ICanUpdate, ICanBeLoaded
+    public class Player : Component, ICanUpdate, ICanBeLoaded, IEnterCollision, IExitCollision, ICanBeAnimated,
+        IStayOnCollision
     {
         private float moveSpeed;
         private Animator animator;
@@ -55,6 +56,22 @@ namespace Battle_Mages
             character.Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
 
             character.Movement();
+        }
+
+        public void OnAnimationDone(string animationsName)
+        {
+        }
+
+        public void OnCollisionExit(Collider other)
+        {
+        }
+
+        public void OnCollisionEnter(Collider other)
+        {
+        }
+
+        public void OnCollisionStay(Collider other)
+        {
         }
     }
 }
