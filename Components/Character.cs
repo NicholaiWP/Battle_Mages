@@ -69,9 +69,9 @@ namespace Battle_Mages
             else
             {
                 mDirection = MovingDirection.Idle;
-                idleStrategy.Execute(fDirection);
+                idleStrategy.Execute(mDirection, fDirection);
             }
-            walkStrategy.Execute(mDirection);
+            walkStrategy.Execute(mDirection, fDirection);
         }
     }
 }

@@ -19,11 +19,7 @@ namespace Battle_Mages
             this.speed = speed;
         }
 
-        public void Execute(FacingDirection fDirection)
-        {
-        }
-
-        public void Execute(MovingDirection mDirection)
+        public void Execute(MovingDirection mDirection, FacingDirection fDirection)
         {
             Vector2 translation = Vector2.Zero;
             switch (mDirection)

@@ -14,7 +14,7 @@ namespace Battle_Mages
             this.animator = animator;
         }
 
-        public void Execute(FacingDirection fDirection)
+        public void Execute(MovingDirection mDirection, FacingDirection fDirection)
         {
             switch (fDirection)
             {
@@ -34,10 +34,6 @@ namespace Battle_Mages
                     // animator.PlayAnimation("IdleFront");
                     break;
             }
-        }
-
-        public void Execute(MovingDirection mDirection)
-        {
         }
     }
 }

@@ -5,7 +5,14 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    class Projectile
+    public class Projectile : Component, IEnterCollision
     {
+        public Projectile(GameObject gameObject) : base(gameObject)
+        {
+        }
+
+        public void OnCollisionEnter(Collider other)
+        {
+        }
     }
 }
