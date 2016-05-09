@@ -17,5 +17,10 @@ namespace Battle_Mages
         public override void Attack()
         {
         }
+
+        public override void Targeting()
+        {
+            base.Targeting();
+        }
     }
 }

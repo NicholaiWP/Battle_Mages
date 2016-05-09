@@ -8,7 +8,6 @@ namespace Battle_Mages
 {
     public class Character : Component
     {
-        private EnemyAI enemyAI;
         private MovingDirection mDirection;
         private FacingDirection fDirection;
         private IStrategy walkStrategy;
@@ -17,24 +16,12 @@ namespace Battle_Mages
         public bool Down { get; set; }
         public bool Left { get; set; }
         public bool Right { get; set; }
-        public EnemyAI EnemyAI { get { return enemyAI; } }
 
         public Character(GameObject gameObject) : base(gameObject)
         {
             walkStrategy = new Walk(GameObject.GetComponent<Animator>(),
                 GameObject.Transform, 100);
             idleStrategy = new Idle(GameObject.GetComponent<Animator>());
-        }
-
-        public void Load()
-        {
-            if (GameObject.GetComponent<Enemy>() != null)
-            {
-                {
-                    enemyAI = new EnemyRanged(this, GameObject.GetComponent<Enemy>(),
-                        GameObject.Transform);
-                }
-            }
         }
 
         public void Movement()

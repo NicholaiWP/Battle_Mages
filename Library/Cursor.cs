@@ -12,7 +12,7 @@ namespace Battle_Mages
     public class Cursor
     {
         //Fields
-        private Texture2D[] sprite = new Texture2D[2];
+        private Texture2D[] sprites = new Texture2D[2];
 
         private Vector2 position;
         private bool canClick = true;
@@ -51,8 +51,8 @@ namespace Battle_Mages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            sprite[0] = content.Load<Texture2D>("Images/BMcursor");
-            sprite[1] = content.Load<Texture2D>("Images/battle-mages spell-cursor");
+            sprites[0] = content.Load<Texture2D>("Images/BMcursor");
+            sprites[1] = content.Load<Texture2D>("Images/battle-mages spell-cursor");
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite[CursorPictureNumber],
+            spriteBatch.Draw(sprites[CursorPictureNumber],
                 position: Position,
                 origin: Vector2.Zero,
                 color: Color.White,

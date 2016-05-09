@@ -10,7 +10,8 @@ namespace Battle_Mages
     public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated, IEnterCollision, IExitCollision,
         IStayOnCollision
     {
-        private int level;
+        private int level = 1;
+        private EnemyAI enemyAI;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
         private Transform transform;
@@ -23,7 +24,6 @@ namespace Battle_Mages
         {
             mDirection = MovingDirection.Idle;
             fDirection = FacingDirection.Front;
-            level = 1;
         }
 
         public void LoadContent(ContentManager content)
@@ -32,7 +32,7 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-            character.Load();
+            enemyAI = new EnemyRanged(character, this, transform);
             CreateAnimation();
         }
 
@@ -56,7 +56,7 @@ namespace Battle_Mages
 
         private void Move()
         {
-            character.EnemyAI.Targeting();
+            enemyAI.Targeting();
             character.Movement();
             character.Up = false;
             character.Down = false;

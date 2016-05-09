@@ -14,12 +14,11 @@ namespace Battle_Mages
 
         public override void Attack()
         {
-            throw new NotImplementedException();
         }
 
         public override void Targeting()
         {
-            throw new NotImplementedException();
+            base.Targeting();
         }
     }
 }

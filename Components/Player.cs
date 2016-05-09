@@ -32,7 +32,6 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-            character.Load();
             CreateAnimation();
         }
 
