@@ -75,6 +75,7 @@
     <Compile Include="Library\MenuStuff\SettingsWindow.cs" />
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\MenuStuff\MenuScreenManager.cs" />
+    <Compile Include="Library\Scene.cs" />
     <Compile Include="Library\ViewCalculator.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
@@ -91,6 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\BMcursor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Bmcursor1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\Bmcursor2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\BMLoadGameButton.png">

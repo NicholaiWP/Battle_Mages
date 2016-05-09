@@ -15,6 +15,8 @@ namespace Battle_Mages
         //Fields
         private GraphicsDeviceManager graphics;
 
+        private bool paused;
+        private KeyboardState keyState, oldKeyState;
         private Drawer drawer;
         private GameObject player;
         private Director director;
@@ -25,26 +27,17 @@ namespace Battle_Mages
         private MenuScreenManager menuScreenManager;
         private Cursor cursor;
         private Camera2D camera;
+        private Scene scene;
 
-        private List<GameObject> activeObjects = new List<GameObject>();
-        private List<GameObject> objectsToAdd = new List<GameObject>();
-        private List<GameObject> objectsToRemove = new List<GameObject>();
-
-        public ReadOnlyCollection<GameObject> ActiveObjects
-        {
-            get { return activeObjects.AsReadOnly(); }
-        }
-
+        public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
         public static MenuScreenManager MenuScreenManager { get { return Instance.menuScreenManager; } }
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
-        public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
+        public static Scene Scene { get { return Instance.scene; } }
         public float DeltaTime { get; private set; }
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
-        public List<GameObject> ObjectsToAdd { get { return objectsToAdd; } }
-        public List<GameObject> ObjectsToRemove { get { return objectsToRemove; } }
         public const int GameWidth = 320;
         public const int GameHeight = 180;
 
@@ -94,6 +87,7 @@ namespace Battle_Mages
             menuScreenManager = new MenuScreenManager();
             cursor = new Cursor();
             camera = new Camera2D();
+            scene = new Scene();
 
             base.Initialize();
         }
@@ -109,10 +103,11 @@ namespace Battle_Mages
 
             director = new Director(new PlayerBuilder());
             player = director.Construct(Vector2.Zero);
+            camera.Target = player.Transform;
             director = new Director(new EnemyBuilder());
             GameObject enemy = director.Construct(new Vector2(50, 50));
-            objectsToAdd.Add(player);
-            objectsToAdd.Add(enemy);
+            scene.AddObject(player);
+            scene.AddObject(enemy);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             menuScreenManager.LoadContent(Content);
@@ -152,29 +147,43 @@ namespace Battle_Mages
                     break;
 
                 case GameState.InGame:
-                    DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    foreach (GameObject go in activeObjects)
+                    keyState = Keyboard.GetState();
+                    
+
+                  if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
+                    {                     	        
+                         paused = !paused;
+                    }
+                  
+
+                    if (!paused)
                     {
-                        go.Update();
+                        DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        foreach (GameObject go in scene.ActiveObjects)
+                            go.Update();
+
+                        scene.ProcessObjectLists();
+
+                        #region Camera Movement
+
+                        camera.Update(DeltaTime);
+
+                        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                        {
+                            camera.Position = new Vector2(player.Transform.Position.X + 80,
+                                player.Transform.Position.Y + 98);
+                        }
+
+                        #endregion Camera Movement
+
+                        //DONT DEBUGG HERE
+
                     }
 
-                    #region Camera Movement
-
-                    camera.Update(DeltaTime);
-
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                    {
-                        camera.Position = new Vector2(player.Transform.Position.X + 80,
-                            player.Transform.Position.Y + 98);
-                    }
-
-                    #endregion Camera Movement
-
-                    //DONT DEBUGG HERE
-
-                    TemplateControl();
-
+                    oldKeyState = keyState;
+                   
                     break;
 
                 case GameState.Settings:
@@ -186,24 +195,6 @@ namespace Battle_Mages
             }
 
             base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// This method is for controlling our templates (lists)
-        /// </summary>
-        private void TemplateControl()
-        {
-            foreach (GameObject gameObject in ObjectsToAdd)
-            {
-                activeObjects.Add(gameObject);
-            }
-            ObjectsToAdd.Clear();
-
-            foreach (GameObject gameObject in ObjectsToRemove)
-            {
-                activeObjects.Remove(gameObject);
-            }
-            ObjectsToRemove.Clear();
         }
 
         /// <summary>
@@ -227,7 +218,7 @@ namespace Battle_Mages
                     break;
 
                 case GameState.InGame:
-                    foreach (GameObject gameObject in activeObjects)
+                    foreach (GameObject gameObject in scene.ActiveObjects)
                     {
                         gameObject.Draw(drawer);
                     }
