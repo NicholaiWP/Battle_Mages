@@ -15,6 +15,8 @@ namespace Battle_Mages
         //Fields
         private GraphicsDeviceManager graphics;
 
+        private bool paused;
+        private KeyboardState keyState, oldKeyState;
         private Drawer drawer;
         private GameObject player;
         private Director director;
@@ -153,28 +155,43 @@ namespace Battle_Mages
                     break;
 
                 case GameState.InGame:
-                    DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    foreach (GameObject go in activeObjects)
-                    {
-                        go.Update();
+                    keyState = Keyboard.GetState();
+                    
+
+                  if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
+                    {                     	        
+                         paused = !paused;
                     }
 
-                    #region Camera Movement
-
-                    camera.Update(DeltaTime);
-
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    if (!paused)
                     {
-                        camera.Position = new Vector2(player.Transform.Position.X + 80,
-                            player.Transform.Position.Y + 98);
+                        DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        foreach (GameObject go in activeObjects)
+                        {
+                            go.Update();
+                        }
+
+                        #region Camera Movement
+
+                        camera.Update(DeltaTime);
+
+                        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                        {
+                            camera.Position = new Vector2(player.Transform.Position.X + 80,
+                                player.Transform.Position.Y + 98);
+                        }
+
+                        #endregion Camera Movement
+
+                        //DONT DEBUGG HERE
+
+                        TemplateControl();
                     }
 
-                    #endregion Camera Movement
-
-                    //DONT DEBUGG HERE
-
-                    TemplateControl();
+                    oldKeyState = keyState;
+                   
 
                     break;
 
