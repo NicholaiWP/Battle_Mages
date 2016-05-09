@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Battle_Mages
 {
@@ -152,41 +152,41 @@ namespace Battle_Mages
 
                     keyState = Keyboard.GetState();
 
-                   
-                  if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
-                    {                     	        
-                         paused = !paused;
-                        pGS.Update();                      
-                    }
-                  
-
-                    if (!paused)
+                    if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
                     {
-                        DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                        foreach (GameObject go in scene.ActiveObjects)
-                            go.Update();
-
-                        scene.ProcessObjectLists();
-
-                        #region Camera Movement
-
-                        camera.Update(DeltaTime);
-
-                        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                        paused = !paused;
+                        pGS.Update();
+                        if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
                         {
-                            camera.Position = new Vector2(player.Transform.Position.X + 80,
-                                player.Transform.Position.Y + 98);
+                            paused = !paused;
                         }
 
-                        #endregion Camera Movement
+                        if (!paused)
+                        {
+                            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                        //DONT DEBUGG HERE
+                            foreach (GameObject go in scene.ActiveObjects)
+                                go.Update();
 
+                            scene.ProcessObjectLists();
+
+                            #region Camera Movement
+
+                            camera.Update(DeltaTime);
+
+                            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                            {
+                                camera.Position = new Vector2(player.Transform.Position.X + 80,
+                                    player.Transform.Position.Y + 98);
+                            }
+
+                            #endregion Camera Movement
+
+                            //DONT DEBUGG HERE
+                        }
+
+                        oldKeyState = keyState;
                     }
-
-                    oldKeyState = keyState;
-                   
                     break;
 
                 case GameState.Settings:
