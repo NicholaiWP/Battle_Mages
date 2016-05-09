@@ -12,6 +12,9 @@ namespace Battle_Mages
     {
         private List<Component> components = new List<Component>();
 
+        private List<Component> componentsToAdd = new List<Component>();
+        private List<Component> componentsToRemove = new List<Component>();
+
         //Transform component is cached in a property for easy access because all GameObjects have one
         public Transform Transform { get; private set; }
 
@@ -33,9 +36,7 @@ namespace Battle_Mages
         {
             if (!components.Any(a => a.GetType() == component.GetType()))
             {
-                components.Add(component);
-                if (component is ICanBeLoaded)
-                    (component as ICanBeLoaded).LoadContent(GameWorld.Instance.Content);
+                componentsToAdd.Add(component);
             }
         }
 
@@ -45,7 +46,7 @@ namespace Battle_Mages
         /// <param name="componentName"></param>
         public void RemoveComponent<T>() where T : Component
         {
-            components.Remove(GetComponent<T>());
+            componentsToRemove.Add(GetComponent<T>());
         }
 
         /// <summary>
@@ -70,6 +71,19 @@ namespace Battle_Mages
                     (comp as ICanUpdate).Update();
                 }
             }
+
+            foreach (Component comp in componentsToAdd)
+                components.Add(comp);
+
+            foreach (Component comp in componentsToAdd)
+                if (comp is ICanBeLoaded)
+                    (comp as ICanBeLoaded).LoadContent(GameWorld.Instance.Content);
+
+            foreach (Component comp in componentsToRemove)
+                components.Remove(comp);
+
+            componentsToAdd.Clear();
+            componentsToRemove.Clear();
         }
 
         /// <summary>
