@@ -11,21 +11,23 @@ namespace Battle_Mages
         private EnemyAI enemyAI;
         private MovingDirection mDirection;
         private FacingDirection fDirection;
-        private Strategy strategy;
+        private IStrategy walkStrategy;
+        private IStrategy idleStrategy;
         public bool Up { get; set; }
         public bool Down { get; set; }
         public bool Left { get; set; }
         public bool Right { get; set; }
+        public EnemyAI EnemyAI { get { return enemyAI; } }
 
         public Character(GameObject gameObject) : base(gameObject)
         {
+            walkStrategy = new Walk(GameObject.GetComponent<Animator>(),
+                GameObject.Transform, 100);
+            idleStrategy = new Idle(GameObject.GetComponent<Animator>());
         }
 
         public void Load()
         {
-            strategy = new Strategy(GameObject.GetComponent<Animator>(),
-                GameObject.Transform, 100);
-
             if (GameObject.GetComponent<Enemy>() != null)
             {
                 {
@@ -35,29 +37,7 @@ namespace Battle_Mages
             }
         }
 
-        public void PlayerMove()
-        {
-            KeyboardState kbState = Keyboard.GetState();
-
-            Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
-            Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
-            Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
-            Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
-
-            Movement();
-        }
-
-        public void EnemyMove()
-        {
-            enemyAI.Targeting();
-            Movement();
-            Up = false;
-            Down = false;
-            Right = false;
-            Left = false;
-        }
-
-        private void Movement()
+        public void Movement()
         {
             if (Up && Right)
             {
@@ -102,9 +82,9 @@ namespace Battle_Mages
             else
             {
                 mDirection = MovingDirection.Idle;
-                strategy.Idle(fDirection);
+                idleStrategy.Execute(fDirection);
             }
-            strategy.Move(mDirection);
+            walkStrategy.Execute(mDirection);
         }
     }
 }

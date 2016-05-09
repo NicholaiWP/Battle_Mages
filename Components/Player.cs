@@ -43,7 +43,19 @@ namespace Battle_Mages
 
         public void Update()
         {
-            character.PlayerMove();
+            Move();
+        }
+
+        private void Move()
+        {
+            KeyboardState kbState = Keyboard.GetState();
+
+            character.Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
+            character.Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
+            character.Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
+            character.Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
+
+            character.Movement();
         }
     }
 }

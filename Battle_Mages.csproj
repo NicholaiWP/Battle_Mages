@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\Character.cs" />
+    <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Library\Director.cs" />
     <Compile Include="Builders\EnemyBuilder.cs" />
     <Compile Include="Builders\PlayerBuilder.cs" />
@@ -74,11 +75,12 @@
     <Compile Include="Library\MenuStuff\SettingsWindow.cs" />
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\MenuStuff\MenuScreenManager.cs" />
-    <Compile Include="Library\Strategy.cs" />
     <Compile Include="Library\ViewCalculator.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\Idle.cs" />
+    <Compile Include="Strategies\Walk.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -99,6 +101,9 @@
     </Content>
     <Content Include="Content\Images\BMLoadGameButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\BMLoadGameButton_Hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\BMmenu.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -121,11 +126,20 @@
     <Content Include="Content\Images\BMPlayGameButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\BMPlayGameButton_Hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\BMQuitButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\BMQuitButton_Hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\BMSettingsButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\BMSettingsButton_Hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\CollisionTexture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

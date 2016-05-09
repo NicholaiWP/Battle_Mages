@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -60,9 +60,9 @@ namespace Battle_Mages
                 }
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    GameWorld.MenuScreenManager.MouseCanClickButton)
+                    GameWorld.Cursor.CanClick)
                 {
-                    GameWorld.MenuScreenManager.MouseCanClickButton = false;
+                    GameWorld.Cursor.CanClick = false;
                     //Invoke the onClick delegate when the button is clicked
                     onClick();
                 }

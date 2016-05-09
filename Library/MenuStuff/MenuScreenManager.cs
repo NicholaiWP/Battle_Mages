@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -17,12 +17,10 @@ namespace Battle_Mages
         private DisplayMode resolutionHolder;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
         private Vector2 scalingVector;
-        private bool mouseCanClickButton;
         private SettingsWindow settingsWindow;
         private MainMenuWindow mainMenuWindow;
         public Vector2 ScalingVector { get { return scalingVector; } set { scalingVector = value; } }
         public string CurrentResolutionString { get { return currentResolutionString; } }
-        public bool MouseCanClickButton { get { return mouseCanClickButton; } set { mouseCanClickButton = value; } }
         public int ElementAtNumber { get; set; }
         public bool SwappingKeyBind { get; set; } = false;
         public PlayerBind ChosenKeyToRebind { get; set; }
@@ -34,7 +32,6 @@ namespace Battle_Mages
         {
             bgStartPos = new Vector2(-GameWorld.GameWidth / 2, -GameWorld.GameHeight / 2);
             fontPosition = new Vector2(-100, -50);
-            mouseCanClickButton = true;
             settingsWindow = new SettingsWindow();
             mainMenuWindow = new MainMenuWindow();
         }
@@ -74,7 +71,7 @@ namespace Battle_Mages
         {
             if (SwappingKeyBind)
             {
-                mouseCanClickButton = false;
+                GameWorld.Cursor.CanClick = false;
                 ReadNewKey();
             }
             switch (currentState)
@@ -87,9 +84,9 @@ namespace Battle_Mages
                     settingsWindow.Update();
                     break;
             }
-            if (!mouseCanClickButton && Mouse.GetState().LeftButton == ButtonState.Released)
+            if (!GameWorld.Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
             {
-                mouseCanClickButton = true;
+                GameWorld.Cursor.CanClick = true;
             }
 
             if (ElementAtNumber >= resolutions.Count) ElementAtNumber = 0;
@@ -126,7 +123,7 @@ namespace Battle_Mages
             {
                 GameWorld.PlayerControls.ChangeBinding(ChosenKeyToRebind, keyPressed[0]);
                 SwappingKeyBind = false;
-                mouseCanClickButton = true;
+                GameWorld.Cursor.CanClick = true;
             }
         }
 
