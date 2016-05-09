@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Battle_Mages
 {
@@ -149,13 +149,11 @@ namespace Battle_Mages
                 case GameState.InGame:
 
                     keyState = Keyboard.GetState();
-                    
 
-                  if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
-                    {                     	        
-                         paused = !paused;
+                    if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
+                    {
+                        paused = !paused;
                     }
-                  
 
                     if (!paused)
                     {
@@ -179,11 +177,10 @@ namespace Battle_Mages
                         #endregion Camera Movement
 
                         //DONT DEBUGG HERE
-
                     }
 
                     oldKeyState = keyState;
-                   
+
                     break;
 
                 case GameState.Settings:
