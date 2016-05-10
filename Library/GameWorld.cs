@@ -101,6 +101,10 @@ namespace Battle_Mages
             // Create a new Drawer, which can be used to draw textures.
             drawer = new Drawer(GraphicsDevice);
 
+            var ellipse = new GameObject(Vector2.Zero);
+            ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/ellipse", 0));
+            scene.AddObject(ellipse);
+
             director = new Director(new PlayerBuilder());
             player = director.Construct(Vector2.Zero);
             camera.Target = player.Transform;
@@ -113,7 +117,6 @@ namespace Battle_Mages
             menuScreenManager.LoadContent(Content);
             soundManager.LoadContent(Content);
             soundManager.Music("hey");
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -149,13 +152,11 @@ namespace Battle_Mages
                 case GameState.InGame:
 
                     keyState = Keyboard.GetState();
-                    
 
-                  if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
-                    {                     	        
-                         paused = !paused;
+                    if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
+                    {
+                        paused = !paused;
                     }
-                  
 
                     if (!paused)
                     {
@@ -179,11 +180,10 @@ namespace Battle_Mages
                         #endregion Camera Movement
 
                         //DONT DEBUGG HERE
-
                     }
 
                     oldKeyState = keyState;
-                   
+
                     break;
 
                 case GameState.Settings:

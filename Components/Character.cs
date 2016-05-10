@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,9 @@ namespace Battle_Mages
                 idleStrategy.Execute(mDirection, fDirection);
             }
             walkStrategy.Execute(mDirection, fDirection);
+
+            //Testing limiting position to circle
+            GameObject.Transform.Position = Utils.LimitToCircle(GameObject.Transform.Position, Vector2.Zero, 320);
         }
     }
 }

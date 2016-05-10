@@ -60,8 +60,8 @@ namespace Battle_Mages
                 lastResolution = dmode;
             }
             ElementAtNumber = i - 1;
-            ScalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
-                ViewCalculator.CalculateHeightScale(currentResolution.Height));
+            ScalingVector = new Vector2(Utils.CalculateWidthScale(currentResolution.Width),
+                Utils.CalculateHeightScale(currentResolution.Height));
         }
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace Battle_Mages
             }
             resolutionHolder = currentResolution;
 
-            scalingVector = new Vector2(ViewCalculator.CalculateWidthScale(currentResolution.Width),
-                ViewCalculator.CalculateHeightScale(currentResolution.Height));
+            scalingVector = new Vector2(Utils.CalculateWidthScale(currentResolution.Width),
+                Utils.CalculateHeightScale(currentResolution.Height));
 
             for (int i = 0; i < resolutions.Count; i++)
             {

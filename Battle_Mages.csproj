@@ -76,7 +76,7 @@
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\MenuStuff\MenuScreenManager.cs" />
     <Compile Include="Library\Scene.cs" />
-    <Compile Include="Library\ViewCalculator.cs" />
+    <Compile Include="Library\Utils.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

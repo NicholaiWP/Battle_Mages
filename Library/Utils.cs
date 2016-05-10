@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public static class ViewCalculator
+    public static class Utils
     {
         public static float CalculateWidthScale(float resolutionWidth)
         {
@@ -46,6 +46,27 @@ namespace Battle_Mages
         {
             float realHeight = height / GameWorld.MenuScreenManager.ScalingVector.Y;
             return (int)realHeight;
+        }
+
+        public static bool InsideEllipse(Vector2 pos, Vector2 ellipsePos, float ellipseWidth, float ellipseHeight)
+        {
+            float dist = ((float)Math.Pow(pos.X - ellipsePos.X, 2) / (float)Math.Pow(ellipseWidth, 2)) +
+                ((float)Math.Pow(pos.Y - ellipsePos.Y, 2) / (float)Math.Pow(ellipseHeight, 2));
+
+            return dist < 1f;
+        }
+
+        public static Vector2 LimitToCircle(Vector2 pos, Vector2 circlePos, float circleRadius)
+        {
+            Vector2 rPos = pos - circlePos;
+            float mag = rPos.Length();
+            if (mag > circleRadius)
+            {
+                Vector2 unit = new Vector2(rPos.X, rPos.Y);
+                unit.Normalize();
+                return (unit * circleRadius) + circlePos;
+            }
+            return pos;
         }
     }
 }
