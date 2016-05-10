@@ -60,7 +60,7 @@ namespace Battle_Mages
         /// <param name="spriteBatch"></param>
         public void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, position: GameObject.Transform.Position + offset,
+            drawer[DrawLayer.Gameplay].Draw(sprite, position: GameObject.Transform.Position - new Vector2(sprite.Width / 2, sprite.Height / 2) + offset,
                 sourceRectangle: rectangle,
                 origin: Vector2.Zero,
                 rotation: 0f,
