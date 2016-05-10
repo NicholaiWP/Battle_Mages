@@ -84,10 +84,7 @@ namespace Battle_Mages
                     settingsWindow.Update();
                     break;
             }
-            if (!GameWorld.Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
-            {
-                GameWorld.Cursor.CanClick = true;
-            }
+
 
             if (ElementAtNumber >= resolutions.Count) ElementAtNumber = 0;
             if (ElementAtNumber < 0) ElementAtNumber = resolutions.Count - 1;
