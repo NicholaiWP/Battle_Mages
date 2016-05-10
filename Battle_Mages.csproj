@@ -155,6 +155,12 @@
     <Content Include="Content\Images\CollisionTexture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\EvilMageBM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\GdMageBM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\paused_bMages.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
