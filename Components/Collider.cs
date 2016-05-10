@@ -32,6 +32,19 @@ namespace Battle_Mages
             return new Rectangle((int)(transform.Position.X - Size.X / 2), (int)(transform.Position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
         }
 
+        public bool CheckCollisionAtPosition(Vector2 position)
+        {
+            var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
+            foreach (var coll in colliders)
+            {
+                if (coll != this)
+                {
+                    if (coll.CalcColliderRect().Intersects(rect)) return true;
+                }
+            }
+            return false;
+        }
+
         public bool CheckCollision(Collider other)
         {
             //Rectangle-rectangle collision

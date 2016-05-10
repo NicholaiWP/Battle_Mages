@@ -19,52 +19,27 @@ namespace Battle_Mages
             this.speed = speed;
         }
 
-        public void Execute(MovingDirection mDirection, FacingDirection fDirection)
+        public void Execute(bool movingLeft, bool movingRight, bool movingUp, bool movingDown, FacingDirection fDirection)
         {
+            float moveDist = GameWorld.Instance.DeltaTime * speed;
+
+            Collider collider = transform.GameObject.GetComponent<Collider>();
+            bool collisionLeft = collider.CheckCollisionAtPosition(transform.Position + new Vector2(-moveDist, 0));
+            bool collisionRight = collider.CheckCollisionAtPosition(transform.Position + new Vector2(moveDist, 0));
+            bool collisionUp = collider.CheckCollisionAtPosition(transform.Position + new Vector2(0, -moveDist));
+            bool collisionDown = collider.CheckCollisionAtPosition(transform.Position + new Vector2(0, moveDist));
+
             Vector2 translation = Vector2.Zero;
-            switch (mDirection)
-            {
-                case MovingDirection.UpLeft:
-                    //animator.PlayAnimation("WalkLeft");
-                    translation -= new Vector2(1, 1);
-                    break;
+            if (movingLeft && !collisionLeft)
+                translation += new Vector2(-1, 0);
+            if (movingRight && !collisionRight)
+                translation += new Vector2(1, 0);
+            if (movingUp && !collisionUp)
+                translation += new Vector2(0, -1);
+            if (movingDown && !collisionDown)
+                translation += new Vector2(0, 1);
 
-                case MovingDirection.UpRight:
-                    //animator.PlayAnimation("WalkRight");
-                    translation += new Vector2(1, -1);
-                    break;
-
-                case MovingDirection.Up:
-                    //animator.PlayAnimation("WalkBack");
-                    translation -= new Vector2(0, 1);
-                    break;
-
-                case MovingDirection.Left:
-                    //animator.PlayAnimation("WalkLeft");
-                    translation -= new Vector2(1, 0);
-                    break;
-
-                case MovingDirection.Right:
-                    //animator.PlayAnimation("WalkRight");
-                    translation += new Vector2(1, 0);
-                    break;
-
-                case MovingDirection.DownLeft:
-                    //animator.PlayAnimation("WalkLeft");
-                    translation += new Vector2(-1, 1);
-                    break;
-
-                case MovingDirection.DownRight:
-                    //animator.PlayAnimation("WalkRight");
-                    translation += new Vector2(1, 1);
-                    break;
-
-                case MovingDirection.Down:
-                    //animator.PlayAnimation("WalkFront");
-                    translation += new Vector2(0, 1);
-                    break;
-            }
-            transform.Translate(translation * GameWorld.Instance.DeltaTime * speed);
+            transform.Translate(translation * moveDist);
         }
     }
 }

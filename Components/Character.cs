@@ -9,7 +9,6 @@ namespace Battle_Mages
 {
     public class Character : Component
     {
-        private MovingDirection mDirection;
         private FacingDirection fDirection;
         private IStrategy walkStrategy;
         private IStrategy idleStrategy;
@@ -29,50 +28,41 @@ namespace Battle_Mages
         {
             if (Up && Right)
             {
-                mDirection = MovingDirection.UpRight;
                 fDirection = FacingDirection.Right;
             }
             else if (Up && Left)
             {
-                mDirection = MovingDirection.UpLeft;
                 fDirection = FacingDirection.Left;
             }
             else if (Down && Right)
             {
-                mDirection = MovingDirection.DownRight;
                 fDirection = FacingDirection.Right;
             }
             else if (Down && Left)
             {
-                mDirection = MovingDirection.DownLeft;
                 fDirection = FacingDirection.Left;
             }
             else if (Up)
             {
-                mDirection = MovingDirection.Up;
                 fDirection = FacingDirection.Back;
             }
             else if (Left)
             {
-                mDirection = MovingDirection.Left;
                 fDirection = FacingDirection.Left;
             }
             else if (Down)
             {
-                mDirection = MovingDirection.Down;
                 fDirection = FacingDirection.Front;
             }
             else if (Right)
             {
-                mDirection = MovingDirection.Right;
                 fDirection = FacingDirection.Right;
             }
             else
             {
-                mDirection = MovingDirection.Idle;
-                idleStrategy.Execute(mDirection, fDirection);
+                idleStrategy.Execute(Left, Right, Up, Down, fDirection);
             }
-            walkStrategy.Execute(mDirection, fDirection);
+            walkStrategy.Execute(Left, Right, Up, Down, fDirection);
 
             //Testing limiting position to circle
             GameObject.Transform.Position = Utils.LimitToCircle(GameObject.Transform.Position, Vector2.Zero, 320);

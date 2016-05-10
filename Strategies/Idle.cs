@@ -14,7 +14,7 @@ namespace Battle_Mages
             this.animator = animator;
         }
 
-        public void Execute(MovingDirection mDirection, FacingDirection fDirection)
+        public void Execute(bool movingLeft, bool movingRight, bool movingUp, bool movingDown, FacingDirection fDirection)
         {
             switch (fDirection)
             {

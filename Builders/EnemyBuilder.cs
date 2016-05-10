@@ -17,6 +17,7 @@ namespace Battle_Mages
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject));
             gameObject.AddComponent(new Enemy(gameObject));
+            gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
         }
 
         public GameObject GetResult()
