@@ -48,16 +48,19 @@ namespace Battle_Mages
         /// </summary>
         public void ProcessObjectLists()
         {
+            //Additions
             foreach (GameObject gameObject in objectsToAdd)
-            {
                 activeObjects.Add(gameObject);
-            }
+
             objectsToAdd.Clear();
 
+            //Removal
             foreach (GameObject gameObject in objectsToRemove)
-            {
                 activeObjects.Remove(gameObject);
-            }
+
+            foreach (GameObject gameObject in objectsToRemove)
+                gameObject.OnDestroy();
+
             objectsToRemove.Clear();
         }
 

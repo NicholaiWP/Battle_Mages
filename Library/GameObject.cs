@@ -158,5 +158,13 @@ namespace Battle_Mages
                 }
             }
         }
+
+        public void OnDestroy()
+        {
+            foreach (Component comp in components)
+            {
+                comp.OnDestroy();
+            }
+        }
     }
 }

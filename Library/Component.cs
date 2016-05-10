@@ -30,5 +30,9 @@ namespace Battle_Mages
         {
             this.gameObject = gameObject;
         }
+
+        public virtual void OnDestroy()
+        {
+        }
     }
 }
