@@ -36,7 +36,7 @@ namespace Battle_Mages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static Scene Scene { get { return Instance.scene; } }
-        public float DeltaTime { get; private set; }
+        public float DeltaTime { get; private set; }        
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public const int GameWidth = 320;
@@ -54,6 +54,19 @@ namespace Battle_Mages
                     instance = new GameWorld();
                 }
                 return instance;
+            }
+        }
+
+        public bool Paused
+        {
+            get
+            {
+                return paused;
+            }
+
+            set
+            {
+                paused = value;
             }
         }
 
@@ -141,6 +154,10 @@ namespace Battle_Mages
             {
                 Exit();
             }
+            if (!Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                Cursor.CanClick = true;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
@@ -157,11 +174,12 @@ namespace Battle_Mages
 
                     if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
                     {
-                        paused = !paused;
+                        Paused = !Paused;                      
                         pGS.Update();
+                        
                     }
-                        if (!paused)
-                        {
+                    if (!Paused)
+                        {                       
                             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                             foreach (GameObject go in scene.ActiveObjects)
@@ -183,7 +201,10 @@ namespace Battle_Mages
 
                             //DONT DEBUGG HERE
                         }
-
+                    else if (Paused)
+                    {
+                        pGS.Update();
+                    }                 
                         oldKeyState = keyState;
                     
                     break;
@@ -227,7 +248,7 @@ namespace Battle_Mages
                     }
                     camera.Draw(drawer[DrawLayer.UI]);
 
-                    if (paused)
+                    if (Paused)
                     {
                         pGS.DrawPause(drawer[DrawLayer.UI]);
                     }

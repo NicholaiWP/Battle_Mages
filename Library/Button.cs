@@ -17,6 +17,7 @@ namespace Battle_Mages
         private Texture2D[] sprites = new Texture2D[2];
         private Rectangle rectangle;
         private Vector2 position;
+
         private ClickDelegate onClick;
         private Vector2 startPos;
         private float offset;
@@ -38,6 +39,11 @@ namespace Battle_Mages
             offset = position.Y * 0.02f;
             this.onClick = onClick;
             this.wiggle = wiggle;
+        }
+
+        public void UpdatePosition(Vector2 newPos)
+        {
+           position = startPos + newPos;
         }
 
         public void Update()
