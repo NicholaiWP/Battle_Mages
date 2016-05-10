@@ -36,7 +36,7 @@ namespace Battle_Mages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static Scene Scene { get { return Instance.scene; } }
-        public float DeltaTime { get; private set; }        
+        public float DeltaTime { get; private set; }
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public const int GameWidth = 320;
@@ -132,6 +132,9 @@ namespace Battle_Mages
             soundManager.LoadContent(Content);
             soundManager.Music("hey");
             pGS = new PausedGameScreen();
+            var wall = new GameObject(new Vector2(0, -100));
+            wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
+            scene.AddObject(wall);
         }
 
         /// <summary>
@@ -174,39 +177,38 @@ namespace Battle_Mages
 
                     if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P))
                     {
-                        Paused = !Paused;                      
+                        Paused = !Paused;
                         pGS.Update();
-                        
                     }
                     if (!Paused)
-                        {                       
-                            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    {
+                        DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                            foreach (GameObject go in scene.ActiveObjects)
-                                go.Update();
+                        foreach (GameObject go in scene.ActiveObjects)
+                            go.Update();
 
-                            scene.ProcessObjectLists();
+                        scene.ProcessObjectLists();
 
-                            #region Camera Movement
+                        #region Camera Movement
 
-                            camera.Update(DeltaTime);
+                        camera.Update(DeltaTime);
 
-                            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                            {
-                                camera.Position = new Vector2(player.Transform.Position.X + 80,
-                                    player.Transform.Position.Y + 98);
-                            }
-
-                            #endregion Camera Movement
-
-                            //DONT DEBUGG HERE
+                        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                        {
+                            camera.Position = new Vector2(player.Transform.Position.X + 80,
+                                player.Transform.Position.Y + 98);
                         }
+
+                        #endregion Camera Movement
+
+                        //DONT DEBUGG HERE
+                    }
                     else if (Paused)
                     {
                         pGS.Update();
-                    }                 
-                        oldKeyState = keyState;
-                    
+                    }
+                    oldKeyState = keyState;
+
                     break;
 
                 case GameState.Settings:
@@ -252,7 +254,7 @@ namespace Battle_Mages
                     {
                         pGS.DrawPause(drawer[DrawLayer.UI]);
                     }
-                   
+
                     break;
 
                 case GameState.Settings:

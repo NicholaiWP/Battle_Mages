@@ -16,14 +16,12 @@ namespace Battle_Mages
     public class Collider : Component, ICanBeLoaded
     {
         //Static list of all colliders created
-        private static List<Collider> colliders = new List<Collider>();
         private Transform transform;
 
         public Vector2 Size { get; }
 
         public Collider(GameObject gameObject, Vector2 size) : base(gameObject)
         {
-            colliders.Add(this);
             Size = size;
         }
 
@@ -34,8 +32,9 @@ namespace Battle_Mages
 
         public bool CheckCollisionAtPosition(Vector2 position)
         {
+            IEnumerable<Collider> collidersInScene = GameWorld.Scene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
             var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
-            foreach (var coll in colliders)
+            foreach (var coll in collidersInScene)
             {
                 if (coll != this)
                 {
@@ -49,11 +48,6 @@ namespace Battle_Mages
         {
             //Rectangle-rectangle collision
             return CalcColliderRect().Intersects(other.CalcColliderRect());
-        }
-
-        public override void OnDestroy()
-        {
-            colliders.Remove(this);
         }
 
         public void LoadContent(ContentManager content)
