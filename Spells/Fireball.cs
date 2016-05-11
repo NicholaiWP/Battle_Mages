@@ -10,6 +10,7 @@ namespace Battle_Mages
         public Fireball(Rune[] runes) : base(runes)
         {
             Damage = 120120301;
+            ApplyRunes();
         }
     }
 }
