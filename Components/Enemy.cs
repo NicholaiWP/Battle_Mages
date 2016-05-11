@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battle_Mages
 {
@@ -15,15 +15,11 @@ namespace Battle_Mages
         private SpriteRenderer spriteRenderer;
         private Animator animator;
         private Transform transform;
-        private FacingDirection fDirection;
-        private MovingDirection mDirection;
         private Character character;
         public int Level { get { return level; } }
 
         public Enemy(GameObject gameObject) : base(gameObject)
         {
-            mDirection = MovingDirection.Idle;
-            fDirection = FacingDirection.Front;
         }
 
         public void LoadContent(ContentManager content)
@@ -33,12 +29,8 @@ namespace Battle_Mages
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             enemyAI = new EnemyRanged(character, this, transform);
-            CreateAnimation();
-        }
 
-        private void CreateAnimation()
-        {
-            //throw new NotImplementedException();
+            //TODO: Create animations here
         }
 
         /// <summary>

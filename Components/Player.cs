@@ -1,30 +1,24 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battle_Mages
 {
     public class Player : Component, ICanUpdate, ICanBeLoaded, IEnterCollision, IExitCollision, ICanBeAnimated,
         IStayOnCollision
     {
-        private float moveSpeed;
         private Animator animator;
         private Character character;
         private SpriteRenderer spriteRenderer;
         private Transform transform;
-        public MovingDirection MDirection { get; set; }
-        public FacingDirection FDirection { get; set; }
 
         public Player(GameObject gameObject) : base(gameObject)
         {
-            moveSpeed = 30;
-            MDirection = MovingDirection.Idle;
-            FDirection = FacingDirection.Front;
         }
 
         public void LoadContent(ContentManager content)
@@ -33,12 +27,8 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-            CreateAnimation();
-        }
 
-        private void CreateAnimation()
-        {
-            //animator.CreateAnimation("MoveUp", new Animation())
+            //TODO: Create animations here
         }
 
         public void Update()

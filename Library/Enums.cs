@@ -5,11 +5,6 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public enum MovingDirection
-    {
-        UpLeft, UpRight, Up, Left, Right, DownLeft, DownRight, Down, Idle
-    }
-
     public enum FacingDirection
     {
         Left, Right, Back, Front
