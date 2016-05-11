@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace Battle_Mages.Spells
+namespace Battle_Mages
 {
     public static class RuneList
     {
