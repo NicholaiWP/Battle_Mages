@@ -10,7 +10,7 @@ namespace Battle_Mages
         public EnemyRanged(Character character, Enemy enemy, Transform transform) :
             base(character, enemy, transform)
         {
-            attackRange = 200 * enemy.Level;
+            attackRange = 100 * enemy.Level;
             targetingRange = 500 * enemy.Level;
         }
 

@@ -14,6 +14,7 @@ namespace Battle_Mages
 
         public override void Attack()
         {
+            enemy.IsAttacking = true;
         }
 
         public override void Targeting()

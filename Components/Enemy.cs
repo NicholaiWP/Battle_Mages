@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 
 namespace Battle_Mages
 {
@@ -17,9 +17,11 @@ namespace Battle_Mages
         private Transform transform;
         private Character character;
         public int Level { get { return level; } }
+        public bool IsAttacking { get; set; }
 
         public Enemy(GameObject gameObject) : base(gameObject)
         {
+            IsAttacking = false;
         }
 
         public void LoadContent(ContentManager content)

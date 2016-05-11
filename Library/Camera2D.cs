@@ -18,10 +18,6 @@ namespace Battle_Mages
         private Vector2 position;
         private Matrix viewMatrix;
         private Matrix worldMatrix;
-        private Rectangle topRectangle;
-        private Rectangle rightRectangle;
-        private Rectangle bottomRectangle;
-        private Rectangle leftRectangle;
 
         //Latest position of the target if it's been set, defaults to 0,0
         private Vector2 latestTargetPosition = Vector2.Zero;
