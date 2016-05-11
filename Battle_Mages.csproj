@@ -73,6 +73,7 @@
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\MenuStuff\MainMenuWindow.cs" />
     <Compile Include="Library\MenuStuff\SettingsWindow.cs" />
+    <Compile Include="Library\ObjectBuilder.cs" />
     <Compile Include="Library\PausedGameScreen.cs" />
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\MenuStuff\MenuScreenManager.cs" />

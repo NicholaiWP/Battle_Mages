@@ -120,10 +120,10 @@ namespace Battle_Mages
             scene.AddObject(ellipse);
 
             director = new Director(new PlayerBuilder());
-            player = director.Construct(Vector2.Zero);
+            player = ObjectBuilder.BuildPlayer(Vector2.Zero);
             camera.Target = player.Transform;
             director = new Director(new EnemyBuilder());
-            GameObject enemy = director.Construct(new Vector2(50, 50));
+            GameObject enemy = ObjectBuilder.BuildEnemy(new Vector2(50, 50));
             scene.AddObject(player);
             scene.AddObject(enemy);
             camera.LoadContent(Content);
