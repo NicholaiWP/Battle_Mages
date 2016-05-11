@@ -40,10 +40,6 @@
   <ItemGroup>
     <Compile Include="Components\Character.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
-    <Compile Include="Library\Director.cs" />
-    <Compile Include="Builders\EnemyBuilder.cs" />
-    <Compile Include="Builders\PlayerBuilder.cs" />
-    <Compile Include="Builders\SpellBuilder.cs" />
     <Compile Include="Library\Component.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Enemy.cs" />

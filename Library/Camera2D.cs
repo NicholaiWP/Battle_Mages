@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
@@ -66,71 +66,6 @@ namespace Battle_Mages
             {
                 worldMatrix = Matrix.Invert(viewMatrix);
                 return worldMatrix;
-            }
-        }
-
-        /// <summary>
-        /// Setting the topRectangle to be in the top corner of the screen, and moving it with 2% of the screen
-        /// and setting height to 55
-        /// </summary>
-        public Rectangle TopRectangle
-        {
-            get
-            {
-                topRectangle = Utils.CalculateRectangle(new Vector2(-2, -2),
-                    (int)GameWorld.Instance.HalfViewPortWidth * 2 + 2,
-                    (int)GameWorld.Instance.HalfViewPortHeight / 10);
-                return topRectangle;
-            }
-        }
-
-        /// <summary>
-        /// Setting the rightRectangle to be in the top corner of the screen, and moving it with 2% of the screen
-        /// and setting width to 55
-        /// </summary>
-        public Rectangle RightRectangle
-        {
-            get
-            {
-                rightRectangle = Utils.CalculateRectangle(
-                    new Vector2(GameWorld.Instance.HalfViewPortWidth * 2 -
-                    (int)GameWorld.Instance.HalfViewPortWidth / 13, -2),
-                    (int)GameWorld.Instance.HalfViewPortWidth / 12,
-                    (int)GameWorld.Instance.HalfViewPortHeight * 2 + 2);
-                return rightRectangle;
-            }
-        }
-
-        /// <summary>
-        /// Setting the bottomRectangle to be in the top corner of the screen, and moving it with 2% of the screen
-        /// and setting height to 55
-        /// </summary>
-        public Rectangle BottomRectangle
-        {
-            get
-            {
-                bottomRectangle = Utils.CalculateRectangle(new Vector2(-2,
-                    GameWorld.Instance.HalfViewPortHeight * 2 - (int)GameWorld.Instance.HalfViewPortHeight / 11),
-                    (int)GameWorld.Instance.HalfViewPortWidth * 2 + 2,
-                    (int)GameWorld.Instance.HalfViewPortHeight / 10);
-
-                return bottomRectangle;
-            }
-        }
-
-        /// <summary>
-        /// Setting the leftRectangle to be in the top corner of the screen, and moving it with 2% of the screen
-        /// and setting width to 55
-        /// </summary>
-        public Rectangle LeftRectangle
-        {
-            get
-            {
-                leftRectangle = Utils.CalculateRectangle(new Vector2(-2, -2),
-                    (int)GameWorld.Instance.HalfViewPortWidth / 12,
-                    (int)GameWorld.Instance.HalfViewPortHeight * 2 + 2);
-
-                return leftRectangle;
             }
         }
 

@@ -19,7 +19,6 @@ namespace Battle_Mages
         private KeyboardState keyState, oldKeyState;
         private Drawer drawer;
         private GameObject player;
-        private Director director;
         private GameState currentGameState = GameState.MainMenu;
 
         private PlayerControls playerControls;
@@ -119,10 +118,8 @@ namespace Battle_Mages
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena", 0));
             scene.AddObject(ellipse);
 
-            director = new Director(new PlayerBuilder());
             player = ObjectBuilder.BuildPlayer(Vector2.Zero);
             camera.Target = player.Transform;
-            director = new Director(new EnemyBuilder());
             GameObject enemy = ObjectBuilder.BuildEnemy(new Vector2(50, 50));
             scene.AddObject(player);
             scene.AddObject(enemy);
