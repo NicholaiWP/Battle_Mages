@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
-namespace Battle_Mages.Library
+namespace Battle_Mages
 {
     public class SpellInfo
     {
-        public delegate Spell SpellSpawnDelegate(GameObject go, RuneInfo[] runes);
+        public delegate Spell SpellSpawnDelegate(GameObject go, Vector2 targetPos, RuneInfo[] runes);
 
         public string Name { get; }
         public string Description { get; }
@@ -20,9 +21,9 @@ namespace Battle_Mages.Library
             this.spawnFunc = spawnFunc;
         }
 
-        public Spell CreateSpell(GameObject go, RuneInfo[] runes)
+        public Spell CreateSpell(GameObject go, Vector2 targetPos, RuneInfo[] runes)
         {
-            return spawnFunc(go, runes);
+            return spawnFunc(go, targetPos, runes);
         }
     }
 }

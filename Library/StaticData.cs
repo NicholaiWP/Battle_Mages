@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace Battle_Mages.Library
+namespace Battle_Mages
 {
     public static class StaticData
     {
@@ -40,7 +40,7 @@ namespace Battle_Mages.Library
             {
                 new SpellInfo("Fireball",
                 "A ball of fire",
-                (go, runes) => { return new Fireball(go, runes); }),
+                (go, pos, runes) => { return new Fireball(go, pos, runes); }),
             };
         }
 
