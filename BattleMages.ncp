@@ -345,30 +345,37 @@
       <Entity type="Class">
         <Name>Collider</Name>
         <Access>Public</Access>
-        <Location left="2756" top="775" />
-        <Size width="198" height="216" />
+        <Location left="2701" top="777" />
+        <Size width="272" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Constructor">public Collider(GameObject gameObject)</Member>
+        <Member type="Field">Transform transform</Member>
+        <Member type="Property">public Vector2 Size { get; set; }</Member>
+        <Member type="Constructor">public Collider(GameObject gameObject, Size size)</Member>
+        <Member type="Method">public Rectangle CalcColliderRect()</Member>
+        <Member type="Method">public bool CheckCollisionAtPosition(Vector2 position)</Member>
+        <Member type="Method">public bool CheckCollision(Collider other)</Member>
+        <Member type="Method">public void LoadContent(ContentManager content)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Enemy</Name>
         <Access>Public</Access>
-        <Location left="2401" top="1321" />
-        <Size width="274" height="383" />
+        <Location left="2401" top="1322" />
+        <Size width="274" height="417" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private int level</Member>
         <Member type="Field">private EnemyAI enemyAI</Member>
         <Member type="Field">private SpriteRenderer spriteRenderer</Member>
         <Member type="Field">private Animator animator</Member>
         <Member type="Field">private Transform transform</Member>
-        <Member type="Field">private FacingDirection fDirection</Member>
-        <Member type="Field">private MovingDirection mDirection</Member>
         <Member type="Field">private Character character</Member>
+        <Member type="Field">private int damage</Member>
+        <Member type="Field">private float attackSpeed</Member>
         <Member type="Property">public int Level { get; }</Member>
+        <Member type="Property">public bool IsAttacking { get; set; }</Member>
+        <Member type="Property">public int Damage { get; set; }</Member>
         <Member type="Constructor">public Enemy(GameObject gameObject)</Member>
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
-        <Member type="Method">private void CreateAnimation()</Member>
         <Member type="Method">public void Update()</Member>
         <Member type="Method">private void Move()</Member>
         <Member type="Method">public void OnAnimationDone(string animationsName)</Member>
@@ -380,25 +387,21 @@
       <Entity type="Class">
         <Name>Player</Name>
         <Access>Public</Access>
-        <Location left="1825" top="937" />
-        <Size width="275" height="349" />
+        <Location left="1826" top="946" />
+        <Size width="275" height="281" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">private float moveSpeed</Member>
         <Member type="Field">private Animator animator</Member>
+        <Member type="Field">Character character</Member>
         <Member type="Field">private SpriteRenderer spriteRenderer</Member>
-        <Member type="Field">private Transform transform</Member>
-        <Member type="Field">private MovingDirection mDirection</Member>
-        <Member type="Field">private FacingDirection fDirection</Member>
-        <Member type="Field">private Strategy strategy</Member>
+        <Member type="Field">Transform transform</Member>
+        <Member type="Field">Collider collider</Member>
+        <Member type="Field">int health</Member>
         <Member type="Constructor">public Player(GameObject gameObject)</Member>
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
-        <Member type="Method">private void CreateAnimation()</Member>
         <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void OnCollision(Collider other)</Member>
         <Member type="Method">private void Move()</Member>
         <Member type="Method">public void OnAnimationDone(string animationsName)</Member>
-        <Member type="Method">public void OnCollisionExit(Collider other)</Member>
-        <Member type="Method">public void OnCollisionEnter(Collider other)</Member>
-        <Member type="Method">public void OnCollisionStay(Collider other)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -412,20 +415,19 @@
       <Entity type="Class">
         <Name>SpriteRenderer</Name>
         <Access>Public</Access>
-        <Location left="2176" top="890" />
-        <Size width="422" height="298" />
+        <Location left="2169" top="891" />
+        <Size width="424" height="298" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string spriteName</Member>
         <Member type="Field">private Color color</Member>
-        <Member type="Field">private float drawDepth</Member>
-        <Member type="Field">private Rectangle rectangl</Member>
+        <Member type="Field">private Rectangle rectangle</Member>
         <Member type="Field">private Vector2 offset</Member>
         <Member type="Field">private Animator animator</Member>
         <Member type="Field">private Texture2D sprite</Member>
         <Member type="Property">public Rectangle Rectangle { get; set; }</Member>
         <Member type="Property">public Texture2D Sprite { get; set; }</Member>
         <Member type="Property">public Vector2 Offset { get; set; }</Member>
-        <Member type="Constructor">public SpriteRenderer(GameObject gameObject, string spriteName, float drawDepth)</Member>
+        <Member type="Constructor">public SpriteRenderer(GameObject gameObject, string spriteName)</Member>
         <Member type="Method">public void LoadContent(ContentManager content)</Member>
         <Member type="Method">public void Draw(Drawer drawer)</Member>
         <Modifier>None</Modifier>
@@ -582,10 +584,9 @@
       <Entity type="Class">
         <Name>Character</Name>
         <Access>Public</Access>
-        <Location left="2701" top="1303" />
+        <Location left="2701" top="1304" />
         <Size width="212" height="264" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">private MovingDirection mDirection</Member>
         <Member type="Field">private FacingDirection fDirection</Member>
         <Member type="Field">private IStrategy walkStrategy</Member>
         <Member type="Field">private IStrategy idleStrategy</Member>
@@ -594,7 +595,6 @@
         <Member type="Property">public bool Left { get; set; }</Member>
         <Member type="Property">public bool Right { get; set; }</Member>
         <Member type="Constructor">public Character(GameObject gameObject)</Member>
-        <Member type="Method">public void EnemyLoad()</Member>
         <Member type="Method">public void Movement()</Member>
         <Modifier>None</Modifier>
       </Entity>
@@ -651,6 +651,38 @@
         <Member type="Method">public void RemoveObject(GameObject go)</Member>
         <Member type="Method">public void ProcessObjectLists()</Member>
         <Member type="Method">public void DrawObjects(Drawer target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Delegate">
+        <Name>ClickDelegate</Name>
+        <Access>Public</Access>
+        <Location left="248" top="1604" />
+        <Size width="162" height="190" />
+        <Collapsed>False</Collapsed>
+        <ReturnType>void</ReturnType>
+      </Entity>
+      <Entity type="Class">
+        <Name>Spell</Name>
+        <Access>Public</Access>
+        <Location left="2870" top="332" />
+        <Size width="252" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private RuneInfo[] runes</Member>
+        <Member type="Property">public int Damage { get; set; }</Member>
+        <Member type="Property">public int ManaCost { get; set; }</Member>
+        <Member type="Property">public int ManaCooldown { get; set; }</Member>
+        <Member type="Constructor">public Spell(GameObject go, RuneInfo[] runes)</Member>
+        <Member type="Method">protected void ApplyRunes()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Projectile</Name>
+        <Access>Public</Access>
+        <Location left="2390" top="234" />
+        <Size width="222" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Projectile(GameObject gameObject)</Member>
+        <Member type="Method">public void OnCollisionEnter(Collider other)</Member>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
@@ -720,7 +752,7 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2060</X>
-          <Y>1595</Y>
+          <Y>1596</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1878</X>
@@ -736,7 +768,7 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2705</X>
-          <Y>1688</Y>
+          <Y>1689</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
@@ -748,7 +780,7 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2631</X>
-          <Y>1732</Y>
+          <Y>1767</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
@@ -760,7 +792,7 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2423</X>
-          <Y>1730</Y>
+          <Y>1765</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
@@ -772,7 +804,7 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2356</X>
-          <Y>1617</Y>
+          <Y>1618</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>2009</X>
@@ -785,8 +817,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>2075</X>
-          <Y>871</Y>
+          <X>2076</X>
+          <Y>880</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>2433</X>
@@ -799,8 +831,8 @@
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1547</X>
-          <Y>1153</Y>
+          <X>1548</X>
+          <Y>1162</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>2842</X>
@@ -835,8 +867,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1866</X>
-          <Y>1461</Y>
+          <X>1859</X>
+          <Y>1462</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1866</X>
@@ -851,8 +883,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>2191</X>
-          <Y>1213</Y>
+          <X>2184</X>
+          <Y>1214</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>2191</X>
@@ -984,15 +1016,15 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2656</X>
-          <Y>1262</Y>
+          <Y>1263</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Association" first="24" second="33">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1739</X>
-          <Y>1194</Y>
+          <X>1740</X>
+          <Y>1203</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
@@ -1001,8 +1033,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1836</X>
-          <Y>1321</Y>
+          <X>1837</X>
+          <Y>1262</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1816</X>
@@ -1016,7 +1048,7 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2198</X>
-          <Y>1666</Y>
+          <Y>1667</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1673</X>
@@ -1030,7 +1062,7 @@
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2209</X>
-          <Y>1688</Y>
+          <Y>1689</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1608</X>
@@ -1046,7 +1078,7 @@
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>2700</X>
-          <Y>1661</Y>
+          <Y>1662</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
@@ -1072,6 +1104,10 @@
       <Relationship type="Association" first="24" second="10">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1807</X>
+          <Y>1107</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
@@ -1079,8 +1115,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1844</X>
-          <Y>1819</Y>
+          <X>1847</X>
+          <Y>1816</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1713</X>
@@ -1093,8 +1129,8 @@
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1592</X>
-          <Y>1182</Y>
+          <X>1593</X>
+          <Y>1191</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>2356</X>
@@ -1107,8 +1143,8 @@
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1569</X>
-          <Y>1171</Y>
+          <X>1570</X>
+          <Y>1180</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>2582</X>
@@ -1266,6 +1302,14 @@
         <AssociationType>Composition</AssociationType>
         <StartMultiplicity>1</StartMultiplicity>
         <EndMultiplicity>0..*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Generalization" first="45" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="46" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
       </Relationship>
     </Relationships>
   </ProjectItem>
