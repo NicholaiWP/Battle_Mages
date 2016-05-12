@@ -28,6 +28,7 @@ namespace Battle_Mages
         private Camera2D camera;
         private Scene scene;
         private PausedGameScreen pGS;
+        private LobbyScreen lobbyS;
 
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -66,6 +67,19 @@ namespace Battle_Mages
             set
             {
                 paused = value;
+            }
+        }
+
+        public LobbyScreen LobbyS
+        {
+            get
+            {
+                return lobbyS;
+            }
+
+            set
+            {
+                lobbyS = value;
             }
         }
 
@@ -129,6 +143,7 @@ namespace Battle_Mages
             soundManager.LoadContent(Content);
             soundManager.Music("hey");
             pGS = new PausedGameScreen();
+            LobbyS = new LobbyScreen();
             var wall = new GameObject(new Vector2(0, -100));
             wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
             scene.AddObject(wall);
@@ -214,6 +229,29 @@ namespace Battle_Mages
 
                 case GameState.Shop:
                     break;
+
+                case GameState.Lobby:
+
+                    player.Update();
+                    LobbyS.Update();
+                    player.Update();
+                    DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    #region Camera Movement
+
+                    camera.Update(DeltaTime);
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        camera.Position = new Vector2(player.Transform.Position.X + 80,
+                            player.Transform.Position.Y + 98);
+                    }
+
+                    #endregion Camera Movement
+
+                    //DONT DEBUGG HERE
+
+                    break;
             }
 
             base.Update(gameTime);
@@ -221,11 +259,11 @@ namespace Battle_Mages
 
         /// <summary>
         /// This is called when the game should draw itself.
-        /// </summary>
+        /// </summary>ProcessObjectLists
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
@@ -259,6 +297,14 @@ namespace Battle_Mages
                     break;
 
                 case GameState.Shop:
+
+                    break;
+
+                case GameState.Lobby:
+
+                    player.Draw(drawer);
+                    camera.Draw(drawer[DrawLayer.UI]);
+                    LobbyS.DrawLobby(drawer[DrawLayer.Background]);
 
                     break;
 
