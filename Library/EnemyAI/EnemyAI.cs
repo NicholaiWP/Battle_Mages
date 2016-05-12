@@ -23,6 +23,21 @@ namespace Battle_Mages
 
         public abstract void Attack();
 
+        public bool InAttackRange()
+        {
+            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
+            {
+                if (potentialTarget.GetComponent<Player>() != null)
+                {
+                    Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
+                    float lengthToTarget = vecToTarget.Length();
+                    if (lengthToTarget <= attackRange)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         public virtual void Targeting()
         {
             foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
@@ -33,10 +48,10 @@ namespace Battle_Mages
                     float lengthToTarget = vecToTarget.Length();
                     if (lengthToTarget <= targetingRange && lengthToTarget >= attackRange)
                     {
-                        character.Up = transform.Position.Y - 50 > potentialTarget.Transform.Position.Y + 50;
-                        character.Down = transform.Position.Y + 50 < potentialTarget.Transform.Position.Y - 50;
-                        character.Left = transform.Position.X - 50 > potentialTarget.Transform.Position.X + 50;
-                        character.Right = transform.Position.X + 50 < potentialTarget.Transform.Position.X - 50;
+                        character.Up = transform.Position.Y - 32 > potentialTarget.Transform.Position.Y + 32;
+                        character.Down = transform.Position.Y + 32 < potentialTarget.Transform.Position.Y - 32;
+                        character.Left = transform.Position.X - 32 > potentialTarget.Transform.Position.X + 32;
+                        character.Right = transform.Position.X + 32 < potentialTarget.Transform.Position.X - 32;
                     }
                     break;
                 }

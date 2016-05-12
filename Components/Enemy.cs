@@ -16,12 +16,17 @@ namespace Battle_Mages
         private Animator animator;
         private Transform transform;
         private Character character;
+        private int damage;
+        private float attackSpeed;
         public int Level { get { return level; } }
         public bool IsAttacking { get; set; }
+        public int Damage { get { return damage; } set { damage = value; } }
 
         public Enemy(GameObject gameObject) : base(gameObject)
         {
             IsAttacking = false;
+            damage = 10;
+            attackSpeed = 5;
         }
 
         public void LoadContent(ContentManager content)
@@ -30,7 +35,7 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-            enemyAI = new EnemyRanged(character, this, transform);
+            enemyAI = new EnemyCloseRange(character, this, transform);
 
             //TODO: Create animations here
         }
@@ -50,6 +55,15 @@ namespace Battle_Mages
 
         private void Move()
         {
+            if (enemyAI.InAttackRange() && attackSpeed <= 0)
+            {
+                IsAttacking = true;
+                attackSpeed = 5;
+            }
+            else
+            {
+                attackSpeed -= GameWorld.Instance.DeltaTime;
+            }
             enemyAI.Targeting();
             character.Movement();
             character.Up = false;
@@ -64,6 +78,8 @@ namespace Battle_Mages
 
         public void OnCollisionEnter(Collider other)
         {
+            if (IsAttacking)
+                IsAttacking = false;
         }
 
         public void OnCollisionStay(Collider other)

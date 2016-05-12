@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Battle_Mages
 {
-    public class Player : Component, ICanUpdate, ICanBeLoaded, IEnterCollision, IExitCollision, ICanBeAnimated,
-        IStayOnCollision
+    public class Player : Component, ICanUpdate, ICanBeLoaded, ICanBeAnimated
     {
         private Animator animator;
         private Character character;
         private SpriteRenderer spriteRenderer;
         private Transform transform;
+        private Collider collider;
+        private int health;
 
         public Player(GameObject gameObject) : base(gameObject)
         {
+            health = 100;
         }
 
         public void LoadContent(ContentManager content)
@@ -27,13 +29,28 @@ namespace Battle_Mages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-
+            collider = GameObject.GetComponent<Collider>();
             //TODO: Create animations here
         }
 
         public void Update()
         {
             Move();
+            if (health <= 0)
+                GameWorld.Scene.RemoveObject(GameObject);
+        }
+
+        private void OnCollision(Collider coll)
+        {
+            Enemy enemy = coll.GameObject.GetComponent<Enemy>();
+
+            if (enemy != null)
+            {
+                if (enemy.IsAttacking)
+                {
+                    health -= enemy.Damage;
+                }
+            }
         }
 
         private void Move()
@@ -49,18 +66,6 @@ namespace Battle_Mages
         }
 
         public void OnAnimationDone(string animationsName)
-        {
-        }
-
-        public void OnCollisionExit(Collider other)
-        {
-        }
-
-        public void OnCollisionEnter(Collider other)
-        {
-        }
-
-        public void OnCollisionStay(Collider other)
         {
         }
     }

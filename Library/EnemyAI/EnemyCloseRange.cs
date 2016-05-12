@@ -10,6 +10,8 @@ namespace Battle_Mages
         public EnemyCloseRange(Character character, Enemy enemy, Transform transform) :
             base(character, enemy, transform)
         {
+            attackRange = 50;
+            targetingRange = 500 * enemy.Level;
         }
 
         public override void Attack()
