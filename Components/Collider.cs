@@ -7,12 +7,6 @@ using System.Text;
 
 namespace Battle_Mages
 {
-    public enum ColliderShape
-    {
-        Rectangle,
-        Ellipse
-    }
-
     public class Collider : Component, ICanBeLoaded
     {
         //Static list of all colliders created
