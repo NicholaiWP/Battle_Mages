@@ -23,6 +23,21 @@ namespace Battle_Mages
 
         public abstract void Attack();
 
+        public bool InAttackRange()
+        {
+            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
+            {
+                if (potentialTarget.GetComponent<Player>() != null)
+                {
+                    Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
+                    float lengthToTarget = vecToTarget.Length();
+                    if (lengthToTarget <= attackRange)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         public virtual void Targeting()
         {
             foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
