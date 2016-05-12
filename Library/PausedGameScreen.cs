@@ -41,7 +41,17 @@ namespace Battle_Mages
                     () => { GameWorld.SetState(GameState.Quit); },
                     false
                     ));
-          
+
+            //Forfeit button for pause screen
+            var ForfeitSpr1 = content.Load<Texture2D>("Images/forfeit_button");
+            var ForfeitSpr2 = content.Load<Texture2D>("Images/forfeit_hover_red2");
+            PauseButton.Add(new Button(
+                ForfeitSpr1,
+                ForfeitSpr2,
+                 new Vector2(-ForfeitSpr1.Width / 2, ForfeitSpr1.Height * 1f),
+                () => { GameWorld.SetState(GameState.Lobby); GameWorld.Instance.LobbyS.SetPosition(new Vector2(-100, -100)); },
+                false
+                ));
         }
 
         public void DrawPause(SpriteBatch spriteBatch)
