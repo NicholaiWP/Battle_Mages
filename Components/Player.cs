@@ -35,6 +35,17 @@ namespace Battle_Mages
 
         public void Update()
         {
+            MouseState mState = Mouse.GetState();
+            if (mState.LeftButton == ButtonState.Pressed)
+            {
+                var spellInfo = StaticData.Spells.FirstOrDefault();
+                var runeInfo = StaticData.Runes.FirstOrDefault();
+
+                GameObject spellGo = new GameObject(transform.Position);
+                spellGo.AddComponent(spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[] { runeInfo }));
+                GameWorld.Scene.AddObject(spellGo);
+            }
+
             Move();
             if (health <= 0)
                 GameWorld.Scene.RemoveObject(GameObject);
