@@ -11,7 +11,7 @@ namespace Battle_Mages
         public static GameObject BuildPlayer(Vector2 position)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/GdMageBM", 0));
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/GdMageBM"));
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Player(gameObject));
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
@@ -22,7 +22,7 @@ namespace Battle_Mages
         public static GameObject BuildEnemy(Vector2 position)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM", 0));
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject));
             gameObject.AddComponent(new Enemy(gameObject));

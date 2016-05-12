@@ -115,7 +115,7 @@ namespace Battle_Mages
             drawer = new Drawer(GraphicsDevice);
 
             var ellipse = new GameObject(Vector2.Zero);
-            ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena", 0));
+            ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
             scene.AddObject(ellipse);
 
             player = ObjectBuilder.BuildPlayer(Vector2.Zero);

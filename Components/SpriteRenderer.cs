@@ -14,7 +14,6 @@ namespace Battle_Mages
         private string spriteName;
 
         private Color color = Color.White;
-        private float drawDepth;
         private Rectangle rectangle;
         private Vector2 offset;
         private Animator animator;
@@ -32,15 +31,13 @@ namespace Battle_Mages
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="spriteName"></param>
-        /// <param name="drawDepth"></param>
-        public SpriteRenderer(GameObject gameObject, string spriteName, float drawDepth) : base(gameObject)
+        public SpriteRenderer(GameObject gameObject, string spriteName) : base(gameObject)
         {
             if (spriteName == "CollisionTexture")
             {
                 color = Color.Transparent;
             }
             this.spriteName = spriteName;
-            this.drawDepth = drawDepth;
         }
 
         /// <summary>
