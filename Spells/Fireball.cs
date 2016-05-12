@@ -14,7 +14,7 @@ namespace Battle_Mages
 
         public Fireball(GameObject go, Vector2 targetPos, RuneInfo[] runes) : base(go, runes)
         {
-            Damage = 120120301;
+            Damage = 10;
             ApplyRunes();
 
             var diff = targetPos - GameObject.Transform.Position;

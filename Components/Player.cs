@@ -37,9 +37,10 @@ namespace Battle_Mages
             if (mState.LeftButton == ButtonState.Pressed)
             {
                 var spellInfo = StaticData.Spells.FirstOrDefault();
+                var runeInfo = StaticData.Runes.FirstOrDefault();
 
                 GameObject spellGo = new GameObject(transform.Position);
-                spellGo.AddComponent(spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[0]));
+                spellGo.AddComponent(spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[] { runeInfo }));
                 GameWorld.Scene.AddObject(spellGo);
             }
 
