@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
 namespace Battle_Mages
 {
-    public abstract class Spell
+    public abstract class Spell : Component
     {
         //BASE STATS
         //These stats are used by spells to modify behaviour in different ways.
@@ -15,9 +16,9 @@ namespace Battle_Mages
         public int ManaCost { get; set; }
         public int ManaCooldown { get; set; }
 
-        private Rune[] runes;
+        private RuneInfo[] runes;
 
-        public Spell(Rune[] runes)
+        public Spell(GameObject go, RuneInfo[] runes) : base(go)
         {
             this.runes = runes;
         }
