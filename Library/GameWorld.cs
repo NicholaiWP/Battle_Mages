@@ -29,6 +29,9 @@ namespace Battle_Mages
         private Scene scene;
         private PausedGameScreen pGS;
         private LobbyScreen lobbyS;
+        private static GameWorld instance;
+        public const int GameWidth = 320;
+        public const int GameHeight = 180;
 
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -39,11 +42,8 @@ namespace Battle_Mages
         public float DeltaTime { get; private set; }
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
-        public const int GameWidth = 320;
-        public const int GameHeight = 180;
-
-        //Singleton
-        private static GameWorld instance;
+        public bool Paused { get { return paused; } set { paused = value; } }
+        public LobbyScreen LobbyS { get { return lobbyS; } set { lobbyS = value; } }
 
         public static GameWorld Instance
         {
@@ -54,32 +54,6 @@ namespace Battle_Mages
                     instance = new GameWorld();
                 }
                 return instance;
-            }
-        }
-
-        public bool Paused
-        {
-            get
-            {
-                return paused;
-            }
-
-            set
-            {
-                paused = value;
-            }
-        }
-
-        public LobbyScreen LobbyS
-        {
-            get
-            {
-                return lobbyS;
-            }
-
-            set
-            {
-                lobbyS = value;
             }
         }
 
