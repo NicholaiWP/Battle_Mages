@@ -232,6 +232,7 @@ namespace Battle_Mages
 
                 case GameState.Lobby:
 
+                    player.Update();
                     LobbyS.Update();
                     player.Update();
                     DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -302,10 +303,11 @@ namespace Battle_Mages
                 case GameState.Lobby:
 
                     player.Draw(drawer);
-                     camera.Draw(drawer[DrawLayer.UI]);
+                    camera.Draw(drawer[DrawLayer.UI]);
                     LobbyS.DrawLobby(drawer[DrawLayer.Background]);
 
                     break;
+
                 default:
                     break;
             }
