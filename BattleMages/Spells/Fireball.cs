@@ -15,6 +15,7 @@ namespace BattleMages
         public Fireball(GameObject go, Vector2 targetPos, RuneInfo[] runes) : base(go, runes)
         {
             Damage = 10;
+            CooldownTime = 0.3f;
             ApplyRunes();
 
             var diff = targetPos - GameObject.Transform.Position;
@@ -30,7 +31,7 @@ namespace BattleMages
 
         public void Update()
         {
-            GameObject.Transform.Position += velocity * GameWorld.Instance.DeltaTime;
+            GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
         }
     }
 }

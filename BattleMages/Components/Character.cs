@@ -34,7 +34,7 @@ namespace BattleMages
             else if (Down)
                 fDirection = FacingDirection.Front;
 
-            float moveDist = GameWorld.Instance.DeltaTime * MoveSpeed;
+            float moveDist = GameWorld.DeltaTime * MoveSpeed;
 
             Collider collider = GameObject.GetComponent<Collider>();
             bool collisionLeft = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(-moveDist, 0), true);

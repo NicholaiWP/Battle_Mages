@@ -64,7 +64,7 @@ namespace BattleMages
             }
             else
             {
-                attackSpeed -= GameWorld.Instance.DeltaTime;
+                attackSpeed -= GameWorld.DeltaTime;
             }
             enemyAI.Targeting();
             character.Movement();

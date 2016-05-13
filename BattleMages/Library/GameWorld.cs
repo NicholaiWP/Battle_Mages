@@ -42,7 +42,7 @@ namespace BattleMages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static Scene Scene { get { return Instance.scene; } }
-        public float DeltaTime { get { return Instance.deltaTime; } }
+        public static float DeltaTime { get { return Instance.deltaTime; } }
         public bool Paused { get { return paused; } set { paused = value; } }
         public LobbyScreen LobbyS { get { return lobbyS; } set { lobbyS = value; } }
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }

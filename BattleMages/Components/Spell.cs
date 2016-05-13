@@ -8,7 +8,6 @@ namespace BattleMages
 {
     public abstract class Spell : Component
     {
-
         private RuneInfo[] runes;
 
         //BASE STATS
@@ -17,7 +16,7 @@ namespace BattleMages
         //These stats will then be modified by runes.
         public int Damage { get; set; }
         public int ManaCost { get; set; }
-        public int ManaCooldown { get; set; }      
+        public float CooldownTime { get; set; }
 
         public Spell(GameObject go, RuneInfo[] runes) : base(go)
         {

@@ -18,6 +18,8 @@ namespace BattleMages
         private Collider collider;
         private int health;
 
+        private float spellCooldownTimer;
+
         public Player(GameObject gameObject) : base(gameObject)
         {
             health = 100;
@@ -35,15 +37,21 @@ namespace BattleMages
 
         public void Update()
         {
+            if (spellCooldownTimer > 0)
+            {
+                spellCooldownTimer -= GameWorld.DeltaTime;
+            }
             MouseState mState = Mouse.GetState();
-            if (mState.LeftButton == ButtonState.Pressed)
+            if (mState.LeftButton == ButtonState.Pressed && spellCooldownTimer <= 0)
             {
                 var spellInfo = StaticData.Spells.FirstOrDefault();
                 var runeInfo = StaticData.Runes.FirstOrDefault();
 
                 GameObject spellGo = new GameObject(transform.Position);
-                spellGo.AddComponent(spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[] { runeInfo }));
+                Spell s = spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[] { runeInfo });
+                spellGo.AddComponent(s);
                 GameWorld.Scene.AddObject(spellGo);
+                spellCooldownTimer = s.CooldownTime;
             }
 
             Move();
