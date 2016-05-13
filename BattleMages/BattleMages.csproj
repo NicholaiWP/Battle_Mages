@@ -84,8 +84,6 @@
     <Compile Include="Components\Spell.cs" />
     <Compile Include="Library\RuneInfo.cs" />
     <Compile Include="Spells\Fireball.cs" />
-    <Compile Include="Strategies\Idle.cs" />
-    <Compile Include="Strategies\Walk.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

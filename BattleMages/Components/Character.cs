@@ -10,8 +10,6 @@ namespace BattleMages
     public class Character : Component
     {
         private FacingDirection fDirection;
-        private IStrategy walkStrategy;
-        private IStrategy idleStrategy;
 
         //bool properties
         public bool Up { get; set; }
@@ -19,11 +17,10 @@ namespace BattleMages
         public bool Left { get; set; }
         public bool Right { get; set; }
 
+        public float MoveSpeed { get; set; } = 100;
+
         public Character(GameObject gameObject) : base(gameObject)
         {
-            walkStrategy = new Walk(GameObject.GetComponent<Animator>(),
-                GameObject.Transform, 100);
-            idleStrategy = new Idle(GameObject.GetComponent<Animator>());
         }
 
         public void Movement()
@@ -36,12 +33,28 @@ namespace BattleMages
                 fDirection = FacingDirection.Back;
             else if (Down)
                 fDirection = FacingDirection.Front;
-            else
-                idleStrategy.Execute(Left, Right, Up, Down, fDirection);
 
-            walkStrategy.Execute(Left, Right, Up, Down, fDirection);
+            float moveDist = GameWorld.Instance.DeltaTime * MoveSpeed;
 
-            //Testing limiting position to circle
+            Collider collider = GameObject.GetComponent<Collider>();
+            bool collisionLeft = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(-moveDist, 0), true);
+            bool collisionRight = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(moveDist, 0), true);
+            bool collisionUp = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, -moveDist), true);
+            bool collisionDown = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, moveDist), true);
+
+            Vector2 translation = Vector2.Zero;
+            if (Left && !collisionLeft)
+                translation += new Vector2(-1, 0);
+            if (Right && !collisionRight)
+                translation += new Vector2(1, 0);
+            if (Up && !collisionUp)
+                translation += new Vector2(0, -1);
+            if (Down && !collisionDown)
+                translation += new Vector2(0, 1);
+
+            GameObject.Transform.Translate(translation * moveDist);
+
+            //Limiting position to circle
             GameObject.Transform.Position = Utils.LimitToCircle(GameObject.Transform.Position, Vector2.Zero, 320);
         }
     }
