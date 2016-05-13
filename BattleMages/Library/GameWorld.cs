@@ -12,10 +12,13 @@ namespace BattleMages
     /// </summary>
     public class GameWorld : Game
     {
+        //Constants
+        public const int GameWidth = 320;
+        public const int GameHeight = 180;
+
         //Fields
         private GraphicsDeviceManager graphics;
 
-        private bool paused;
         private KeyboardState keyState, oldKeyState;
         private Drawer drawer;
         private GameObject player;
@@ -27,11 +30,11 @@ namespace BattleMages
         private Cursor cursor;
         private Camera2D camera;
         private Scene scene;
+        private float deltaTime;
+        private bool paused;
         private PausedGameScreen pGS;
         private LobbyScreen lobbyS;
         private static GameWorld instance;
-        public const int GameWidth = 320;
-        public const int GameHeight = 180;
 
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -39,11 +42,11 @@ namespace BattleMages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static Scene Scene { get { return Instance.scene; } }
-        public float DeltaTime { get; private set; }
-        public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
-        public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
+        public float DeltaTime { get { return Instance.deltaTime; } }
         public bool Paused { get { return paused; } set { paused = value; } }
         public LobbyScreen LobbyS { get { return lobbyS; } set { lobbyS = value; } }
+        public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
+        public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
 
         public static GameWorld Instance
         {
@@ -168,7 +171,7 @@ namespace BattleMages
                     }
                     if (!Paused)
                     {
-                        DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                         foreach (GameObject go in scene.ActiveObjects)
                             go.Update();
@@ -209,7 +212,7 @@ namespace BattleMages
                     player.Update();
                     LobbyS.Update();
                     player.Update();
-                    DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     #region Camera Movement
 
