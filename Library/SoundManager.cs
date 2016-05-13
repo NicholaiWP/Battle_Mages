@@ -12,8 +12,8 @@ namespace Battle_Mages
     {
         //Fields
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
-
         private Song backgroundMusic;
+
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
 

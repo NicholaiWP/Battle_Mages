@@ -12,7 +12,6 @@ namespace Battle_Mages
     {
         //Fields
         private string spriteName;
-
         private Color color = Color.White;
         private Rectangle rectangle;
         private Vector2 offset;

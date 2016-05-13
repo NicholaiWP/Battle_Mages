@@ -12,6 +12,8 @@ namespace Battle_Mages
         private FacingDirection fDirection;
         private IStrategy walkStrategy;
         private IStrategy idleStrategy;
+
+        //bool properties
         public bool Up { get; set; }
         public bool Down { get; set; }
         public bool Left { get; set; }

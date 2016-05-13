@@ -19,14 +19,16 @@ namespace Battle_Mages
         private Vector2 scalingVector;
         private SettingsWindow settingsWindow;
         private MainMenuWindow mainMenuWindow;
+        private Texture2D background;
+        private Vector2 bgStartPos;
+
         public Vector2 ScalingVector { get { return scalingVector; } set { scalingVector = value; } }
         public string CurrentResolutionString { get { return currentResolutionString; } }
         public int ElementAtNumber { get; set; }
         public bool SwappingKeyBind { get; set; } = false;
         public PlayerBind ChosenKeyToRebind { get; set; }
 
-        private Texture2D background;
-        private Vector2 bgStartPos;
+       
 
         public MenuScreenManager()
         {

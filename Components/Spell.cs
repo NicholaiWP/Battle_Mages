@@ -8,15 +8,16 @@ namespace Battle_Mages
 {
     public abstract class Spell : Component
     {
+
+        private RuneInfo[] runes;
+
         //BASE STATS
         //These stats are used by spells to modify behaviour in different ways.
         //Spells should also define base stats in their constructor.
         //These stats will then be modified by runes.
         public int Damage { get; set; }
         public int ManaCost { get; set; }
-        public int ManaCooldown { get; set; }
-
-        private RuneInfo[] runes;
+        public int ManaCooldown { get; set; }      
 
         public Spell(GameObject go, RuneInfo[] runes) : base(go)
         {

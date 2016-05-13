@@ -18,6 +18,8 @@ namespace Battle_Mages
         private Character character;
         private int damage;
         private float attackSpeed;
+
+        //properties
         public int Level { get { return level; } }
         public bool IsAttacking { get; set; }
         public int Damage { get { return damage; } set { damage = value; } }

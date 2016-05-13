@@ -10,7 +10,6 @@ namespace Battle_Mages
     {
         //Fields
         private float timeElapsed;
-
         private int currentIndex;
         private string animationName;
         private float fps;
