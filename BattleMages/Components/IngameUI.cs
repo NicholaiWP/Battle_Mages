@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Battle_Mages
+namespace BattleMages
 {
     public class IngameUI : Component, ICanBeDrawn, ICanBeLoaded
     {
