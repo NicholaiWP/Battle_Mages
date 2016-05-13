@@ -25,7 +25,7 @@ namespace Battle_Mages
 
         public bool InAttackRange()
         {
-            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
+            foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
                 {
@@ -40,7 +40,7 @@ namespace Battle_Mages
 
         public virtual void Targeting()
         {
-            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
+            foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
                 {

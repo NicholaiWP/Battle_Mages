@@ -43,12 +43,12 @@ namespace Battle_Mages
 
                 GameObject spellGo = new GameObject(transform.Position);
                 spellGo.AddComponent(spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[] { runeInfo }));
-                GameWorld.Scene.AddObject(spellGo);
+                GameWorld.CurrentScene.AddObject(spellGo);
             }
 
             Move();
             if (health <= 0)
-                GameWorld.Scene.RemoveObject(GameObject);
+                GameWorld.CurrentScene.RemoveObject(GameObject);
         }
 
         private void OnCollision(Collider coll)

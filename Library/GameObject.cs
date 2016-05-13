@@ -62,7 +62,7 @@ namespace Battle_Mages
         /// <summary>
         /// Method for updating the gameobject, position etc.
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
             foreach (Component comp in components)
             {
@@ -90,7 +90,7 @@ namespace Battle_Mages
         /// Method for drawing the gameobject on the screen
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public void Draw(Drawer drawer)
+        public virtual void Draw(Drawer drawer)
         {
             foreach (Component comp in components)
             {

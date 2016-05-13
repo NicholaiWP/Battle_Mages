@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battle_Mages
 {
-    public class Scene
+    public abstract class Scene
     {
         private List<GameObject> activeObjects = new List<GameObject>();
-        private List<GameObject> objectsToAdd = new List<GameObject>();
-        private List<GameObject> objectsToRemove = new List<GameObject>();
-
+        protected List<GameObject> objectsToAdd = new List<GameObject>();
+        protected List<GameObject> objectsToRemove = new List<GameObject>();
+        protected SpriteFont fontBM;
+        protected Texture2D background;
+        public bool Paused { get; set; }
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
         /// </summary>
@@ -24,6 +28,9 @@ namespace Battle_Mages
         {
         }
 
+        public abstract void LoadContent(ContentManager content);
+        public abstract void Update();
+        public abstract void Draw(Drawer drawer);
         /// <summary>
         /// Marks an object for addition to ActiveObjects.
         /// </summary>
