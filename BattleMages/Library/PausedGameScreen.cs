@@ -13,7 +13,7 @@ namespace BattleMages
     {
         private Texture2D pauseTexture;
         private Vector2 position;
-        private List<Button> PauseButton = new List<Button>();
+        private List<Button> PauseButtons = new List<Button>();
 
         public PausedGameScreen()
         {
@@ -24,43 +24,44 @@ namespace BattleMages
             //Continue button in pause screen
                 var ContinueSpr1 = content.Load<Texture2D>("Images/BMContinueButton1");
                 var ContinueSpr2 = content.Load<Texture2D>("Images/BMContinueButton_hover7");
-                PauseButton.Add(new Button(
+                PauseButtons.Add(new Button(
                ContinueSpr1,
                ContinueSpr2,
                new Vector2(-ContinueSpr1.Width / 2, ContinueSpr1.Height * -1f),
-               () => { GameWorld.Instance.Paused = false; },
+               () => { GameWorld.CurrentScene.Paused = false; },
                false));
 
                 //Quit button for pause screen
                 var QuitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
                 var QuitSpr2 = content.Load<Texture2D>("Images/BMQuitButton_Hover");
-                PauseButton.Add(new Button(
+                PauseButtons.Add(new Button(
                     QuitSpr1,
                     QuitSpr2,
                     new Vector2(-QuitSpr1.Width / 2, 0),
-                    () => { GameWorld.SetState(GameState.Quit); },
+                    () => { GameWorld.Instance.Exit(); },
                     false
                     ));
 
             //Forfeit button for pause screen
             var ForfeitSpr1 = content.Load<Texture2D>("Images/forfeit_button");
             var ForfeitSpr2 = content.Load<Texture2D>("Images/forfeit_hover_red2");
-            PauseButton.Add(new Button(
+            PauseButtons.Add(new Button(
                 ForfeitSpr1,
                 ForfeitSpr2,
                  new Vector2(-ForfeitSpr1.Width / 2, ForfeitSpr1.Height * 1f),
-                () => { GameWorld.SetState(GameState.Lobby); GameWorld.Instance.LobbyS.SetPosition(new Vector2(-100, -100)); },
+                () => { GameWorld.ChangeScene(new LobbyScene()); },
                 false
                 ));
         }
 
-        public void DrawPause(SpriteBatch spriteBatch)
+        public void Draw(Drawer drawer)
         {
+           SpriteBatch spriteBatch = drawer[DrawLayer.Foreground];
            spriteBatch.Draw(pauseTexture, position, Color.White);
 
-            foreach (Button button in PauseButton)
+            foreach (Button button in PauseButtons)
             {
-                button.Draw(spriteBatch);
+                button.Draw(drawer);
             }
         }
 
@@ -69,7 +70,7 @@ namespace BattleMages
                 position = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
 
-            foreach  (Button button in PauseButton)
+            foreach  (Button button in PauseButtons)
             {
                 button.UpdatePosition(GameWorld.Camera.Position);
 

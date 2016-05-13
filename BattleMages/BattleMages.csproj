@@ -68,13 +68,13 @@
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\Enums.cs" />
     <Compile Include="Library\GameWorld.cs" />
-    <Compile Include="Library\LobbyScreen.cs" />
-    <Compile Include="Library\MenuStuff\MainMenuWindow.cs" />
-    <Compile Include="Library\MenuStuff\SettingsWindow.cs" />
+    <Compile Include="Library\Scenes\GameScene.cs" />
+    <Compile Include="Library\Scenes\LobbyScene.cs" />
+    <Compile Include="Library\Scenes\MenuScene.cs" />
+    <Compile Include="Library\Scenes\SettingsScene.cs" />
     <Compile Include="Library\ObjectBuilder.cs" />
     <Compile Include="Library\PausedGameScreen.cs" />
     <Compile Include="Library\PlayerControls.cs" />
-    <Compile Include="Library\MenuStuff\MenuScreenManager.cs" />
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
     <Compile Include="Library\SpellInfo.cs" />

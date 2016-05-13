@@ -28,7 +28,7 @@ namespace BattleMages
 
         public bool CheckCollisionAtPosition(Vector2 position, bool solidOnly = false)
         {
-            IEnumerable<Collider> collidersInScene = GameWorld.Scene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
+            IEnumerable<Collider> collidersInScene = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
             var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
             foreach (var coll in collidersInScene)
             {
