@@ -24,10 +24,10 @@ namespace BattleMages
             float moveDist = GameWorld.Instance.DeltaTime * speed;
 
             Collider collider = transform.GameObject.GetComponent<Collider>();
-            bool collisionLeft = collider.CheckCollisionAtPosition(transform.Position + new Vector2(-moveDist, 0));
-            bool collisionRight = collider.CheckCollisionAtPosition(transform.Position + new Vector2(moveDist, 0));
-            bool collisionUp = collider.CheckCollisionAtPosition(transform.Position + new Vector2(0, -moveDist));
-            bool collisionDown = collider.CheckCollisionAtPosition(transform.Position + new Vector2(0, moveDist));
+            bool collisionLeft = collider.CheckCollisionAtPosition(transform.Position + new Vector2(-moveDist, 0), true);
+            bool collisionRight = collider.CheckCollisionAtPosition(transform.Position + new Vector2(moveDist, 0), true);
+            bool collisionUp = collider.CheckCollisionAtPosition(transform.Position + new Vector2(0, -moveDist), true);
+            bool collisionDown = collider.CheckCollisionAtPosition(transform.Position + new Vector2(0, moveDist), true);
 
             Vector2 translation = Vector2.Zero;
             if (movingLeft && !collisionLeft)

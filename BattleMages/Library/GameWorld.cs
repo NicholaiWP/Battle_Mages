@@ -122,7 +122,7 @@ namespace BattleMages
             pGS = new PausedGameScreen();
             LobbyS = new LobbyScreen();
             var wall = new GameObject(new Vector2(0, -100));
-            wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
+            wall.AddComponent(new Collider(wall, new Vector2(128, 32), true));
             scene.AddObject(wall);
         }
 
