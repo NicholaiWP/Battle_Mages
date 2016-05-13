@@ -74,6 +74,7 @@
     <Compile Include="Library\PausedGameScreen.cs" />
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\MenuStuff\MenuScreenManager.cs" />
+    <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
     <Compile Include="Library\SpellInfo.cs" />
     <Compile Include="Library\StaticData.cs" />

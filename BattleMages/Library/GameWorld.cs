@@ -30,6 +30,7 @@ namespace BattleMages
         private Cursor cursor;
         private Camera2D camera;
         private Scene scene;
+        private SavedState state;
         private float deltaTime;
         private bool paused;
         private PausedGameScreen pGS;
@@ -42,6 +43,7 @@ namespace BattleMages
         public static Cursor Cursor { get { return Instance.cursor; } }
         public static Camera2D Camera { get { return Instance.camera; } }
         public static Scene Scene { get { return Instance.scene; } }
+        public static SavedState State { get { return Instance.state; } }
         public static float DeltaTime { get { return Instance.deltaTime; } }
         public bool Paused { get { return paused; } set { paused = value; } }
         public LobbyScreen LobbyS { get { return lobbyS; } set { lobbyS = value; } }
