@@ -132,6 +132,10 @@ namespace Battle_Mages
             var wall = new GameObject(new Vector2(0, -100));
             wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
             scene.AddObject(wall);
+
+            var ingameUI = new GameObject(new Vector2(100, 100));
+            ingameUI.AddComponent(new IngameUI(ingameUI));
+            scene.AddObject(ingameUI);
         }
 
         /// <summary>
