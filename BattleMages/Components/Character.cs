@@ -7,6 +7,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
+    public enum FacingDirection
+    {
+        Left, Right, Back, Front
+    }
+
     public class Character : Component
     {
         private FacingDirection fDirection;
