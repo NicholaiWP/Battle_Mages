@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -20,12 +20,9 @@ namespace BattleMages
 
         public LobbyScene()
         {
+            var content = GameWorld.Instance.Content;
             lobbyPosition = new Vector2(-100, -100);
             pgs = new PausedGameScreen();
-        }
-
-        public override void LoadContent(ContentManager content)
-        {
             lobbyTexture = content.Load<Texture2D>("Images/BMtavern");
             objectsToAdd.Add(ObjectBuilder.BuildPlayer(new Vector2(lobbyTexture.Width / 2 - 100, lobbyTexture.Height - 120)));
             ProcessObjectLists();

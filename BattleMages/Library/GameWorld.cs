@@ -14,10 +14,12 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
+
         public const int GameHeight = 180;
 
         //Fields
         private GraphicsDeviceManager graphics;
+
         private Drawer drawer;
         private Scene currentScene;
 
@@ -40,6 +42,7 @@ namespace BattleMages
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public Vector2 ScalingVector { get; set; }
+
         public static GameWorld Instance
         {
             get
@@ -93,7 +96,6 @@ namespace BattleMages
             drawer = new Drawer(GraphicsDevice);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
-            currentScene.LoadContent(Content);
             soundManager.LoadContent(Content);
             soundManager.Music("hey");
         }
@@ -110,7 +112,6 @@ namespace BattleMages
         public static void ChangeScene(Scene targetScene)
         {
             Instance.currentScene = targetScene;
-            Instance.currentScene.LoadContent(Instance.Content);
         }
 
         /// <summary>

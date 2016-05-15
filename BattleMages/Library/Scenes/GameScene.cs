@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -29,21 +29,15 @@ namespace BattleMages
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
-            AddObject(ingameUI);
-
+            objectsToAdd.Add(ingameUI);
+            var wall = new GameObject(new Vector2(0, -100));
+            wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
+            objectsToAdd.Add(wall);
             ProcessObjectLists();
-        }
-
-        public override void LoadContent(ContentManager content)
-        {
             foreach (GameObject gameObject in ActiveObjects)
             {
                 gameObject.Update();
             }
-
-            var wall = new GameObject(new Vector2(0, -100));
-            wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
-            objectsToAdd.Add(wall);
 
             foreach (GameObject gameObject in ActiveObjects)
             {
