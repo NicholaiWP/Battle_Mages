@@ -20,19 +20,23 @@ namespace BattleMages
             var content = GameWorld.Instance.Content;
             lobbyPosition = new Vector2(-100, -100);
             lobbyTexture = content.Load<Texture2D>("Images/BMtavern");
+
+            //Making the player
             AddObject(ObjectBuilder.BuildPlayer(new Vector2(lobbyTexture.Width / 2 - 100, lobbyTexture.Height - 120)));
             ProcessObjectLists();
 
-            foreach (GameObject gameObject in ActiveObjects)
+            //Updating the gameobjects once to add the components
+            foreach (GameObject go in ActiveObjects)
             {
-                gameObject.Update();
+                go.Update();
             }
 
-            foreach (GameObject gameObject in ActiveObjects)
+            //Finding the GameObject with the player component, so the camera can target it.
+            foreach (GameObject go in ActiveObjects)
             {
-                if (gameObject.GetComponent<Player>() != null)
+                if (go.GetComponent<Player>() != null)
                 {
-                    GameWorld.Camera.Target = gameObject.Transform;
+                    GameWorld.Camera.Target = go.Transform;
                     break;
                 }
             }
