@@ -6,9 +6,23 @@ using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
+    public class SpellCreationParams
+    {
+        public RuneInfo[] Runes { get; }
+        public Vector2 AimTarget { get; }
+        public Vector2 VelocityOffset { get; }
+
+        public SpellCreationParams(RuneInfo[] runes, Vector2 aimTarget, Vector2 velocityOffset)
+        {
+            Runes = runes;
+            AimTarget = aimTarget;
+            VelocityOffset = velocityOffset;
+        }
+    }
+
     public class SpellInfo
     {
-        public delegate Spell SpellSpawnDelegate(GameObject go, Vector2 targetPos, RuneInfo[] runes);
+        public delegate Spell SpellSpawnDelegate(GameObject go, SpellCreationParams creationParams);
 
         public string Name { get; }
         public string Description { get; }
@@ -21,9 +35,9 @@ namespace BattleMages
             this.spawnFunc = spawnFunc;
         }
 
-        public Spell CreateSpell(GameObject go, Vector2 targetPos, RuneInfo[] runes)
+        public Spell CreateSpell(GameObject go, SpellCreationParams creationParams)
         {
-            return spawnFunc(go, targetPos, runes);
+            return spawnFunc(go, creationParams);
         }
     }
 }

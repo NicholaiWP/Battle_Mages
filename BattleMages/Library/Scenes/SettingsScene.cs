@@ -27,7 +27,7 @@ namespace BattleMages
             var content = GameWorld.Instance.Content;
             //Back button
             var backSpr = content.Load<Texture2D>("Images/Back");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                     backSpr,
                     backSpr,
                     new Vector2(-backSpr.Width / 2, backSpr.Height * 2f),
@@ -38,7 +38,7 @@ namespace BattleMages
              settingsButtons.Add(new Button(MenuButtons.KeyBindRight));*/
             //Keybind up
             var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 keyBindUpSpr,
                 keyBindUpSpr,
                 new Vector2(-keyBindUpSpr.Width / 2, -78),
@@ -46,10 +46,17 @@ namespace BattleMages
                 {
                     SwappingKeyBind = true;
                     ChosenKeyToRebind = PlayerBind.Up;
+                    ChosenKeyToRebind = PlayerBind.Down;
+                    ChosenKeyToRebind = PlayerBind.Left;
+                    ChosenKeyToRebind = PlayerBind.Right;
+                    ChosenKeyToRebind = PlayerBind.Spell1;
+                    ChosenKeyToRebind = PlayerBind.Spell2;
+                    ChosenKeyToRebind = PlayerBind.Spell3;
+                    ChosenKeyToRebind = PlayerBind.Spell4;
                 }));
             //Res down
             var resDown = content.Load<Texture2D>("Images/ResDown");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 resDown,
                 resDown,
                 new Vector2(-64 - resDown.Width / 2, -50),
@@ -57,7 +64,7 @@ namespace BattleMages
                 ));
             //Res up
             var resUp = content.Load<Texture2D>("Images/ResUp");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 resUp,
                 resUp,
                 new Vector2(64 - resUp.Width / 2, -50),
@@ -140,17 +147,17 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
-            SpriteBatch spriteBatch = drawer[DrawLayer.UI];
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
-            foreach (GameObject button in ActiveObjects)
+
+            foreach (GameObject go in ActiveObjects)
             {
-                button.Draw(drawer);
+                go.Draw(drawer);
             }
 
-            spriteBatch.DrawString(fontBM, currentResolutionString, Vector2.Zero,
+            drawer[DrawLayer.UI].DrawString(fontBM, currentResolutionString, Vector2.Zero,
                 Color.Black);
-            spriteBatch.DrawString(fontBM,
+            drawer[DrawLayer.UI].DrawString(fontBM,
                 GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),
                 new Vector2(64, -72), Color.Black);
         }

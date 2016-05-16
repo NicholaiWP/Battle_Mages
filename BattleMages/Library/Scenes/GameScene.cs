@@ -12,38 +12,42 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
-        private PausedGameScreen pgs;
-
-        private bool canChangePause;
 
         public GameScene()
         {
-            pgs = new PausedGameScreen();
-            Paused = false;
-            canChangePause = true;
+            //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
-            objectsToAdd.Add(ellipse);
-            objectsToAdd.Add(ObjectBuilder.BuildPlayer(Vector2.Zero));
-            objectsToAdd.Add(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
+            AddObject(ellipse);
+
+            //Making a player with the ObjectBuilder
+            AddObject(ObjectBuilder.BuildPlayer(Vector2.Zero));
+            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
-            objectsToAdd.Add(ingameUI);
+            AddObject(ingameUI);
+
             var wall = new GameObject(new Vector2(0, -100));
-            wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
-            objectsToAdd.Add(wall);
+            wall.AddComponent(new Collider(wall, new Vector2(128, 32), true));
+            AddObject(wall);
+
+            //Processing the lists
             ProcessObjectLists();
-            foreach (GameObject gameObject in ActiveObjects)
+
+            //Making one update for all GameObjects in the ActiveObjects list,
+            //so the components are added to the GameObject´s components list.
+            foreach (GameObject go in ActiveObjects)
             {
-                gameObject.Update();
+                go.Update();
             }
 
-            foreach (GameObject gameObject in ActiveObjects)
+            //Finding the GameObject with the player component, so the camera can target it.
+            foreach (GameObject go in ActiveObjects)
             {
-                if (gameObject.GetComponent<Player>() != null)
+                if (go.GetComponent<Player>() != null)
                 {
-                    GameWorld.Camera.Target = gameObject.Transform;
+                    GameWorld.Camera.Target = go.Transform;
                     break;
                 }
             }
@@ -52,47 +56,25 @@ namespace BattleMages
         public override void Update()
         {
             keyState = Keyboard.GetState();
-            if (keyState.IsKeyUp(Keys.P))
-            {
-                canChangePause = true;
-            }
-            if (keyState.IsKeyDown(Keys.P) && !Paused && canChangePause)
-            {
-                Paused = true;
-                canChangePause = false;
-            }
-            else if (keyState.IsKeyDown(Keys.P) && Paused && canChangePause)
-            {
-                Paused = false;
-                canChangePause = false;
-            }
 
-            if (Paused)
+            //If the key P is down then we change to the pause scene
+            if (keyState.IsKeyDown(Keys.P))
             {
-                pgs.Update();
+                GameWorld.ChangeScene(new PauseScene(this));
             }
-            else
+            GameWorld.Camera.Update(GameWorld.DeltaTime);
+
+            foreach (GameObject go in ActiveObjects)
             {
-                GameWorld.Camera.Update(GameWorld.DeltaTime);
-                foreach (GameObject gameObject in ActiveObjects)
-                {
-                    gameObject.Update();
-                }
+                go.Update();
             }
         }
 
         public override void Draw(Drawer drawer)
         {
-            if (Paused)
+            foreach (GameObject go in ActiveObjects)
             {
-                pgs.Draw(drawer);
-            }
-            else
-            {
-                foreach (GameObject gameObject in ActiveObjects)
-                {
-                    gameObject.Draw(drawer);
-                }
+                go.Draw(drawer);
             }
         }
     }
