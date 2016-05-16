@@ -85,6 +85,7 @@
     <Compile Include="Components\Spell.cs" />
     <Compile Include="Library\RuneInfo.cs" />
     <Compile Include="Spells\Fireball.cs" />
+    <Compile Include="Spells\Icicle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -169,7 +170,7 @@
     <Content Include="Content\Images\forfeit_hover_red2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Images\fireball.png">
+    <Content Include="Content\Spell Images\fireball.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\GdMageBM.png">
@@ -198,6 +199,9 @@
     </Content>
     <Content Include="Content\Images\ResUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Spell Images\ice.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
