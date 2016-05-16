@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -16,6 +16,7 @@ namespace BattleMages
         protected SpriteFont fontBM;
         protected Texture2D background;
         public bool Paused { get; set; }
+
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
         /// </summary>
@@ -28,9 +29,10 @@ namespace BattleMages
         {
         }
 
-        public abstract void LoadContent(ContentManager content);
         public abstract void Update();
+
         public abstract void Draw(Drawer drawer);
+
         /// <summary>
         /// Marks an object for addition to ActiveObjects.
         /// </summary>

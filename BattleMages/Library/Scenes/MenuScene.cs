@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -53,13 +53,6 @@ namespace BattleMages
                 () => { GameWorld.Instance.Exit(); },
                 true
                 ));
-        }
-
-        public override void LoadContent(ContentManager content)
-        {
-            GameObject go = new GameObject(Vector2.Zero);
-            GameWorld.Camera.Target = go.Transform;
-
             background = content.Load<Texture2D>("Images/BMmenu");
         }
 
