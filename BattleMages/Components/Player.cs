@@ -65,12 +65,9 @@ namespace BattleMages
             }
 
             Move();
-
             if (health <= 0)
                 GameWorld.CurrentScene.RemoveObject(GameObject);
         }
-
-        
 
         private void OnCollision(Collider coll)
         {

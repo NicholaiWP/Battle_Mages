@@ -46,13 +46,6 @@ namespace BattleMages
                 {
                     SwappingKeyBind = true;
                     ChosenKeyToRebind = PlayerBind.Up;
-                    ChosenKeyToRebind = PlayerBind.Down;
-                    ChosenKeyToRebind = PlayerBind.Left;
-                    ChosenKeyToRebind = PlayerBind.Right;
-                    ChosenKeyToRebind = PlayerBind.Spell1;
-                    ChosenKeyToRebind = PlayerBind.Spell2;
-                    ChosenKeyToRebind = PlayerBind.Spell3;
-                    ChosenKeyToRebind = PlayerBind.Spell4;
                 }));
             //Res down
             var resDown = content.Load<Texture2D>("Images/ResDown");
