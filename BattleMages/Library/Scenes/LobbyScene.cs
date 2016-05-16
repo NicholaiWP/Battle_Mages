@@ -14,17 +14,13 @@ namespace BattleMages
         private Texture2D lobbyTexture;
         private Vector2 lobbyPosition;
         private KeyboardState keyState;
-        private PausedGameScreen pgs;
-        private bool paused;
-        private bool canChangePause;
 
         public LobbyScene()
         {
             var content = GameWorld.Instance.Content;
             lobbyPosition = new Vector2(-100, -100);
-            pgs = new PausedGameScreen();
             lobbyTexture = content.Load<Texture2D>("Images/BMtavern");
-            objectsToAdd.Add(ObjectBuilder.BuildPlayer(new Vector2(lobbyTexture.Width / 2 - 100, lobbyTexture.Height - 120)));
+            AddObject(ObjectBuilder.BuildPlayer(new Vector2(lobbyTexture.Width / 2 - 100, lobbyTexture.Height - 120)));
             ProcessObjectLists();
 
             foreach (GameObject gameObject in ActiveObjects)
@@ -44,40 +40,25 @@ namespace BattleMages
 
         public override void Update()
         {
-            keyState = new KeyboardState();
-            if (keyState.IsKeyUp(Keys.P))
+            keyState = Keyboard.GetState();
+
+            if (keyState.IsKeyDown(Keys.P))
             {
-                canChangePause = true;
-            }
-            if (keyState.IsKeyDown(Keys.P) && !paused && canChangePause)
-            {
-                paused = true;
-                canChangePause = false;
-            }
-            else if (keyState.IsKeyDown(Keys.P) && paused && canChangePause)
-            {
-                paused = false;
-                canChangePause = false;
+                GameWorld.ChangeScene(new PauseScene(this));
             }
 
-            if (paused)
+            GameWorld.Camera.Update(GameWorld.DeltaTime);
+
+            foreach (GameObject gameObject in ActiveObjects)
             {
-                pgs.Update();
-            }
-            else
-            {
-                GameWorld.Camera.Update(GameWorld.DeltaTime);
-                foreach (GameObject gameObject in ActiveObjects)
-                {
-                    gameObject.Update();
-                }
+                gameObject.Update();
             }
         }
 
         public override void Draw(Drawer drawer)
         {
-            SpriteBatch spriteBatch = drawer[DrawLayer.Background];
-            spriteBatch.Draw(lobbyTexture, lobbyPosition, Color.White);
+            drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyPosition, Color.White);
+
             foreach (GameObject go in ActiveObjects)
             {
                 go.Draw(drawer);

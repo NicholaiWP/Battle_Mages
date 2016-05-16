@@ -70,9 +70,9 @@
     <Compile Include="Library\Scenes\GameScene.cs" />
     <Compile Include="Library\Scenes\LobbyScene.cs" />
     <Compile Include="Library\Scenes\MenuScene.cs" />
+    <Compile Include="Library\Scenes\PauseScene.cs" />
     <Compile Include="Library\Scenes\SettingsScene.cs" />
     <Compile Include="Library\ObjectBuilder.cs" />
-    <Compile Include="Library\PausedGameScreen.cs" />
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />

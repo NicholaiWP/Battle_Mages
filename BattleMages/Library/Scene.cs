@@ -11,11 +11,10 @@ namespace BattleMages
     public abstract class Scene
     {
         private List<GameObject> activeObjects = new List<GameObject>();
-        protected List<GameObject> objectsToAdd = new List<GameObject>();
-        protected List<GameObject> objectsToRemove = new List<GameObject>();
+        private List<GameObject> objectsToAdd = new List<GameObject>();
+        private List<GameObject> objectsToRemove = new List<GameObject>();
         protected SpriteFont fontBM;
         protected Texture2D background;
-        public bool Paused { get; set; }
 
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
