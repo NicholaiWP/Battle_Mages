@@ -5,9 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BattleMages.Spells
+namespace BattleMages
 {
-    internal class Icicle : Spell, ICanBeDrawn, ICanBeAnimated, ICanUpdate
+    public class Icicle : Spell, ICanBeDrawn, ICanBeAnimated, ICanUpdate
     {
         private Texture2D sprite;
         private Vector2 velocity;

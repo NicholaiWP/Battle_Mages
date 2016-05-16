@@ -41,6 +41,10 @@ namespace BattleMages
                 new SpellInfo("Fireball",
                 "A ball of fire",
                 (go, p) => { return new Fireball(go, p); }),
+
+                new SpellInfo("Icicle",
+                "A sharp chunk of ice",
+                (go, p) => { return new Icicle(go, p); }),
             };
         }
 
