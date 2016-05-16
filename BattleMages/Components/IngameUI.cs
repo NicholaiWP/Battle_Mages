@@ -44,6 +44,7 @@ namespace BattleMages
             drawer[DrawLayer.UI].Draw(spellThreeSprite, position: GameWorld.Camera.Position);
             drawer[DrawLayer.UI].Draw(spellFourSprite, position: GameWorld.Camera.Position);
             drawer[DrawLayer.UI].Draw(coinsSprite, position: GameWorld.Camera.Position);*/
+
         }
     }
 }

@@ -18,9 +18,9 @@ namespace BattleMages
         public int ManaCost { get; set; }
         public float CooldownTime { get; set; }
 
-        public Spell(GameObject go, RuneInfo[] runes) : base(go)
+        public Spell(GameObject go, SpellCreationParams p) : base(go)
         {
-            this.runes = runes;
+            runes = p.Runes;
         }
 
         /// <summary>

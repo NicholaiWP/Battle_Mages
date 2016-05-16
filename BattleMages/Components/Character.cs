@@ -24,6 +24,8 @@ namespace BattleMages
 
         public float MoveSpeed { get; set; } = 100;
 
+        public Vector2 Velocity { get; private set; }
+
         public Character(GameObject gameObject) : base(gameObject)
         {
         }
@@ -58,6 +60,8 @@ namespace BattleMages
                 translation += new Vector2(0, 1);
 
             GameObject.Transform.Translate(translation * moveDist);
+
+            Velocity = translation * MoveSpeed;
 
             //Limiting position to circle
             GameObject.Transform.Position = Utils.LimitToCircle(GameObject.Transform.Position, Vector2.Zero, 320);
