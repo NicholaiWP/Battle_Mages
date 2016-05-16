@@ -17,6 +17,8 @@ namespace BattleMages
         private Transform transform;
         private Collider collider;
         private int health;
+       
+        public int Health { get { return health; } set { health = value; } }
 
         private float spellCooldownTimer;
 
@@ -59,23 +61,9 @@ namespace BattleMages
                 GameWorld.CurrentScene.RemoveObject(GameObject);
         }
 
-        private void OnCollision(Collider coll)
-        {
-            Enemy enemy = coll.GameObject.GetComponent<Enemy>();
-
-            if (enemy != null)
-            {
-                if (enemy.IsAttacking)
-                {
-                    health -= enemy.Damage;
-                }
-            }
-        }
-
         private void Move()
         {
             KeyboardState kbState = Keyboard.GetState();
-
             character.Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
             character.Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
             character.Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
@@ -83,6 +71,8 @@ namespace BattleMages
 
             character.Movement();
         }
+
+
 
         public void OnAnimationDone(string animationsName)
         {

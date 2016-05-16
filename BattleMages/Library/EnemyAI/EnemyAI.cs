@@ -13,6 +13,7 @@ namespace BattleMages
         protected Transform transform;
         protected float attackRange;
         protected float targetingRange;
+        protected Player player;
 
         protected EnemyAI(Character character, Enemy enemy, Transform transform)
         {
@@ -23,7 +24,7 @@ namespace BattleMages
 
         public abstract void Attack();
 
-        public bool InAttackRange()
+        public virtual bool InAttackRange()
         {
             foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
             {
@@ -32,6 +33,7 @@ namespace BattleMages
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();
                     if (lengthToTarget <= attackRange)
+                        Attack();
                         return true;
                 }
             }

@@ -11,7 +11,6 @@ namespace BattleMages
     public class GameObject
     {
         private List<Component> components = new List<Component>();
-
         private List<Component> componentsToAdd = new List<Component>();
         private List<Component> componentsToRemove = new List<Component>();
 

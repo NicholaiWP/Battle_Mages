@@ -23,6 +23,7 @@ namespace BattleMages
         public int Level { get { return level; } }
         public bool IsAttacking { get; set; }
         public int Damage { get { return damage; } set { damage = value; } }
+        public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
 
         public Enemy(GameObject gameObject) : base(gameObject)
         {
@@ -38,7 +39,6 @@ namespace BattleMages
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             enemyAI = new EnemyCloseRange(character, this, transform);
-
             //TODO: Create animations here
         }
 
@@ -60,11 +60,12 @@ namespace BattleMages
             if (enemyAI.InAttackRange() && attackSpeed <= 0)
             {
                 IsAttacking = true;
-                attackSpeed = 5;
+                attackSpeed = 5000000;
             }
             else
             {
                 attackSpeed -= GameWorld.DeltaTime;
+                IsAttacking = false;
             }
             enemyAI.Targeting();
             character.Movement();
@@ -80,8 +81,7 @@ namespace BattleMages
 
         public void OnCollisionEnter(Collider other)
         {
-            if (IsAttacking)
-                IsAttacking = false;
+           
         }
 
         public void OnCollisionStay(Collider other)
