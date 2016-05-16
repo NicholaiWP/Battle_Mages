@@ -12,15 +12,15 @@ namespace BattleMages
         private Texture2D sprite;
         private Vector2 velocity;
 
-        public Fireball(GameObject go, Vector2 targetPos, RuneInfo[] runes) : base(go, runes)
+        public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
         {
             Damage = 10;
             CooldownTime = 0.3f;
             ApplyRunes();
 
-            var diff = targetPos - GameObject.Transform.Position;
+            var diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
-            velocity = diff * 100f;
+            velocity = p.VelocityOffset + diff * 100f;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
         }
 
