@@ -21,7 +21,7 @@ namespace BattleMages
             var diff = targetPos - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 100f;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Images/fireball");
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
         }
 
         public void Draw(Drawer drawer)

@@ -17,6 +17,7 @@ namespace BattleMages
         private Transform transform;
         private Collider collider;
         private int health;
+        private int selectedSpell;
 
         private float spellCooldownTimer;
 
@@ -44,20 +45,32 @@ namespace BattleMages
             MouseState mState = Mouse.GetState();
             if (mState.LeftButton == ButtonState.Pressed && spellCooldownTimer <= 0)
             {
-                var spellInfo = StaticData.Spells.FirstOrDefault();
-                var runeInfo = StaticData.Runes.FirstOrDefault();
+                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
 
+                //Fetch base spell and runes
+                var baseSpell = spellToCast.GetSpell();
+                RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
+                for (int i = 0; i < spellToCast.RuneCount; i++)
+                {
+                    runes[i] = spellToCast.GetRune(i);
+                }
+
+                //Create spell object and add it to the world
                 GameObject spellGo = new GameObject(transform.Position);
-                Spell s = spellInfo.CreateSpell(spellGo, GameWorld.Cursor.Position, new RuneInfo[] { runeInfo });
+                Spell s = baseSpell.CreateSpell(spellGo, GameWorld.Cursor.Position, runes);
                 spellGo.AddComponent(s);
-                GameWorld.Scene.AddObject(spellGo);
+                GameWorld.CurrentScene.AddObject(spellGo);
+                //Set cooldown
                 spellCooldownTimer = s.CooldownTime;
             }
 
             Move();
+
             if (health <= 0)
-                GameWorld.Scene.RemoveObject(GameObject);
+                GameWorld.CurrentScene.RemoveObject(GameObject);
         }
+
+        
 
         private void OnCollision(Collider coll)
         {

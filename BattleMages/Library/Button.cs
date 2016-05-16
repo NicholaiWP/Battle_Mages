@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Button
+    public class Button : GameObject
     {
         //fields
 
@@ -30,7 +30,7 @@ namespace BattleMages
         /// </summary>
         /// <param name="newSprite1"></param>
         /// <param name="graphics"></param>
-        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false)
+        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false) : base (position)
         {
             sprites[0] = normalTex;
             sprites[1] = hoverTex;
@@ -46,7 +46,7 @@ namespace BattleMages
            position = startPos + newPos;
         }
 
-        public void Update()
+        public override void Update()
         {
             if (wiggle)
             {
@@ -83,8 +83,9 @@ namespace BattleMages
         /// Draws the rectangle using a texture, rectangle and color
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(Drawer drawer)
         {
+            SpriteBatch spriteBatch = drawer[DrawLayer.UI];
             spriteBatch.Draw(sprites[hoverNumber],
                 destinationRectangle: rectangle,
                 origin: Vector2.Zero,

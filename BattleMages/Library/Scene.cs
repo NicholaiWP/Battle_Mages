@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,11 +8,13 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Scene
+    public abstract class Scene
     {
         private List<GameObject> activeObjects = new List<GameObject>();
         private List<GameObject> objectsToAdd = new List<GameObject>();
         private List<GameObject> objectsToRemove = new List<GameObject>();
+        protected SpriteFont fontBM;
+        protected Texture2D background;
 
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
@@ -23,6 +27,10 @@ namespace BattleMages
         public Scene()
         {
         }
+
+        public abstract void Update();
+
+        public abstract void Draw(Drawer drawer);
 
         /// <summary>
         /// Marks an object for addition to ActiveObjects.
