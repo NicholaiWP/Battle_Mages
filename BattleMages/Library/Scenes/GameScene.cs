@@ -12,38 +12,36 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
-        private PausedGameScreen pgs;
 
         private bool canChangePause;
 
         public GameScene()
         {
-            pgs = new PausedGameScreen();
-            Paused = false;
             canChangePause = true;
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
-            objectsToAdd.Add(ellipse);
-            objectsToAdd.Add(ObjectBuilder.BuildPlayer(Vector2.Zero));
-            objectsToAdd.Add(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
+            AddObject(ellipse);
+            AddObject(ObjectBuilder.BuildPlayer(Vector2.Zero));
+            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
-            objectsToAdd.Add(ingameUI);
+            AddObject(ingameUI);
             var wall = new GameObject(new Vector2(0, -100));
             wall.AddComponent(new Collider(wall, new Vector2(128, 32)));
-            objectsToAdd.Add(wall);
+            AddObject(wall);
             ProcessObjectLists();
+
             foreach (GameObject gameObject in ActiveObjects)
             {
                 gameObject.Update();
             }
 
-            foreach (GameObject gameObject in ActiveObjects)
+            foreach (GameObject go in ActiveObjects)
             {
-                if (gameObject.GetComponent<Player>() != null)
+                if (go.GetComponent<Player>() != null)
                 {
-                    GameWorld.Camera.Target = gameObject.Transform;
+                    GameWorld.Camera.Target = go.Transform;
                     break;
                 }
             }
@@ -52,47 +50,22 @@ namespace BattleMages
         public override void Update()
         {
             keyState = Keyboard.GetState();
-            if (keyState.IsKeyUp(Keys.P))
+            if (keyState.IsKeyDown(Keys.P))
             {
-                canChangePause = true;
+                GameWorld.ChangeScene(new PauseScene(this));
             }
-            if (keyState.IsKeyDown(Keys.P) && !Paused && canChangePause)
+            GameWorld.Camera.Update(GameWorld.DeltaTime);
+            foreach (GameObject gameObject in ActiveObjects)
             {
-                Paused = true;
-                canChangePause = false;
-            }
-            else if (keyState.IsKeyDown(Keys.P) && Paused && canChangePause)
-            {
-                Paused = false;
-                canChangePause = false;
-            }
-
-            if (Paused)
-            {
-                pgs.Update();
-            }
-            else
-            {
-                GameWorld.Camera.Update(GameWorld.DeltaTime);
-                foreach (GameObject gameObject in ActiveObjects)
-                {
-                    gameObject.Update();
-                }
+                gameObject.Update();
             }
         }
 
         public override void Draw(Drawer drawer)
         {
-            if (Paused)
+            foreach (GameObject go in ActiveObjects)
             {
-                pgs.Draw(drawer);
-            }
-            else
-            {
-                foreach (GameObject gameObject in ActiveObjects)
-                {
-                    gameObject.Draw(drawer);
-                }
+                go.Draw(drawer);
             }
         }
     }
