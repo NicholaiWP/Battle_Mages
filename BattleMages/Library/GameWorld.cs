@@ -81,6 +81,8 @@ namespace BattleMages
             soundManager = new SoundManager();
             cursor = new Cursor();
             camera = new Camera2D();
+            state = new SavedState();
+            state.SpellBar.Add(new PlayerSpell(0, new[] { 0 }));
             currentScene = new MenuScene();
 
             base.Initialize();
@@ -111,6 +113,16 @@ namespace BattleMages
 
         public static void ChangeScene(Scene targetScene)
         {
+            if (targetScene is PauseScene)
+            {
+                foreach (GameObject go in targetScene.ActiveObjects)
+                {
+                    if (go is Button)
+                    {
+                        (go as Button).UpdatePosition(GameWorld.Camera.Position);
+                    }
+                }
+            }
             Instance.currentScene = targetScene;
         }
 

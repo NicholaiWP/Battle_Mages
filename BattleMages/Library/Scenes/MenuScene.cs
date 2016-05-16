@@ -16,7 +16,7 @@ namespace BattleMages
             //Play button
             var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");
             var playSpr2 = content.Load<Texture2D>("Images/BMPlayGameButton_Hover");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 playSpr1,
                 playSpr2,
                 new Vector2(-playSpr1.Width / 2, playSpr1.Height * -1f),
@@ -26,7 +26,7 @@ namespace BattleMages
             //Load game button
             var loadSpr1 = content.Load<Texture2D>("Images/BMLoadGameButton");
             var loadSpr2 = content.Load<Texture2D>("Images/BMLoadGameButton_Hover");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 loadSpr1,
                 loadSpr2,
                 new Vector2(-loadSpr1.Width / 2, 0),
@@ -36,7 +36,7 @@ namespace BattleMages
             //Settings button
             var settingsSpr1 = content.Load<Texture2D>("Images/BMSettingsButton");
             var settingsSpr2 = content.Load<Texture2D>("Images/BMSettingsButton_Hover");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 settingsSpr1,
                 settingsSpr2,
                 new Vector2(-settingsSpr1.Width / 2, settingsSpr1.Height * 1f),
@@ -46,7 +46,7 @@ namespace BattleMages
             //Quit button
             var quitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
             var quitSpr2 = content.Load<Texture2D>("Images/BMQuitButton_Hover");
-            objectsToAdd.Add(new Button(
+            AddObject(new Button(
                 quitSpr1,
                 quitSpr2,
                 new Vector2(-quitSpr1.Width / 2, quitSpr1.Height * 2f),
