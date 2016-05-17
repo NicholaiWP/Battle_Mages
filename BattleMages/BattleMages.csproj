@@ -85,6 +85,7 @@
     <Compile Include="Library\Cursor.cs" />
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\GameWorld.cs" />
+    <Compile Include="Library\Scenes\DeathScene.cs" />
     <Compile Include="Library\Scenes\GameScene.cs" />
     <Compile Include="Library\Scenes\LobbyScene.cs" />
     <Compile Include="Library\Scenes\MenuScene.cs" />

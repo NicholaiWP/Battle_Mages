@@ -70,7 +70,11 @@ namespace BattleMages
             Move();
 
             if (health <= 0)
+            {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.ChangeScene(new DeathScene());
+            }
+                
         }
 
         private void Move()
