@@ -6,6 +6,9 @@ using System.Text;
 
 namespace BattleMages
 {
+    /// <summary>
+    /// Contains data that will never change during or between runs, such as arrays of all the spells and runes in the game.
+    /// </summary>
     public static class StaticData
     {
         private static RuneInfo[] runes;
@@ -29,6 +32,7 @@ namespace BattleMages
 
         static StaticData()
         {
+            //Add new runes to this array
             runes = new RuneInfo[]
             {
                 new RuneInfo("Damage up rune",
@@ -36,6 +40,7 @@ namespace BattleMages
                 DamageUpRune),
             };
 
+            //Add new spells to this array
             spells = new SpellInfo[]
             {
                 new SpellInfo("Fireball",
