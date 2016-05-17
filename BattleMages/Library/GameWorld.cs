@@ -144,6 +144,10 @@ namespace BattleMages
             {
                 Exit();
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                state.Save();
+            }
             currentScene.Update();
 
             base.Update(gameTime);

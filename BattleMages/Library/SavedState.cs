@@ -21,8 +21,8 @@ namespace BattleMages
 
         public void Save()
         {
-            SQLiteConnection.CreateFile("BMdatabase.db");
-            CreateTables();
+            //SQLiteConnection.CreateFile("BMdatabase.db");
+            //CreateTables();
             InsertToTables();
         }
 
@@ -30,13 +30,18 @@ namespace BattleMages
         {
             connection.Open();
 
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(id integer primary key, spellId int, rune1Id int, rune2Id int, rune3Id int, rune4Id int)",
+            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(Id integer primary key, spellId int)",
                 connection))
             {
                 command.ExecuteNonQuery();
             }
 
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(spellId int, rune1Id int, rune2Id int, rune3Id int, rune4Id int)",
+            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS Runes(RuneId integer, SBId integer, FOREIGN KEY(SBId) REFERENCES SpellBook(Id))",
+                connection))
+            {
+                command.ExecuteNonQuery();
+            }
+            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(SBId integer, FOREIGN KEY REFERENCES(SBId) SpellBook(Id))",
                 connection))
             {
                 command.ExecuteNonQuery();
@@ -52,20 +57,25 @@ namespace BattleMages
 
         private void InsertToTables()
         {
-            connection.Open();
-            using (SQLiteCommand command = new SQLiteCommand("DELETE * from SpellBook", connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
+            int sbPrimaryId = 1;
             foreach (PlayerSpell spell in spellBook)
             {
-                using (SQLiteCommand command = new SQLiteCommand(@"INSERT INTO SpellBook VALUES(null, @spellId, @rune1Id, @rune2Id, @rune3Id, @rune4Id)",
-                connection))
+                using (SQLiteCommand command = new SQLiteCommand(@"Insert into SpellBook Values(null, @spellId)",
+                        connection))
                 {
                     command.Parameters.AddWithValue("@spellId", spell.SpellId);
-                    //command.Parameters.AddWithValue("@rune1Id", )
+                    command.ExecuteNonQuery();
                 }
+                for (int i = 0; i < spell.RuneCount; i++)
+                {
+                    using (SQLiteCommand command = new SQLiteCommand(@"Insert into Runes Values(@runeId, @SBId)"))
+                    {
+                        command.Parameters.AddWithValue("@runeId", spell.RuneIds[i]);
+                        command.Parameters.AddWithValue("@SBId", sbPrimaryId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                sbPrimaryId++;
             }
         }
     }
