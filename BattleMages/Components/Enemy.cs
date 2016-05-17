@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +18,21 @@ namespace BattleMages
         private Transform transform;
         private Character character;
         private int damage;
+        private int health;
         private float attackSpeed;
 
         //properties
         public int Level { get { return level; } }
         public bool IsAttacking { get; set; }
         public int Damage { get { return damage; } set { damage = value; } }
+        public int Health { get { return health; } set { health = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
 
         public Enemy(GameObject gameObject) : base(gameObject)
         {
             IsAttacking = false;
-            damage = 10;
-            attackSpeed = 5;
+            damage = 1;
+            attackSpeed = 1;
         }
 
         public void LoadContent(ContentManager content)
@@ -59,13 +62,11 @@ namespace BattleMages
         {
             if (enemyAI.InAttackRange() && attackSpeed <= 0)
             {
-                IsAttacking = true;
-                attackSpeed = 5000000;
+                attackSpeed = 1;
             }
             else
             {
                 attackSpeed -= GameWorld.DeltaTime;
-                IsAttacking = false;
             }
             enemyAI.Targeting();
             character.Movement();

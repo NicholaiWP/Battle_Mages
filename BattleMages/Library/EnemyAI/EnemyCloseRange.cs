@@ -17,17 +17,18 @@ namespace BattleMages
 
         public override void Attack()
         {
-            enemy.IsAttacking = true;
             foreach (GameObject player in GameWorld.CurrentScene.ActiveObjects)
             {
                 if (player.GetComponent<Player>() != null)
                 {
                     player.GetComponent<Player>().Health -= enemy.Damage;
-                    enemy.IsAttacking = false;
+                    enemy.IsAttacking = true;
                     break;
                 }
-
-               
+                else
+                {
+                    enemy.IsAttacking = false;
+                }
             }
         }
 

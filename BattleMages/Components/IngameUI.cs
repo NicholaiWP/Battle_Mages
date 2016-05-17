@@ -36,7 +36,6 @@ namespace BattleMages
         public void Draw(Drawer drawer)
         {
             Vector2 topLeft = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
-
             drawer[DrawLayer.UI].Draw(healthBarSprite, position: topLeft);
             drawer[DrawLayer.UI].Draw(manaBarSprite, position: new Vector2(topLeft.X, topLeft.Y + healthBarSprite.Height));
             /*drawer[DrawLayer.UI].Draw(spellOneSprite, position: GameWorld.Camera.Position);
