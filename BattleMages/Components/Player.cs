@@ -84,8 +84,6 @@ namespace BattleMages
             character.Movement();
         }
 
-
-
         public void OnAnimationDone(string animationsName)
         {
         }
