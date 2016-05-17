@@ -22,7 +22,7 @@ namespace BattleMages
         public void Save()
         {
             //SQLiteConnection.CreateFile("BMdatabase.db");
-            //CreateTables();
+            CreateTables();
             InsertToTables();
         }
 
@@ -36,12 +36,12 @@ namespace BattleMages
                 command.ExecuteNonQuery();
             }
 
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS Runes(RuneId integer, SBId integer, FOREIGN KEY(SBId) REFERENCES SpellBook(Id))",
+            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS Runes(RuneId integer, SBId integer REFERENCES SpellBook(Id))",
                 connection))
             {
                 command.ExecuteNonQuery();
             }
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(SBId integer, FOREIGN KEY REFERENCES(SBId) SpellBook(Id))",
+            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(SBId integer REFERENCES SpellBook(Id))",
                 connection))
             {
                 command.ExecuteNonQuery();
@@ -57,6 +57,7 @@ namespace BattleMages
 
         private void InsertToTables()
         {
+            connection.Open();
             int sbPrimaryId = 1;
             foreach (PlayerSpell spell in spellBook)
             {
@@ -68,7 +69,8 @@ namespace BattleMages
                 }
                 for (int i = 0; i < spell.RuneCount; i++)
                 {
-                    using (SQLiteCommand command = new SQLiteCommand(@"Insert into Runes Values(@runeId, @SBId)"))
+                    using (SQLiteCommand command = new SQLiteCommand(@"Insert into Runes Values(@runeId, @SBId)",
+                        connection))
                     {
                         command.Parameters.AddWithValue("@runeId", spell.RuneIds[i]);
                         command.Parameters.AddWithValue("@SBId", sbPrimaryId);
