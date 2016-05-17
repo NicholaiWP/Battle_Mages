@@ -55,7 +55,7 @@ namespace BattleMages
 
         private static void DamageUpRune(Spell spell)
         {
-            spell.Damage += 10;
+            spell.Damage = (int)(spell.Damage * 1.25f);
         }
     }
 }

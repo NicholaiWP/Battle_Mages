@@ -28,7 +28,7 @@ namespace BattleMages
 
         public bool CheckCollisionAtPosition(Vector2 position, bool solidOnly = false)
         {
-            IEnumerable<Collider> collidersInScene = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
+            IEnumerable<Collider> collidersInScene = GetCollidersInScene();
             var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
             foreach (var coll in collidersInScene)
             {
@@ -38,6 +38,27 @@ namespace BattleMages
                 }
             }
             return false;
+        }
+
+        public List<Collider> GetCollisionsAtPosition(Vector2 position, bool solidOnly = false)
+        {
+            List<Collider> result = new List<Collider>();
+
+            IEnumerable<Collider> collidersInScene = GetCollidersInScene();
+            var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
+            foreach (var coll in collidersInScene)
+            {
+                if (coll != this && (!solidOnly || coll.Solid) && coll.CalcColliderRect().Intersects(rect))
+                {
+                    result.Add(coll);
+                }
+            }
+            return result;
+        }
+
+        private IEnumerable<Collider> GetCollidersInScene()
+        {
+            return GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
         }
 
         public bool CheckCollision(Collider other)

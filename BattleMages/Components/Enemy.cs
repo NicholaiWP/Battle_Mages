@@ -28,11 +28,21 @@ namespace BattleMages
         public int Health { get { return health; } set { health = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
 
-        public Enemy(GameObject gameObject) : base(gameObject)
+        public Enemy(GameObject gameObject, int startHealth) : base(gameObject)
         {
             IsAttacking = false;
             damage = 1;
             attackSpeed = 1;
+            health = startHealth;
+        }
+
+        public void DealDamage(int points)
+        {
+            health -= points;
+            if (health <= 0)
+            {
+                GameWorld.CurrentScene.RemoveObject(GameObject);
+            }
         }
 
         public void LoadContent(ContentManager content)
@@ -82,7 +92,6 @@ namespace BattleMages
 
         public void OnCollisionEnter(Collider other)
         {
-           
         }
 
         public void OnCollisionStay(Collider other)
