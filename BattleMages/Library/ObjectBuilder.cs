@@ -29,5 +29,12 @@ namespace BattleMages
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
             return gameObject;
         }
+
+        public static GameObject BuildFlyingLabelText(Vector2 position, string text)
+        {
+            GameObject gameObject = new GameObject(position);
+            gameObject.AddComponent(new FloatingText(gameObject, text));
+            return gameObject;
+        }
     }
 }
