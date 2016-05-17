@@ -58,9 +58,14 @@ namespace BattleMages
                 command.ExecuteNonQuery();
             }
 
-            using (SQLiteCommand command = new SQLiteCommand(@"INSERT INTO SpellBook VALUES(null, @spellId, @rune1Id, @rune2Id, @rune3Id, @rune4Id)",
-                connection))
+            foreach (PlayerSpell spell in spellBook)
             {
+                using (SQLiteCommand command = new SQLiteCommand(@"INSERT INTO SpellBook VALUES(null, @spellId, @rune1Id, @rune2Id, @rune3Id, @rune4Id)",
+                connection))
+                {
+                    command.Parameters.AddWithValue("@spellId", spell.SpellId);
+                    //command.Parameters.AddWithValue("@rune1Id", )
+                }
             }
         }
     }
@@ -71,6 +76,8 @@ namespace BattleMages
         private int[] runeIds;
 
         public int RuneCount { get { return runeIds.Length; } }
+        public int SpellId { get { return spellId; } }
+        public int[] RuneIds { get { return runeIds; } }
 
         public PlayerSpell(int spellId, int[] runeIds)
         {
