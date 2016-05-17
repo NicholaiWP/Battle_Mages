@@ -19,17 +19,29 @@ namespace BattleMages
         private int damage;
         private float attackSpeed;
 
+        private int health;
+
         //properties
         public int Level { get { return level; } }
         public bool IsAttacking { get; set; }
         public int Damage { get { return damage; } set { damage = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
 
-        public Enemy(GameObject gameObject) : base(gameObject)
+        public Enemy(GameObject gameObject, int startHealth) : base(gameObject)
         {
             IsAttacking = false;
             damage = 10;
             attackSpeed = 5;
+            health = startHealth;
+        }
+
+        public void DealDamage(int points)
+        {
+            health -= points;
+            if (health <= 0)
+            {
+                GameWorld.CurrentScene.RemoveObject(GameObject);
+            }
         }
 
         public void LoadContent(ContentManager content)
@@ -81,7 +93,6 @@ namespace BattleMages
 
         public void OnCollisionEnter(Collider other)
         {
-           
         }
 
         public void OnCollisionStay(Collider other)
