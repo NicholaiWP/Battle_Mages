@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 
@@ -19,6 +20,14 @@ namespace BattleMages
 
         public void Save()
         {
+            var connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
+            connection.Open();
+
+            using (SQLiteCommand command = new SQLiteCommand(
+                "create table IF NOT EXISTS spells(spellId int, )",
+                connection))
+            {
+            }
         }
     }
 

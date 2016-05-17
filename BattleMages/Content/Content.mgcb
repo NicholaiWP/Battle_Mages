@@ -284,17 +284,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/EvilMageBM.png
 
-#begin Images/fireball.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Images/fireball.png
-
 #begin Images/forfeit_button.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -416,7 +405,11 @@
 /processorParam:TextureFormat=Color
 /build:Images/ResUp.png
 
+<<<<<<< HEAD
 #begin Images/BMspellSprite.png
+=======
+#begin Spell Images/fireball.png
+>>>>>>> 7e2d02e41c065fdb6bf4c5d5ee2c18020044be4e
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -425,5 +418,20 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
+<<<<<<< HEAD
 /build:Images/BMspellSprite.png
+=======
+/build:Spell Images/fireball.png
+
+#begin Spell Images/ice.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Spell Images/ice.png
+>>>>>>> 7e2d02e41c065fdb6bf4c5d5ee2c18020044be4e
 

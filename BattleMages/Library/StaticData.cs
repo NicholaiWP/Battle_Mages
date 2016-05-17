@@ -40,7 +40,11 @@ namespace BattleMages
             {
                 new SpellInfo("Fireball",
                 "A ball of fire",
-                (go, pos, runes) => { return new Fireball(go, pos, runes); }),
+                (go, p) => { return new Fireball(go, p); }),
+
+                new SpellInfo("Icicle",
+                "A sharp chunk of ice",
+                (go, p) => { return new Icicle(go, p); }),
             };
         }
 

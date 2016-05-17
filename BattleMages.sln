@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleMages", "BattleMages\BattleMages.csproj", "{2916FD25-37C2-4226-B627-8EADCC946CF1}"
 EndProject
@@ -23,8 +23,8 @@ Global
 		{2916FD25-37C2-4226-B627-8EADCC946CF1}.Release|x86.Build.0 = Release|x86
 		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Debug|x86.ActiveCfg = Debug|x86
+		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Debug|x86.Build.0 = Debug|x86
 		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE62F7FC-49BD-4540-801D-D5E9F2163471}.Release|x86.ActiveCfg = Release|Any CPU
