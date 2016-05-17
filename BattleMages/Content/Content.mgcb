@@ -416,6 +416,17 @@
 /processorParam:TextureFormat=Color
 /build:Images/BMspellSprite.png
 
+#begin Images/coinsSprite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Images/coinsSprite.png
+
 #begin Spell Images/fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -437,5 +448,4 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Spell Images/ice.png
-
 

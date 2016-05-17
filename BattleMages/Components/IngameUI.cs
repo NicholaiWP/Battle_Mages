@@ -30,7 +30,7 @@ namespace BattleMages
             spellTwoSprite = content.Load<Texture2D>("images/BMspellSprite");
             spellThreeSprite = content.Load<Texture2D>("images/BMspellSprite");
             spellFourSprite = content.Load<Texture2D>("images/BMspellSprite");
-            coinsSprite = content.Load<Texture2D>("images/healthBar");
+            coinsSprite = content.Load<Texture2D>("images/coinsSprite");
         }
 
         public void Draw(Drawer drawer)
@@ -38,7 +38,7 @@ namespace BattleMages
             int offset = 6;
             int halfOffset = offset / 2;
             Vector2 topLeft = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
-            Vector2 topRight = GameWorld.Camera.Position - new Vector2((- GameWorld.GameWidth / 2), ((GameWorld.GameHeight / 2) - coinsSprite.Width));
+            Vector2 topRight = GameWorld.Camera.Position - new Vector2((- GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             Vector2 bottomMiddle = GameWorld.Camera.Position - new Vector2(0, ((- GameWorld.GameHeight / 2 + 5) + spellOneSprite.Height));
 
             drawer[DrawLayer.UI].Draw(healthBarSprite, position: topLeft);
@@ -47,7 +47,7 @@ namespace BattleMages
             drawer[DrawLayer.UI].Draw(spellTwoSprite, position: new Vector2((bottomMiddle.X - halfOffset)- (spellOneSprite.Width), bottomMiddle.Y));
             drawer[DrawLayer.UI].Draw(spellThreeSprite, position: new Vector2((bottomMiddle.X + halfOffset), bottomMiddle.Y));
             drawer[DrawLayer.UI].Draw(spellFourSprite, position: new Vector2((bottomMiddle.X + (offset + halfOffset))+ (spellOneSprite.Width), bottomMiddle.Y));
-            drawer[DrawLayer.UI].Draw(coinsSprite, position: topRight);
+            drawer[DrawLayer.UI].Draw(coinsSprite, position: new Vector2(topRight.X - (coinsSprite.Width + offset), topRight.Y));
 
         }
     }
