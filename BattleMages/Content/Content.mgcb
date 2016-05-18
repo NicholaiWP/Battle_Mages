@@ -251,17 +251,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/BMSettingsButton_Hover.png
 
-#begin Images/BMtavern.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Images/BMtavern.png
-
 #begin Images/CollisionTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -470,4 +459,15 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Backgrounds/TavernLighting.png
+
+#begin Backgrounds/Tavern.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/Tavern.png
 

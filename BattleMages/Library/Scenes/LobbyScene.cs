@@ -29,6 +29,12 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-160 - 8, 0), new Vector2(16, 180 + 32)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
 
+            //Door trigger
+            GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
+            doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
+            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { }));
+            AddObject(doorTriggerGameObject);
+
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);
             AddObject(playerGameObject);
