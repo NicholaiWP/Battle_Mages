@@ -89,6 +89,7 @@
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\Scenes\DeathScene.cs" />
     <Compile Include="Library\Scenes\GameScene.cs" />
+    <Compile Include="Library\Scenes\HallwayScene.cs" />
     <Compile Include="Library\Scenes\LobbyScene.cs" />
     <Compile Include="Library\Scenes\MenuScene.cs" />
     <Compile Include="Library\Scenes\PauseScene.cs" />

@@ -1,22 +1,21 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
-    public class LobbyScene : Scene
+    internal class HallwayScene : Scene
     {
         private Texture2D lobbyTexture;
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
         private KeyboardState keyState;
 
-        public LobbyScene()
+        public HallwayScene()
         {
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
@@ -32,7 +31,7 @@ namespace BattleMages
             //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
             doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
-            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { GameWorld.ChangeScene(new HallwayScene()); }));
+            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { GameWorld.ChangeScene(new GameScene()); }));
             AddObject(doorTriggerGameObject);
 
             //Player

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -10,6 +11,7 @@ namespace BattleMages
     {
         private Collider collider;
         private Action action;
+        private bool clicked;
 
         public Interactable(GameObject gameObject, Action action) : base(gameObject)
         {
@@ -26,6 +28,22 @@ namespace BattleMages
             if (collider.CalcColliderRect().Contains(GameWorld.Cursor.Position))
             {
                 GameWorld.Cursor.CursorPictureNumber = 1;
+                MouseState mouseState = Mouse.GetState();
+                if (!clicked)
+                {
+                    if (mouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        clicked = true;
+                        action();
+                    }
+                }
+                else
+                {
+                    if (mouseState.LeftButton == ButtonState.Released)
+                    {
+                        clicked = false;
+                    }
+                }
             }
         }
     }
