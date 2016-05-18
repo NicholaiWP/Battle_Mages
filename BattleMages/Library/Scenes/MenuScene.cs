@@ -20,7 +20,7 @@ namespace BattleMages
                 playSpr1,
                 playSpr2,
                 new Vector2(GameWorld.Camera.Position.X - playSpr1.Width / 2, GameWorld.Camera.Position.Y + playSpr1.Height * -1f),
-                () => { GameWorld.ChangeScene(new GameScene()); },
+                () => { GameWorld.ChangeScene(new LobbyScene()); },
                 true
                 ));
             //Load game button
@@ -49,7 +49,7 @@ namespace BattleMages
             AddObject(new Button(
                 quitSpr1,
                 quitSpr2,
-                new Vector2(GameWorld.Camera.Position.X -quitSpr1.Width / 2, GameWorld.Camera.Position.Y + quitSpr1.Height * 2f),
+                new Vector2(GameWorld.Camera.Position.X - quitSpr1.Width / 2, GameWorld.Camera.Position.Y + quitSpr1.Height * 2f),
                 () => { GameWorld.Instance.Exit(); },
                 true
                 ));

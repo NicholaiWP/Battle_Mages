@@ -4,13 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
-    public class Collider : Component, ICanBeLoaded
+    public class Collider : Component, ICanBeLoaded, ICanBeDrawn
     {
         //Static list of all colliders created
         private Transform transform;
+        //private Texture2D debugTexture;
 
         public Vector2 Size { get; }
         public bool Solid { get; }
@@ -19,6 +21,7 @@ namespace BattleMages
         {
             Size = size;
             Solid = solid;
+            //debugTexture = GameWorld.Instance.Content.Load<Texture2D>("Images/CollisionTexture");
         }
 
         public Rectangle CalcColliderRect()
@@ -70,6 +73,11 @@ namespace BattleMages
         public void LoadContent(ContentManager content)
         {
             transform = GameObject.Transform;
+        }
+
+        public void Draw(Drawer drawer)
+        {
+            //drawer[DrawLayer.Gameplay].Draw(debugTexture, CalcColliderRect(), new Color(Color.Red, 0.5f));
         }
     }
 }

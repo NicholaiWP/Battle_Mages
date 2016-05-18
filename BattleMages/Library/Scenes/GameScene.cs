@@ -12,9 +12,6 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
-        private Player player;
-        private GameObject gameObject;
-
 
         public GameScene()
         {
@@ -23,8 +20,12 @@ namespace BattleMages
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
             AddObject(ellipse);
 
-            //Making a player with the ObjectBuilder
-            AddObject(ObjectBuilder.BuildPlayer(Vector2.Zero));
+            //Making a player
+            GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, true);
+            AddObject(playerGameObject);
+            GameWorld.Camera.Target = playerGameObject.Transform;
+
+            //Test enemy
             AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
 
             var ingameUI = new GameObject(new Vector2(100, 100));
@@ -35,25 +36,8 @@ namespace BattleMages
             wall.AddComponent(new Collider(wall, new Vector2(128, 32), true));
             AddObject(wall);
 
-            //Processing the lists
+            //Get all objects on the list before the first run of Update()
             ProcessObjectLists();
-
-            //Making one update for all GameObjects in the ActiveObjects list,
-            //so the components are added to the GameObject´s components list.
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Update();
-            }
-
-            //Finding the GameObject with the player component, so the camera can target it.
-            foreach (GameObject go in ActiveObjects)
-            {
-                if (go.GetComponent<Player>() != null)
-                {
-                    GameWorld.Camera.Target = go.Transform;
-                    break;
-                }
-            }
         }
 
         public override void Update()
@@ -71,11 +55,6 @@ namespace BattleMages
             {
                 go.Update();
             }
-
-            player = new Player(gameObject);
-
-
-            
         }
 
         public override void Draw(Drawer drawer)

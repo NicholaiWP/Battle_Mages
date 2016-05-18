@@ -74,8 +74,7 @@ namespace BattleMages
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            Instance.ScalingVector = new Vector2(Utils.CalculateWidthScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width),
+            ScalingVector = new Vector2(Utils.CalculateWidthScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width),
                 Utils.CalculateHeightScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height));
             playerControls = new PlayerControls();
             soundManager = new SoundManager();

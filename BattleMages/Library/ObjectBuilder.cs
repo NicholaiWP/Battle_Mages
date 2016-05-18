@@ -8,12 +8,12 @@ namespace BattleMages
 {
     public static class ObjectBuilder
     {
-        public static GameObject BuildPlayer(Vector2 position)
+        public static GameObject BuildPlayer(Vector2 position, bool canUseSpells)
         {
             GameObject gameObject = new GameObject(position);
             gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/GdMageBM"));
             gameObject.AddComponent(new Animator(gameObject));
-            gameObject.AddComponent(new Player(gameObject));
+            gameObject.AddComponent(new Player(gameObject, canUseSpells));
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
             gameObject.AddComponent(new Character(gameObject));
             return gameObject;
@@ -34,6 +34,13 @@ namespace BattleMages
         {
             GameObject gameObject = new GameObject(position);
             gameObject.AddComponent(new FloatingText(gameObject, text));
+            return gameObject;
+        }
+
+        public static GameObject BuildInvisibleWall(Vector2 position, Vector2 size)
+        {
+            GameObject gameObject = new GameObject(position);
+            gameObject.AddComponent(new Collider(gameObject, size, true));
             return gameObject;
         }
     }
