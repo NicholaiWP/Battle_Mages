@@ -163,6 +163,7 @@ namespace BattleMages
                     }
                 }
                 spellBar.AddRange(spellBook);
+                connection.Close();
             }
         }
     }
