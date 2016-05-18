@@ -17,6 +17,8 @@ namespace BattleMages
         private List<PlayerSpell> spellBar = new List<PlayerSpell>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
         private string databaseFileName = "BMdatabase.db";
+        private List<int> loadSpellIds = new List<int>();
+        private List<int> loadRuneIds = new List<int>();
         public List<PlayerSpell> SpellBook { get { return spellBook; } }
         public List<PlayerSpell> SpellBar { get { return spellBar; } }
 
@@ -24,7 +26,14 @@ namespace BattleMages
         {
             if (File.Exists(databaseFileName))
             {
-                File.Delete(databaseFileName);
+                try
+                {
+                    File.Delete(databaseFileName);
+                }
+                catch (IOException)
+                {
+                    throw;
+                }
             }
             SQLiteConnection.CreateFile(databaseFileName);
             CreateTables();
@@ -82,9 +91,9 @@ namespace BattleMages
                         command.ExecuteNonQuery();
                     }
                 }
-                foreach (PlayerSpell spell2 in spellBar)
+                foreach (PlayerSpell spellInSpellbar in spellBar)
                 {
-                    if (spell2 == spell)
+                    if (spellInSpellbar == spell)
                     {
                         using (SQLiteCommand command = new SQLiteCommand(@"Insert into SpellBar Values(null, @SBId)",
                             connection))
@@ -103,6 +112,57 @@ namespace BattleMages
         {
             if (File.Exists(databaseFileName))
             {
+                connection.Open();
+                using (SQLiteCommand command = new SQLiteCommand("Select SpellId from SpellBook",
+                    connection))
+                {
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        loadSpellIds.Add(reader.GetInt32(0));
+                    }
+                    reader.Close();
+                }
+                using (SQLiteCommand command = new SQLiteCommand("Select RuneId from Runes Where SBId like @Id",
+                    connection))
+                {
+                    for (int i = 0; i < loadSpellIds.Count; i++)
+                    {
+                        command.Parameters.AddWithValue("@Id", i + 1);
+                        SQLiteDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            loadRuneIds.Add(reader.GetInt32(0));
+                        }
+
+                        #region Check RuneIdCount
+
+                        if (loadRuneIds.Count == 1)
+                        {
+                            spellBook.Add(new PlayerSpell(loadSpellIds[i], new[] { loadRuneIds[0] }));
+                        }
+                        else if (loadRuneIds.Count == 2)
+                        {
+                            spellBook.Add(new PlayerSpell(loadSpellIds[i], new[] { loadRuneIds[0], loadRuneIds[1] }));
+                        }
+                        else if (loadRuneIds.Count == 3)
+                        {
+                            spellBook.Add(new PlayerSpell(loadSpellIds[i], new[] { loadRuneIds[0], loadRuneIds[1],
+                            loadRuneIds[2]}));
+                        }
+                        else if (loadRuneIds.Count == 4)
+                        {
+                            spellBook.Add(new PlayerSpell(loadSpellIds[i], new[] { loadRuneIds[0], loadRuneIds[1],
+                            loadRuneIds[2], loadRuneIds[3]}));
+                        }
+
+                        #endregion Check RuneIdCount
+
+                        loadRuneIds.Clear();
+                        reader.Close();
+                    }
+                }
+                spellBar.AddRange(spellBook);
             }
         }
     }
