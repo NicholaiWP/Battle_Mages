@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -15,13 +16,17 @@ namespace BattleMages
         private List<PlayerSpell> spellBook = new List<PlayerSpell>();
         private List<PlayerSpell> spellBar = new List<PlayerSpell>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
-
+        private string databaseFileName = "BMdatabase.db";
         public List<PlayerSpell> SpellBook { get { return spellBook; } }
         public List<PlayerSpell> SpellBar { get { return spellBar; } }
 
         public void Save()
         {
-            //SQLiteConnection.CreateFile("BMdatabase.db");
+            if (File.Exists(databaseFileName))
+            {
+                File.Delete(databaseFileName);
+            }
+            SQLiteConnection.CreateFile(databaseFileName);
             CreateTables();
             InsertToTables();
         }
@@ -41,7 +46,7 @@ namespace BattleMages
             {
                 command.ExecuteNonQuery();
             }
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(SBId integer REFERENCES SpellBook(Id))",
+            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(SpellBarId integer primary key, SBId integer REFERENCES SpellBook(Id))",
                 connection))
             {
                 command.ExecuteNonQuery();
@@ -77,7 +82,27 @@ namespace BattleMages
                         command.ExecuteNonQuery();
                     }
                 }
+                foreach (PlayerSpell spell2 in spellBar)
+                {
+                    if (spell2 == spell)
+                    {
+                        using (SQLiteCommand command = new SQLiteCommand(@"Insert into SpellBar Values(null, @SBId)",
+                            connection))
+                        {
+                            command.Parameters.AddWithValue("@SBId", sbPrimaryId);
+                            command.ExecuteNonQuery();
+                        }
+                        break;
+                    }
+                }
                 sbPrimaryId++;
+            }
+        }
+
+        public void Load()
+        {
+            if (File.Exists(databaseFileName))
+            {
             }
         }
     }

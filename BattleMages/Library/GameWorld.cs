@@ -82,8 +82,8 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
-            state.SpellBar.Add(new PlayerSpell(0, new[] { 0 }));
             state.SpellBook.Add(new PlayerSpell(0, new[] { 0 }));
+            state.SpellBar.AddRange(state.SpellBook);
             currentScene = new MenuScene();
 
             base.Initialize();
@@ -145,7 +145,7 @@ namespace BattleMages
             {
                 Exit();
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            if (Keyboard.GetState().IsKeyDown(Keys.O))
             {
                 state.Save();
             }
