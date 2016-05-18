@@ -17,6 +17,7 @@ namespace BattleMages
         private Transform transform;
         private Collider collider;
         private int health;
+        private bool isMoving;
        
         public int Health { get { return health; } set { health = value; } }
         private int selectedSpell;
@@ -74,7 +75,7 @@ namespace BattleMages
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
             }
-                
+                              
         }
 
         private void Move()
@@ -84,6 +85,14 @@ namespace BattleMages
             character.Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
             character.Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
             character.Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
+
+            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down))
+                || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up))
+                || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left))
+                || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
+            {
+                GameWorld.SoundManager.PlaySound("walk");
+            }
 
             character.Movement();
         }

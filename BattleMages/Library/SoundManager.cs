@@ -33,6 +33,7 @@ namespace BattleMages
         public void LoadContent(ContentManager content)
         {
             sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
+            sounds.Add("walk", content.Load<SoundEffect>("Sounds/walk").CreateInstance());
             backgroundMusic = content.Load<Song>("Sounds/backgroundMusic");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = MusicVolume;

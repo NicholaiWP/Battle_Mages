@@ -460,3 +460,9 @@
 /processorParam:TextureFormat=Color
 /build:Images/died_new.png
 
+#begin Sounds/walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/walk.wav
+
