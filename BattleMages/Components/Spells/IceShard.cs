@@ -7,23 +7,23 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Fireball : Spell, ICanBeDrawn, ICanUpdate
+    public class IceShard : Spell, ICanBeDrawn, ICanUpdate
     {
         private Texture2D sprite;
         private Vector2 velocity;
+        private Vector2 diff;
         private Collider collider;
 
-        public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
+        public IceShard(GameObject go, SpellCreationParams p) : base(go, p)
         {
-            Damage = 10;
-            CooldownTime = 0.3f;
+            Damage = 5;
+            CooldownTime = 0.6f;
             ApplyRunes();
 
-            var diff = p.AimTarget - GameObject.Transform.Position;
+            diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
-            velocity = diff * 120f;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
-
+            velocity = diff * 100f;
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
             collider = new Collider(GameObject, new Vector2(8, 8));
         }
 
@@ -45,7 +45,6 @@ namespace BattleMages
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }
             }
-
             if (!Utils.InsideCircle(GameObject.Transform.Position, 320))
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
