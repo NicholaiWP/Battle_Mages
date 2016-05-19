@@ -26,7 +26,7 @@ namespace BattleMages
             GameWorld.Camera.Target = playerGameObject.Transform;
 
             //Test enemy
-            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
+            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged));
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));

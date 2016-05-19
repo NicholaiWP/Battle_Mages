@@ -21,7 +21,7 @@ namespace BattleMages
             {
                 if (player.GetComponent<Player>() != null)
                 {
-                    player.GetComponent<Player>().Health -= enemy.Damage;
+                    player.GetComponent<Player>().DealDamage(enemy.Damage);
                     enemy.IsAttacking = true;
                     break;
                 }

@@ -5,11 +5,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 namespace BattleMages
 {
     internal class SpellbookScene : Scene
     {
+        private Texture2D background;
+        private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
         private Scene oldScene;
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
@@ -24,6 +29,8 @@ namespace BattleMages
 
         public SpellbookScene(Scene oldScene)
         {
+            var content = GameWorld.Instance.Content;
+            background = content.Load<Texture2D>("Backgrounds/BMspellBookbg");
             this.oldScene = oldScene;
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
             GameWorld.Camera.Position = Vector2.Zero;
@@ -52,6 +59,7 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.UI].DrawString(font, "Spellbook", new Vector2(20, 20), Color.White);
+            drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);
             foreach (GameObject go in ActiveObjects)
             {
                 go.Draw(drawer);

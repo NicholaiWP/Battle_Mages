@@ -37,11 +37,11 @@ namespace BattleMages
             //Itterating through all the values of the Enum called Keys
             foreach (Keys key in Enum.GetValues(typeof(Keys)))
             {
-                //Checking if the key is enter, space or tab
+                //Checking if the key is enter, space 
                 //Also checking for the hashcode of the value, if the hashcode is between 37 and 40 it is the arrow keys
                 //if it is between 48 and 57 it is the number 0 to 9, not numpad, and 65 to 90 is A to Z.
                 //These keys are the keys we want the user to be able to bind.
-                if (key == Keys.Enter || key == Keys.Space || key == Keys.Tab ||
+                if (key == Keys.Enter || key == Keys.Space ||
                     key.GetHashCode() >= 37 && key.GetHashCode() <= 40 ||
                     key.GetHashCode() >= 48 && key.GetHashCode() <= 57 ||
                     key.GetHashCode() >= 65 && key.GetHashCode() <= 90)
