@@ -55,7 +55,8 @@ namespace BattleMages
         public override void Update()
         {
             //Playing ambient sound in low volume using SoundManager
-            GameWorld.SoundManager.PlaySound("ambience");
+            GameWorld.SoundManager.PlaySound("ambience");                
+
 
             keyState = Keyboard.GetState();
 

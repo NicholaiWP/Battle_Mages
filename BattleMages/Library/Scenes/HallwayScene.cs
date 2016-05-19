@@ -44,7 +44,6 @@ namespace BattleMages
             ProcessObjectLists();
         }
         
-
         public override void Update()
         {
             //Plays ambience sound looped using SoundManager
@@ -62,6 +61,16 @@ namespace BattleMages
             foreach (GameObject gameObject in ActiveObjects)
             {
                 gameObject.Update();
+            }
+
+            //Turns volume of ambience up or down depending on the position of Camera
+            if (GameWorld.Camera.Position.Y < 0)
+            {
+                GameWorld.SoundManager.AmbienceVolume += 0.05f * GameWorld.DeltaTime;
+            }
+            if (GameWorld.Camera.Position.Y > 0)
+            {
+                GameWorld.SoundManager.AmbienceVolume -= 0.05f * GameWorld.DeltaTime;
             }
         }
 

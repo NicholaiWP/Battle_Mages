@@ -39,11 +39,6 @@ namespace BattleMages
             backgroundMusic = content.Load<Song>("Sounds/backgroundMusic");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = MusicVolume;
-
-            //SoundEffect ambience = content.Load<SoundEffect>("Sounds/ambience");
-            //SoundEffectInstance ambienceInstance = ambience.CreateInstance();
-            //ambienceInstance.Volume = 0.05f;
-            //ambienceInstance.Play();
         }
 
         /// <summary>
@@ -64,13 +59,20 @@ namespace BattleMages
             {
                 if(soundName == "ambience")
                 {
+                    if (AmbienceVolume > 0.20f)
+                    {                       
+                        AmbienceVolume = 0.20f; 
+                    }
+                    if (AmbienceVolume < 0.02f)
+                    {
+                        AmbienceVolume = 0.02f;
+                    }
                     sounds[soundName].Volume = AmbienceVolume;
                     sounds[soundName].Play();
                 }
                 
-                else if (sounds[soundName].State == SoundState.Stopped)
+                if (sounds[soundName].State == SoundState.Stopped)
                 {
-
                     sounds[soundName].Volume = SoundVolume;
                     sounds[soundName].Play();
                 }
@@ -79,6 +81,7 @@ namespace BattleMages
 
         public void UpdateMusicVolume()
         {
+
         }
     }
 }
