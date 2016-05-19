@@ -11,31 +11,29 @@ namespace BattleMages
     internal class HallwayScene : Scene
     {
         private Texture2D lobbyTexture;
-        private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
         private KeyboardState keyState;
 
         public HallwayScene()
         {
             var content = GameWorld.Instance.Content;
-            lobbyTexturePosition = new Vector2(-160, -270);
-            lobbyTexture = content.Load<Texture2D>("Images/BMtavern");
-            lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
+            lobbyTexturePosition = new Vector2(-32, -360 / 2);
+            lobbyTexture = content.Load<Texture2D>("Backgrounds/Hallway");
 
             //Side walls
-            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 90 + 8), new Vector2(320, 16)));
-            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, -90 - 8), new Vector2(320, 16)));
-            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-160 - 8, 0), new Vector2(16, 180 + 32)));
-            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
+            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 180 + 8), new Vector2(64, 16)));
+            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, -180 + 64 - 8), new Vector2(64, 16)));
+            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-32 - 8, 0), new Vector2(16, 360 + 32)));
+            AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(32 + 8, 0), new Vector2(16, 360 + 32)));
 
             //Door trigger
-            GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
-            doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
+            GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -180 + 64 - 64 / 2));
+            doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(64, 64)));
             doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { GameWorld.ChangeScene(new GameScene()); }));
             AddObject(doorTriggerGameObject);
 
             //Player
-            GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);
+            GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, 180 - 32), false);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
@@ -63,7 +61,6 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
-            drawer[DrawLayer.Foreground].Draw(lobbyTextureForeground, lobbyTexturePosition, Color.White);
 
             foreach (GameObject go in ActiveObjects)
             {

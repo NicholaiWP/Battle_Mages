@@ -20,7 +20,7 @@ namespace BattleMages
         {
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
-            lobbyTexture = content.Load<Texture2D>("Images/BMtavern");
+            lobbyTexture = content.Load<Texture2D>("Backgrounds/Tavern");
             lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
 
             //Side walls

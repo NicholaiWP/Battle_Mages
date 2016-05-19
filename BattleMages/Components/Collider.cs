@@ -12,7 +12,7 @@ namespace BattleMages
     {
         //Static list of all colliders created
         private Transform transform;
-        //private Texture2D debugTexture;
+        private Texture2D debugTexture;
 
         public Vector2 Size { get; }
         public bool Solid { get; }
@@ -21,7 +21,7 @@ namespace BattleMages
         {
             Size = size;
             Solid = solid;
-            //debugTexture = GameWorld.Instance.Content.Load<Texture2D>("Images/CollisionTexture");
+            debugTexture = GameWorld.Instance.Content.Load<Texture2D>("Images/CollisionTexture");
         }
 
         public Rectangle CalcColliderRect()

@@ -17,6 +17,8 @@ namespace BattleMages
         private Vector2 position;
         private bool canClick = true;
 
+        private bool leftButtonHeld = false;
+
         //Properties
         /// <summary>
         /// In this property the position is set equal to the transformed mouse position,
@@ -44,6 +46,8 @@ namespace BattleMages
 
         public bool CanClick { get { return canClick; } set { canClick = value; } }
 
+        public bool LeftButtonPressed { get; private set; }
+
         /// <summary>
         /// Method for loading the content of the cursor, it is the pictures that are placed in an array
         /// so we can change the pictures of the mouse when certain things happen
@@ -53,6 +57,31 @@ namespace BattleMages
         {
             sprites[0] = content.Load<Texture2D>("Images/Bmcursor2");
             sprites[1] = content.Load<Texture2D>("Images/Bmcursor1");
+        }
+
+        public void Update()
+        {
+            MouseState state = Mouse.GetState();
+            if (state.LeftButton == ButtonState.Pressed)
+            {
+                if (!leftButtonHeld)
+                {
+                    leftButtonHeld = true;
+                    LeftButtonPressed = true;
+                }
+                else
+                {
+                    LeftButtonPressed = false;
+                }
+            }
+            else
+            {
+                if (leftButtonHeld)
+                {
+                    leftButtonHeld = false;
+                    LeftButtonPressed = false;
+                }
+            }
         }
 
         /// <summary>

@@ -29,20 +29,9 @@ namespace BattleMages
             {
                 GameWorld.Cursor.CursorPictureNumber = 1;
                 MouseState mouseState = Mouse.GetState();
-                if (!clicked)
+                if (GameWorld.Cursor.LeftButtonPressed)
                 {
-                    if (mouseState.LeftButton == ButtonState.Pressed)
-                    {
-                        clicked = true;
-                        action();
-                    }
-                }
-                else
-                {
-                    if (mouseState.LeftButton == ButtonState.Released)
-                    {
-                        clicked = false;
-                    }
+                    action();
                 }
             }
         }
