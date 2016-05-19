@@ -6,6 +6,15 @@ using System.Text;
 
 namespace BattleMages
 {
+    public enum EnemyType
+    {
+        CloseRange,
+        Ranged,
+        DodgingCloseRange,
+        DodgingRanged,
+        Boss
+    }
+
     public abstract class EnemyAI
     {
         protected Character character;
@@ -33,8 +42,9 @@ namespace BattleMages
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();
                     if (lengthToTarget <= attackRange)
-                        Attack();
+                    {
                         return true;
+                    }
                 }
             }
             return false;

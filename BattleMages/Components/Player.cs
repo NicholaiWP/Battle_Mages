@@ -17,8 +17,7 @@ namespace BattleMages
         private Transform transform;
         private Collider collider;
         private int health;
-       
-        public int Health { get { return health; } set { health = value; } }
+
         private int selectedSpell;
 
         private float spellCooldownTimer;
@@ -74,7 +73,6 @@ namespace BattleMages
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
             }
-                
         }
 
         private void Move()
@@ -90,6 +88,11 @@ namespace BattleMages
 
         public void OnAnimationDone(string animationsName)
         {
+        }
+
+        public void DealDamage(int points)
+        {
+            health -= points;
         }
     }
 }

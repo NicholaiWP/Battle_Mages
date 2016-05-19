@@ -15,7 +15,6 @@ namespace BattleMages
         private Player player;
         private GameObject gameObject;
 
-
         public GameScene()
         {
             //Creating the brackground for the arena and adding it to the list
@@ -25,7 +24,7 @@ namespace BattleMages
 
             //Making a player with the ObjectBuilder
             AddObject(ObjectBuilder.BuildPlayer(Vector2.Zero));
-            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
+            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged));
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
@@ -73,9 +72,6 @@ namespace BattleMages
             }
 
             player = new Player(gameObject);
-
-
-            
         }
 
         public override void Draw(Drawer drawer)
