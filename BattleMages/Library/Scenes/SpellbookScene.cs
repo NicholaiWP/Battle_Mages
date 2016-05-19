@@ -13,8 +13,8 @@ namespace BattleMages
         private Texture2D background;
         private Texture2D spellCircle;
         private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
-        private Vector2 scPosition = GameWorld.Camera.Position - new Vector2(- GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
-        private Vector2 mcPosition = GameWorld.Camera.Position - new Vector2(- GameWorld.GameWidth / 16, (GameWorld.GameHeight / 2) - 120);
+        private Vector2 scPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
+        private Vector2 mcPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 16, (GameWorld.GameHeight / 2) - 120);
 
         private Scene oldScene;
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
@@ -64,14 +64,14 @@ namespace BattleMages
                 ));
             var playerSpellSpr1 = content.Load<Texture2D>("Images/Button_PlayerSpell");
             var playerSpellSpr2 = content.Load<Texture2D>("Images/Button_PlayerSpell_Hover");
-            int nextSpellYPos = 32;
+            int nextSpellYPos = 0;
             foreach (PlayerSpell spell in GameWorld.State.SpellBook)
             {
                 PlayerSpell thisSpell = spell;
                 AddTabObject(new Button(
                     playerSpellSpr1,
                     playerSpellSpr2,
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + nextSpellYPos),
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextSpellYPos),
                     () =>
                     {
                         OpenRunesTab(thisSpell);
@@ -99,6 +99,29 @@ namespace BattleMages
                     OpenSpellsTab();
                 }
                 ));
+
+            var runeSpr1 = content.Load<Texture2D>("Images/Button_Rune");
+            var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
+            int nextRuneX = 0;
+            int nextRuneY = 0;
+            for (int i = 0; i < StaticData.Runes.Count; i++)
+            {
+                RuneInfo thisRune = StaticData.Runes[i];
+                AddTabObject(new Button(
+                    runeSpr1,
+                    runeSpr2,
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
+                    () =>
+                    {
+                    }
+                    ));
+                nextRuneX += 16;
+                if (i % 8 == 0)
+                {
+                    nextRuneY += 16;
+                    nextRuneX = 0;
+                }
+            }
         }
 
         private void ClearTab()
