@@ -17,16 +17,16 @@ namespace BattleMages
         private Transform transform;
         private Collider collider;
         private int health;
-        private bool isMoving;
-       
+        private bool canUseSpells;
         public int Health { get { return health; } set { health = value; } }
         private int selectedSpell;
 
         private float spellCooldownTimer;
 
-        public Player(GameObject gameObject) : base(gameObject)
+        public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
             health = 100;
+            this.canUseSpells = canUseSpells;
         }
 
         public void LoadContent(ContentManager content)
@@ -46,7 +46,7 @@ namespace BattleMages
                 spellCooldownTimer -= GameWorld.DeltaTime;
             }
             MouseState mState = Mouse.GetState();
-            if (mState.LeftButton == ButtonState.Pressed && spellCooldownTimer <= 0)
+            if (canUseSpells && mState.LeftButton == ButtonState.Pressed && spellCooldownTimer <= 0)
             {
                 PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
 
@@ -75,7 +75,6 @@ namespace BattleMages
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
             }
-                              
         }
 
         private void Move()
