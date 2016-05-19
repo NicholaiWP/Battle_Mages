@@ -20,6 +20,7 @@ namespace BattleMages
         private bool canUseSpells;
         public int Health { get { return health; } set { health = value; } }
         private int selectedSpell;
+        private KeyboardState oldKbState;
 
         private float spellCooldownTimer;
 
@@ -93,7 +94,13 @@ namespace BattleMages
                 GameWorld.SoundManager.PlaySound("walk");
             }
 
+            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab))
+            {
+                GameWorld.ChangeScene(new SpellbookScene(GameWorld.CurrentScene));
+            }
+
             character.Movement();
+            oldKbState = kbState;
         }
 
         public void OnAnimationDone(string animationsName)

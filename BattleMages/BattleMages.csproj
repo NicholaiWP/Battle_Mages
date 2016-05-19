@@ -98,6 +98,7 @@
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
+    <Compile Include="Library\Scenes\SpellbookScene.cs" />
     <Compile Include="Library\SpellInfo.cs" />
     <Compile Include="Library\StaticData.cs" />
     <Compile Include="Library\Utils.cs" />

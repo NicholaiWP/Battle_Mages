@@ -66,8 +66,7 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
-                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
+            drawer[DrawLayer.Background].Draw(background, new Vector2(-GameWorld.GameWidth / 2, -GameWorld.GameHeight / 2));
             foreach (GameObject button in ActiveObjects)
             {
                 button.Draw(drawer);

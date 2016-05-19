@@ -134,7 +134,6 @@ namespace BattleMages
         {
             cursor.Update();
 
-            currentScene.ProcessObjectLists();
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (!Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
@@ -146,6 +145,7 @@ namespace BattleMages
                 Exit();
             }
             currentScene.Update();
+            currentScene.ProcessObjectLists();
 
             base.Update(gameTime);
         }
