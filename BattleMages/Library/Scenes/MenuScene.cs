@@ -19,7 +19,7 @@ namespace BattleMages
             AddObject(new Button(
                 playSpr1,
                 playSpr2,
-                new Vector2(-playSpr1.Width / 2, playSpr1.Height * -1f),
+                new Vector2(GameWorld.Camera.Position.X - playSpr1.Width / 2, GameWorld.Camera.Position.Y + playSpr1.Height * -1f),
                 () => { GameWorld.ChangeScene(new GameScene()); },
                 true
                 ));
@@ -29,7 +29,7 @@ namespace BattleMages
             AddObject(new Button(
                 loadSpr1,
                 loadSpr2,
-                new Vector2(-loadSpr1.Width / 2, 0),
+                new Vector2(GameWorld.Camera.Position.X - loadSpr1.Width / 2, GameWorld.Camera.Position.Y + 0),
                 () => { },
                 true
                 ));
@@ -39,7 +39,7 @@ namespace BattleMages
             AddObject(new Button(
                 settingsSpr1,
                 settingsSpr2,
-                new Vector2(-settingsSpr1.Width / 2, settingsSpr1.Height * 1f),
+                new Vector2(GameWorld.Camera.Position.X - settingsSpr1.Width / 2, GameWorld.Camera.Position.Y + settingsSpr1.Height * 1f),
                 () => { GameWorld.ChangeScene(new SettingsScene()); },
                 true
                 ));
@@ -49,7 +49,7 @@ namespace BattleMages
             AddObject(new Button(
                 quitSpr1,
                 quitSpr2,
-                new Vector2(-quitSpr1.Width / 2, quitSpr1.Height * 2f),
+                new Vector2(GameWorld.Camera.Position.X -quitSpr1.Width / 2, GameWorld.Camera.Position.Y + quitSpr1.Height * 2f),
                 () => { GameWorld.Instance.Exit(); },
                 true
                 ));

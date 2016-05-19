@@ -12,6 +12,9 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
+        private Player player;
+        private GameObject gameObject;
+
 
         public GameScene()
         {
@@ -68,6 +71,11 @@ namespace BattleMages
             {
                 go.Update();
             }
+
+            player = new Player(gameObject);
+
+
+            
         }
 
         public override void Draw(Drawer drawer)

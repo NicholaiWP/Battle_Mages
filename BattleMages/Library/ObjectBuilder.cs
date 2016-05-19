@@ -25,8 +25,15 @@ namespace BattleMages
             gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject) { MoveSpeed = 40 });
-            gameObject.AddComponent(new Enemy(gameObject));
+            gameObject.AddComponent(new Enemy(gameObject, 100));
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
+            return gameObject;
+        }
+
+        public static GameObject BuildFlyingLabelText(Vector2 position, string text)
+        {
+            GameObject gameObject = new GameObject(position);
+            gameObject.AddComponent(new FloatingText(gameObject, text));
             return gameObject;
         }
     }
