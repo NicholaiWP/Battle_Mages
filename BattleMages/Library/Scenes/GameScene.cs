@@ -12,6 +12,8 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
+        private int enemyCount;
+        private GameObject waveController;
 
         public GameScene()
         {
@@ -25,9 +27,6 @@ namespace BattleMages
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
-            //Test enemy
-            AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged));
-
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
             AddObject(ingameUI);
@@ -36,12 +35,16 @@ namespace BattleMages
             wall.AddComponent(new Collider(wall, new Vector2(128, 32), true));
             AddObject(wall);
 
+            waveController = new GameObject(Vector2.Zero);
+            waveController.AddComponent(new WaveController(waveController, this));
+            waveController.Update();
             //Get all objects on the list before the first run of Update()
             ProcessObjectLists();
         }
 
         public override void Update()
         {
+            enemyCount = 0;
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene
@@ -49,11 +52,21 @@ namespace BattleMages
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }
+
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
             foreach (GameObject go in ActiveObjects)
             {
                 go.Update();
+                if (go.GetComponent<Enemy>() != null)
+                {
+                    enemyCount++;
+                }
+            }
+
+            if (enemyCount == 0)
+            {
+                waveController.GetComponent<WaveController>().NewWave();
             }
         }
 

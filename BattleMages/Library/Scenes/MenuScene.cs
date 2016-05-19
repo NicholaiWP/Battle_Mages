@@ -10,6 +10,8 @@ namespace BattleMages
 {
     public class MenuScene : Scene
     {
+        private Vector2 backgroundPos;
+
         public MenuScene()
         {
             var content = GameWorld.Instance.Content;
@@ -54,6 +56,9 @@ namespace BattleMages
                 true
                 ));
             background = content.Load<Texture2D>("Images/BMmenu");
+            backgroundPos = new Vector2(
+                GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
+                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
         }
 
         public override void Update()
@@ -66,7 +71,7 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Background].Draw(background, new Vector2(-GameWorld.GameWidth / 2, -GameWorld.GameHeight / 2));
+            drawer[DrawLayer.Background].Draw(background, backgroundPos);
             foreach (GameObject button in ActiveObjects)
             {
                 button.Draw(drawer);

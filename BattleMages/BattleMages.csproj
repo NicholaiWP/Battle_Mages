@@ -60,6 +60,7 @@
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />
     <Compile Include="Components\SpellBookUI.cs" />
+    <Compile Include="Components\WaveController.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Library\Component.cs" />
     <Compile Include="Components\Collider.cs" />
