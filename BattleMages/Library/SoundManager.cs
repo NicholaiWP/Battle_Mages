@@ -14,6 +14,7 @@ namespace BattleMages
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
         private Song backgroundMusic;
 
+        public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
 
@@ -38,6 +39,11 @@ namespace BattleMages
             backgroundMusic = content.Load<Song>("Sounds/backgroundMusic");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = MusicVolume;
+
+            //SoundEffect ambience = content.Load<SoundEffect>("Sounds/ambience");
+            //SoundEffectInstance ambienceInstance = ambience.CreateInstance();
+            //ambienceInstance.Volume = 0.05f;
+            //ambienceInstance.Play();
         }
 
         /// <summary>
@@ -56,8 +62,15 @@ namespace BattleMages
         {
             if (sounds.ContainsKey(soundName))
             {
-                if (sounds[soundName].State == SoundState.Stopped)
+                if(soundName == "ambience")
                 {
+                    sounds[soundName].Volume = AmbienceVolume;
+                    sounds[soundName].Play();
+                }
+                
+                else if (sounds[soundName].State == SoundState.Stopped)
+                {
+
                     sounds[soundName].Volume = SoundVolume;
                     sounds[soundName].Play();
                 }

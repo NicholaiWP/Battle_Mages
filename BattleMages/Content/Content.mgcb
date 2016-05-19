@@ -251,17 +251,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/BMSettingsButton_Hover.png
 
-#begin Images/BMtavern.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Images/BMtavern.png
-
 #begin Images/CollisionTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -449,6 +438,17 @@
 /processorParam:TextureFormat=Color
 /build:Spell Images/ice.png
 
+#begin Images/BMspellBookbg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Images/BMspellBookbg.png
+
 #begin Images/died_new.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -472,3 +472,35 @@
 /processorParam:Quality=Best
 /build:Sounds/ambience.wav
 
+#begin Backgrounds/TavernLighting.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/TavernLighting.png
+
+#begin Backgrounds/Tavern.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/Tavern.png
+
+#begin Backgrounds/Hallway.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/Hallway.png
