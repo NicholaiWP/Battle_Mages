@@ -74,6 +74,7 @@ namespace BattleMages
                 //Set cooldown
                 spell1CooldownTimer = s.CooldownTime;
             }
+
             if (canUseSpells && mState.RightButton == ButtonState.Pressed && spell2CooldownTimer <= 0)
             {
                 selectedSpell = 1;
@@ -110,12 +111,6 @@ namespace BattleMages
             }
 
             Move();
-
-            if (health <= 0)
-            {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
-                GameWorld.ChangeScene(new DeathScene());
-            }
         }
 
         private void Move()
@@ -150,6 +145,11 @@ namespace BattleMages
         public void DealDamage(int points)
         {
             health -= points;
+            if (health <= 0)
+            {
+                GameWorld.CurrentScene.RemoveObject(GameObject);
+                //GameWorld.ChangeScene(new DeathScene());
+            }
         }
     }
 }

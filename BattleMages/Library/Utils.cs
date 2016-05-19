@@ -27,14 +27,6 @@ namespace BattleMages
             return realPosition;
         }
 
-        public static bool InsideEllipse(Vector2 pos, Vector2 ellipsePos, float ellipseWidth, float ellipseHeight)
-        {
-            float dist = ((float)Math.Pow(pos.X - ellipsePos.X, 2) / (float)Math.Pow(ellipseWidth, 2)) +
-                ((float)Math.Pow(pos.Y - ellipsePos.Y, 2) / (float)Math.Pow(ellipseHeight, 2));
-
-            return dist < 1f;
-        }
-
         public static Vector2 LimitToCircle(Vector2 pos, Vector2 circlePos, float circleRadius)
         {
             Vector2 rPos = pos - circlePos;
@@ -46,6 +38,22 @@ namespace BattleMages
                 return (unit * circleRadius) + circlePos;
             }
             return pos;
+        }
+
+        public static bool InsideCircle(Vector2 pos, float circleRadius)
+        {
+            bool isObjectInside;
+            Vector2 vec = Vector2.Subtract(pos, Vector2.Zero);
+            float lengthOfVec = vec.Length();
+            if (lengthOfVec >= circleRadius)
+            {
+                isObjectInside = false;
+            }
+            else
+            {
+                isObjectInside = true;
+            }
+            return isObjectInside;
         }
 
         public static Vector2 RotationPos(Vector2 mousePos, float rotationDegrees)

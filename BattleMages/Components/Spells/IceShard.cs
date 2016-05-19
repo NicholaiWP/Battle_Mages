@@ -45,6 +45,10 @@ namespace BattleMages
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }
             }
+            if (!Utils.InsideCircle(GameObject.Transform.Position, 320))
+            {
+                GameWorld.CurrentScene.RemoveObject(GameObject);
+            }
         }
     }
 }
