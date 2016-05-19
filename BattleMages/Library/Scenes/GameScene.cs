@@ -31,10 +31,6 @@ namespace BattleMages
             ingameUI.AddComponent(new IngameUI(ingameUI));
             AddObject(ingameUI);
 
-            var wall = new GameObject(new Vector2(0, -100));
-            wall.AddComponent(new Collider(wall, new Vector2(128, 32), true));
-            AddObject(wall);
-
             waveController = new GameObject(Vector2.Zero);
             waveController.AddComponent(new WaveController(waveController, this));
             waveController.Update();

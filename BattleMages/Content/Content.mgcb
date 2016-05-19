@@ -510,3 +510,14 @@
 /processorParam:TextureFormat=Color
 /build:Images/BMspellcircle.png
 
+#begin Spell Images/lightning_bigger.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Spell Images/lightning_bigger.png
+

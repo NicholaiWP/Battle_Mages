@@ -48,8 +48,12 @@ namespace BattleMages
                 (go, p) => { return new Fireball(go, p); }),
 
                 new SpellInfo("Icicle",
-                "A sharp chunk of ice",
+                "Sharp chunks of ice",
                 (go, p) => { return new Icicle(go, p); }),
+
+                new SpellInfo("Lightning",
+                "A fierce lightning which strikes from the sky",
+               (go, p) => {return new Lightning(go, p); }),
             };
         }
 
@@ -57,5 +61,10 @@ namespace BattleMages
         {
             spell.Damage = (int)(spell.Damage * 1.25f);
         }
+        private static void DecreaseManaCostRune(Spell spell)
+        {
+            spell.ManaCost -= (int)(spell.ManaCost * 0.15f);
+        }
+            
     }
 }

@@ -61,7 +61,7 @@ namespace BattleMages
                 //Create spell object and add it to the world
                 GameObject spellGo = new GameObject(transform.Position);
                 Spell s = baseSpell.CreateSpell(spellGo, new SpellCreationParams(runes,
-                    GameWorld.Cursor.Position, character.Velocity));
+                GameWorld.Cursor.Position, character.Velocity));
                 spellGo.AddComponent(s);
                 GameWorld.CurrentScene.AddObject(spellGo);
                 //Set cooldown
