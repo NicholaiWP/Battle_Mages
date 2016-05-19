@@ -25,6 +25,9 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildPlayer(new Vector2(lobbyTexture.Width / 2 - 100, lobbyTexture.Height - 120)));
             ProcessObjectLists();
 
+            //Sets the sound volume low
+            GameWorld.SoundManager.SoundVolume = 0.01f;
+
             //Updating the gameobjects once to add the components
             foreach (GameObject go in ActiveObjects)
             {
@@ -44,6 +47,9 @@ namespace BattleMages
 
         public override void Update()
         {
+            //Playing ambient sound in low volume using SoundManager
+            GameWorld.SoundManager.PlaySound("ambience");
+
             keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.P))

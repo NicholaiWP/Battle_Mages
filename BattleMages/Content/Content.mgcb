@@ -466,3 +466,9 @@
 /processorParam:Quality=Best
 /build:Sounds/walk.wav
 
+#begin Sounds/ambience.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/ambience.wav
+

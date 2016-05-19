@@ -22,7 +22,6 @@ namespace BattleMages
 
         private Drawer drawer;
         private Scene currentScene;
-
         private PlayerControls playerControls;
         private SoundManager soundManager;
         private Cursor cursor;

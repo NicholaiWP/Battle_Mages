@@ -27,6 +27,9 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildPlayer(Vector2.Zero));
             AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50)));
 
+            
+            GameWorld.SoundManager.SoundVolume = 0.10f;
+
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
             AddObject(ingameUI);
@@ -58,6 +61,9 @@ namespace BattleMages
 
         public override void Update()
         {
+            //Playing ambient sounds using SoundManager
+            GameWorld.SoundManager.PlaySound("ambience");
+
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene

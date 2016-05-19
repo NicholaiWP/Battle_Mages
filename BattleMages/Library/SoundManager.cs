@@ -32,6 +32,7 @@ namespace BattleMages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
+            sounds.Add("ambience", content.Load<SoundEffect>("Sounds/ambience").CreateInstance());
             sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
             sounds.Add("walk", content.Load<SoundEffect>("Sounds/walk").CreateInstance());
             backgroundMusic = content.Load<Song>("Sounds/backgroundMusic");
