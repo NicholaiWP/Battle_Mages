@@ -510,7 +510,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/BMspellcircle.png
 
-#begin Images/Button_NewSpell.png
+#begin Rune Images/rune1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -519,9 +519,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Images/Button_NewSpell.png
+/build:Rune Images/rune1.png
 
-#begin Images/Button_NewSpell_Hover.png
+#begin Rune Images/rune2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -530,9 +530,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Images/Button_NewSpell_Hover.png
+/build:Rune Images/rune2.png
 
-#begin Images/Button_Done.png
+#begin Rune Images/lightningRune.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -541,9 +541,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Images/Button_Done.png
+/build:Rune Images/lightningRune.png
 
-#begin Images/Button_Done_Hover.png
+#begin Rune Images/iceshardsRune.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -552,5 +552,27 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Images/Button_Done_Hover.png
+/build:Rune Images/iceshardsRune.png
+
+#begin Rune Images/fireballRune.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Rune Images/fireballRune.png
+
+#begin Rune Images/earthspikesRune.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Rune Images/earthspikesRune.png
 
