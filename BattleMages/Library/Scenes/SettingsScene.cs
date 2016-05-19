@@ -11,6 +11,8 @@ namespace BattleMages
 {
     public class SettingsScene : Scene
     {
+        private Texture2D background;
+
         private DisplayMode currentResolution;
         private DisplayMode resolutionHolder;
         private List<DisplayMode> resolutions = new List<DisplayMode>();

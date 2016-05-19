@@ -5,9 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace BattleMages
 {
@@ -33,7 +30,6 @@ namespace BattleMages
             background = content.Load<Texture2D>("Backgrounds/BMspellBookbg");
             this.oldScene = oldScene;
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
-            GameWorld.Camera.Position = Vector2.Zero;
         }
 
         public override void Update()

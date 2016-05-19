@@ -14,7 +14,6 @@ namespace BattleMages
         private List<GameObject> objectsToAdd = new List<GameObject>();
         private List<GameObject> objectsToRemove = new List<GameObject>();
         protected SpriteFont fontBM;
-        protected Texture2D background;
 
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
