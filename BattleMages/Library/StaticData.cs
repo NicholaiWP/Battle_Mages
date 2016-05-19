@@ -37,6 +37,7 @@ namespace BattleMages
             {
                 new RuneInfo("Damage up rune",
                 "+damage",
+                "rune1",
                 DamageUpRune),
             };
 
@@ -45,10 +46,12 @@ namespace BattleMages
             {
                 new SpellInfo("Fireball",
                 "A ball of fire",
+                "fireballRune",
                 (go, p) => { return new Fireball(go, p); }),
 
                 new SpellInfo("Icicle",
                 "A sharp chunk of ice",
+                "iceshardsRune",
                 (go, p) => { return new Icicle(go, p); }),
             };
         }

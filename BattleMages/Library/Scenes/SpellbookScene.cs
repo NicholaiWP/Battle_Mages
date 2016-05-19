@@ -16,6 +16,12 @@ namespace BattleMages
         private Vector2 scPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
         private Vector2 mcPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 16, (GameWorld.GameHeight / 2) - 120);
 
+        private Vector2 centerRunePos;
+        private Vector2 leftRunePos;
+        private Vector2 rightRunePos;
+        private Vector2 topRunePos;
+        private Vector2 botRunePos;
+
         private Scene oldScene;
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
@@ -30,9 +36,16 @@ namespace BattleMages
         private PlayerSpell currentlyEditing;
 
         private SpriteFont font;
+        private string bottomLeftText = string.Empty;
 
         public SpellbookScene(Scene oldScene)
         {
+            centerRunePos = scPosition + new Vector2(60, 60);
+            leftRunePos = scPosition + new Vector2(25, 60);
+            rightRunePos = scPosition + new Vector2(120 - 25, 60);
+            topRunePos = scPosition + new Vector2(60, 25);
+            botRunePos = scPosition + new Vector2(60, 120 - 25);
+
             var content = GameWorld.Instance.Content;
 
             spellCircle = content.Load<Texture2D>("Images/BMspellcircle");
@@ -104,19 +117,47 @@ namespace BattleMages
             var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
             int nextRuneX = 0;
             int nextRuneY = 0;
-            for (int i = 0; i < StaticData.Runes.Count; i++)
+            int nextRunePos = 0;
+
+            foreach (var spell in StaticData.Spells)
             {
-                RuneInfo thisRune = StaticData.Runes[i];
+                SpellInfo thisSpell = spell;
                 AddTabObject(new Button(
-                    runeSpr1,
+                    content.Load<Texture2D>("Rune Images/" + thisSpell.TextureName),
                     runeSpr2,
                     new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
                     () =>
                     {
+                        bottomLeftText = thisSpell.Name + Environment.NewLine + thisSpell.Description;
                     }
                     ));
+                nextRunePos++;
                 nextRuneX += 16;
-                if (i % 8 == 0)
+                if (nextRunePos % 8 == 0)
+                {
+                    nextRuneY += 16;
+                    nextRuneX = 0;
+                }
+            }
+
+            nextRuneY += 16;
+            nextRuneX = 0;
+
+            foreach (var rune in StaticData.Runes)
+            {
+                RuneInfo thisRune = rune;
+                AddTabObject(new Button(
+                    content.Load<Texture2D>("Rune Images/" + thisRune.TextureName),
+                    runeSpr2,
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
+                    () =>
+                    {
+                        bottomLeftText = thisRune.Name + Environment.NewLine + thisRune.Description;
+                    }
+                    ));
+                nextRunePos++;
+                nextRuneX += 16;
+                if (nextRunePos % 8 == 0)
                 {
                     nextRuneY += 16;
                     nextRuneX = 0;
@@ -162,6 +203,23 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.UI].DrawString(font, "ManaCost:", mcPosition, Color.White);
+            drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), new Color(120, 100, 80));
+
+            if (currentlyEditing != null)
+            {
+                SpellInfo spell = currentlyEditing.GetSpell();
+                if (spell != null)
+                    drawer[DrawLayer.UI].DrawString(font, spell.Name, centerRunePos, new Color(120, 100, 80));
+                if (currentlyEditing.RuneCount > 0)
+                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(0).Name, topRunePos, new Color(120, 100, 80));
+                if (currentlyEditing.RuneCount > 1)
+                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(1).Name, rightRunePos, new Color(120, 100, 80));
+                if (currentlyEditing.RuneCount > 2)
+                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(2).Name, botRunePos, new Color(120, 100, 80));
+                if (currentlyEditing.RuneCount > 3)
+                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(3).Name, leftRunePos, new Color(120, 100, 80));
+            }
+
             drawer[DrawLayer.Gameplay].Draw(spellCircle, scPosition, Color.White);
             drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);
             foreach (GameObject go in ActiveObjects)

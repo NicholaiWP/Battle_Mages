@@ -41,6 +41,7 @@ namespace BattleMages
 
         public string Name { get; }
         public string Description { get; }
+        public string TextureName { get; }
         private SpellSpawnDelegate spawnFunc;
 
         /// <summary>
@@ -49,10 +50,11 @@ namespace BattleMages
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="spawnFunc"></param>
-        public SpellInfo(string name, string description, SpellSpawnDelegate spawnFunc)
+        public SpellInfo(string name, string description, string textureName, SpellSpawnDelegate spawnFunc)
         {
             Name = name;
             Description = description;
+            TextureName = textureName;
             this.spawnFunc = spawnFunc;
         }
 

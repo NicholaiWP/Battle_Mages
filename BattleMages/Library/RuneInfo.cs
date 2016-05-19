@@ -16,6 +16,7 @@ namespace BattleMages
 
         public string Name { get; }
         public string Description { get; }
+        public string TextureName { get; }
 
         /// <summary>
         /// Creates a new instance of RuneInfo with a name, a description, and a delegate method to call when applying the rune to a spell.
@@ -23,10 +24,11 @@ namespace BattleMages
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="action"></param>
-        public RuneInfo(string name, string description, RuneAction action)
+        public RuneInfo(string name, string description, string textureName, RuneAction action)
         {
             Name = name;
             Description = description;
+            TextureName = textureName;
             this.action = action;
         }
 
