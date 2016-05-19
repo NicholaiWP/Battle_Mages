@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
@@ -9,11 +11,22 @@ namespace BattleMages
     internal class SpellbookScene : Scene
     {
         private Scene oldScene;
-        private bool tabPressed = true;
+        private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
+
+        //Seperate ints to keep track of each tab's current page so that they are kept when switching tabs.
+        private int spellListPage = 0;
+        private int runeListPage = 0;
+
+        //NULL if no spell is being edited. Determines if runes or player spells should be shown.
+        private PlayerSpell currentlyEditing;
+
+        private SpriteFont font;
 
         public SpellbookScene(Scene oldScene)
         {
             this.oldScene = oldScene;
+            font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
+            GameWorld.Camera.Position = Vector2.Zero;
         }
 
         public override void Update()
@@ -38,6 +51,7 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
+            drawer[DrawLayer.UI].DrawString(font, "Spellbook", new Vector2(20, 20), Color.White);
             foreach (GameObject go in ActiveObjects)
             {
                 go.Draw(drawer);
