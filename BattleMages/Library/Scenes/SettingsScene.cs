@@ -30,7 +30,8 @@ namespace BattleMages
             AddObject(new Button(
                     backSpr,
                     backSpr,
-                    new Vector2(-backSpr.Width / 2, backSpr.Height * 2f),
+                    new Vector2(GameWorld.Camera.Position.X - backSpr.Width / 2,
+                    GameWorld.Camera.Position.Y + backSpr.Height * 2f),
                     () => { GameWorld.ChangeScene(new MenuScene()); }
                 ));
             /* settingsButtons.Add(new Button(MenuButtons.KeyBindDown));
@@ -41,7 +42,7 @@ namespace BattleMages
             AddObject(new Button(
                 keyBindUpSpr,
                 keyBindUpSpr,
-                new Vector2(-keyBindUpSpr.Width / 2, -78),
+                new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
                 () =>
                 {
                     SwappingKeyBind = true;
@@ -59,7 +60,7 @@ namespace BattleMages
             AddObject(new Button(
                 resDown,
                 resDown,
-                new Vector2(-64 - resDown.Width / 2, -50),
+                new Vector2(GameWorld.Camera.Position.X - 64 - resDown.Width / 2, GameWorld.Camera.Position.Y - 50),
                 () => { ElementAtNumber--; }
                 ));
             //Res up
@@ -67,7 +68,7 @@ namespace BattleMages
             AddObject(new Button(
                 resUp,
                 resUp,
-                new Vector2(64 - resUp.Width / 2, -50),
+                new Vector2(GameWorld.Camera.Position.X + 64 - resUp.Width / 2, GameWorld.Camera.Position.Y - 50),
                 () => { ElementAtNumber++; }
                 ));
 
@@ -155,11 +156,11 @@ namespace BattleMages
                 go.Draw(drawer);
             }
 
-            drawer[DrawLayer.UI].DrawString(fontBM, currentResolutionString, Vector2.Zero,
-                Color.Black);
+            drawer[DrawLayer.UI].DrawString(fontBM, currentResolutionString, new Vector2(GameWorld.Camera.Position.X,
+                GameWorld.Camera.Position.Y), Color.Black);
             drawer[DrawLayer.UI].DrawString(fontBM,
                 GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),
-                new Vector2(64, -72), Color.Black);
+                new Vector2(GameWorld.Camera.Position.X + 64, GameWorld.Camera.Position.Y - 72), Color.Black);
         }
     }
 }
