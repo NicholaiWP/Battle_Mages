@@ -19,6 +19,9 @@ namespace BattleMages
         private Scene oldScene;
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
+        //Holds objects in a tab to delete them on tab change
+        private List<GameObject> objectsInTab = new List<GameObject>();
+
         //Seperate ints to keep track of each tab's current page so that they are kept when switching tabs.
         private int spellListPage = 0;
         private int runeListPage = 0;
@@ -37,6 +40,59 @@ namespace BattleMages
 
             this.oldScene = oldScene;
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
+
+            OpenSpellsTab();
+        }
+
+        private void OpenSpellsTab()
+        {
+            ClearTab();
+            var content = GameWorld.Instance.Content;
+            //New spell button
+            var newSpellSpr1 = content.Load<Texture2D>("Images/Button_NewSpell");
+            var newSpellSpr2 = content.Load<Texture2D>("Images/Button_NewSpell_Hover");
+            AddTabObject(new Button(
+                newSpellSpr1,
+                newSpellSpr2,
+                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
+                () =>
+                {
+                    OpenRunesTab();
+                }
+                ));
+        }
+
+        private void OpenRunesTab()
+        {
+            ClearTab();
+            var content = GameWorld.Instance.Content;
+            //Done button
+            var doneSpr1 = content.Load<Texture2D>("Images/Button_Done");
+            var doneSpr2 = content.Load<Texture2D>("Images/Button_Done_Hover");
+            AddTabObject(new Button(
+                doneSpr1,
+                doneSpr2,
+                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
+                () =>
+                {
+                    OpenSpellsTab();
+                }
+                ));
+        }
+
+        private void ClearTab()
+        {
+            foreach (GameObject go in objectsInTab)
+            {
+                RemoveObject(go);
+            }
+            objectsInTab.Clear();
+        }
+
+        private void AddTabObject(GameObject go)
+        {
+            objectsInTab.Add(go);
+            AddObject(go);
         }
 
         public override void Update()
@@ -62,7 +118,6 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.UI].DrawString(font, "ManaCost:", mcPosition, Color.White);
-
             drawer[DrawLayer.Gameplay].Draw(spellCircle, scPosition, Color.White);
             drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);
             foreach (GameObject go in ActiveObjects)
