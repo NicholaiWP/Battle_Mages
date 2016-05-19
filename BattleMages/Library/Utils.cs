@@ -47,5 +47,11 @@ namespace BattleMages
             }
             return pos;
         }
+
+        public static Vector2 RotationPos(Vector2 mousePos, float rotationDegrees)
+        {
+            var m = Matrix.CreateRotationZ(MathHelper.ToRadians(rotationDegrees));
+            return Vector2.TransformNormal(mousePos, m);
+        }
     }
 }
