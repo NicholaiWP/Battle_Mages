@@ -75,6 +75,7 @@ namespace BattleMages
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
             }
+
         }
 
         private void Move()
