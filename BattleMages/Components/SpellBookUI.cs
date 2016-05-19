@@ -11,6 +11,10 @@ namespace BattleMages
     class SpellBookUI : Component, ICanBeDrawn, ICanBeLoaded
     {
         private Texture2D background;
+        private Texture2D decor;
+        private Texture2D spellCircle;
+        private Texture2D runeDscWindow;
+        
 
         public SpellBookUI(GameObject gameObject) : base(gameObject)
         {
@@ -19,10 +23,12 @@ namespace BattleMages
 
         public void LoadContent(ContentManager content)
         {
-             
+            background = content.Load<Texture2D>("images/BMspellBookbg");
         }
         public void Draw (Drawer drawer)
         {
+
+            drawer[DrawLayer.UI].Draw(background, position: GameWorld.Camera.Position);
 
         }
     }
