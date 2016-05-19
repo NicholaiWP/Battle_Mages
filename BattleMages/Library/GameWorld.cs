@@ -81,7 +81,14 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
-            state.SpellBar.Add(new PlayerSpell(0, new[] { 0, 0, 0, 0 }));
+
+            //Create 4 test spell for both the bar and the book
+            for (int i = 0; i < 4; i++)
+            {
+                PlayerSpell ps = new PlayerSpell(0, new[] { 0, 0, 0, 0 });
+                state.SpellBar.Add(ps);
+                state.SpellBook.Add(ps);
+            }
             currentScene = new MenuScene();
 
             base.Initialize();

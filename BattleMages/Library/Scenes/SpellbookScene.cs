@@ -50,13 +50,33 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 () =>
                 {
-                    OpenRunesTab();
+                    PlayerSpell newSpell = new PlayerSpell(-1, new int[0]);
+                    GameWorld.State.SpellBook.Add(newSpell);
+                    OpenRunesTab(newSpell);
                 }
                 ));
+            var playerSpellSpr1 = content.Load<Texture2D>("Images/Button_PlayerSpell");
+            var playerSpellSpr2 = content.Load<Texture2D>("Images/Button_PlayerSpell_Hover");
+            int nextSpellYPos = 32;
+            foreach (PlayerSpell spell in GameWorld.State.SpellBook)
+            {
+                PlayerSpell thisSpell = spell;
+                AddTabObject(new Button(
+                    playerSpellSpr1,
+                    playerSpellSpr2,
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + nextSpellYPos),
+                    () =>
+                    {
+                        OpenRunesTab(thisSpell);
+                    }
+                    ));
+                nextSpellYPos += 16;
+            }
         }
 
-        private void OpenRunesTab()
+        private void OpenRunesTab(PlayerSpell spellToEdit)
         {
+            currentlyEditing = spellToEdit;
             ClearTab();
             var content = GameWorld.Instance.Content;
             //Done button
@@ -68,6 +88,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 () =>
                 {
+                    currentlyEditing = null;
                     OpenSpellsTab();
                 }
                 ));
