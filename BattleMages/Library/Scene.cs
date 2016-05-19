@@ -71,11 +71,5 @@ namespace BattleMages
 
             objectsToRemove.Clear();
         }
-
-        public void DrawObjects(Drawer target)
-        {
-            foreach (GameObject go in activeObjects)
-                go.Draw(target);
-        }
     }
 }

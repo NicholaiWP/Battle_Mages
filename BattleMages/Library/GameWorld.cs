@@ -74,8 +74,7 @@ namespace BattleMages
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            Instance.ScalingVector = new Vector2(Utils.CalculateWidthScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width),
+            ScalingVector = new Vector2(Utils.CalculateWidthScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width),
                 Utils.CalculateHeightScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height));
             playerControls = new PlayerControls();
             soundManager = new SoundManager();
@@ -133,7 +132,8 @@ namespace BattleMages
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            currentScene.ProcessObjectLists();
+            cursor.Update();
+
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (!Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
@@ -145,6 +145,7 @@ namespace BattleMages
                 Exit();
             }
             currentScene.Update();
+            currentScene.ProcessObjectLists();
 
             base.Update(gameTime);
         }

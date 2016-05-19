@@ -39,7 +39,8 @@ namespace BattleMages
             int halfOffset = offset / 2;
             Vector2 topLeft = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             Vector2 topRight = GameWorld.Camera.Position - new Vector2((- GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
-            Vector2 bottomMiddle = GameWorld.Camera.Position - new Vector2(0, ((- GameWorld.GameHeight / 2 + 5) + spellOneSprite.Height));
+            Vector2 bottomMiddle = GameWorld.Camera.Position - new Vector2(0, ((- GameWorld.GameHeight / 2 + offset) + spellOneSprite.Height));
+
             drawer[DrawLayer.UI].Draw(healthBarSprite, position: topLeft);
             drawer[DrawLayer.UI].Draw(manaBarSprite, position: new Vector2(topLeft.X, topLeft.Y + healthBarSprite.Height));
             drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset))- (spellOneSprite.Width * 2), bottomMiddle.Y));
