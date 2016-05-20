@@ -56,7 +56,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\Character.cs" />
-    <Compile Include="Components\DropPoint.cs" />
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />

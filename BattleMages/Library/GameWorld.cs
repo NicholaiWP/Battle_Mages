@@ -148,7 +148,8 @@ namespace BattleMages
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (!Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
+            var s = Mouse.GetState();
+            if (!Cursor.CanClick && s.LeftButton == ButtonState.Released && s.RightButton == ButtonState.Released)
             {
                 Cursor.CanClick = true;
             }

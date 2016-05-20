@@ -24,6 +24,7 @@ namespace BattleMages
 
         //Holds objects in a tab to delete them on tab change
         private List<GameObject> objectsInTab = new List<GameObject>();
+        //Same for the rune grid
         private List<GameObject> objectsInRuneGrid = new List<GameObject>();
 
         //Seperate ints to keep track of each tab's current page so that they are kept when switching tabs.
@@ -32,9 +33,19 @@ namespace BattleMages
 
         //NULL if no spell is being edited. Determines if runes or player spells should be shown.
         private PlayerSpell currentlyEditing;
+        private SpellInfo selectedSpell;
+        private RuneInfo selectedRune;
 
         private SpriteFont font;
         private string bottomLeftText = string.Empty;
+
+        private Vector2 TopLeft
+        {
+            get
+            {
+                return GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
+            }
+        }
 
         public SpellbookScene(Scene oldScene)
         {
@@ -54,6 +65,46 @@ namespace BattleMages
 
             this.oldScene = oldScene;
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
+
+            //Rune grid buttons
+
+            //Spell
+            var spellSpr1 = content.Load<Texture2D>("Images/Button_Rune");
+            var spellSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
+            AddObject(new Button(
+                spellSpr1,
+                spellSpr2,
+                baseSpellPosition - new Vector2(spellSpr1.Width / 2, spellSpr2.Height / 2),
+                () =>
+                {
+                    if (currentlyEditing != null && selectedSpell != null)
+                    {
+                        currentlyEditing.SetSpell(StaticData.Spells.IndexOf(selectedSpell));
+                    }
+                    UpdateRuneGrid();
+                }, false,
+                () => { if (currentlyEditing != null) { currentlyEditing.SetSpell(-1); UpdateRuneGrid(); } }
+                ));
+            for (int i = 0; i < runePositions.Length; i++)
+            {
+                int thisPos = i;
+                var runeSpr1 = content.Load<Texture2D>("Images/Button_Rune");
+                var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
+                AddObject(new Button(
+                    runeSpr1,
+                    runeSpr2,
+                    runePositions[thisPos] - new Vector2(runeSpr1.Width / 2, runeSpr1.Height / 2),
+                    () =>
+                    {
+                        if (currentlyEditing != null && selectedRune != null)
+                        {
+                            currentlyEditing.SetRune(thisPos, StaticData.Runes.IndexOf(selectedRune));
+                        }
+                        UpdateRuneGrid();
+                    }, false,
+                    () => { if (currentlyEditing != null) { currentlyEditing.SetRune(thisPos, -1); UpdateRuneGrid(); } }
+                    ));
+            }
 
             OpenSpellsTab();
         }
@@ -91,6 +142,16 @@ namespace BattleMages
                         OpenRunesTab(thisSpell);
                     }
                     ));
+                //Draw sprite for the base spell of the spell
+                SpellInfo spellInfo = spell.GetSpell();
+                if (spellInfo != null)
+                    AddTabObject(RuneIcon(TopLeft + new Vector2(18 + 8 + 4, 32 + 8 + nextSpellYPos), spell.GetSpell().TextureName));
+                for (int i = 0; i < spell.RuneCount; i++)
+                {
+                    RuneInfo rune = spell.GetRune(i);
+                    if (rune != null)
+                        AddTabObject(RuneIcon(TopLeft + new Vector2(18 + 8 + 4 + 16 + 16 * i, 32 + 8 + nextSpellYPos), rune.TextureName));
+                }
                 nextSpellYPos += 16;
             }
             UpdateRuneGrid();
@@ -131,8 +192,8 @@ namespace BattleMages
                     () =>
                     {
                         bottomLeftText = thisSpell.Name + Environment.NewLine + thisSpell.Description;
-                        currentlyEditing.SetSpell(StaticData.Spells.IndexOf(thisSpell));
-                        UpdateRuneGrid();
+                        selectedRune = null;
+                        selectedSpell = thisSpell;
                     }
                     ));
                 nextRunePos++;
@@ -157,6 +218,8 @@ namespace BattleMages
                     () =>
                     {
                         bottomLeftText = thisRune.Name + Environment.NewLine + thisRune.Description;
+                        selectedRune = thisRune;
+                        selectedSpell = null;
                     }
                     ));
                 nextRunePos++;
