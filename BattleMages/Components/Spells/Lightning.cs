@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
-    class Lightning : Spell, ICanBeDrawn, ICanBeAnimated, ICanUpdate
+    internal class Lightning : Spell, ICanBeDrawn, ICanBeAnimated, ICanUpdate
     {
         private Texture2D sprite;
         private Vector2 velocity;
@@ -33,19 +33,18 @@ namespace BattleMages
 
         public void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
+            drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(0, sprite.Height), Color.White);
         }
 
         public void OnAnimationDone(string animationsName)
         {
-            
         }
 
         public void Update()
         {
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
 
-            //Finds Enemy component  and if it's not null, deal damage and apply floating damage text 
+            //Finds Enemy component  and if it's not null, deal damage and apply floating damage text
             //to the enemy when the object's collision position is found.
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
