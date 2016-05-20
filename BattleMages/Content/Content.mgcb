@@ -503,7 +503,6 @@
 /processorParam:TextureFormat=Color
 /build:Spell Images/lightning_bigger.png
 
-<<<<<<< HEAD
 #begin Spell Images/earthspikes.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -514,7 +513,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Spell Images/earthspikes.png
-=======
+
 #begin Sounds/CombatMusic.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
