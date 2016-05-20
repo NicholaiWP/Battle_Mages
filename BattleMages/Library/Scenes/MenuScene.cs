@@ -63,6 +63,7 @@ namespace BattleMages
 
         public override void Update()
         {
+            
             foreach (GameObject button in ActiveObjects)
             {
                 button.Update();

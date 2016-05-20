@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace BattleMages
 {
@@ -16,6 +17,8 @@ namespace BattleMages
 
         public HallwayScene()
         {
+            GameWorld.SoundManager.Music("HubBGM");
+
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
             lobbyTexture = content.Load<Texture2D>("Backgrounds/Hallway");
@@ -32,6 +35,9 @@ namespace BattleMages
             doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { GameWorld.ChangeScene(new GameScene()); }));
             AddObject(doorTriggerGameObject);
 
+            //Sets sound volume semi-low
+            GameWorld.SoundManager.AmbienceVolume = 0.02f;
+
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, 180 - 32), false);
             AddObject(playerGameObject);
@@ -40,11 +46,14 @@ namespace BattleMages
             //Get all objects on the list before the first run of Update()
             ProcessObjectLists();
         }
-
+        
         public override void Update()
         {
+            //Plays ambience sound looped using SoundManager
+            GameWorld.SoundManager.PlaySound("AmbienceSound");
+            
             keyState = Keyboard.GetState();
-
+            
             if (keyState.IsKeyDown(Keys.P))
             {
                 GameWorld.ChangeScene(new PauseScene(this));
@@ -55,6 +64,16 @@ namespace BattleMages
             foreach (GameObject gameObject in ActiveObjects)
             {
                 gameObject.Update();
+            }
+
+            //Turns volume of ambience up or down depending on the position of Camera
+            if (GameWorld.Camera.Position.Y < 0)
+            {
+                GameWorld.SoundManager.AmbienceVolume += 0.03f * GameWorld.DeltaTime;
+            }
+            if (GameWorld.Camera.Position.Y > 0)
+            {
+                GameWorld.SoundManager.AmbienceVolume -= 0.03f * GameWorld.DeltaTime;
             }
         }
 

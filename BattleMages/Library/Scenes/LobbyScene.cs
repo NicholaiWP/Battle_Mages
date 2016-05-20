@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace BattleMages
 
         public LobbyScene()
         {
+            GameWorld.SoundManager.Music("HubBGM");
+
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
             lobbyTexture = content.Load<Texture2D>("Backgrounds/Tavern");
@@ -30,11 +33,19 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
             
 
+            //Updating the gameobjects once to add the components
+            foreach (GameObject go in ActiveObjects)
+            {
+                go.Update();
+            }
             //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
             doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
             doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { GameWorld.ChangeScene(new HallwayScene()); }));
             AddObject(doorTriggerGameObject);
+
+            //Sets the sound volume for this scene
+            GameWorld.SoundManager.AmbienceVolume = 0.02f;
 
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);
@@ -47,6 +58,10 @@ namespace BattleMages
 
         public override void Update()
         {
+            //Playing ambient sound in low volume using SoundManager
+            GameWorld.SoundManager.PlaySound("AmbienceSound");                
+
+
             keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.P))
