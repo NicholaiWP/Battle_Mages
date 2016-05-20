@@ -12,6 +12,7 @@ namespace BattleMages
     {
         public MenuScene()
         {
+            combatState = false;
             var content = GameWorld.Instance.Content;
             //Play button
             var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");

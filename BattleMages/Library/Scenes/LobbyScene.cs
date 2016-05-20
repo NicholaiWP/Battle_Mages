@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace BattleMages
 
         public LobbyScene()
         {
+            combatState = false;
+
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
             lobbyTexture = content.Load<Texture2D>("Backgrounds/Tavern");
@@ -55,7 +58,7 @@ namespace BattleMages
         public override void Update()
         {
             //Playing ambient sound in low volume using SoundManager
-            GameWorld.SoundManager.PlaySound("ambience");                
+            GameWorld.SoundManager.PlaySound("AmbienceSound");                
 
 
             keyState = Keyboard.GetState();

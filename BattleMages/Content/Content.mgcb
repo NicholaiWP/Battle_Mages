@@ -19,18 +19,6 @@
 /processorParam:TextureFormat=Compressed
 /build:FontBM.spritefont
 
-#begin Sounds/JumpSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/JumpSound.wav
-
-#begin Sounds/backgroundMusic.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Sounds/backgroundMusic.mp3
-
 #begin Images/apple.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -460,18 +448,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/died_new.png
 
-#begin Sounds/walk.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/walk.wav
-
-#begin Sounds/ambience.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/ambience.wav
-
 #begin Backgrounds/TavernLighting.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -504,4 +480,28 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Backgrounds/Hallway.png
+
+#begin Sounds/CombatMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/CombatMusic.mp3
+
+#begin Sounds/AmbienceSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/AmbienceSound.wav
+
+#begin Sounds/HubMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/HubMusic.mp3
+
+#begin Sounds/WalkSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/WalkSound.wav
 

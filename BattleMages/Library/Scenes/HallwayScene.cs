@@ -33,7 +33,7 @@ namespace BattleMages
             AddObject(doorTriggerGameObject);
 
             //Sets sound volume semi-low
-            GameWorld.SoundManager.AmbienceVolume = 0.10f;
+            GameWorld.SoundManager.AmbienceVolume = 0.02f;
 
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, 180 - 32), false);
@@ -47,7 +47,7 @@ namespace BattleMages
         public override void Update()
         {
             //Plays ambience sound looped using SoundManager
-            GameWorld.SoundManager.PlaySound("ambience");
+            GameWorld.SoundManager.PlaySound("AmbienceSound");
             
             keyState = Keyboard.GetState();
             
@@ -66,11 +66,11 @@ namespace BattleMages
             //Turns volume of ambience up or down depending on the position of Camera
             if (GameWorld.Camera.Position.Y < 0)
             {
-                GameWorld.SoundManager.AmbienceVolume += 0.05f * GameWorld.DeltaTime;
+                GameWorld.SoundManager.AmbienceVolume += 0.03f * GameWorld.DeltaTime;
             }
             if (GameWorld.Camera.Position.Y > 0)
             {
-                GameWorld.SoundManager.AmbienceVolume -= 0.05f * GameWorld.DeltaTime;
+                GameWorld.SoundManager.AmbienceVolume -= 0.03f * GameWorld.DeltaTime;
             }
         }
 

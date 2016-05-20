@@ -12,8 +12,11 @@ namespace BattleMages
     {
         //Fields
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
-        private Song backgroundMusic;
-
+        private Song hubBGM;
+        private Song combatBGM;
+        
+        public Song HubBGM { get; set; }
+        public Song CombatBGM { get; set; }
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
@@ -33,20 +36,28 @@ namespace BattleMages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            sounds.Add("ambience", content.Load<SoundEffect>("Sounds/ambience").CreateInstance());
-            sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/JumpSound").CreateInstance());
-            sounds.Add("walk", content.Load<SoundEffect>("Sounds/walk").CreateInstance());
-            backgroundMusic = content.Load<Song>("Sounds/backgroundMusic");
+            sounds.Add("AmbienceSound", content.Load<SoundEffect>("Sounds/AmbienceSound").CreateInstance());
+            //sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/[INSERT SOUND]").CreateInstance());
+            sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
+            hubBGM = content.Load<Song>("Sounds/HubMusic");
+            combatBGM = content.Load<Song>("Sounds/CombatMusic");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = MusicVolume;
         }
 
         /// <summary>
-        /// Method for playing music that have to be looped
+        /// Method for playing music that is looped
         /// </summary>
-        public void Music(string soundName)
+        public void Music()
         {
-            MediaPlayer.Play(backgroundMusic);
+            if (GameWorld.CurrentScene.CombatState == true)
+            {
+                MediaPlayer.Play(combatBGM);
+            }
+            else
+            {
+                MediaPlayer.Play(hubBGM);
+            }
         }
 
         /// <summary>
@@ -57,11 +68,11 @@ namespace BattleMages
         {
             if (sounds.ContainsKey(soundName))
             {
-                if(soundName == "ambience")
+                if(soundName == "AmbienceSound")
                 {
-                    if (AmbienceVolume > 0.20f)
+                    if (AmbienceVolume > 0.12f)
                     {                       
-                        AmbienceVolume = 0.20f; 
+                        AmbienceVolume = 0.12f; 
                     }
                     if (AmbienceVolume < 0.02f)
                     {
@@ -79,9 +90,9 @@ namespace BattleMages
             }
         }
 
-        public void UpdateMusicVolume()
+        public void Update(string soundName)
         {
-
+           
         }
     }
 }
