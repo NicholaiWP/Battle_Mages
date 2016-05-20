@@ -23,6 +23,7 @@ namespace BattleMages
 
         private float spell1CooldownTimer;
         private float spell2CooldownTimer;
+        private float spell3CooldownTimer;
 
         public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
@@ -49,6 +50,10 @@ namespace BattleMages
             else if (spell2CooldownTimer > 0)
             {
                 spell2CooldownTimer -= GameWorld.DeltaTime;
+            }
+            else if(spell3CooldownTimer > 0)
+            {
+                spell3CooldownTimer -= GameWorld.DeltaTime;
             }
 
             MouseState mState = Mouse.GetState();
@@ -98,6 +103,24 @@ namespace BattleMages
                 //Set cooldown
                 spell2CooldownTimer = s1.CooldownTime;
             }
+            if (canUseSpells && mState.MiddleButton == ButtonState.Pressed && spell3CooldownTimer <= 0)
+            {
+                selectedSpell = 2;
+                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                var baseSpell = spellToCast.GetSpell();
+                RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
+                for (int i = 0; i < spellToCast.RuneCount; i++)
+                {
+                    runes[i] = spellToCast.GetRune(i);
+                }
+
+                GameObject lightning = new GameObject(transform.Position);
+                Spell light1 = baseSpell.CreateSpell(lightning, new SpellCreationParams(runes,
+                GameWorld.Camera.Position, character.Velocity));
+                lightning.AddComponent(light1);
+                GameWorld.CurrentScene.AddObject(lightning);
+                spell3CooldownTimer = light1.CooldownTime;
+            }
 
             Move();
         }
@@ -137,7 +160,7 @@ namespace BattleMages
             if (health <= 0)
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
-                //GameWorld.ChangeScene(new DeathScene());
+                GameWorld.ChangeScene(new DeathScene());
             }
         }
     }

@@ -83,6 +83,7 @@ namespace BattleMages
             state = new SavedState();
             state.SpellBar.Add(new PlayerSpell(0, new[] { 0, 0, 0, 0 }));
             state.SpellBar.Add(new PlayerSpell(1, new[] { 0 }));
+            state.SpellBar.Add(new PlayerSpell(2, new[] { 0 }));
             currentScene = new MenuScene();
 
             base.Initialize();
