@@ -27,6 +27,7 @@ namespace BattleMages
 
         //Holds objects in a tab to delete them on tab change
         private List<GameObject> objectsInTab = new List<GameObject>();
+        private List<GameObject> objectsInRuneGrid = new List<GameObject>();
 
         //Seperate ints to keep track of each tab's current page so that they are kept when switching tabs.
         private int spellListPage = 0;
@@ -70,7 +71,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 () =>
                 {
-                    PlayerSpell newSpell = new PlayerSpell(-1, new int[0]);
+                    PlayerSpell newSpell = new PlayerSpell();
                     GameWorld.State.SpellBook.Add(newSpell);
                     OpenRunesTab(newSpell);
                 }
@@ -163,6 +164,8 @@ namespace BattleMages
                     nextRuneX = 0;
                 }
             }
+
+            UpdateRuneGrid();
         }
 
         private void ClearTab()
@@ -178,6 +181,68 @@ namespace BattleMages
         {
             objectsInTab.Add(go);
             AddObject(go);
+        }
+
+        private void ClearRuneGrid()
+        {
+            foreach (GameObject go in objectsInRuneGrid)
+            {
+                RemoveObject(go);
+            }
+            objectsInRuneGrid.Clear();
+        }
+
+        private void AddRuneGridObject(GameObject go)
+        {
+            objectsInRuneGrid.Add(go);
+            AddObject(go);
+        }
+
+        private void UpdateRuneGrid()
+        {
+            ClearRuneGrid();
+
+            SpellInfo spell = currentlyEditing.GetSpell();
+            if (spell != null)
+            {
+                var go = RuneIcon(centerRunePos, spell.TextureName);
+                AddRuneGridObject(go);
+            }
+
+            RuneInfo rune0 = currentlyEditing.GetRune(0);
+            if (rune0 != null)
+            {
+                var go = RuneIcon(topRunePos, rune0.TextureName);
+                AddRuneGridObject(go);
+            }
+
+            RuneInfo rune1 = currentlyEditing.GetRune(1);
+            if (rune1 != null)
+            {
+                var go = RuneIcon(rightRunePos, rune1.TextureName);
+                AddRuneGridObject(go);
+            }
+
+            RuneInfo rune2 = currentlyEditing.GetRune(2);
+            if (rune2 != null)
+            {
+                var go = RuneIcon(botRunePos, rune2.TextureName);
+                AddRuneGridObject(go);
+            }
+
+            RuneInfo rune3 = currentlyEditing.GetRune(3);
+            if (rune3 != null)
+            {
+                var go = RuneIcon(leftRunePos, rune3.TextureName);
+                AddRuneGridObject(go);
+            }
+        }
+
+        private GameObject RuneIcon(Vector2 position, string textureName)
+        {
+            GameObject go = new GameObject(position);
+            go.AddComponent(new SpriteRenderer(go, "Rune Images/" + textureName));
+            return go;
         }
 
         public override void Update()
@@ -205,20 +270,28 @@ namespace BattleMages
             drawer[DrawLayer.UI].DrawString(font, "ManaCost:", mcPosition, Color.White);
             drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), new Color(120, 100, 80));
 
-            if (currentlyEditing != null)
+            /*if (currentlyEditing != null)
             {
                 SpellInfo spell = currentlyEditing.GetSpell();
                 if (spell != null)
                     drawer[DrawLayer.UI].DrawString(font, spell.Name, centerRunePos, new Color(120, 100, 80));
-                if (currentlyEditing.RuneCount > 0)
-                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(0).Name, topRunePos, new Color(120, 100, 80));
-                if (currentlyEditing.RuneCount > 1)
-                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(1).Name, rightRunePos, new Color(120, 100, 80));
-                if (currentlyEditing.RuneCount > 2)
-                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(2).Name, botRunePos, new Color(120, 100, 80));
-                if (currentlyEditing.RuneCount > 3)
-                    drawer[DrawLayer.UI].DrawString(font, currentlyEditing.GetRune(3).Name, leftRunePos, new Color(120, 100, 80));
-            }
+
+                RuneInfo rune0 = currentlyEditing.GetRune(0);
+                if (rune0 != null)
+                    drawer[DrawLayer.UI].DrawString(font, rune0.Name, topRunePos, new Color(120, 100, 80));
+
+                RuneInfo rune1 = currentlyEditing.GetRune(1);
+                if (rune1 != null)
+                    drawer[DrawLayer.UI].DrawString(font, rune1.Name, rightRunePos, new Color(120, 100, 80));
+
+                RuneInfo rune2 = currentlyEditing.GetRune(2);
+                if (rune2 != null)
+                    drawer[DrawLayer.UI].DrawString(font, rune2.Name, botRunePos, new Color(120, 100, 80));
+
+                RuneInfo rune3 = currentlyEditing.GetRune(3);
+                if (rune3 != null)
+                    drawer[DrawLayer.UI].DrawString(font, rune3.Name, leftRunePos, new Color(120, 100, 80));
+            }*/
 
             drawer[DrawLayer.Gameplay].Draw(spellCircle, scPosition, Color.White);
             drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);

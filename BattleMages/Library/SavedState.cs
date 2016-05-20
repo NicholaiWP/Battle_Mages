@@ -64,28 +64,4 @@ namespace BattleMages
             }
         }
     }
-
-    public class PlayerSpell
-    {
-        private int spellId;
-        private int[] runeIds;
-
-        public int RuneCount { get { return runeIds.Length; } }
-
-        public PlayerSpell(int spellId, int[] runeIds)
-        {
-            this.spellId = spellId;
-            this.runeIds = runeIds.ToArray();
-        }
-
-        public SpellInfo GetSpell()
-        {
-            return StaticData.Spells[spellId];
-        }
-
-        public RuneInfo GetRune(int pos)
-        {
-            return StaticData.Runes[runeIds[pos]];
-        }
-    }
 }
