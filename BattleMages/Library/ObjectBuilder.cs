@@ -43,5 +43,14 @@ namespace BattleMages
             gameObject.AddComponent(new Collider(gameObject, size, true));
             return gameObject;
         }
+
+        public static GameObject BuildSpell(Vector2 position, SpellInfo baseSpell, SpellCreationParams creationParams, out float cooldownTime)
+        {
+            GameObject gameObject = new GameObject(position);
+            Spell s = baseSpell.CreateSpell(gameObject, creationParams);
+            gameObject.AddComponent(s);
+            cooldownTime = s.CooldownTime;
+            return gameObject;
+        }
     }
 }
