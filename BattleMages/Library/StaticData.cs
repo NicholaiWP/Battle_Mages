@@ -54,6 +54,10 @@ namespace BattleMages
                 new SpellInfo("Lightning",
                 "A fierce lightning which strikes from the sky",
                (go, p) => {return new Lightning(go, p); }),
+
+                new SpellInfo("EarthSpikes",
+                "Hard spikes will rise from the ground",
+               (go, p) => {return new EarthSpikes(go, p); }),
             };
         }
 

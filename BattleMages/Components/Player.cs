@@ -24,6 +24,7 @@ namespace BattleMages
         private float spell1CooldownTimer;
         private float spell2CooldownTimer;
         private float spell3CooldownTimer;
+        private float spell4CooldownTimer;
 
         public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
@@ -47,15 +48,18 @@ namespace BattleMages
             {
                 spell1CooldownTimer -= GameWorld.DeltaTime;
             }
-            else if (spell2CooldownTimer > 0)
+            if (spell2CooldownTimer > 0)
             {
                 spell2CooldownTimer -= GameWorld.DeltaTime;
             }
-            else if(spell3CooldownTimer > 0)
+            if (spell3CooldownTimer > 0)
             {
                 spell3CooldownTimer -= GameWorld.DeltaTime;
             }
-
+            if (spell4CooldownTimer > 0)
+            {
+                spell4CooldownTimer -= GameWorld.DeltaTime;
+            }
             MouseState mState = Mouse.GetState();
             if (canUseSpells && mState.LeftButton == ButtonState.Pressed && spell1CooldownTimer <= 0)
             {
@@ -121,13 +125,35 @@ namespace BattleMages
                 GameWorld.CurrentScene.AddObject(lightning);
                 spell3CooldownTimer = light1.CooldownTime;
             }
-
             Move();
         }
 
         private void Move()
         {
             KeyboardState kbState = Keyboard.GetState();
+            if (canUseSpells && kbState.IsKeyDown(Keys.D2) && spell4CooldownTimer <= 0)
+            {
+                selectedSpell = 3;
+                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                var baseSpell = spellToCast.GetSpell();
+                RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
+                for (int i = 0; i < spellToCast.RuneCount; i++)
+                {
+                    runes[i] = spellToCast.GetRune(i);
+                }
+
+                //Create spell object and add it to the world
+                GameObject earthspikes = new GameObject(GameWorld.Cursor.Position);
+                Spell s1 = baseSpell.CreateSpell(earthspikes, new SpellCreationParams(runes,
+                    GameWorld.Cursor.Position, character.Velocity));
+
+                earthspikes.AddComponent(s1);
+
+                GameWorld.CurrentScene.AddObject(earthspikes);
+
+                //Set cooldown
+                spell4CooldownTimer = s1.CooldownTime;
+            }
             character.Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
             character.Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
             character.Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));

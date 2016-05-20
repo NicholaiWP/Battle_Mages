@@ -11,26 +11,46 @@ namespace BattleMages
     {
         private Collider collider;
         private Texture2D sprite;
-        private Vector2 position;
+        private float timer;
+        private float damageTimer;
 
         public EarthSpikes(GameObject go, SpellCreationParams p) : base(go, p)
         {
             Damage = 8;
-            CooldownTime = 2;
+            damageTimer = 0;
+            CooldownTime = 5;
             ApplyRunes();
-            position = p.AimTarget;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
-            collider = new Collider(GameObject, new Vector2(8, 8));
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
+            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
+            timer = 4;
         }
 
         public void Update()
         {
-            throw new NotImplementedException();
+            foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
+            {
+                var enemy = other.GameObject.GetComponent<Enemy>();
+                if (enemy != null && damageTimer <= 0)
+                {
+                    damageTimer = 0.6f;
+                    enemy.DealDamage(Damage);
+                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                }
+            }
+            timer -= GameWorld.DeltaTime;
+            if (timer <= 0)
+            {
+                GameWorld.CurrentScene.RemoveObject(GameObject);
+            }
+            if (damageTimer > 0)
+            {
+                damageTimer -= GameWorld.DeltaTime;
+            }
         }
 
         public void Draw(Drawer drawer)
         {
-            throw new NotImplementedException();
+            drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
         }
     }
 }
