@@ -55,12 +55,12 @@ namespace BattleMages
                 (go, p) => { return new IceShard(go, p); }),
 
                 new SpellInfo("Lightning",
-                "A fierce lightning which strikes from the sky",
+                "A fierce lightning which strikes\n from the sky",
                 "lightningRune",
                 (go, p) => {return new Lightning(go, p); }),
 
                 new SpellInfo("EarthSpikes",
-                "Hard spikes will rise from the ground",
+                "Hard spikes will rise from the\n ground",
                 "earthspikesRune",
                (go, p) => {return new EarthSpikes(go, p); }),
             };
