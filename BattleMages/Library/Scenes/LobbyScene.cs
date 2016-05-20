@@ -28,6 +28,7 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, -90 - 8), new Vector2(320, 16)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-160 - 8, 0), new Vector2(16, 180 + 32)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
+            
 
             //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
