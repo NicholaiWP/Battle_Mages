@@ -88,24 +88,13 @@ namespace BattleMages
 
                 //Create spell object and add it to the world
                 GameObject iceShard1 = new GameObject(transform.Position);
-                GameObject iceShard2 = new GameObject(transform.Position);
-                GameObject iceShard3 = new GameObject(transform.Position);
                 Spell s1 = baseSpell.CreateSpell(iceShard1, new SpellCreationParams(runes,
                     GameWorld.Cursor.Position, character.Velocity));
 
-                Spell s2 = baseSpell.CreateSpell(iceShard2, new SpellCreationParams(runes,
-                    Utils.RotationPos(GameWorld.Cursor.Position, 30), character.Velocity));
-
-                Spell s3 = baseSpell.CreateSpell(iceShard3, new SpellCreationParams(runes,
-                    Utils.RotationPos(GameWorld.Cursor.Position, -30), character.Velocity));
-
                 iceShard1.AddComponent(s1);
-                iceShard2.AddComponent(s2);
-                iceShard3.AddComponent(s3);
 
                 GameWorld.CurrentScene.AddObject(iceShard1);
-                GameWorld.CurrentScene.AddObject(iceShard2);
-                GameWorld.CurrentScene.AddObject(iceShard3);
+
                 //Set cooldown
                 spell2CooldownTimer = s1.CooldownTime;
             }

@@ -61,10 +61,10 @@ namespace BattleMages
         {
             spell.Damage = (int)(spell.Damage * 1.25f);
         }
+
         private static void DecreaseManaCostRune(Spell spell)
         {
             spell.ManaCost -= (int)(spell.ManaCost * 0.15f);
         }
-            
     }
 }
