@@ -80,10 +80,19 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
-            state.SpellBar.Add(new PlayerSpell(0, new[] { 0, 0, 0, 0 }));
-            state.SpellBar.Add(new PlayerSpell(1, new[] { 0 }));
-            state.SpellBar.Add(new PlayerSpell(2, new[] { 0 }));
-            state.SpellBar.Add(new PlayerSpell(3, new[] { 0, 0 }));
+
+            //Create 4 test spell for both the bar and the book
+            for (int i = 0; i < 4; i++)
+            {
+                PlayerSpell ps = new PlayerSpell();
+                ps.SetSpell(i);
+                for (int j = 0; j < i; j++)
+                {
+                    ps.SetRune(j, 0);
+                }
+                state.SpellBook.Add(ps);
+                state.SpellBar.Add(state.SpellBook.IndexOf(ps));
+            }
             currentScene = new MenuScene();
 
             base.Initialize();
@@ -142,7 +151,8 @@ namespace BattleMages
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (!Cursor.CanClick && Mouse.GetState().LeftButton == ButtonState.Released)
+            var s = Mouse.GetState();
+            if (!Cursor.CanClick && s.LeftButton == ButtonState.Released && s.RightButton == ButtonState.Released)
             {
                 Cursor.CanClick = true;
             }

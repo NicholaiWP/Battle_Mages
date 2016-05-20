@@ -11,7 +11,8 @@ namespace BattleMages
     public class MenuScene : Scene
     {
         private Vector2 backgroundPos;
-
+        private Texture2D background;
+		
         public MenuScene()
         {
             var content = GameWorld.Instance.Content;

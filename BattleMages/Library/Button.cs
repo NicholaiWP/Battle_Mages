@@ -19,6 +19,7 @@ namespace BattleMages
         private Vector2 position;
 
         private ClickDelegate onClick;
+        private ClickDelegate onRightClick;
         private Vector2 startPos;
         private float offset;
         private bool wiggle;
@@ -30,7 +31,7 @@ namespace BattleMages
         /// </summary>
         /// <param name="newSprite1"></param>
         /// <param name="graphics"></param>
-        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false) : base (position)
+        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false, ClickDelegate onRightClick = null) : base(position)
         {
             sprites[0] = normalTex;
             sprites[1] = hoverTex;
@@ -39,11 +40,12 @@ namespace BattleMages
             offset = position.Y * 0.02f;
             this.onClick = onClick;
             this.wiggle = wiggle;
+            this.onRightClick = onRightClick;
         }
 
         public void UpdatePosition(Vector2 newPos)
         {
-           position = startPos + newPos;
+            position = startPos + newPos;
         }
 
         public override void Update()
@@ -71,6 +73,11 @@ namespace BattleMages
                     GameWorld.Cursor.CanClick = false;
                     //Invoke the onClick delegate when the button is clicked
                     onClick();
+                }
+                else if (Mouse.GetState().RightButton == ButtonState.Pressed && GameWorld.Cursor.CanClick)
+                {
+                    GameWorld.Cursor.CanClick = false;
+                    onRightClick?.Invoke();
                 }
             }
             else

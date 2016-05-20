@@ -11,6 +11,8 @@ namespace BattleMages
 {
     public class SettingsScene : Scene
     {
+        private Texture2D background;
+
         private DisplayMode currentResolution;
         private DisplayMode resolutionHolder;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
@@ -47,13 +49,6 @@ namespace BattleMages
                 {
                     SwappingKeyBind = true;
                     ChosenKeyToRebind = PlayerBind.Up;
-                    ChosenKeyToRebind = PlayerBind.Down;
-                    ChosenKeyToRebind = PlayerBind.Left;
-                    ChosenKeyToRebind = PlayerBind.Right;
-                    ChosenKeyToRebind = PlayerBind.Spell1;
-                    ChosenKeyToRebind = PlayerBind.Spell2;
-                    ChosenKeyToRebind = PlayerBind.Spell3;
-                    ChosenKeyToRebind = PlayerBind.Spell4;
                 }));
             //Res down
             var resDown = content.Load<Texture2D>("Images/ResDown");

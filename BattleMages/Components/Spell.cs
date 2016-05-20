@@ -30,7 +30,8 @@ namespace BattleMages
         {
             foreach (var r in runes)
             {
-                r.ApplyChanges(this);
+                if (r != null)
+                    r.ApplyChanges(this);
             }
         }
     }
