@@ -48,7 +48,7 @@ namespace BattleMages
             MouseState mState = Mouse.GetState();
             if (canUseSpells && mState.LeftButton == ButtonState.Pressed && spellCooldownTimer <= 0)
             {
-                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
 
                 //Fetch base spell and runes
                 var baseSpell = spellToCast.GetSpell();
@@ -75,7 +75,6 @@ namespace BattleMages
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
             }
-
         }
 
         private void Move()

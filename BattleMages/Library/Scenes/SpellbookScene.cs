@@ -35,9 +35,11 @@ namespace BattleMages
         private PlayerSpell currentlyEditing;
         private SpellInfo selectedSpell;
         private RuneInfo selectedRune;
+        private int selectedSpellBarSlot = -1;
 
         private SpriteFont font;
         private string bottomLeftText = string.Empty;
+        private string bottomRightText = string.Empty;
 
         private Vector2 TopLeft
         {
@@ -111,6 +113,8 @@ namespace BattleMages
 
         private void OpenSpellsTab()
         {
+            bottomRightText = "Select a spell to start\nediting it. Select a spell bar\nslot then select a spell to\nassign the spell to the slot.";
+            bottomLeftText = "Action bar";
             ClearTab();
             var content = GameWorld.Instance.Content;
             //New spell button
@@ -139,7 +143,16 @@ namespace BattleMages
                     new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextSpellYPos),
                     () =>
                     {
-                        OpenRunesTab(thisSpell);
+                        if (selectedSpellBarSlot >= 0)
+                        {
+                            GameWorld.State.SpellBar[selectedSpellBarSlot] = GameWorld.State.SpellBook.IndexOf(thisSpell);
+                            selectedSpellBarSlot = -1;
+                            OpenSpellsTab();
+                        }
+                        else
+                        {
+                            OpenRunesTab(thisSpell);
+                        }
                     }
                     ));
                 //Draw sprite for the base spell of the spell
@@ -154,11 +167,28 @@ namespace BattleMages
                 }
                 nextSpellYPos += 16;
             }
+            //Action bar slots
+            for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
+            {
+                int thisIndex = i;
+                int spellId = GameWorld.State.SpellBar[thisIndex];
+
+                var btnSpr1 = content.Load<Texture2D>("Images/Button_Rune");
+                var btnSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
+                AddTabObject(new Button(
+                        btnSpr1,
+                        btnSpr2,
+                        TopLeft + new Vector2(20 + thisIndex * 24, GameWorld.GameHeight - 40),
+                        () => { selectedSpellBarSlot = thisIndex; }
+                    ));
+                AddTabObject(RuneIcon(TopLeft + new Vector2(20 + thisIndex * 24 + 8, GameWorld.GameHeight - 40 + 8), GameWorld.State.SpellBook[spellId].GetSpell().TextureName));
+            }
             UpdateRuneGrid();
         }
 
         private void OpenRunesTab(PlayerSpell spellToEdit)
         {
+            bottomRightText = "Left click a rune to select\nthen left click a slot\nto add the selected rune.\nRight click to clear slots.";
             currentlyEditing = spellToEdit;
             ClearTab();
             var content = GameWorld.Instance.Content;
@@ -316,8 +346,9 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.UI].DrawString(font, "ManaCost:", mcPosition, Color.White);
-            drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), new Color(120, 100, 80));
+            Color textColor = new Color(120, 100, 80);
+            drawer[DrawLayer.UI].DrawString(font, bottomRightText, mcPosition, textColor);
+            drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), textColor);
 
             /*if (currentlyEditing != null)
             {

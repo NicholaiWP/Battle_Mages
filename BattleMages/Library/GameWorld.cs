@@ -91,8 +91,8 @@ namespace BattleMages
                 {
                     ps.SetRune(j, 0);
                 }
-                state.SpellBar.Add(ps);
                 state.SpellBook.Add(ps);
+                state.SpellBar.Add(state.SpellBook.IndexOf(ps));
             }
             currentScene = new MenuScene();
 
