@@ -16,11 +16,8 @@ namespace BattleMages
         private Vector2 scPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
         private Vector2 mcPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 16, (GameWorld.GameHeight / 2) - 120);
 
-        private Vector2 centerRunePos;
-        private Vector2 leftRunePos;
-        private Vector2 rightRunePos;
-        private Vector2 topRunePos;
-        private Vector2 botRunePos;
+        private Vector2 baseSpellPosition;
+        private Vector2[] runePositions;
 
         private Scene oldScene;
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
@@ -41,11 +38,14 @@ namespace BattleMages
 
         public SpellbookScene(Scene oldScene)
         {
-            centerRunePos = scPosition + new Vector2(60, 60);
-            leftRunePos = scPosition + new Vector2(25, 60);
-            rightRunePos = scPosition + new Vector2(120 - 25, 60);
-            topRunePos = scPosition + new Vector2(60, 25);
-            botRunePos = scPosition + new Vector2(60, 120 - 25);
+            baseSpellPosition = scPosition + new Vector2(60, 60);
+            runePositions = new Vector2[]
+            {
+                scPosition + new Vector2(60, 25), //Top slot
+                scPosition + new Vector2(120 - 25, 60), //Right slot
+                scPosition + new Vector2(60, 120 - 25), //Bottom slot
+                scPosition + new Vector2(25, 60), //Left slot
+            };
 
             var content = GameWorld.Instance.Content;
 
@@ -93,6 +93,7 @@ namespace BattleMages
                     ));
                 nextSpellYPos += 16;
             }
+            UpdateRuneGrid();
         }
 
         private void OpenRunesTab(PlayerSpell spellToEdit)
@@ -130,6 +131,8 @@ namespace BattleMages
                     () =>
                     {
                         bottomLeftText = thisSpell.Name + Environment.NewLine + thisSpell.Description;
+                        currentlyEditing.SetSpell(StaticData.Spells.IndexOf(thisSpell));
+                        UpdateRuneGrid();
                     }
                     ));
                 nextRunePos++;
@@ -201,40 +204,23 @@ namespace BattleMages
         private void UpdateRuneGrid()
         {
             ClearRuneGrid();
+            if (currentlyEditing == null) return;
 
             SpellInfo spell = currentlyEditing.GetSpell();
             if (spell != null)
             {
-                var go = RuneIcon(centerRunePos, spell.TextureName);
+                var go = RuneIcon(baseSpellPosition, spell.TextureName);
                 AddRuneGridObject(go);
             }
 
-            RuneInfo rune0 = currentlyEditing.GetRune(0);
-            if (rune0 != null)
+            for (int i = 0; i < currentlyEditing.RuneCount; i++)
             {
-                var go = RuneIcon(topRunePos, rune0.TextureName);
-                AddRuneGridObject(go);
-            }
-
-            RuneInfo rune1 = currentlyEditing.GetRune(1);
-            if (rune1 != null)
-            {
-                var go = RuneIcon(rightRunePos, rune1.TextureName);
-                AddRuneGridObject(go);
-            }
-
-            RuneInfo rune2 = currentlyEditing.GetRune(2);
-            if (rune2 != null)
-            {
-                var go = RuneIcon(botRunePos, rune2.TextureName);
-                AddRuneGridObject(go);
-            }
-
-            RuneInfo rune3 = currentlyEditing.GetRune(3);
-            if (rune3 != null)
-            {
-                var go = RuneIcon(leftRunePos, rune3.TextureName);
-                AddRuneGridObject(go);
+                RuneInfo runeInfo = currentlyEditing.GetRune(i);
+                if (runeInfo != null)
+                {
+                    var go = RuneIcon(runePositions[i], runeInfo.TextureName);
+                    AddRuneGridObject(go);
+                }
             }
         }
 
