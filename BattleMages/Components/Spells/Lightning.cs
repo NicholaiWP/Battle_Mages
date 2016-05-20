@@ -8,10 +8,10 @@ using System.Text;
 
 namespace BattleMages
 {
-    internal class Lightning : Spell, ICanBeDrawn, ICanUpdate
+    public class Lightning : Spell, ICanBeDrawn, ICanUpdate
+
     {
         private Texture2D sprite;
-        private Vector2 velocity;
         private Collider collider;
         private float waitTimer;
         private float existenceTimer;
@@ -20,7 +20,7 @@ namespace BattleMages
         public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
         {
             GameObject.Transform.Position = p.AimTarget;
-            Damage = 15;
+            Damage = 25;
             CooldownTime = 0.9f;
             ApplyRunes();
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
@@ -39,8 +39,6 @@ namespace BattleMages
 
         public void Update()
         {
-            GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
-
             if (waitTimer <= 0 && !hadACollider)
             {
                 collider = new Collider(GameObject, new Vector2(10, 10));

@@ -21,7 +21,7 @@ namespace BattleMages
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
-            lobbyTexture = content.Load<Texture2D>("Backgrounds/Hallway");
+            lobbyTexture = content.Load<Texture2D>("Backgrounds/Hallway_proto");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 180 + 8), new Vector2(64, 16)));

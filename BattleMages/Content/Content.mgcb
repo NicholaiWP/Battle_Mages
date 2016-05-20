@@ -736,3 +736,14 @@
 /processorParam:TextureFormat=Color
 /build:Spell Images/earthspikes.png
 
+#begin Backgrounds/Hallway_proto.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/Hallway_proto.png
+
