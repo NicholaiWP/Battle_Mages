@@ -99,8 +99,7 @@ namespace BattleMages
             drawer = new Drawer(GraphicsDevice);
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
-            soundManager.LoadContent(Content);
-            soundManager.Music("HubBGM");
+            soundManager.LoadContent(Content);         
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace BattleMages
                 {
                     if (go is Button)
                     {
-                        (go as Button).UpdatePosition(GameWorld.Camera.Position);
+                        (go as Button).UpdatePosition(Camera.Position);
                     }
                 }
             }
@@ -135,6 +134,11 @@ namespace BattleMages
         protected override void Update(GameTime gameTime)
         {
             cursor.Update();
+            if(currentScene is MenuScene || CurrentScene is LobbyScene || currentScene is HallwayScene)
+            {
+                SoundManager.Music("HubBGM");
+
+            }
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 

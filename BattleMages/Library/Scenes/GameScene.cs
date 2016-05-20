@@ -32,7 +32,7 @@ namespace BattleMages
 
 
             //Changes the sound volume
-            GameWorld.SoundManager.AmbienceVolume = 0.10f;
+            GameWorld.SoundManager.AmbienceVolume = 0.05f;
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));

@@ -120,7 +120,7 @@ namespace BattleMages
 
                 GameObject lightning = new GameObject(transform.Position);
                 Spell light1 = baseSpell.CreateSpell(lightning, new SpellCreationParams(runes,
-                GameWorld.Camera.Position, character.Velocity));
+                GameWorld.Cursor.Position, character.Velocity));
                 lightning.AddComponent(light1);
                 GameWorld.CurrentScene.AddObject(lightning);
                 spell3CooldownTimer = light1.CooldownTime;

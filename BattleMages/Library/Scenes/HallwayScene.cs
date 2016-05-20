@@ -17,7 +17,7 @@ namespace BattleMages
 
         public HallwayScene()
         {
-            GameWorld.SoundManager.Music("HubBGM");
+           // GameWorld.SoundManager.Music("HubBGM");
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);

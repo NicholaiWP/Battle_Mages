@@ -14,6 +14,7 @@ namespace BattleMages
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
         private Song hubBGM;
         private Song combatBGM;
+        private bool isPlaying, isPLaying1;
 
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
@@ -48,15 +49,20 @@ namespace BattleMages
         /// </summary>
         public void Music(string soundName)
         {
-            if (soundName == "CombatBGM")
+            if (soundName == "CombatBGM" && isPLaying1 == false)
             {
                     MediaPlayer.Play(combatBGM);
+                isPlaying = false;
+                isPLaying1 = true;
             }
-            if (soundName == "HubBGM")
+            if (soundName == "HubBGM" && isPlaying== false)
             {
                     MediaPlayer.Play(hubBGM);
+                   isPlaying = true;
+                isPLaying1 = false;
             }
-        }
+         
+                }
 
         /// <summary>
         /// Method for playing a sound by the soundName
