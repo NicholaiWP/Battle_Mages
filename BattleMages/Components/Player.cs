@@ -138,7 +138,7 @@ namespace BattleMages
                 || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left))
                 || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
             {
-                GameWorld.SoundManager.PlaySound("walk");
+                GameWorld.SoundManager.PlaySound("WalkSound");
             }
 
             if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab))

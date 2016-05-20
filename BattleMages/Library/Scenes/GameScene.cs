@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace BattleMages
 
         public GameScene()
         {
+            GameWorld.SoundManager.Music("CombatBGM");
+
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
@@ -26,6 +29,10 @@ namespace BattleMages
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, true);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
+
+
+            //Changes the sound volume
+            GameWorld.SoundManager.AmbienceVolume = 0.10f;
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
@@ -41,6 +48,9 @@ namespace BattleMages
         public override void Update()
         {
             enemyCount = 0;
+            //Playing ambient sounds using SoundManager
+            GameWorld.SoundManager.PlaySound("AmbienceSound");
+
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene

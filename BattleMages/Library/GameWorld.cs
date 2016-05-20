@@ -22,7 +22,6 @@ namespace BattleMages
 
         private Drawer drawer;
         private Scene currentScene;
-
         private PlayerControls playerControls;
         private SoundManager soundManager;
         private Cursor cursor;
@@ -100,7 +99,7 @@ namespace BattleMages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);
-            soundManager.Music("hey");
+            soundManager.Music("HubBGM");
         }
 
         /// <summary>
