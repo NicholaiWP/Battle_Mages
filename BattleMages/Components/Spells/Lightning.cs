@@ -1,62 +1,77 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
-    class Lightning : Spell, ICanBeDrawn, ICanBeAnimated, ICanUpdate
+    internal class Lightning : Spell, ICanBeDrawn, ICanUpdate
     {
         private Texture2D sprite;
         private Vector2 velocity;
-        private Vector2 LightningPos;
         private Collider collider;
+        private float waitTimer;
+        private float existenceTimer;
+        private bool hadACollider;
 
         public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
         {
-            Damage = 40;
+            GameObject.Transform.Position = p.AimTarget;
+            Damage = 15;
             CooldownTime = 0.9f;
             ApplyRunes();
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
-
-            LightningPos = p.AimTarget - GameObject.Transform.Position;
-
-            //sets the speed of the spell
-            velocity = LightningPos * 400f;
-
-            //adds a collider
-            collider = new Collider(GameObject, new Vector2(8, 8));
+            waitTimer = 0.9f;
+            existenceTimer = 0.05f;
+            hadACollider = false;
         }
 
         public void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
-        }
-
-        public void OnAnimationDone(string animationsName)
-        {
-            
+            if (waitTimer <= 0)
+            {
+                drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
+            }
         }
 
         public void Update()
         {
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
 
-            //Finds Enemy component  and if it's not null, deal damage and apply floating damage text 
-            //to the enemy when the object's collision position is found.
-            foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
+            if (waitTimer <= 0 && !hadACollider)
             {
-                var enemy = other.GameObject.GetComponent<Enemy>();
-                if (enemy != null)
+                collider = new Collider(GameObject, new Vector2(10, 10));
+                hadACollider = true;
+
+                foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
                 {
-                    enemy.DealDamage(Damage);
-                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    var enemy = other.GameObject.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.DealDamage(Damage);
+                        GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position,
+                            Damage.ToString()));
+                    }
                 }
             }
+            else
+            {
+                waitTimer -= GameWorld.DeltaTime;
+            }
+
+            if (collider != null)
+            {
+                existenceTimer -= GameWorld.DeltaTime;
+            }
+
+            if (existenceTimer <= 0)
+            {
+                GameWorld.CurrentScene.RemoveObject(GameObject);
+            }
+
             if (!Utils.InsideCircle(GameObject.Transform.Position, 320))
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
