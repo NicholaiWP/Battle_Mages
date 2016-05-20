@@ -16,6 +16,8 @@ namespace BattleMages
 
         public EarthSpikes(GameObject go, SpellCreationParams p) : base(go, p)
         {
+            GameObject.Transform.Position = p.AimTarget;
+
             Damage = 8;
             damageTimer = 0;
             CooldownTime = 5;
