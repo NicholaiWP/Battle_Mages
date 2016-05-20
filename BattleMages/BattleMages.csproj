@@ -16,6 +16,7 @@
     </MonoGameContentBuilderExe>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -59,7 +59,6 @@
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />
-    <Compile Include="Components\SpellBookUI.cs" />
     <Compile Include="Components\Spells\EarthSpikes.cs" />
     <Compile Include="Components\Spells\Lightning.cs" />
     <Compile Include="Components\WaveController.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="Library\Cursor.cs" />
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\GameWorld.cs" />
+    <Compile Include="Library\PlayerSpell.cs" />
     <Compile Include="Library\Scenes\DeathScene.cs" />
     <Compile Include="Library\Scenes\GameScene.cs" />
     <Compile Include="Library\Scenes\HallwayScene.cs" />

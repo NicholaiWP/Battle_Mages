@@ -64,7 +64,7 @@ namespace BattleMages
             if (canUseSpells && mState.LeftButton == ButtonState.Pressed && spell1CooldownTimer <= 0)
             {
                 selectedSpell = 0;
-                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
 
                 //Fetch base spell and runes
                 var baseSpell = spellToCast.GetSpell();
@@ -87,7 +87,7 @@ namespace BattleMages
             if (canUseSpells && mState.RightButton == ButtonState.Pressed && spell2CooldownTimer <= 0)
             {
                 selectedSpell = 1;
-                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
                 var baseSpell = spellToCast.GetSpell();
                 RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
                 for (int i = 0; i < spellToCast.RuneCount; i++)
@@ -110,7 +110,7 @@ namespace BattleMages
             if (canUseSpells && mState.MiddleButton == ButtonState.Pressed && spell3CooldownTimer <= 0)
             {
                 selectedSpell = 2;
-                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
                 var baseSpell = spellToCast.GetSpell();
                 RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
                 for (int i = 0; i < spellToCast.RuneCount; i++)
@@ -134,7 +134,7 @@ namespace BattleMages
             if (canUseSpells && kbState.IsKeyDown(Keys.D2) && spell4CooldownTimer <= 0)
             {
                 selectedSpell = 3;
-                PlayerSpell spellToCast = GameWorld.State.SpellBar[selectedSpell];
+                PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
                 var baseSpell = spellToCast.GetSpell();
                 RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
                 for (int i = 0; i < spellToCast.RuneCount; i++)

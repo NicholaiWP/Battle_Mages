@@ -37,6 +37,7 @@ namespace BattleMages
             {
                 new RuneInfo("Damage up rune",
                 "+damage",
+                "rune1",
                 DamageUpRune),
             };
 
@@ -45,18 +46,22 @@ namespace BattleMages
             {
                 new SpellInfo("Fireball",
                 "A ball of fire",
+                "fireballRune",
                 (go, p) => { return new Fireball(go, p); }),
 
                 new SpellInfo("Icicle",
                 "Sharp chunks of ice",
+                "iceshardsRune",
                 (go, p) => { return new IceShard(go, p); }),
 
                 new SpellInfo("Lightning",
                 "A fierce lightning which strikes from the sky",
-               (go, p) => {return new Lightning(go, p); }),
+                "lightningRune",
+                (go, p) => {return new Lightning(go, p); }),
 
                 new SpellInfo("EarthSpikes",
                 "Hard spikes will rise from the ground",
+                "earthspikesRune",
                (go, p) => {return new EarthSpikes(go, p); }),
             };
         }
