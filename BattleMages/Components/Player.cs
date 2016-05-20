@@ -137,7 +137,7 @@ namespace BattleMages
             if (health <= 0)
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
-                //GameWorld.ChangeScene(new DeathScene());
+                GameWorld.ChangeScene(new DeathScene());
             }
         }
     }
