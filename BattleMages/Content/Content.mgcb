@@ -503,16 +503,17 @@
 /processorParam:TextureFormat=Color
 /build:Spell Images/lightning_bigger.png
 
-#begin Spell Images/earthspikes.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Spell Images/earthspikes.png
+#begin Sounds/AmbienceSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/AmbienceSound.wav
+
+#begin Sounds/WalkSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/WalkSound.wav
 
 #begin Sounds/CombatMusic.mp3
 /importer:Mp3Importer
@@ -520,21 +521,9 @@
 /processorParam:Quality=Best
 /build:Sounds/CombatMusic.mp3
 
-#begin Sounds/AmbienceSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/AmbienceSound.wav
-
 #begin Sounds/HubMusic.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Sounds/HubMusic.mp3
-
-#begin Sounds/WalkSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/WalkSound.wav
 
