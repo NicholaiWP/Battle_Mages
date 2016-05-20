@@ -15,7 +15,6 @@ namespace BattleMages
         private List<GameObject> objectsToRemove = new List<GameObject>();
         protected bool combatState;
         protected SpriteFont fontBM;
-        protected Texture2D background;
 
         public bool CombatState;
         /// <summary>
