@@ -23,6 +23,8 @@ namespace BattleMages
 
         private float cooldownTimer;
 
+        public int Health { get { return health; } }
+
         public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
             health = 100;

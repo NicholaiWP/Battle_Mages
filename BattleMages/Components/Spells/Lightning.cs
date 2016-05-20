@@ -24,7 +24,7 @@ namespace BattleMages
             CooldownTime = 0.9f;
             ApplyRunes();
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
-            waitTimer = 0.9f;
+            waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
         }
@@ -33,7 +33,7 @@ namespace BattleMages
         {
             if (waitTimer <= 0)
             {
-                drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
+                drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(0, sprite.Height), Color.White);
             }
         }
 
