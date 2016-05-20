@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace BattleMages
 {
@@ -16,6 +17,8 @@ namespace BattleMages
 
         public HallwayScene()
         {
+            GameWorld.SoundManager.Music("HubBGM");
+
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
             lobbyTexture = content.Load<Texture2D>("Backgrounds/Hallway");

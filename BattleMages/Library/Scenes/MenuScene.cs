@@ -12,7 +12,6 @@ namespace BattleMages
     {
         public MenuScene()
         {
-            combatState = false;
             var content = GameWorld.Instance.Content;
             //Play button
             var playSpr1 = content.Load<Texture2D>("Images/BMPlayGameButton");
@@ -55,10 +54,12 @@ namespace BattleMages
                 true
                 ));
             background = content.Load<Texture2D>("Images/BMmenu");
+            
         }
 
         public override void Update()
         {
+            
             foreach (GameObject button in ActiveObjects)
             {
                 button.Update();

@@ -14,9 +14,7 @@ namespace BattleMages
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
         private Song hubBGM;
         private Song combatBGM;
-        
-        public Song HubBGM { get; set; }
-        public Song CombatBGM { get; set; }
+
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
@@ -27,7 +25,7 @@ namespace BattleMages
         public SoundManager()
         {
             SoundVolume = 0.25f;
-            MusicVolume = 0.10f;
+            MusicVolume = 0.20f;
         }
 
         /// <summary>
@@ -48,15 +46,15 @@ namespace BattleMages
         /// <summary>
         /// Method for playing music that is looped
         /// </summary>
-        public void Music()
+        public void Music(string soundName)
         {
-            if (GameWorld.CurrentScene.CombatState == true)
+            if (soundName == "CombatBGM")
             {
-                MediaPlayer.Play(combatBGM);
+                    MediaPlayer.Play(combatBGM);
             }
-            else
+            if (soundName == "HubBGM")
             {
-                MediaPlayer.Play(hubBGM);
+                    MediaPlayer.Play(hubBGM);
             }
         }
 

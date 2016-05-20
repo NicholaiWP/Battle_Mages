@@ -97,7 +97,7 @@ namespace BattleMages
             camera.LoadContent(Content);
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);
-            soundManager.Music();
+            soundManager.Music("HubBGM");
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace BattleMages
 
         public LobbyScene()
         {
-            combatState = false;
+            GameWorld.SoundManager.Music("HubBGM");
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);

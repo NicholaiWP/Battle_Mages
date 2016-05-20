@@ -16,7 +16,7 @@ namespace BattleMages
 
         public GameScene()
         {
-            combatState = true;
+            GameWorld.SoundManager.Music("CombatBGM");
 
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
