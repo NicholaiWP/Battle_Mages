@@ -48,7 +48,7 @@ namespace BattleMages
             {
                 if (instance == null)
                 {
-                    instance = new GameWorld();
+                    throw new InvalidOperationException("A GameWorld has not been instantiated yet.");
                 }
                 return instance;
             }
@@ -57,8 +57,11 @@ namespace BattleMages
         /// <summary>
         /// Constructor for the GameWorld
         /// </summary>
-        private GameWorld()
+        public GameWorld()
         {
+            if (instance != null) throw new InvalidOperationException("One GameWorld already exists.");
+            instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
