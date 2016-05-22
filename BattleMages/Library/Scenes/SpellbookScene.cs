@@ -73,10 +73,10 @@ namespace BattleMages
             //Spell
             var spellSpr1 = content.Load<Texture2D>("Images/Button_Rune");
             var spellSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
-            AddObject(new Button(
+            AddObject(ObjectBuilder.BuildButton(
+                baseSpellPosition - new Vector2(spellSpr1.Width / 2, spellSpr2.Height / 2),
                 spellSpr1,
                 spellSpr2,
-                baseSpellPosition - new Vector2(spellSpr1.Width / 2, spellSpr2.Height / 2),
                 () =>
                 {
                     if (currentlyEditing != null && selectedSpell != null)
@@ -84,7 +84,7 @@ namespace BattleMages
                         currentlyEditing.SetSpell(StaticData.Spells.IndexOf(selectedSpell));
                     }
                     UpdateRuneGrid();
-                }, false,
+                },
                 () => { if (currentlyEditing != null) { currentlyEditing.SetSpell(-1); UpdateRuneGrid(); } }
                 ));
             for (int i = 0; i < runePositions.Length; i++)
@@ -92,10 +92,10 @@ namespace BattleMages
                 int thisPos = i;
                 var runeSpr1 = content.Load<Texture2D>("Images/Button_Rune");
                 var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
-                AddObject(new Button(
+                AddObject(ObjectBuilder.BuildButton(
+                    runePositions[thisPos] - new Vector2(runeSpr1.Width / 2, runeSpr1.Height / 2),
                     runeSpr1,
                     runeSpr2,
-                    runePositions[thisPos] - new Vector2(runeSpr1.Width / 2, runeSpr1.Height / 2),
                     () =>
                     {
                         if (currentlyEditing != null && selectedRune != null)
@@ -103,7 +103,7 @@ namespace BattleMages
                             currentlyEditing.SetRune(thisPos, StaticData.Runes.IndexOf(selectedRune));
                         }
                         UpdateRuneGrid();
-                    }, false,
+                    },
                     () => { if (currentlyEditing != null) { currentlyEditing.SetRune(thisPos, -1); UpdateRuneGrid(); } }
                     ));
             }
@@ -120,10 +120,10 @@ namespace BattleMages
             //New spell button
             var newSpellSpr1 = content.Load<Texture2D>("Images/Button_NewSpell");
             var newSpellSpr2 = content.Load<Texture2D>("Images/Button_NewSpell_Hover");
-            AddTabObject(new Button(
+            AddTabObject(ObjectBuilder.BuildButton(
+                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 newSpellSpr1,
                 newSpellSpr2,
-                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 () =>
                 {
                     PlayerSpell newSpell = new PlayerSpell();
@@ -137,10 +137,10 @@ namespace BattleMages
             foreach (PlayerSpell spell in GameWorld.State.SpellBook)
             {
                 PlayerSpell thisSpell = spell;
-                AddTabObject(new Button(
+                AddTabObject(ObjectBuilder.BuildButton(
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextSpellYPos),
                     playerSpellSpr1,
                     playerSpellSpr2,
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextSpellYPos),
                     () =>
                     {
                         if (selectedSpellBarSlot >= 0)
@@ -175,10 +175,10 @@ namespace BattleMages
 
                 var btnSpr1 = content.Load<Texture2D>("Images/Button_Rune");
                 var btnSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
-                AddTabObject(new Button(
+                AddTabObject(ObjectBuilder.BuildButton(
+                        TopLeft + new Vector2(20 + thisIndex * 24, GameWorld.GameHeight - 40),
                         btnSpr1,
                         btnSpr2,
-                        TopLeft + new Vector2(20 + thisIndex * 24, GameWorld.GameHeight - 40),
                         () => { selectedSpellBarSlot = thisIndex; }
                     ));
                 AddTabObject(RuneIcon(TopLeft + new Vector2(20 + thisIndex * 24 + 8, GameWorld.GameHeight - 40 + 8), GameWorld.State.SpellBook[spellId].GetSpell().TextureName));
@@ -195,10 +195,10 @@ namespace BattleMages
             //Done button
             var doneSpr1 = content.Load<Texture2D>("Images/Button_Done");
             var doneSpr2 = content.Load<Texture2D>("Images/Button_Done_Hover");
-            AddTabObject(new Button(
+            AddTabObject(ObjectBuilder.BuildButton(
+                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 doneSpr1,
                 doneSpr2,
-                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 () =>
                 {
                     currentlyEditing = null;
@@ -215,10 +215,10 @@ namespace BattleMages
             foreach (var spell in StaticData.Spells)
             {
                 SpellInfo thisSpell = spell;
-                AddTabObject(new Button(
+                AddTabObject(ObjectBuilder.BuildButton(
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
                     content.Load<Texture2D>("Rune Images/" + thisSpell.TextureName),
                     runeSpr2,
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
                     () =>
                     {
                         bottomLeftText = thisSpell.Name + Environment.NewLine + thisSpell.Description;
@@ -241,10 +241,10 @@ namespace BattleMages
             foreach (var rune in StaticData.Runes)
             {
                 RuneInfo thisRune = rune;
-                AddTabObject(new Button(
+                AddTabObject(ObjectBuilder.BuildButton(
+                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
                     content.Load<Texture2D>("Rune Images/" + thisRune.TextureName),
                     runeSpr2,
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
                     () =>
                     {
                         bottomLeftText = thisRune.Name + Environment.NewLine + thisRune.Description;

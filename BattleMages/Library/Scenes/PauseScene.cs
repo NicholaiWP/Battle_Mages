@@ -21,22 +21,21 @@ namespace BattleMages
             //Continue button in pause screen
             var ContinueSpr1 = content.Load<Texture2D>("Images/BMContinueButton1");
             var ContinueSpr2 = content.Load<Texture2D>("Images/BMContinueButton_hover7");
-            AddObject(new Button(
-           ContinueSpr1,
-           ContinueSpr2,
-           new Vector2(-ContinueSpr1.Width / 2, ContinueSpr1.Height * -1f),
-           () => { GameWorld.ChangeScene(oldScene); },
-           false));
+            AddObject(ObjectBuilder.BuildButton(
+                new Vector2(-ContinueSpr1.Width / 2, ContinueSpr1.Height * -1f),
+                ContinueSpr1,
+                ContinueSpr2,
+                () => { GameWorld.ChangeScene(oldScene); }
+                ));
 
             //Quit button for pause screen
             var QuitSpr1 = content.Load<Texture2D>("Images/BMQuitButton");
             var QuitSpr2 = content.Load<Texture2D>("Images/BMQuitButton_Hover");
-            AddObject(new Button(
+            AddObject(ObjectBuilder.BuildButton(
+                new Vector2(-QuitSpr1.Width / 2, 0),
                 QuitSpr1,
                 QuitSpr2,
-                new Vector2(-QuitSpr1.Width / 2, 0),
-                () => { GameWorld.Instance.Exit(); },
-                false
+                () => { GameWorld.Instance.Exit(); }
                 ));
 
             if (oldScene is GameScene)
@@ -44,12 +43,11 @@ namespace BattleMages
                 //Forfeit button for pause screen
                 var ForfeitSpr1 = content.Load<Texture2D>("Images/forfeit_button");
                 var ForfeitSpr2 = content.Load<Texture2D>("Images/forfeit_hover_red2");
-                AddObject(new Button(
+                AddObject(ObjectBuilder.BuildButton(
+                    new Vector2(-ForfeitSpr1.Width / 2, ForfeitSpr1.Height * 1f),
                     ForfeitSpr1,
                     ForfeitSpr2,
-                     new Vector2(-ForfeitSpr1.Width / 2, ForfeitSpr1.Height * 1f),
-                    () => { GameWorld.ChangeScene(new LobbyScene()); },
-                    false
+                    () => { GameWorld.ChangeScene(new LobbyScene()); }
                     ));
             }
 

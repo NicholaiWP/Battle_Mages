@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BattleMages
 {
-    public class GameObject
+    public sealed class GameObject
     {
         private List<Component> components = new List<Component>();
         private List<Component> componentsToAdd = new List<Component>();
@@ -61,7 +61,7 @@ namespace BattleMages
         /// <summary>
         /// Method for updating the gameobject, position etc.
         /// </summary>
-        public virtual void Update()
+        public void Update()
         {
             foreach (Component comp in components)
             {
@@ -89,7 +89,7 @@ namespace BattleMages
         /// Method for drawing the gameobject on the screen
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public virtual void Draw(Drawer drawer)
+        public void Draw(Drawer drawer)
         {
             foreach (Component comp in components)
             {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -50,6 +51,13 @@ namespace BattleMages
             Spell s = baseSpell.CreateSpell(gameObject, creationParams);
             gameObject.AddComponent(s);
             cooldownTime = s.CooldownTime;
+            return gameObject;
+        }
+
+        public static GameObject BuildButton(Vector2 position, Texture2D normalTex, Texture2D hoverTex, Button.ClickDelegate onClick, Button.ClickDelegate onRightClick = null, bool wiggle = false)
+        {
+            GameObject gameObject = new GameObject(position);
+            gameObject.AddComponent(new Button(gameObject,normalTex,hoverTex,onClick, onRightClick, wiggle));
             return gameObject;
         }
     }

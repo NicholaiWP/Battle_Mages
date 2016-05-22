@@ -29,22 +29,21 @@ namespace BattleMages
             var content = GameWorld.Instance.Content;
             //Back button
             var backSpr = content.Load<Texture2D>("Images/Back");
-            AddObject(new Button(
+            AddObject(ObjectBuilder.BuildButton(
+                    new Vector2(GameWorld.Camera.Position.X - backSpr.Width / 2, GameWorld.Camera.Position.Y + backSpr.Height * 2f),
                     backSpr,
                     backSpr,
-                    new Vector2(GameWorld.Camera.Position.X - backSpr.Width / 2,
-                    GameWorld.Camera.Position.Y + backSpr.Height * 2f),
                     () => { GameWorld.ChangeScene(new MenuScene()); }
                 ));
-            /* settingsButtons.Add(new Button(MenuButtons.KeyBindDown));
-             settingsButtons.Add(new Button(MenuButtons.KeyBindLeft));
-             settingsButtons.Add(new Button(MenuButtons.KeyBindRight));*/
+            /* settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindDown));
+             settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindLeft));
+             settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindRight));*/
             //Keybind up
             var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
-            AddObject(new Button(
-                keyBindUpSpr,
-                keyBindUpSpr,
+            AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
+                keyBindUpSpr,
+                keyBindUpSpr,
                 () =>
                 {
                     SwappingKeyBind = true;
@@ -52,18 +51,18 @@ namespace BattleMages
                 }));
             //Res down
             var resDown = content.Load<Texture2D>("Images/ResDown");
-            AddObject(new Button(
-                resDown,
-                resDown,
+            AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - 64 - resDown.Width / 2, GameWorld.Camera.Position.Y - 50),
+                resDown,
+                resDown,
                 () => { ElementAtNumber--; }
                 ));
             //Res up
             var resUp = content.Load<Texture2D>("Images/ResUp");
-            AddObject(new Button(
-                resUp,
-                resUp,
+            AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X + 64 - resUp.Width / 2, GameWorld.Camera.Position.Y - 50),
+                resUp,
+                resUp,
                 () => { ElementAtNumber++; }
                 ));
 

@@ -9,14 +9,11 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Button : GameObject
+    public class Button : Component, ICanUpdate, ICanBeDrawn
     {
-        //fields
-
         private int hoverNumber = 0;
         private Texture2D[] sprites = new Texture2D[2];
         private Rectangle rectangle;
-        private Vector2 position;
 
         private ClickDelegate onClick;
         private ClickDelegate onRightClick;
@@ -26,18 +23,12 @@ namespace BattleMages
 
         public delegate void ClickDelegate();
 
-        /// <summary>
-        /// Button class' constructor
-        /// </summary>
-        /// <param name="newSprite1"></param>
-        /// <param name="graphics"></param>
-        public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false, ClickDelegate onRightClick = null) : base(position)
+        public Button(GameObject gameObject, Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false) : base(gameObject)
         {
             sprites[0] = normalTex;
             sprites[1] = hoverTex;
-            this.position = position;
-            startPos = position;
-            offset = position.Y * 0.02f;
+            startPos = GameObject.Transform.Position;
+            offset = GameObject.Transform.Position.Y * 0.02f;
             this.onClick = onClick;
             this.wiggle = wiggle;
             this.onRightClick = onRightClick;
@@ -45,18 +36,18 @@ namespace BattleMages
 
         public void UpdatePosition(Vector2 newPos)
         {
-            position = startPos + newPos;
+            GameObject.Transform.Position = startPos + newPos;
         }
 
-        public override void Update()
+        public void Update()
         {
             if (wiggle)
             {
                 offset += 0.02f;
-                position = startPos + new Vector2((float)Math.Sin(offset) * 8, 0);
+                GameObject.Transform.Position = startPos + new Vector2((float)Math.Sin(offset) * 8, 0);
             }
 
-            rectangle = new Rectangle((int)position.X, (int)position.Y,
+            rectangle = new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y,
                 (sprites[hoverNumber].Width),
                 (sprites[hoverNumber].Height));
 
@@ -86,11 +77,7 @@ namespace BattleMages
             }
         }
 
-        /// <summary>
-        /// Draws the rectangle using a texture, rectangle and color
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        public override void Draw(Drawer drawer)
+        public void Draw(Drawer drawer)
         {
             SpriteBatch spriteBatch = drawer[DrawLayer.UI];
             spriteBatch.Draw(sprites[hoverNumber],
