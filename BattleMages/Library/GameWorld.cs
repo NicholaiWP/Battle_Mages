@@ -106,7 +106,6 @@ namespace BattleMages
         {
             // Create a new Drawer, which can be used to draw textures.
             drawer = new Drawer(GraphicsDevice);
-            camera.LoadContent(Content);
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);         
         }
