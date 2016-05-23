@@ -14,12 +14,11 @@ namespace BattleMages
     {
         //The layers will be ordered by the order they are declared in here
         Background,
-
         Gameplay,
         Foreground,
         UI,
         AboveUI,
-        Mouse
+        Cursor
     }
 
     /// <summary>

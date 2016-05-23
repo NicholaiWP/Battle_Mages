@@ -111,6 +111,34 @@ namespace BattleMages
             OpenSpellsTab();
         }
 
+        #region General purpose methods
+
+        private GameObject RuneIcon(Vector2 position, string textureName)
+        {
+            GameObject go = new GameObject(position);
+            go.AddComponent(new SpriteRenderer(go, "Rune Images/" + textureName));
+            return go;
+        }
+
+        #endregion
+
+        #region Tabs (Left pane)
+
+        private void AddTabObject(GameObject go)
+        {
+            objectsInTab.Add(go);
+            AddObject(go);
+        }
+
+        private void ClearTab()
+        {
+            foreach (GameObject go in objectsInTab)
+            {
+                RemoveObject(go);
+            }
+            objectsInTab.Clear();
+        }
+
         private void OpenSpellsTab()
         {
             bottomRightText = "Select a spell to start\nediting it. Select a spell bar\nslot then select a spell to\nassign the spell to the slot.";
@@ -264,20 +292,9 @@ namespace BattleMages
             UpdateRuneGrid();
         }
 
-        private void ClearTab()
-        {
-            foreach (GameObject go in objectsInTab)
-            {
-                RemoveObject(go);
-            }
-            objectsInTab.Clear();
-        }
+        #endregion
 
-        private void AddTabObject(GameObject go)
-        {
-            objectsInTab.Add(go);
-            AddObject(go);
-        }
+        #region Rune grid (Right pane)
 
         private void ClearRuneGrid()
         {
@@ -317,12 +334,7 @@ namespace BattleMages
             }
         }
 
-        private GameObject RuneIcon(Vector2 position, string textureName)
-        {
-            GameObject go = new GameObject(position);
-            go.AddComponent(new SpriteRenderer(go, "Rune Images/" + textureName));
-            return go;
-        }
+        #endregion
 
         public override void Update()
         {
@@ -338,10 +350,7 @@ namespace BattleMages
                     tabPressed = false;
             }
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Update();
-            }
+            base.Update();
         }
 
         public override void Draw(Drawer drawer)
@@ -350,35 +359,10 @@ namespace BattleMages
             drawer[DrawLayer.UI].DrawString(font, bottomRightText, mcPosition, textColor);
             drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), textColor);
 
-            /*if (currentlyEditing != null)
-            {
-                SpellInfo spell = currentlyEditing.GetSpell();
-                if (spell != null)
-                    drawer[DrawLayer.UI].DrawString(font, spell.Name, centerRunePos, new Color(120, 100, 80));
-
-                RuneInfo rune0 = currentlyEditing.GetRune(0);
-                if (rune0 != null)
-                    drawer[DrawLayer.UI].DrawString(font, rune0.Name, topRunePos, new Color(120, 100, 80));
-
-                RuneInfo rune1 = currentlyEditing.GetRune(1);
-                if (rune1 != null)
-                    drawer[DrawLayer.UI].DrawString(font, rune1.Name, rightRunePos, new Color(120, 100, 80));
-
-                RuneInfo rune2 = currentlyEditing.GetRune(2);
-                if (rune2 != null)
-                    drawer[DrawLayer.UI].DrawString(font, rune2.Name, botRunePos, new Color(120, 100, 80));
-
-                RuneInfo rune3 = currentlyEditing.GetRune(3);
-                if (rune3 != null)
-                    drawer[DrawLayer.UI].DrawString(font, rune3.Name, leftRunePos, new Color(120, 100, 80));
-            }*/
-
             drawer[DrawLayer.Gameplay].Draw(spellCircle, scPosition, Color.White);
             drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Draw(drawer);
-            }
+
+            base.Draw(drawer);
         }
     }
 }

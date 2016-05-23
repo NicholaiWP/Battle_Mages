@@ -37,6 +37,10 @@ namespace BattleMages
             {
                 componentsToAdd.Add(component);
             }
+            else
+            {
+                throw new InvalidOperationException("The game object already contains a component of this type.");
+            }
         }
 
         /// <summary>
@@ -86,7 +90,7 @@ namespace BattleMages
         }
 
         /// <summary>
-        /// Method for drawing the gameobject on the screen
+        /// Draws all components on this game object.
         /// </summary>
         /// <param name="spriteBatch"></param>
         public void Draw(Drawer drawer)
@@ -109,51 +113,6 @@ namespace BattleMages
                 {
                     //If a component is ICanBeAnimated we call the local implementation of the method
                     (component as ICanBeAnimated).OnAnimationDone(animationName);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method when objects collide
-        /// </summary>
-        /// <param name="other"></param>
-        public void OnCollisionEnter(Collider other)
-        {
-            foreach (Component comp in components)
-            {
-                if (comp is IEnterCollision)
-                {
-                    (comp as IEnterCollision).OnCollisionEnter(other);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The method for when the objec´s collides with something repeadetly
-        /// </summary>
-        /// <param name="other"></param>
-        public void OnCollisionStay(Collider other)
-        {
-            foreach (Component comp in components)
-            {
-                if (comp is IStayOnCollision)
-                {
-                    (comp as IStayOnCollision).OnCollisionStay(other);
-                }
-            }
-        }
-
-        /// <summary>
-        /// When objects doesnt collide
-        /// </summary>
-        /// <param name="other"></param>
-        public void OnCollisionExit(Collider other)
-        {
-            foreach (Component comp in components)
-            {
-                if (comp is IExitCollision)
-                {
-                    (comp as IExitCollision).OnCollisionExit(other);
                 }
             }
         }

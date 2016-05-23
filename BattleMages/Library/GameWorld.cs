@@ -106,7 +106,6 @@ namespace BattleMages
         {
             // Create a new Drawer, which can be used to draw textures.
             drawer = new Drawer(GraphicsDevice);
-            camera.LoadContent(Content);
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);         
         }
@@ -151,7 +150,6 @@ namespace BattleMages
                 Exit();
             }
             currentScene.Update();
-            currentScene.ProcessObjectLists();
 
             base.Update(gameTime);
         }
@@ -163,11 +161,15 @@ namespace BattleMages
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
+
             currentScene.Draw(drawer);
-            cursor.Draw(drawer[DrawLayer.Mouse]);
+            cursor.Draw(drawer[DrawLayer.Cursor]);
+
             drawer.EndBatches();
+
             base.Draw(gameTime);
         }
     }

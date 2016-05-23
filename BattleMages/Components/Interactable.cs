@@ -11,7 +11,6 @@ namespace BattleMages
     {
         private Collider collider;
         private Action action;
-        private bool clicked;
 
         public Interactable(GameObject gameObject, Action action) : base(gameObject)
         {
@@ -27,7 +26,7 @@ namespace BattleMages
         {
             if (collider.CalcColliderRect().Contains(GameWorld.Cursor.Position))
             {
-                GameWorld.Cursor.CursorPictureNumber = 1;
+                GameWorld.Cursor.SetCursor(CursorStyle.Interactable);
                 MouseState mouseState = Mouse.GetState();
                 if (GameWorld.Cursor.LeftButtonPressed)
                 {

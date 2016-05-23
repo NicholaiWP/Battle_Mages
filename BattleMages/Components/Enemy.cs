@@ -8,8 +8,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated, IEnterCollision, IExitCollision,
-        IStayOnCollision
+    public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated
     {
         private int level = 1;
         private EnemyType type;
@@ -122,18 +121,6 @@ namespace BattleMages
         }
 
         public void OnAnimationDone(string animationsName)
-        {
-        }
-
-        public void OnCollisionEnter(Collider other)
-        {
-        }
-
-        public void OnCollisionStay(Collider other)
-        {
-        }
-
-        public void OnCollisionExit(Collider other)
         {
         }
     }
