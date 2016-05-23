@@ -37,6 +37,10 @@ namespace BattleMages
             {
                 componentsToAdd.Add(component);
             }
+            else
+            {
+                throw new InvalidOperationException("The game object already contains a component of this type.");
+            }
         }
 
         /// <summary>
