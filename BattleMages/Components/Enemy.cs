@@ -17,9 +17,11 @@ namespace BattleMages
         private Animator animator;
         private Transform transform;
         private Character character;
+        private Collider collider;
         private int damage;
         private int health;
         private float attackSpeed;
+        private bool dodge;
 
         //properties
         public int Level { get { return level; } }
@@ -29,13 +31,14 @@ namespace BattleMages
         public int Health { get { return health; } set { health = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
 
-        public Enemy(GameObject gameObject, int startHealth, EnemyType type) : base(gameObject)
+        public Enemy(GameObject gameObject, int startHealth, EnemyType type, bool dodge) : base(gameObject)
         {
             IsAttacking = false;
             damage = 10;
             attackSpeed = 0;
             health = startHealth;
             this.type = type;
+            this.dodge = dodge;
         }
 
         public void DealDamage(int points)
@@ -53,15 +56,15 @@ namespace BattleMages
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
-
+            collider = GameObject.GetComponent<Collider>();
             switch (type)
             {
                 case EnemyType.CloseRange:
-                    enemyAI = new EnemyCloseRange(character, this, transform);
+                    enemyAI = new EnemyCloseRange(character, this, transform, dodge);
                     break;
 
                 case EnemyType.Ranged:
-                    enemyAI = new EnemyRanged(character, this, transform);
+                    enemyAI = new EnemyRanged(character, this, transform, dodge);
                     break;
 
                 case EnemyType.DodgingCloseRange:
@@ -101,7 +104,15 @@ namespace BattleMages
                 attackSpeed -= GameWorld.DeltaTime;
                 IsAttacking = false;
             }
-            enemyAI.Targeting();
+            if (dodge)
+            {
+                enemyAI.Dodge();
+            }
+
+            if (!enemyAI.IsDodging)
+            {
+                enemyAI.Targeting();
+            }
             character.Movement();
             character.Up = false;
             character.Down = false;

@@ -40,10 +40,10 @@ namespace BattleMages
             return pos;
         }
 
-        public static bool InsideCircle(Vector2 pos, float circleRadius)
+        public static bool InsideCircle(Vector2 currentPos, Vector2 midPos, float circleRadius)
         {
             bool isObjectInside;
-            Vector2 vec = Vector2.Subtract(pos, Vector2.Zero);
+            Vector2 vec = Vector2.Subtract(currentPos, midPos);
             float lengthOfVec = vec.Length();
             if (lengthOfVec >= circleRadius)
             {

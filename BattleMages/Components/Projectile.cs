@@ -28,6 +28,7 @@ namespace BattleMages
                     sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
                     collider = new Collider(GameObject, new Vector2(8, 8));
+                    GameObject.AddComponent(collider);
                     break;
                 }
             }
@@ -45,7 +46,7 @@ namespace BattleMages
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }
             }
-            if (!Utils.InsideCircle(GameObject.Transform.Position, 320))
+            if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
             }
