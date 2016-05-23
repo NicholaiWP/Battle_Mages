@@ -122,18 +122,6 @@ namespace BattleMages
 
         public static void ChangeScene(Scene targetScene)
         {
-            //TODO: wtf is this
-            if (targetScene is PauseScene)
-            {
-                foreach (GameObject go in targetScene.ActiveObjects)
-                {
-                    Button b = go.GetComponent<Button>();
-                    if (b != null)
-                    {
-                        b.UpdatePosition(Camera.Position);
-                    }
-                }
-            }
             Instance.currentScene = targetScene;
         }
 

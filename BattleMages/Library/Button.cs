@@ -34,11 +34,6 @@ namespace BattleMages
             this.onRightClick = onRightClick;
         }
 
-        public void UpdatePosition(Vector2 newPos)
-        {
-            GameObject.Transform.Position = startPos + newPos;
-        }
-
         public void Update()
         {
             if (wiggle)
