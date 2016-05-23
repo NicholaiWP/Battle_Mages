@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 
@@ -14,54 +13,13 @@ namespace BattleMages
     {
         private List<PlayerSpell> spellBook = new List<PlayerSpell>();
         private List<int> spellBar = new List<int>();
-        private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
 
         public List<PlayerSpell> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
 
         public void Save()
         {
-            SQLiteConnection.CreateFile("BMdatabase.db");
-            CreateTables();
-            InsertToTables();
-        }
 
-        private void CreateTables()
-        {
-            connection.Open();
-
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(id integer primary key, spellId int, rune1Id int, rune2Id int, rune3Id int, rune4Id int)",
-                connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(spellId int, rune1Id int, rune2Id int, rune3Id int, rune4Id int)",
-                connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS ChallengesCompleted(challengeId int)",
-                connection))
-            {
-                command.ExecuteNonQuery();
-            }
-            connection.Close();
-        }
-
-        private void InsertToTables()
-        {
-            connection.Open();
-            using (SQLiteCommand command = new SQLiteCommand("DELETE * from SpellBook", connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            using (SQLiteCommand command = new SQLiteCommand(@"INSERT INTO SpellBook VALUES(null, @spellId, @rune1Id, @rune2Id, @rune3Id, @rune4Id)",
-                connection))
-            {
-            }
         }
     }
 }
