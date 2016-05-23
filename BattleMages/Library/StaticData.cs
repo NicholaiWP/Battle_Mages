@@ -52,7 +52,7 @@ namespace BattleMages
                 new SpellInfo("Icicle",
                 "Sharp chunks of ice",
                 "iceshardsRune",
-                (go, p) => { return new IceShard(go, p); }),
+                (go, p) => { return new IceShard(go, p, true); }),
 
                 new SpellInfo("Lightning",
                 "A fierce lightning which strikes\n from the sky",

@@ -56,9 +56,9 @@ namespace BattleMages
             return isObjectInside;
         }
 
-        public static Vector2 RotationPos(Vector2 vecTowardsTarget, float rotationDegrees)
+        public static Vector2 RotateVector(Vector2 vector, float rotationDegrees)
         {
-            float angleTowardsTarget = (float)Math.Atan2(vecTowardsTarget.Y, vecTowardsTarget.X);
+            float angleTowardsTarget = (float)Math.Atan2(vector.Y, vector.X);
             float angleCw = angleTowardsTarget + MathHelper.ToRadians(rotationDegrees);
             return new Vector2((float)Math.Cos(angleCw), (float)Math.Sin(angleCw));
         }
