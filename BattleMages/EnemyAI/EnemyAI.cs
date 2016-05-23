@@ -83,6 +83,24 @@ namespace BattleMages
                     col.GameObject.GetComponent<Player>() == null &&
                     col.GameObject.GetComponent<Enemy>() == null)
                 {
+                    bool comingFromAbove = enemy.GameObject.Transform.Position.Y >=
+                        col.GameObject.Transform.Position.Y;
+                    bool comingFromBelow = enemy.GameObject.Transform.Position.Y <=
+                        col.GameObject.Transform.Position.Y;
+                    bool comingFromLeftSide = enemy.GameObject.Transform.Position.X >=
+                        col.GameObject.Transform.Position.X;
+                    bool comingFromRightSide = enemy.GameObject.Transform.Position.X <=
+                        col.GameObject.Transform.Position.X;
+
+                    if (comingFromAbove)
+                        character.Left = true;
+                    if (comingFromBelow)
+                        character.Right = true;
+                    if (comingFromLeftSide)
+                        character.Down = true;
+                    if (comingFromRightSide)
+                        character.Up = true;
+                    IsDodging = true;
                     break;
                 }
             }

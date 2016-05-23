@@ -118,6 +118,7 @@ namespace BattleMages
             character.Down = false;
             character.Right = false;
             character.Left = false;
+            enemyAI.IsDodging = false;
         }
 
         public void OnAnimationDone(string animationsName)
