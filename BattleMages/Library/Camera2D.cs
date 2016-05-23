@@ -67,8 +67,6 @@ namespace BattleMages
 
             var camMovespeed = 250 * dt;
 
-            GameWorld.Cursor.CursorPictureNumber = 0;
-
             Vector2 pos = (GameWorld.Cursor.Position + latestTargetPosition) / 2;
             position = pos;
         }
