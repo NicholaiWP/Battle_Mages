@@ -79,7 +79,9 @@ namespace BattleMages
             soundManager = new SoundManager();
             cursor = new Cursor();
             camera = new Camera2D();
-            state = new SavedState();
+            state = new SavedState(); 
+                 
+            
 
             //Create 4 test spell for both the bar and the book
             for (int i = 0; i < 4; i++)
@@ -107,7 +109,7 @@ namespace BattleMages
             // Create a new Drawer, which can be used to draw textures.
             drawer = new Drawer(GraphicsDevice);
             cursor.LoadContent(Content);
-            soundManager.LoadContent(Content);         
+            soundManager.LoadContent(Content);                   
         }
 
         /// <summary>
@@ -132,6 +134,7 @@ namespace BattleMages
         protected override void Update(GameTime gameTime)
         {
             cursor.Update();
+                 
             if(currentScene is MenuScene || CurrentScene is LobbyScene || currentScene is HallwayScene)
             {
                 SoundManager.Music("HubBGM");
