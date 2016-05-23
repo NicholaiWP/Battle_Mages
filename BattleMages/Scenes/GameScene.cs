@@ -29,7 +29,6 @@ namespace BattleMages
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
-
             //Changes the sound volume
             GameWorld.SoundManager.AmbienceVolume = 0.05f;
 
@@ -41,7 +40,7 @@ namespace BattleMages
             waveController.AddComponent(new WaveController(waveController, this));
             waveController.Update();
             //Get all objects on the list before the first run of Update()
-            ProcessObjectLists();
+            base.Update();
         }
 
         public override void Update()

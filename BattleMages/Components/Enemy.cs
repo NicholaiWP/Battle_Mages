@@ -115,6 +115,7 @@ namespace BattleMages
             }
             character.Movement();
             character.MoveDirection = Vector2.Zero;
+            enemyAI.IsDodging = false;
         }
 
         public void OnAnimationDone(string animationsName)

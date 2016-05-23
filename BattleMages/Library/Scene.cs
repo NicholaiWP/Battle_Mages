@@ -17,6 +17,7 @@ namespace BattleMages
         protected SpriteFont fontBM;
 
         public bool CombatState;
+
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
         /// </summary>
@@ -34,9 +35,10 @@ namespace BattleMages
         /// </summary>
         public virtual void Update()
         {
+            ProcessObjectLists();
+
             foreach (GameObject go in activeObjects)
                 go.Update();
-            ProcessObjectLists();
         }
 
         /// <summary>

@@ -25,6 +25,7 @@ namespace BattleMages
         public void NewWave()
         {
             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged, true));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange, true));
             /*scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged));
             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange));
             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(150, 70), EnemyType.Ranged));

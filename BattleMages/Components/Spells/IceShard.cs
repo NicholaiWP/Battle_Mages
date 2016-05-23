@@ -40,6 +40,7 @@ namespace BattleMages
 
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
             collider = new Collider(GameObject, new Vector2(8, 8));
+            GameObject.AddComponent(collider);
         }
 
         public void Draw(Drawer drawer)

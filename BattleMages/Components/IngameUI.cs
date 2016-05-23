@@ -10,25 +10,27 @@ namespace BattleMages
 {
     public class IngameUI : Component, ICanBeDrawn, ICanBeLoaded
     {
-        private Texture2D healthBarSprite;
-        private Texture2D manaBarSprite;
+        public Texture2D healthBar;
+        private Texture2D manaBar;
         private Texture2D spellOneSprite;
         private Texture2D spellTwoSprite;
         private Texture2D spellThreeSprite;
         private Texture2D spellFourSprite;
         private Texture2D coinsSprite;
+        
 
         private SpriteFont haxFont;
 
         public IngameUI(GameObject gameObject) : base(gameObject)
         {
+          
         }
 
         public void LoadContent(ContentManager content)
         {
             haxFont = content.Load<SpriteFont>("FontBM");
-            healthBarSprite = content.Load<Texture2D>("images/healthBar");
-            manaBarSprite = content.Load<Texture2D>("images/manaBar");
+            healthBar = content.Load<Texture2D>("images/healthBar");
+            manaBar = content.Load<Texture2D>("images/manaBar");
             spellOneSprite = content.Load<Texture2D>("images/BMspellSprite");
             spellTwoSprite = content.Load<Texture2D>("images/BMspellSprite");
             spellThreeSprite = content.Load<Texture2D>("images/BMspellSprite");
@@ -44,19 +46,29 @@ namespace BattleMages
             Vector2 topRight = GameWorld.Camera.Position - new Vector2((-GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             Vector2 bottomMiddle = GameWorld.Camera.Position - new Vector2(0, ((-GameWorld.GameHeight / 2 + offset) + spellOneSprite.Height));
 
+            //Player player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
+            //if (player != null)
+            //{
+            //    drawer[DrawLayer.UI].DrawString(haxFont, "Health: " + player.Health, topLeft, Color.Purple);
+            //}
+
             Player player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
             if (player != null)
             {
-                drawer[DrawLayer.UI].DrawString(haxFont, "Health: " + player.Health, topLeft, Color.Purple);
-            }
+                player.Health = healthBar.Width;
+                drawer[DrawLayer.UI].Draw(healthBar,  destinationRectangle: new Rectangle((int)topLeft.X, (int)topLeft.Y, player.CurrentHealth, healthBar.Height), color: Color.White);
+                drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height));
 
-            //drawer[DrawLayer.UI].Draw(healthBarSprite, position: topLeft);
-            //drawer[DrawLayer.UI].Draw(manaBarSprite, position: new Vector2(topLeft.X, topLeft.Y + healthBarSprite.Height));
+            }
+          
             drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset)) - (spellOneSprite.Width * 2), bottomMiddle.Y));
             drawer[DrawLayer.UI].Draw(spellTwoSprite, position: new Vector2((bottomMiddle.X - halfOffset) - (spellOneSprite.Width), bottomMiddle.Y));
             drawer[DrawLayer.UI].Draw(spellThreeSprite, position: new Vector2((bottomMiddle.X + halfOffset), bottomMiddle.Y));
             drawer[DrawLayer.UI].Draw(spellFourSprite, position: new Vector2((bottomMiddle.X + (offset + halfOffset)) + (spellOneSprite.Width), bottomMiddle.Y));
             drawer[DrawLayer.UI].Draw(coinsSprite, position: new Vector2(topRight.X - (coinsSprite.Width + offset), topRight.Y));
+
         }
+
     }
+      
 }

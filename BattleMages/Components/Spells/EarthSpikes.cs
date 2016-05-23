@@ -24,6 +24,7 @@ namespace BattleMages
             ApplyRunes();
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
             collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
+            GameObject.AddComponent(collider);
             timer = 4;
         }
 

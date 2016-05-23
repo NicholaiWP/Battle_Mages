@@ -17,18 +17,46 @@ namespace BattleMages
         private Transform transform;
         private Collider collider;
         private int health;
+        private int currentHealth;
         private bool canUseSpells;
         private int selectedSpell;
         private KeyboardState oldKbState;
+        private Color barColor;
 
         private float cooldownTimer;
 
-        public int Health { get { return health; } }
+        public int Health
+        {
+            get
+            {
+                return health;
+            }
+
+            set
+            {
+                health = value;
+            }
+        }
+
+        public int CurrentHealth
+        {
+            get
+            {
+                return currentHealth;
+            }
+
+            set
+            {
+                currentHealth = value;
+            }
+        }
 
         public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
             health = 100;
             this.canUseSpells = canUseSpells;
+            currentHealth = health;
+           
         }
 
         public void LoadContent(ContentManager content)
@@ -82,7 +110,7 @@ namespace BattleMages
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell4)))
                 selectedSpell = 3;
 
-            Move(kbState);
+                Move(kbState);
         }
 
         private void Move(KeyboardState kbState)
@@ -123,9 +151,9 @@ namespace BattleMages
         }
 
         public void DealDamage(int points)
-        {
-            health -= points;
-            if (health <= 0)
+        {          
+            currentHealth -= points;
+            if (currentHealth <= 0)
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
