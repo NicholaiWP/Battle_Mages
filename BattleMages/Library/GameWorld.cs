@@ -14,7 +14,6 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
-
         public const int GameHeight = 180;
 
         //Fields
