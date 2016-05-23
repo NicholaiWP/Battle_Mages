@@ -59,6 +59,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\Behaviour\TargetPlayer.cs" />
     <Compile Include="Components\Character.cs" />
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
@@ -66,12 +67,10 @@
     <Compile Include="Components\Spells\EarthSpikes.cs" />
     <Compile Include="Components\Spells\Lightning.cs" />
     <Compile Include="Components\WaveController.cs" />
+    <Compile Include="Interfaces\IBehaviour.cs" />
     <Compile Include="Library\Component.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Enemy.cs" />
-    <Compile Include="EnemyAI\EnemyAI.cs" />
-    <Compile Include="EnemyAI\EnemyCloseRange.cs" />
-    <Compile Include="EnemyAI\EnemyRanged.cs" />
     <Compile Include="Library\GameObject.cs" />
     <Compile Include="Components\Projectile.cs" />
     <Compile Include="Components\Transform.cs" />
@@ -151,6 +150,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net451\System.Data.SQLite.Core.targets')" />

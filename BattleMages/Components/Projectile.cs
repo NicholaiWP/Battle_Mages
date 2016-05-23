@@ -14,24 +14,16 @@ namespace BattleMages
         private Texture2D sprite;
         private Collider collider;
 
-        public Projectile(GameObject go, Enemy enemy) : base(go)
+        public Projectile(GameObject go, Enemy enemy, Vector2 targetPos) : base(go)
         {
             damage = enemy.Damage;
-            foreach (GameObject target in GameWorld.CurrentScene.ActiveObjects)
-            {
-                if (target.GetComponent<Player>() != null)
-                {
-                    var diff = target.Transform.Position - GameObject.Transform.Position;
-                    diff.Normalize();
-                    velocity = diff * 120f;
+            var diff = targetPos - GameObject.Transform.Position;
+            diff.Normalize();
+            velocity = diff * 120f;
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
-                    sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
-
-                    collider = new Collider(GameObject, new Vector2(8, 8));
-                    GameObject.AddComponent(collider);
-                    break;
-                }
-            }
+            collider = new Collider(GameObject, new Vector2(8, 8));
+            GameObject.AddComponent(collider);
         }
 
         public void Update()

@@ -14,7 +14,7 @@ namespace BattleMages
         public WaveController(GameObject gameObject, GameScene scene) : base(gameObject)
         {
             this.scene = scene;
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged, true));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), 300, 25));
             /* scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange));
              scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(150, 70), EnemyType.Ranged));
              scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(10, 20), EnemyType.CloseRange));
@@ -24,8 +24,8 @@ namespace BattleMages
 
         public void NewWave()
         {
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged, true));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange, true));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), 300, 25));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), 400, 250));
             /*scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged));
             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange));
             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(150, 70), EnemyType.Ranged));
