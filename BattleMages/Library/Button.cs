@@ -11,7 +11,9 @@ namespace BattleMages
 {
     public class Button : Component, ICanUpdate, ICanBeDrawn
     {
-        private int hoverNumber = 0;
+        private bool hovering;
+        Texture2D normalTex;
+        Texture2D hoverTex;
         private Texture2D[] sprites = new Texture2D[2];
         private Rectangle rectangle;
 
@@ -23,15 +25,24 @@ namespace BattleMages
 
         public delegate void ClickDelegate();
 
+        private Texture2D ActiveTex
+        {
+            get
+            {
+                return hovering ? hoverTex : normalTex;
+            }
+        }
+
         public Button(GameObject gameObject, Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false) : base(gameObject)
         {
-            sprites[0] = normalTex;
-            sprites[1] = hoverTex;
             startPos = GameObject.Transform.Position;
             offset = GameObject.Transform.Position.Y * 0.02f;
+
+            this.normalTex = normalTex;
+            this.hoverTex = hoverTex;
             this.onClick = onClick;
-            this.wiggle = wiggle;
             this.onRightClick = onRightClick;
+            this.wiggle = wiggle;
         }
 
         public void Update()
@@ -43,15 +54,12 @@ namespace BattleMages
             }
 
             rectangle = new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y,
-                (sprites[hoverNumber].Width),
-                (sprites[hoverNumber].Height));
+                (ActiveTex.Width),
+                (ActiveTex.Height));
 
             if (rectangle.Contains(GameWorld.Cursor.Position))
             {
-                if (hoverNumber == 0)
-                {
-                    hoverNumber = 1;
-                }
+                hovering = true;
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
                     GameWorld.Cursor.CanClick)
@@ -68,14 +76,14 @@ namespace BattleMages
             }
             else
             {
-                hoverNumber = 0;
+                hovering = false;
             }
         }
 
         public void Draw(Drawer drawer)
         {
             SpriteBatch spriteBatch = drawer[DrawLayer.UI];
-            spriteBatch.Draw(sprites[hoverNumber],
+            spriteBatch.Draw(ActiveTex,
                 destinationRectangle: rectangle,
                 origin: Vector2.Zero,
                 effects: SpriteEffects.None,

@@ -61,19 +61,19 @@
       <Entity type="Class">
         <Name>Button</Name>
         <Access>Public</Access>
-        <Location left="281" top="3061" />
-        <Size width="261" height="298" />
+        <Location left="58" top="3103" />
+        <Size width="705" height="315" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">private int hoverNumber = 0</Member>
-        <Member type="Field">private Texture2D[] sprites</Member>
+        <Member type="Field">private bool hovering</Member>
+        <Member type="Field">private Texture2D normalTex</Member>
+        <Member type="Field">Texture2D hoverTex</Member>
         <Member type="Field">private Rectangle rectangle</Member>
-        <Member type="Field">private Vector2 position</Member>
         <Member type="Field">private ClickDelegate onClick</Member>
         <Member type="Field">private ClickDelegate onRightClick</Member>
         <Member type="Field">private Vector2 startPos</Member>
         <Member type="Field">private float offset</Member>
         <Member type="Field">private bool wiggle</Member>
-        <Member type="Constructor">public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, bool wiggle = false, ClickDelegate onRightClick = null)</Member>
+        <Member type="Constructor">public Button(Texture2D normalTex, Texture2D hoverTex, Vector2 position, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false)</Member>
         <Member type="Method">public void UpdatePosition(Vector2 newPos)</Member>
         <Member type="Method">public void Update()</Member>
         <Member type="Method">public void Draw(SpriteBatch spriteBatch)</Member>
@@ -521,7 +521,7 @@
       <Entity type="Delegate">
         <Name>ClickDelegate</Name>
         <Access>Public</Access>
-        <Location left="327" top="2673" />
+        <Location left="334" top="2822" />
         <Size width="162" height="190" />
         <Collapsed>False</Collapsed>
         <ReturnType>void</ReturnType>
