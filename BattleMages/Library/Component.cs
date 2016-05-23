@@ -10,10 +10,8 @@ namespace BattleMages
 {
     public class Component
     {
-        //Fields
         private GameObject gameObject;
 
-        //Property
         public GameObject GameObject
         {
             get

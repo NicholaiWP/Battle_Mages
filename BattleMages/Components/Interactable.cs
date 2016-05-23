@@ -11,7 +11,6 @@ namespace BattleMages
     {
         private Collider collider;
         private Action action;
-        private bool clicked;
 
         public Interactable(GameObject gameObject, Action action) : base(gameObject)
         {
