@@ -80,7 +80,8 @@ namespace BattleMages
                 if (Utils.InsideCircle(col.GameObject.Transform.Position, enemy.GameObject.Transform.Position, 100) &&
                     col != enemy.GameObject.GetComponent<Collider>() &&
                     col.GameObject.GetComponent<Projectile>() == null &&
-                    col.GameObject.GetComponent<Player>() == null)
+                    col.GameObject.GetComponent<Player>() == null &&
+                    col.GameObject.GetComponent<Enemy>() == null)
                 {
                     break;
                 }
