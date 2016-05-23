@@ -48,9 +48,9 @@ namespace BattleMages
                             movement.Y -= 1;
                         if (transform.Position.Y + 10 < potentialTarget.Transform.Position.Y - 10)
                             movement.Y += 1;
-                        if (transform.Position.X - 10 > potentialTarget.Transform.Position.X + 10)
+                        if (transform.Position.X  > potentialTarget.Transform.Position.X)
                             movement.X -= 1;
-                        if (transform.Position.X + 10 < potentialTarget.Transform.Position.X - 10)
+                        if (transform.Position.X < potentialTarget.Transform.Position.X)
                             movement.X += 1;
                         character.MoveDirection = movement;
                     }
