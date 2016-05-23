@@ -83,7 +83,7 @@
     <Compile Include="Components\Animator.cs" />
     <Compile Include="Components\Player.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
-    <Compile Include="Library\Button.cs" />
+    <Compile Include="Components\Button.cs" />
     <Compile Include="Library\Camera2D.cs" />
     <Compile Include="Library\Cursor.cs" />
     <Compile Include="Library\Drawer.cs" />
