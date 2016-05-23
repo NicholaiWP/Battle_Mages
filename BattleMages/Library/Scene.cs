@@ -29,9 +29,25 @@ namespace BattleMages
         {
         }
 
-        public abstract void Update();
+        /// <summary>
+        /// Updates all game objects in this scene and processes object lists.
+        /// </summary>
+        public virtual void Update()
+        {
+            foreach (GameObject go in activeObjects)
+                go.Update();
+            ProcessObjectLists();
+        }
 
-        public abstract void Draw(Drawer drawer);
+        /// <summary>
+        /// Draws all game objects in this scene.
+        /// </summary>
+        /// <param name="drawer"></param>
+        public virtual void Draw(Drawer drawer)
+        {
+            foreach (GameObject go in activeObjects)
+                go.Draw(drawer);
+        }
 
         /// <summary>
         /// Marks an object for addition to ActiveObjects.
@@ -55,7 +71,7 @@ namespace BattleMages
         /// Processes objects marked with AddObject or RemoveObject.
         /// The objects will be added/removed from ActiveObjects.
         /// </summary>
-        public void ProcessObjectLists()
+        protected void ProcessObjectLists()
         {
             //Additions
             foreach (GameObject gameObject in objectsToAdd)

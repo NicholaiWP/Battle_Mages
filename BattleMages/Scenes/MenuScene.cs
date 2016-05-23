@@ -66,22 +66,10 @@ namespace BattleMages
                 GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
         }
 
-        public override void Update()
-        {
-            
-            foreach (GameObject button in ActiveObjects)
-            {
-                button.Update();
-            }
-        }
-
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(background, backgroundPos);
-            foreach (GameObject button in ActiveObjects)
-            {
-                button.Draw(drawer);
-            }
+            base.Draw(drawer);
         }
     }
 }

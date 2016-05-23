@@ -32,12 +32,6 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-160 - 8, 0), new Vector2(16, 180 + 32)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
             
-
-            //Updating the gameobjects once to add the components
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Update();
-            }
             //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
             doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
@@ -71,10 +65,7 @@ namespace BattleMages
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
-            foreach (GameObject gameObject in ActiveObjects)
-            {
-                gameObject.Update();
-            }
+            base.Update();
         }
 
         public override void Draw(Drawer drawer)
@@ -82,10 +73,7 @@ namespace BattleMages
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
             drawer[DrawLayer.Foreground].Draw(lobbyTextureForeground, lobbyTexturePosition, Color.White);
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Draw(drawer);
-            }
+            base.Draw(drawer);
         }
     }
 }

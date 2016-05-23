@@ -32,17 +32,16 @@ namespace BattleMages
             {
                GameWorld.ChangeScene(new MenuScene());
                                
-            }          
+            }
+
+            base.Update();
         }
 
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(deathTexture, deathPos, Color.White);
 
-            foreach (GameObject button in ActiveObjects)
-            {
-                button.Draw(drawer);
-            }
+            base.Draw(drawer);
         }
     }
 }

@@ -122,10 +122,7 @@ namespace BattleMages
                 }
             }
 
-            foreach (GameObject button in ActiveObjects)
-            {
-                button.Update();
-            }
+            base.Update();
         }
 
         private void ReadNewKey()
@@ -145,16 +142,13 @@ namespace BattleMages
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Draw(drawer);
-            }
-
             drawer[DrawLayer.UI].DrawString(fontBM, currentResolutionString, new Vector2(GameWorld.Camera.Position.X,
                 GameWorld.Camera.Position.Y), Color.Black);
             drawer[DrawLayer.UI].DrawString(fontBM,
                 GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),
                 new Vector2(GameWorld.Camera.Position.X + 64, GameWorld.Camera.Position.Y - 72), Color.Black);
+
+            base.Draw(drawer);
         }
     }
 }

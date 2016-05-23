@@ -150,7 +150,6 @@ namespace BattleMages
                 Exit();
             }
             currentScene.Update();
-            currentScene.ProcessObjectLists();
 
             base.Update(gameTime);
         }
@@ -162,11 +161,15 @@ namespace BattleMages
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
+
             currentScene.Draw(drawer);
-            cursor.Draw(drawer[DrawLayer.Mouse]);
+            cursor.Draw(drawer[DrawLayer.Cursor]);
+
             drawer.EndBatches();
+
             base.Draw(gameTime);
         }
     }

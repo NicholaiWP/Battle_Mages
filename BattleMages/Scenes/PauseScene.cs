@@ -51,33 +51,17 @@ namespace BattleMages
                     ));
             }
 
-            ProcessObjectLists();
-
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Update();
-            }
-        }
-
-        public override void Update()
-        {
             position = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Update();
-            }
+            ProcessObjectLists();
         }
 
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(pauseTexture, position, Color.White);
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Draw(drawer);
-            }
+            base.Draw(drawer);
         }
     }
 }

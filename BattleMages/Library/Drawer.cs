@@ -18,7 +18,7 @@ namespace BattleMages
         Foreground,
         UI,
         AboveUI,
-        Mouse
+        Cursor
     }
 
     /// <summary>

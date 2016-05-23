@@ -13,7 +13,6 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
-        private int enemyCount;
         private GameObject waveController;
 
         public GameScene()
@@ -47,7 +46,7 @@ namespace BattleMages
 
         public override void Update()
         {
-            enemyCount = 0;
+            int enemyCount = 0;
             //Playing ambient sounds using SoundManager
             GameWorld.SoundManager.PlaySound("AmbienceSound");
 
@@ -63,7 +62,6 @@ namespace BattleMages
 
             foreach (GameObject go in ActiveObjects)
             {
-                go.Update();
                 if (go.GetComponent<Enemy>() != null)
                 {
                     enemyCount++;
@@ -74,14 +72,8 @@ namespace BattleMages
             {
                 waveController.GetComponent<WaveController>().NewWave();
             }
-        }
 
-        public override void Draw(Drawer drawer)
-        {
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Draw(drawer);
-            }
+            base.Update();
         }
     }
 }

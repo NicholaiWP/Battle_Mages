@@ -61,11 +61,6 @@ namespace BattleMages
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
-            foreach (GameObject gameObject in ActiveObjects)
-            {
-                gameObject.Update();
-            }
-
             //Turns volume of ambience up or down depending on the position of Camera
             if (GameWorld.Camera.Position.Y < 0)
             {
@@ -75,16 +70,15 @@ namespace BattleMages
             {
                 GameWorld.SoundManager.AmbienceVolume -= 0.03f * GameWorld.DeltaTime;
             }
+
+            base.Update();
         }
 
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                go.Draw(drawer);
-            }
+            base.Draw(drawer);
         }
     }
 }
