@@ -17,18 +17,21 @@ namespace BattleMages
 
     public abstract class EnemyAI
     {
+        protected bool implementDodge;
         protected Character character;
         protected Enemy enemy;
         protected Transform transform;
         protected float attackRange;
         protected float targetingRange;
         protected Player player;
+        public bool IsDodging { get; set; }
 
-        protected EnemyAI(Character character, Enemy enemy, Transform transform)
+        protected EnemyAI(Character character, Enemy enemy, Transform transform, bool implementDodge)
         {
             this.character = character;
             this.enemy = enemy;
             this.transform = transform;
+            this.implementDodge = implementDodge;
         }
 
         public abstract void Attack();
@@ -68,6 +71,25 @@ namespace BattleMages
                     break;
                 }
             }
+        }
+
+        public void Dodge()
+        {
+            foreach (Collider col in GetCollidersInScene())
+            {
+                if (Utils.InsideCircle(col.GameObject.Transform.Position, enemy.GameObject.Transform.Position, 100) &&
+                    col != enemy.GameObject.GetComponent<Collider>() &&
+                    col.GameObject.GetComponent<Projectile>() == null &&
+                    col.GameObject.GetComponent<Player>() == null)
+                {
+                    break;
+                }
+            }
+        }
+
+        private IEnumerable<Collider> GetCollidersInScene()
+        {
+            return GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
         }
     }
 }

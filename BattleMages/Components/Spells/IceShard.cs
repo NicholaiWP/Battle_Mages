@@ -60,7 +60,7 @@ namespace BattleMages
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }
             }
-            if (!Utils.InsideCircle(GameObject.Transform.Position, 320))
+            if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
             }

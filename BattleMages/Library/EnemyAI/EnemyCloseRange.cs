@@ -8,8 +8,8 @@ namespace BattleMages
 {
     public class EnemyCloseRange : EnemyAI
     {
-        public EnemyCloseRange(Character character, Enemy enemy, Transform transform) :
-            base(character, enemy, transform)
+        public EnemyCloseRange(Character character, Enemy enemy, Transform transform, bool implementDodge) :
+            base(character, enemy, transform, implementDodge)
         {
             attackRange = 30;
             targetingRange = 500 * enemy.Level;

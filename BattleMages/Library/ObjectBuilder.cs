@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -20,13 +20,13 @@ namespace BattleMages
             return gameObject;
         }
 
-        public static GameObject BuildEnemy(Vector2 position, EnemyType type)
+        public static GameObject BuildEnemy(Vector2 position, EnemyType type, bool implementDodge)
         {
             GameObject gameObject = new GameObject(position);
             gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject) { MoveSpeed = 40 });
-            gameObject.AddComponent(new Enemy(gameObject, 100, type));
+            gameObject.AddComponent(new Enemy(gameObject, 100, type, implementDodge));
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
             return gameObject;
         }
@@ -57,7 +57,7 @@ namespace BattleMages
         public static GameObject BuildButton(Vector2 position, Texture2D normalTex, Texture2D hoverTex, Button.ClickDelegate onClick, Button.ClickDelegate onRightClick = null, bool wiggle = false)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new Button(gameObject,normalTex,hoverTex,onClick, onRightClick, wiggle));
+            gameObject.AddComponent(new Button(gameObject, normalTex, hoverTex, onClick, onRightClick, wiggle));
             return gameObject;
         }
     }
