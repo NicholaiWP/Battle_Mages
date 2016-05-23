@@ -17,10 +17,7 @@ namespace BattleMages
         private FacingDirection fDirection;
 
         //bool properties
-        public bool Up { get; set; }
-        public bool Down { get; set; }
-        public bool Left { get; set; }
-        public bool Right { get; set; }
+        public Vector2 MoveDirection;
 
         public float MoveSpeed { get; set; } = 100;
 
@@ -32,36 +29,45 @@ namespace BattleMages
 
         public void Movement()
         {
-            if (Right)
+            if (MoveDirection != Vector2.Zero)
+                MoveDirection.Normalize(); //Make sure MoveDirection is normalized
+
+            float angle = (float)Math.Atan2(MoveDirection.X, MoveDirection.Y);
+
+            System.Diagnostics.Debug.WriteLine(angle);
+
+            /*if (Right)
                 fDirection = FacingDirection.Right;
             else if (Left)
                 fDirection = FacingDirection.Left;
             else if (Up)
                 fDirection = FacingDirection.Back;
             else if (Down)
-                fDirection = FacingDirection.Front;
-
-            float moveDist = GameWorld.DeltaTime * MoveSpeed;
+                fDirection = FacingDirection.Front;*/
 
             Collider collider = GameObject.GetComponent<Collider>();
-            bool collisionLeft = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(-moveDist, 0), true);
-            bool collisionRight = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(moveDist, 0), true);
-            bool collisionUp = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, -moveDist), true);
-            bool collisionDown = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, moveDist), true);
 
-            Vector2 translation = Vector2.Zero;
-            if (Left && !collisionLeft)
-                translation += new Vector2(-1, 0);
-            if (Right && !collisionRight)
-                translation += new Vector2(1, 0);
-            if (Up && !collisionUp)
-                translation += new Vector2(0, -1);
-            if (Down && !collisionDown)
-                translation += new Vector2(0, 1);
+            //'translation' is the exact movement the character will perform
+            Vector2 translation = MoveDirection * MoveSpeed * GameWorld.DeltaTime;
 
-            GameObject.Transform.Translate(translation * moveDist);
+            //Collision checking
+            float xDist = Math.Abs(translation.X);
+            float yDist = Math.Abs(translation.Y);
 
-            Velocity = translation * MoveSpeed;
+            bool collisionLeft = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(-xDist, 0), true);
+            bool collisionRight = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(xDist, 0), true);
+            bool collisionUp = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, -yDist), true);
+            bool collisionDown = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, yDist), true);
+
+            //Limit the translation based on horizontal collisions
+            if ((translation.X > 0 && collisionRight) || (translation.X < 0 && collisionLeft))
+                translation.X = 0;
+            //Same for vertical collisions
+            if ((translation.Y > 0 && collisionDown) || (translation.Y < 0 && collisionUp))
+                translation.Y = 0;
+
+            GameObject.Transform.Translate(translation);
+            Velocity = translation;
 
             //Limiting position to circle
             GameObject.Transform.Position = Utils.LimitToCircle(GameObject.Transform.Position, Vector2.Zero, 320);

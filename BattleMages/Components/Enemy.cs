@@ -114,10 +114,7 @@ namespace BattleMages
                 enemyAI.Targeting();
             }
             character.Movement();
-            character.Up = false;
-            character.Down = false;
-            character.Right = false;
-            character.Left = false;
+            character.MoveDirection = Vector2.Zero;
         }
 
         public void OnAnimationDone(string animationsName)

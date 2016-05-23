@@ -87,10 +87,24 @@ namespace BattleMages
 
         private void Move(KeyboardState kbState)
         {
-            character.Up = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up));
-            character.Down = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down));
-            character.Left = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left));
-            character.Right = kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right));
+            Vector2 movement = new Vector2();
+            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
+            {
+                movement.Y -= 1;
+            }
+            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
+            {
+                movement.Y += 1;
+            }
+            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
+            {
+                movement.X -= 1;
+            }
+            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
+            {
+                movement.X += 1;
+            }
+            character.MoveDirection = movement;
 
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down))
                 || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up))

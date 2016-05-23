@@ -63,10 +63,16 @@ namespace BattleMages
                     float lengthToTarget = vecToTarget.Length();
                     if (lengthToTarget <= targetingRange && lengthToTarget >= attackRange)
                     {
-                        character.Up = transform.Position.Y - 50 > potentialTarget.Transform.Position.Y + 50;
-                        character.Down = transform.Position.Y + 50 < potentialTarget.Transform.Position.Y - 50;
-                        character.Left = transform.Position.X - 50 > potentialTarget.Transform.Position.X + 50;
-                        character.Right = transform.Position.X + 50 < potentialTarget.Transform.Position.X - 50;
+                        Vector2 movement = Vector2.Zero;
+                        if (transform.Position.Y - 50 > potentialTarget.Transform.Position.Y + 50)
+                            movement.Y -= 1;
+                        if (transform.Position.Y + 50 < potentialTarget.Transform.Position.Y - 50)
+                            movement.Y += 1;
+                        if (transform.Position.X - 50 > potentialTarget.Transform.Position.X + 50)
+                            movement.X -= 1;
+                        if (transform.Position.X + 50 < potentialTarget.Transform.Position.X - 50)
+                            movement.X += 1;
+                        character.MoveDirection = movement;
                     }
                     break;
                 }
