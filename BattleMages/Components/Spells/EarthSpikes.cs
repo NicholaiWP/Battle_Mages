@@ -41,7 +41,7 @@ namespace BattleMages
                 if (enemy != null && damageTimer <= 0)
                 {
                     damageTimer = 0.6f;
-                    enemy.DealDamage(Damage);
+                    enemy.TakeDamage(Damage);
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                 }
             }

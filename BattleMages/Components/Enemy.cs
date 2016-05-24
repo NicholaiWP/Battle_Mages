@@ -8,38 +8,32 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Enemy : Component
+    public abstract class Enemy : Component
     {
-        private float attackRange;
-        private float targetingRange;
+        protected float attackRange;
+        protected float targetingRange;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
         private Transform transform;
         private Character character;
         private Collider collider;
-        private int damage;
-        private int health;
-        private int potentialBehaviours;
-        private float attackSpeed;
-        private Dictionary<int, IBehaviour> behaviours = new Dictionary<int, IBehaviour>();
+        protected int damage;
+        protected int health;
+        protected float attackSpeed;
+        protected float cooldownTimer;
+        protected List<IBehaviour> behaviours = new List<IBehaviour>();
         public int Damage { get { return damage; } set { damage = value; } }
-        public int Health { get { return health; } set { health = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
+        public float CooldownTimer { get { return cooldownTimer; } }
 
-        public Enemy(GameObject gameObject, int startHealth, float attackRange, float targetingRange) : base(gameObject)
+        protected Enemy(GameObject gameObject) : base(gameObject)
         {
-            damage = 10;
-            attackSpeed = 0;
-            health = startHealth;
-            this.attackRange = attackRange;
-            this.targetingRange = targetingRange;
-            potentialBehaviours = 1;
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
         }
 
-        public void DealDamage(int points)
+        public void TakeDamage(int points)
         {
             health -= points;
             if (health <= 0)
@@ -48,7 +42,7 @@ namespace BattleMages
             }
         }
 
-        private void Initialize(InitializeMsg msg)
+        protected virtual void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
@@ -74,11 +68,9 @@ namespace BattleMages
 
         private void Move()
         {
-            for (int i = 0; i < behaviours.Count; i++)
+            foreach (IBehaviour behaviour in behaviours)
             {
-                var behaviour = behaviours.FirstOrDefault(x => x.Key == i).Value;
-                if (behaviour != null)
-                    behaviour.ExecuteBehaviour(targetingRange, attackRange);
+                behaviour.ExecuteBehaviour(attackRange, targetingRange);
             }
 
             character.Movement();
