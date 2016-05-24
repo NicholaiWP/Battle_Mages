@@ -49,7 +49,7 @@ namespace BattleMages
             player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
             if (player != null)
             {
-                healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / Player.MaxHealth, GameWorld.DeltaTime * 10f));
+                healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / (float)Player.MaxHealth, GameWorld.DeltaTime * 10f));
                 manabarSize = Math.Max(0,MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
             }
         }
