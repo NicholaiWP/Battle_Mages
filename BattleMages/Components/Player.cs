@@ -154,7 +154,7 @@ namespace BattleMages
         {
         }
 
-        public void DealDamage(int points)
+        public void TakeDamage(int points)
         {          
             currentHealth -= points;
             if (currentHealth <= 0)

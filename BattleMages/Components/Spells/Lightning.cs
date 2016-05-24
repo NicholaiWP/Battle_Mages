@@ -20,14 +20,15 @@ namespace BattleMages
         public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
         {
             GameObject.Transform.Position = p.AimTarget;
-            Damage = 25;
-            CooldownTime = 0.9f;
+            Damage = 40;
+            CooldownTime = 2f;
             ApplyRunes();
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
-
+            GameWorld.SoundManager.PlaySound("lightningStrike");
+            GameWorld.SoundManager.SoundVolume = 0.7f;
             Listen<UpdateMsg>(Update);
             Listen <DrawMsg>(Draw);
         }

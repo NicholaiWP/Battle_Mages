@@ -88,7 +88,7 @@ namespace BattleMages
         {
             if (attackTimer <= 0)
             {
-                potentialTarget.GetComponent<Player>().DealDamage(enemy.Damage);
+                potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
                 attackTimer = 4;
             }
         }
