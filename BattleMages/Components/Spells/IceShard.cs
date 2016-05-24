@@ -18,6 +18,7 @@ namespace BattleMages
         {
             Damage = 5;
             CooldownTime = 0.6f;
+            ManaCost = 20;
             ApplyRunes();
 
             diff = p.AimTarget - GameObject.Transform.Position;

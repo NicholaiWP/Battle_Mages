@@ -19,6 +19,7 @@ namespace BattleMages
         private Texture2D coinsSprite;
 
         float healthbarSize = 1f;
+        float manabarSize = 1f;
 
         Player player;
 
@@ -48,7 +49,8 @@ namespace BattleMages
             player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
             if (player != null)
             {
-                healthbarSize = MathHelper.Lerp(healthbarSize, player.CurrentHealth / 100f, GameWorld.DeltaTime * 10f);
+                healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / Player.MaxHealth, GameWorld.DeltaTime * 10f));
+                manabarSize = Math.Max(0,MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
             }
         }
 
@@ -68,10 +70,8 @@ namespace BattleMages
 
             if (player != null)
             {
-                player.Health = healthBar.Width;
-                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: topLeft, scale: new Vector2(healthbarSize,1), color: Color.White);
-                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height));
-
+                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: topLeft, scale: new Vector2(healthbarSize,1));
+                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height), scale: new Vector2(manabarSize,1));
             }
 
             msg.Drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset)) - (spellOneSprite.Width * 2), bottomMiddle.Y));
