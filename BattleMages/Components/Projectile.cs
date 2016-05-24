@@ -21,6 +21,7 @@ namespace BattleMages
             diff.Normalize();
             velocity = diff * 120f;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
+            //GameWorld.SoundManager.PlaySound("Lightning");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
