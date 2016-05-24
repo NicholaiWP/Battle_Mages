@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace BattleMages
 {
-    public interface IBehaviour
+    public class Dodging : IBehaviour
     {
-        void ExecuteBehaviour();
+        public void ExecuteBehaviour()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

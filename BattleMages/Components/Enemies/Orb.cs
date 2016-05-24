@@ -21,8 +21,8 @@ namespace BattleMages
         protected override void Initialize(InitializeMsg msg)
         {
             base.Initialize(msg);
-            behaviours.Add(new Hunt(this));
-            behaviours.Add(new Attack(this));
+            behaviours.Add(new Hunt(this, attackRange, targetingRange));
+            behaviours.Add(new Attack(this, attackRange, targetingRange));
         }
     }
 }

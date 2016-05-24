@@ -15,17 +15,21 @@ namespace BattleMages
         private Character character;
         private int closeRange;
         private float attackTimer;
+        private float attackRange;
+        private float targetingRange;
 
-        public Hunt(Enemy enemy)
+        public Hunt(Enemy enemy, float attackRange, float targetingRange)
         {
             closeRange = 25;
             attackTimer = 0;
             this.enemy = enemy;
+            this.attackRange = attackRange;
+            this.targetingRange = targetingRange;
             transform = enemy.GameObject.Transform;
             character = enemy.GameObject.GetComponent<Character>();
         }
 
-        public void ExecuteBehaviour(float attackRange, float targetingRange)
+        public void ExecuteBehaviour()
         {
             foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
             {
@@ -34,7 +38,7 @@ namespace BattleMages
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();
 
-                    if (lengthToTarget <= targetingRange && !InAttackRange(lengthToTarget, attackRange))
+                    if (lengthToTarget <= targetingRange && !InAttackRange(lengthToTarget))
                     {
                         Vector2 movement = Vector2.Zero;
                         if (transform.Position.Y - 10 > potentialTarget.Transform.Position.Y + 10)
@@ -52,8 +56,8 @@ namespace BattleMages
             }
         }
 
+        private bool InAttackRange(float lengthToTarget)
 
-        private bool InAttackRange(float lengthToTarget, float attackRange)
         {
             if (lengthToTarget <= attackRange)
             {
