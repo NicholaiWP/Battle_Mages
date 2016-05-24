@@ -753,3 +753,15 @@
 /processorParam:Quality=Best
 /build:Sounds/ElectricitySound.wav
 
+#begin Sounds/FireSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/FireSound.wav
+
+#begin Sounds/IceSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/IceSound.wav
+
