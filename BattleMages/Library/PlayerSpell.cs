@@ -7,7 +7,7 @@ namespace BattleMages
 {
     public class PlayerSpell
     {
-        private const int PlayerRuneCount = 4;
+        public const int PlayerRuneCount = 4;
 
         private int spellId;
         private int[] runeIds = new int[PlayerRuneCount];

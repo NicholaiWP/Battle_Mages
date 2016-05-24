@@ -21,7 +21,9 @@ namespace BattleMages
             Damage = 8;
             damageTimer = 0;
             CooldownTime = 5;
+            ManaCost = 80;
             ApplyRunes();
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
             collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
             GameObject.AddComponent(collider);

@@ -22,7 +22,9 @@ namespace BattleMages
             GameObject.Transform.Position = p.AimTarget;
             Damage = 25;
             CooldownTime = 0.9f;
+            ManaCost = 50;
             ApplyRunes();
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
