@@ -19,9 +19,9 @@ namespace BattleMages
         private Collider collider;
         private int damage;
         private int health;
+        private int potentialBehaviours;
         private float attackSpeed;
-        private List<IBehaviour> behaviours = new List<IBehaviour>();
-
+        private Dictionary<int, IBehaviour> behaviours = new Dictionary<int, IBehaviour>();
         public int Damage { get { return damage; } set { damage = value; } }
         public int Health { get { return health; } set { health = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
@@ -33,7 +33,7 @@ namespace BattleMages
             health = startHealth;
             this.attackRange = attackRange;
             this.targetingRange = targetingRange;
-
+            potentialBehaviours = 1;
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
@@ -55,8 +55,7 @@ namespace BattleMages
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
-            behaviours.Add(GameObject.GetComponent<TargetPlayer>());
-            GameObject.RemoveComponent<TargetPlayer>();
+
             //TODO: Create animations here
         }
 
@@ -75,11 +74,13 @@ namespace BattleMages
 
         private void Move()
         {
-            foreach (IBehaviour behaviour in behaviours)
+            for (int i = 0; i < behaviours.Count; i++)
             {
+                var behaviour = behaviours.FirstOrDefault(x => x.Key == i).Value;
                 if (behaviour != null)
                     behaviour.ExecuteBehaviour(targetingRange, attackRange);
             }
+
             character.Movement();
             character.MoveDirection = Vector2.Zero;
         }

@@ -17,7 +17,7 @@ namespace BattleMages
 
         public HallwayScene()
         {
-           // GameWorld.SoundManager.Music("HubBGM");
+            // GameWorld.SoundManager.Music("HubBGM");
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
@@ -49,9 +49,13 @@ namespace BattleMages
         
         public override void Update()
         {
-            //Plays ambience sound looped using SoundManager
+            //Plays ambience sound looped using SoundManager & Sets volume
             GameWorld.SoundManager.PlaySound("AmbienceSound");
-            
+            if (MediaPlayer.Volume < 0.2f)
+            {
+                MediaPlayer.Volume = 0.2f;
+            }
+
             keyState = Keyboard.GetState();
             
             if (keyState.IsKeyDown(Keys.P))
@@ -64,11 +68,13 @@ namespace BattleMages
             //Turns volume of ambience up or down depending on the position of Camera
             if (GameWorld.Camera.Position.Y < 0)
             {
-                GameWorld.SoundManager.AmbienceVolume += 0.03f * GameWorld.DeltaTime;
+                MediaPlayer.Volume -= 0.25f * GameWorld.DeltaTime;
+                GameWorld.SoundManager.AmbienceVolume += 0.1f * GameWorld.DeltaTime;
             }
             if (GameWorld.Camera.Position.Y > 0)
             {
-                GameWorld.SoundManager.AmbienceVolume -= 0.03f * GameWorld.DeltaTime;
+                MediaPlayer.Volume += 0.25f * GameWorld.DeltaTime;
+                GameWorld.SoundManager.AmbienceVolume -= 0.1f * GameWorld.DeltaTime;
             }
 
             base.Update();
