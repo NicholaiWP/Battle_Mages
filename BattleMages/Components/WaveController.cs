@@ -14,28 +14,14 @@ namespace BattleMages
         public WaveController(GameObject gameObject, GameScene scene) : base(gameObject)
         {
             this.scene = scene;
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), 300, 25,
-                new List<IBehaviour> { new Hunt(null) }));
-            /* scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange));
-             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(150, 70), EnemyType.Ranged));
-             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(10, 20), EnemyType.CloseRange));
-             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(-10, 30), EnemyType.Ranged));
-             scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(250, -50), EnemyType.Ranged));*/
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 20), new Golem(null)));
         }
 
         public void NewWave()
         {
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), 300, 25,
-                new List<IBehaviour> { new Hunt(null) }));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), 400, 250,
-                new List<IBehaviour> { new Hunt(null) }));
-            /*scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 50), EnemyType.Ranged));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(100, 50), EnemyType.CloseRange));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(150, 70), EnemyType.Ranged));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(10, 20), EnemyType.CloseRange));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(-10, 30), EnemyType.Ranged));
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(250, -50), EnemyType.Ranged));
-            */
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(25, 30), new Golem(null)));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(-20, -30), new Orb(null)));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(120, 90), new Slime(null)));
         }
     }
 }

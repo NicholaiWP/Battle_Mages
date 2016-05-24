@@ -61,6 +61,9 @@
   <ItemGroup>
     <Compile Include="Components\Behaviours\Hunt.cs" />
     <Compile Include="Components\Character.cs" />
+    <Compile Include="Components\Enemies\Golem.cs" />
+    <Compile Include="Components\Enemies\Orb.cs" />
+    <Compile Include="Components\Enemies\Slime.cs" />
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />
