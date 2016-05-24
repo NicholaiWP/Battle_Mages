@@ -15,8 +15,8 @@ namespace BattleMages
 
         public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
         {
-            Damage = 10;
-            CooldownTime = 0.3f;
+            Damage = 15;
+            CooldownTime = 0.8f;
             ManaCost = 15;
             ApplyAttributeRunes();
 
@@ -27,6 +27,8 @@ namespace BattleMages
 
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
+            GameWorld.SoundManager.PlaySound("fireball");
+            GameWorld.SoundManager.SoundVolume = 0.9f;
 
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);

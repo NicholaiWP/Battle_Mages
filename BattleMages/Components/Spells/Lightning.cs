@@ -20,8 +20,8 @@ namespace BattleMages
         public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
         {
             GameObject.Transform.Position = p.AimTarget;
-            Damage = 25;
-            CooldownTime = 0.9f;
+            Damage = 40;
+            CooldownTime = 2f;
             ManaCost = 50;
             ApplyAttributeRunes();
 
@@ -29,7 +29,8 @@ namespace BattleMages
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
-
+            GameWorld.SoundManager.PlaySound("lightningStrike");
+            GameWorld.SoundManager.SoundVolume = 0.7f;
             Listen<UpdateMsg>(Update);
             Listen <DrawMsg>(Draw);
         }

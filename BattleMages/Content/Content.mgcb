@@ -753,14 +753,33 @@
 /processorParam:Quality=Best
 /build:Sounds/ElectricitySound.wav
 
-#begin Sounds/FireSound.wav
+#begin Sounds/fireball.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/FireSound.wav
+/build:Sounds/fireball.wav
 
-#begin Sounds/IceSound.wav
+#begin Sounds/lightningStrike.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/IceSound.wav
+/build:Sounds/lightningStrike.wav
+
+#begin Sounds/iceshardsbreaking.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/iceshardsbreaking.wav
+
+#begin Sounds/openHallwayDoor1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/openHallwayDoor1.wav
+
+#begin Sounds/teleport.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/teleport.wav
+

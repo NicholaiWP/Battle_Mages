@@ -43,6 +43,7 @@ namespace BattleMages
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
 
+
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
         }
@@ -60,7 +61,10 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(Damage);
+					enemy.TakeDamage(Damage);
+                    GameWorld.SoundManager.PlaySound("iceshardsbreaking");
+                    GameWorld.SoundManager.SoundVolume = 0.9f;
+ 
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }

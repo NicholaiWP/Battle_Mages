@@ -22,8 +22,7 @@ namespace BattleMages
         protected float attackSpeed;
         protected float cooldownTimer;
         protected List<IBehaviour> behaviours = new List<IBehaviour>();
-        public int Damage { get { return damage; } set { damage = value; } }
-        public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
+        public int Damage { get { return damage; } }
         public float CooldownTimer { get { return cooldownTimer; } }
 
         protected Enemy(GameObject gameObject) : base(gameObject)
@@ -70,7 +69,7 @@ namespace BattleMages
         {
             foreach (IBehaviour behaviour in behaviours)
             {
-                behaviour.ExecuteBehaviour(attackRange, targetingRange);
+                behaviour.ExecuteBehaviour();
             }
 
             character.Movement();

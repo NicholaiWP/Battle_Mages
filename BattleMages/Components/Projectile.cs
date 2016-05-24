@@ -38,7 +38,7 @@ namespace BattleMages
                 var player = other.GameObject.GetComponent<Player>();
                 if (player != null)
                 {
-                    player.DealDamage(damage);
+                    player.TakeDamage(damage);
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }
             }

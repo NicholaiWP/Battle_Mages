@@ -40,8 +40,8 @@ namespace BattleMages
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject) { MoveSpeed = 40 });
 
-            //Using the activator to create a new instance of the same type as the enemy with the gameobject,
-            //so the enemy which the gameObject adds will have a connection to the gameObject
+            //Using the activator to create a new instance of the same type as the enemy which is given as a
+            //parameter. The activator then gives the enemy a gameobject.
             var alikeEnemy = Activator.CreateInstance(enemy.GetType(), gameObject);
 
             gameObject.AddComponent(alikeEnemy as Component);
