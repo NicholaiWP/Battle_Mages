@@ -5,6 +5,9 @@ using System.Text;
 
 namespace BattleMages
 {
+    /// <summary>
+    /// Defines a player-made spell, a combination of a base rune and several attribute runes
+    /// </summary>
     public class SpellInfo
     {
         /// <summary>
@@ -12,37 +15,37 @@ namespace BattleMages
         /// </summary>
         public const int AttributeRuneSlotCount = 4;
 
-        private int spellId;
-        private int[] runeIds = new int[AttributeRuneSlotCount];
+        private int baseRuneID;
+        private int[] attrRuneIDs = new int[AttributeRuneSlotCount];
 
         public SpellInfo()
         {
-            spellId = -1;
-            for (int i = 0; i < runeIds.Length; i++)
-                runeIds[i] = -1;
+            baseRuneID = -1;
+            for (int i = 0; i < attrRuneIDs.Length; i++)
+                attrRuneIDs[i] = -1;
         }
 
         public BaseRune GetBaseRune()
         {
-            if (spellId < 0 || spellId >= StaticData.BaseRunes.Count) return null;
-            return StaticData.BaseRunes[spellId];
+            if (baseRuneID < 0 || baseRuneID >= StaticData.BaseRunes.Count) return null;
+            return StaticData.BaseRunes[baseRuneID];
         }
 
         public AttributeRune GetAttributeRune(int pos)
         {
-            int id = runeIds[pos];
+            int id = attrRuneIDs[pos];
             if (id < 0 || id >= StaticData.AttributeRunes.Count) return null;
             return StaticData.AttributeRunes[id];
         }
 
-        public void SetBaseRune(int spellId)
+        public void SetBaseRune(int baseRuneID)
         {
-            this.spellId = spellId;
+            this.baseRuneID = baseRuneID;
         }
 
-        public void SetAttributeRune(int pos, int runeId)
+        public void SetAttributeRune(int pos, int attrRuneID)
         {
-            runeIds[pos] = runeId;
+            attrRuneIDs[pos] = attrRuneID;
         }
     }
 }
