@@ -21,7 +21,7 @@ namespace BattleMages
         protected int health;
         protected float attackSpeed;
         protected float cooldownTimer;
-        protected Dictionary<int, IBehaviour> behaviours = new Dictionary<int, IBehaviour>();
+        protected List<IBehaviour> behaviours = new List<IBehaviour>();
         public int Damage { get { return damage; } set { damage = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
         public float CooldownTimer { get { return cooldownTimer; } }
@@ -68,11 +68,9 @@ namespace BattleMages
 
         private void Move()
         {
-            for (int i = 0; i < behaviours.Count; i++)
+            foreach (IBehaviour behaviour in behaviours)
             {
-                var behaviour = behaviours.FirstOrDefault(x => x.Key == i).Value;
-                if (behaviour != null)
-                    behaviour.ExecuteBehaviour(attackRange, targetingRange);
+                behaviour.ExecuteBehaviour(attackRange, targetingRange);
             }
 
             character.Movement();
