@@ -35,6 +35,11 @@ namespace BattleMages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
+            sounds.Add("fireball", content.Load<SoundEffect>("sounds/fireball").CreateInstance());
+            sounds.Add("iceshardsbreaking", content.Load<SoundEffect>("sounds/iceshardsbreaking").CreateInstance());
+            sounds.Add("lightningStrike", content.Load<SoundEffect>("sounds/lightningStrike").CreateInstance());
+            sounds.Add("openHallwayDoor1", content.Load<SoundEffect>("sounds/openHallwayDoor1").CreateInstance());
+            sounds.Add("teleport", content.Load<SoundEffect>("sounds/teleport").CreateInstance());
             sounds.Add("AmbienceSound", content.Load<SoundEffect>("Sounds/AmbienceSound").CreateInstance());
             //sounds.Add("Lightning", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());

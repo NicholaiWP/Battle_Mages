@@ -61,6 +61,7 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.DealDamage(Damage);
+                    GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
