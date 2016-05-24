@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Projectile : Component, ICanBeDrawn, ICanUpdate
+    public class Projectile : Component
     {
         private int damage;
         private Vector2 velocity;
@@ -21,12 +21,16 @@ namespace BattleMages
             diff.Normalize();
             velocity = diff * 120f;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
+            //GameWorld.SoundManager.PlaySound("Lightning");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
+
+            Listen<UpdateMsg>(Update);
+            Listen<DrawMsg>(Draw);
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
@@ -44,9 +48,9 @@ namespace BattleMages
             }
         }
 
-        public void Draw(Drawer drawer)
+        private void Draw(DrawMsg msg)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
+            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated
+    public class Enemy : Component
     {
         private float attackRange;
         private float targetingRange;
@@ -34,6 +34,9 @@ namespace BattleMages
             this.attackRange = attackRange;
             this.targetingRange = targetingRange;
             potentialBehaviours = 1;
+            Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
+            Listen<AnimationDoneMsg>(AnimationDone);
         }
 
         public void DealDamage(int points)
@@ -45,23 +48,13 @@ namespace BattleMages
             }
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
-
-            for (int i = 0; i < potentialBehaviours; i++)
-            {
-                if (GameObject.GetComponent<Hunt>() != null)
-                {
-                    behaviours.Add(i, GameObject.GetComponent<Hunt>());
-                    GameObject.RemoveComponent<Hunt>();
-                }
-                GameObject.Update();
-            }
 
             //TODO: Create animations here
         }
@@ -74,7 +67,7 @@ namespace BattleMages
         /// the enemy will attempt to attack the player,
         /// if the player isnt in the enemy's range the enemy will be put into its idle state.
         /// </summary>
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             Move();
         }
@@ -92,7 +85,7 @@ namespace BattleMages
             character.MoveDirection = Vector2.Zero;
         }
 
-        public void OnAnimationDone(string animationsName)
+        private void AnimationDone(AnimationDoneMsg msg)
         {
         }
     }

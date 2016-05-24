@@ -36,7 +36,7 @@ namespace BattleMages
         public void LoadContent(ContentManager content)
         {
             sounds.Add("AmbienceSound", content.Load<SoundEffect>("Sounds/AmbienceSound").CreateInstance());
-            //sounds.Add("FireBall", content.Load<SoundEffect>("Sounds/[INSERT SOUND]").CreateInstance());
+            //sounds.Add("Lightning", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
             hubBGM = content.Load<Song>("Sounds/HubMusic");
             combatBGM = content.Load<Song>("Sounds/CombatMusic");
@@ -51,12 +51,14 @@ namespace BattleMages
         {
             if (soundName == "CombatBGM" && isPLaying1 == false)
             {
+                MusicVolume = 0.20f;
                     MediaPlayer.Play(combatBGM);
                 isPlaying = false;
                 isPLaying1 = true;
             }
             if (soundName == "HubBGM" && isPlaying== false)
             {
+                MusicVolume = 0.20f;
                     MediaPlayer.Play(hubBGM);
                    isPlaying = true;
                 isPLaying1 = false;

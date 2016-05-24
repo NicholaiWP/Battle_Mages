@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework.Content;
 
 namespace BattleMages
 {
@@ -14,7 +15,6 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
-
         public const int GameHeight = 180;
 
         //Fields
@@ -66,6 +66,14 @@ namespace BattleMages
         }
 
         /// <summary>
+        /// Shorthand method for loading content from the GameWorld instance's content manager
+        /// </summary>
+        public static T Load<T>(string assetName)
+        {
+            return Instance.Content.Load<T>(assetName);
+        }
+
+        /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
         /// related content.  Calling base.Initialize will enumerate through any components
@@ -80,8 +88,6 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState(); 
-                 
-            
 
             //Create 4 test spell for both the bar and the book
             for (int i = 0; i < 4; i++)

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
-    public class IngameUI : Component, ICanBeDrawn, ICanBeLoaded
+    public class IngameUI : Component
     {
         public Texture2D healthBar;
         private Texture2D manaBar;
@@ -23,22 +23,23 @@ namespace BattleMages
 
         public IngameUI(GameObject gameObject) : base(gameObject)
         {
-          
+            Listen<InitializeMsg>(Initialize);
+            Listen<DrawMsg>(Draw);
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
-            haxFont = content.Load<SpriteFont>("FontBM");
-            healthBar = content.Load<Texture2D>("images/healthBar");
-            manaBar = content.Load<Texture2D>("images/manaBar");
-            spellOneSprite = content.Load<Texture2D>("images/BMspellSprite");
-            spellTwoSprite = content.Load<Texture2D>("images/BMspellSprite");
-            spellThreeSprite = content.Load<Texture2D>("images/BMspellSprite");
-            spellFourSprite = content.Load<Texture2D>("images/BMspellSprite");
-            coinsSprite = content.Load<Texture2D>("images/coinsSprite");
+            haxFont = GameWorld.Load<SpriteFont>("FontBM");
+            healthBar = GameWorld.Load<Texture2D>("images/healthBar");
+            manaBar = GameWorld.Load<Texture2D>("images/manaBar");
+            spellOneSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
+            spellTwoSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
+            spellThreeSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
+            spellFourSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
+            coinsSprite = GameWorld.Load<Texture2D>("images/coinsSprite");
         }
 
-        public void Draw(Drawer drawer)
+        public void Draw(DrawMsg msg)
         {
             int offset = 6;
             int halfOffset = offset / 2;
@@ -56,16 +57,16 @@ namespace BattleMages
             if (player != null)
             {
                 player.Health = healthBar.Width;
-                drawer[DrawLayer.UI].Draw(healthBar,  destinationRectangle: new Rectangle((int)topLeft.X, (int)topLeft.Y, player.CurrentHealth, healthBar.Height), color: Color.White);
-                drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height));
+                msg.Drawer[DrawLayer.UI].Draw(healthBar,  destinationRectangle: new Rectangle((int)topLeft.X, (int)topLeft.Y, player.CurrentHealth, healthBar.Height), color: Color.White);
+                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height));
 
             }
-          
-            drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset)) - (spellOneSprite.Width * 2), bottomMiddle.Y));
-            drawer[DrawLayer.UI].Draw(spellTwoSprite, position: new Vector2((bottomMiddle.X - halfOffset) - (spellOneSprite.Width), bottomMiddle.Y));
-            drawer[DrawLayer.UI].Draw(spellThreeSprite, position: new Vector2((bottomMiddle.X + halfOffset), bottomMiddle.Y));
-            drawer[DrawLayer.UI].Draw(spellFourSprite, position: new Vector2((bottomMiddle.X + (offset + halfOffset)) + (spellOneSprite.Width), bottomMiddle.Y));
-            drawer[DrawLayer.UI].Draw(coinsSprite, position: new Vector2(topRight.X - (coinsSprite.Width + offset), topRight.Y));
+
+            msg.Drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset)) - (spellOneSprite.Width * 2), bottomMiddle.Y));
+            msg.Drawer[DrawLayer.UI].Draw(spellTwoSprite, position: new Vector2((bottomMiddle.X - halfOffset) - (spellOneSprite.Width), bottomMiddle.Y));
+            msg.Drawer[DrawLayer.UI].Draw(spellThreeSprite, position: new Vector2((bottomMiddle.X + halfOffset), bottomMiddle.Y));
+            msg.Drawer[DrawLayer.UI].Draw(spellFourSprite, position: new Vector2((bottomMiddle.X + (offset + halfOffset)) + (spellOneSprite.Width), bottomMiddle.Y));
+            msg.Drawer[DrawLayer.UI].Draw(coinsSprite, position: new Vector2(topRight.X - (coinsSprite.Width + offset), topRight.Y));
 
         }
 
