@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated
+    public class Enemy : Component
     {
         private float attackRange;
         private float targetingRange;
@@ -19,9 +19,9 @@ namespace BattleMages
         private Collider collider;
         private int damage;
         private int health;
+        private int potentialBehaviours;
         private float attackSpeed;
-        private List<IBehaviour> behaviours = new List<IBehaviour>();
-
+        private Dictionary<int, IBehaviour> behaviours = new Dictionary<int, IBehaviour>();
         public int Damage { get { return damage; } set { damage = value; } }
         public int Health { get { return health; } set { health = value; } }
         public float AttackSpeed { get { return attackSpeed; } set { attackSpeed = value; } }
@@ -33,6 +33,10 @@ namespace BattleMages
             health = startHealth;
             this.attackRange = attackRange;
             this.targetingRange = targetingRange;
+            potentialBehaviours = 1;
+            Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
+            Listen<AnimationDoneMsg>(AnimationDone);
         }
 
         public void DealDamage(int points)
@@ -44,15 +48,14 @@ namespace BattleMages
             }
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
-            behaviours.Add(GameObject.GetComponent<TargetPlayer>());
-            GameObject.RemoveComponent<TargetPlayer>();
+
             //TODO: Create animations here
         }
 
@@ -64,23 +67,25 @@ namespace BattleMages
         /// the enemy will attempt to attack the player,
         /// if the player isnt in the enemy's range the enemy will be put into its idle state.
         /// </summary>
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             Move();
         }
 
         private void Move()
         {
-            foreach (IBehaviour behaviour in behaviours)
+            for (int i = 0; i < behaviours.Count; i++)
             {
+                var behaviour = behaviours.FirstOrDefault(x => x.Key == i).Value;
                 if (behaviour != null)
                     behaviour.ExecuteBehaviour(targetingRange, attackRange);
             }
+
             character.Movement();
             character.MoveDirection = Vector2.Zero;
         }
 
-        public void OnAnimationDone(string animationsName)
+        private void AnimationDone(AnimationDoneMsg msg)
         {
         }
     }

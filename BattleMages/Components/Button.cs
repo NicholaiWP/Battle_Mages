@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Button : Component, ICanUpdate, ICanBeDrawn
+    public class Button : Component
     {
         private bool hovering;
         Texture2D normalTex;
@@ -43,9 +43,12 @@ namespace BattleMages
             this.onClick = onClick;
             this.onRightClick = onRightClick;
             this.wiggle = wiggle;
+
+            Listen<UpdateMsg>(Update);
+            Listen<DrawMsg>(Draw);
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             if (wiggle)
             {
@@ -80,9 +83,9 @@ namespace BattleMages
             }
         }
 
-        public void Draw(Drawer drawer)
+        private void Draw(DrawMsg msg)
         {
-            SpriteBatch spriteBatch = drawer[DrawLayer.UI];
+            SpriteBatch spriteBatch = msg.Drawer[DrawLayer.UI];
             spriteBatch.Draw(ActiveTex,
                 destinationRectangle: rectangle,
                 origin: Vector2.Zero,

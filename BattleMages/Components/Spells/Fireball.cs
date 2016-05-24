@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Fireball : Spell, ICanBeDrawn, ICanUpdate
+    public class Fireball : Spell
     {
         private Texture2D sprite;
         private Vector2 velocity;
@@ -26,14 +26,17 @@ namespace BattleMages
 
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
+
+            Listen<UpdateMsg>(Update);
+            Listen<DrawMsg>(Draw);
         }
 
-        public void Draw(Drawer drawer)
+        private void Draw(DrawMsg msg)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
+            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))

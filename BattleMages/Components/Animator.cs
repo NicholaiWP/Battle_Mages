@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
-    public class Animator : Component, ICanUpdate
+    public class Animator : Component
     {
         //Fields
         private float timeElapsed;
@@ -31,6 +31,8 @@ namespace BattleMages
         {
             this.spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             animations = new Dictionary<string, Animation>();
+
+            Listen<UpdateMsg>(Update);
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace BattleMages
         /// <summary>
         /// Updating animations
         /// </summary>
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             /*timeElapsed += GameWorld.GetInstance.GetDeltaTime;
 

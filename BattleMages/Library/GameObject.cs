@@ -63,65 +63,28 @@ namespace BattleMages
         }
 
         /// <summary>
-        /// Method for updating the gameobject, position etc.
+        /// Forwards a message to all components on this game object.
         /// </summary>
-        public void Update()
+        /// <typeparam name="T">Type of message (No need to type this out, it is inferred from the 'message' parameter)</typeparam>
+        /// <param name="message">Message to forward</param>
+        public void SendMessage<T>(T message) where T : Msg
         {
             foreach (Component comp in components)
+                comp.SendMessage(message);
+
+            if (message is UpdateMsg)
             {
-                if (comp is ICanUpdate)
-                {
-                    (comp as ICanUpdate).Update();
-                }
-            }
+                foreach (Component comp in componentsToAdd)
+                    components.Add(comp);
 
-            foreach (Component comp in componentsToAdd)
-                components.Add(comp);
+                foreach (Component comp in componentsToAdd)
+                    comp.SendMessage(new InitializeMsg());
 
-            foreach (Component comp in componentsToAdd)
-                if (comp is ICanBeLoaded)
-                    (comp as ICanBeLoaded).LoadContent(GameWorld.Instance.Content);
+                foreach (Component comp in componentsToRemove)
+                    components.Remove(comp);
 
-            foreach (Component comp in componentsToRemove)
-                components.Remove(comp);
-
-            componentsToAdd.Clear();
-            componentsToRemove.Clear();
-        }
-
-        /// <summary>
-        /// Draws all components on this game object.
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        public void Draw(Drawer drawer)
-        {
-            foreach (Component comp in components)
-            {
-                if (comp is ICanBeDrawn)
-                {
-                    (comp as ICanBeDrawn).Draw(drawer);
-                }
-            }
-        }
-
-        public void OnAnimationDone(string animationName)
-        {
-            foreach (Component component in components)
-            {
-                //Checks if any components are ICanBeAnimated
-                if (component is ICanBeAnimated)
-                {
-                    //If a component is ICanBeAnimated we call the local implementation of the method
-                    (component as ICanBeAnimated).OnAnimationDone(animationName);
-                }
-            }
-        }
-
-        public void OnDestroy()
-        {
-            foreach (Component comp in components)
-            {
-                comp.OnDestroy();
+                componentsToAdd.Clear();
+                componentsToRemove.Clear();
             }
         }
     }

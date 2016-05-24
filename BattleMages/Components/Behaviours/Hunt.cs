@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace BattleMages
 {
-    public class TargetPlayer : Component, ICanBeLoaded, IBehaviour
+    public class Hunt : Component, IBehaviour
+
     {
         private Transform transform;
         private Character character;
@@ -16,13 +17,15 @@ namespace BattleMages
         private int closeRange;
         private float attackTimer;
 
-        public TargetPlayer(GameObject gameObject) : base(gameObject)
+        public Hunt(GameObject gameObject) : base(gameObject)
         {
             closeRange = 25;
             attackTimer = 0;
+
+            Listen<InitializeMsg>(Initialize);
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             transform = GameObject.Transform;
             character = GameObject.GetComponent<Character>();
@@ -41,20 +44,20 @@ namespace BattleMages
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();
 
-                    if (lengthToTarget <= targetingRange && !InAttackRange(potentialTarget, lengthToTarget, attackRange))
+                    if (lengthToTarget <= targetingRange && !InAttackRange(lengthToTarget, attackRange))
                     {
                         Vector2 movement = Vector2.Zero;
                         if (transform.Position.Y - 10 > potentialTarget.Transform.Position.Y + 10)
                             movement.Y -= 1;
                         if (transform.Position.Y + 10 < potentialTarget.Transform.Position.Y - 10)
                             movement.Y += 1;
-                        if (transform.Position.X  > potentialTarget.Transform.Position.X)
+                        if (transform.Position.X > potentialTarget.Transform.Position.X)
                             movement.X -= 1;
                         if (transform.Position.X < potentialTarget.Transform.Position.X)
                             movement.X += 1;
                         character.MoveDirection = movement;
                     }
-                    else if (InAttackRange(potentialTarget, lengthToTarget, attackRange))
+                    else if (InAttackRange(lengthToTarget, attackRange))
                     {
                         if (attackRange == closeRange)
                         {
@@ -90,7 +93,7 @@ namespace BattleMages
             }
         }
 
-        private bool InAttackRange(GameObject potentialTarget, float lengthToTarget, float attackRange)
+        private bool InAttackRange(float lengthToTarget, float attackRange)
         {
             if (lengthToTarget <= attackRange)
             {

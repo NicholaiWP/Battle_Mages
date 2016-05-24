@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Player : Component, ICanUpdate, ICanBeLoaded, ICanBeAnimated
+    public class Player : Component
     {
         private Animator animator;
         private Character character;
@@ -21,7 +22,7 @@ namespace BattleMages
         private bool canUseSpells;
         private int selectedSpell;
         private KeyboardState oldKbState;
-        private Color barColor;
+
 
         private float cooldownTimer;
 
@@ -56,10 +57,13 @@ namespace BattleMages
             health = 100;
             this.canUseSpells = canUseSpells;
             currentHealth = health;
-           
+
+            Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
+            Listen<AnimationDoneMsg>(AnimationDone);
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
@@ -69,7 +73,7 @@ namespace BattleMages
             //TODO: Create animations here
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             if (cooldownTimer > 0)
             {
@@ -146,7 +150,7 @@ namespace BattleMages
             oldKbState = kbState;
         }
 
-        public void OnAnimationDone(string animationsName)
+        private void AnimationDone(AnimationDoneMsg msg)
         {
         }
 

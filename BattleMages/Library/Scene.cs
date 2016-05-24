@@ -38,7 +38,7 @@ namespace BattleMages
             ProcessObjectLists();
 
             foreach (GameObject go in activeObjects)
-                go.Update();
+                go.SendMessage(new UpdateMsg());
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace BattleMages
         public virtual void Draw(Drawer drawer)
         {
             foreach (GameObject go in activeObjects)
-                go.Draw(drawer);
+                go.SendMessage(new DrawMsg(drawer));
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace BattleMages
                 activeObjects.Remove(gameObject);
 
             foreach (GameObject gameObject in objectsToRemove)
-                gameObject.OnDestroy();
+                gameObject.SendMessage(new DestroyMsg());
 
             objectsToRemove.Clear();
         }

@@ -12,6 +12,8 @@ namespace BattleMages
     {
         private GameObject gameObject;
 
+        private Dictionary<Type, object> handlers = new Dictionary<Type, object>();
+
         public GameObject GameObject
         {
             get
@@ -29,8 +31,29 @@ namespace BattleMages
             this.gameObject = gameObject;
         }
 
-        public virtual void OnDestroy()
+        /// <summary>
+        /// Forwards this message to any handlers on this component.
+        /// </summary>
+        /// <typeparam name="T">Type of message (No need to type this out, it is inferred from the 'message' parameter)</typeparam>
+        /// <param name="message">Message to forward</param>
+        public void SendMessage<T>(T message) where T : Msg
         {
+            object result;
+            if (handlers.TryGetValue(message.GetType(),out result))
+            {
+                MsgHandler<T> castedResult = (MsgHandler<T>)result;
+                castedResult(message);
+            }
+        }
+
+        /// <summary>
+        /// Adds a message listener for a specific type of message. Any messages of this type will be forwarded to the supplied delegate.
+        /// </summary>
+        /// <typeparam name="T">Type of message to listen for</typeparam>
+        /// <param name="handler">Delegate to be called when a message of this type is recieved</param>
+        protected void Listen<T>(MsgHandler<T> handler) where T : Msg
+        {
+            handlers.Add(typeof(T), handler);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Lightning : Spell, ICanBeDrawn, ICanUpdate
+    public class Lightning : Spell
 
     {
         private Texture2D sprite;
@@ -27,17 +27,20 @@ namespace BattleMages
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
+
+            Listen<UpdateMsg>(Update);
+            Listen <DrawMsg>(Draw);
         }
 
-        public void Draw(Drawer drawer)
+        private void Draw(DrawMsg msg)
         {
             if (waitTimer <= 0)
             {
-                drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(0, sprite.Height), Color.White);
+                msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(0, sprite.Height), Color.White);
             }
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             if (waitTimer <= 0 && !hadACollider)
             {

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
-    internal class FloatingText : Component, ICanBeDrawn, ICanUpdate
+    internal class FloatingText : Component
     {
         private SpriteFont font;
         private string text;
@@ -25,9 +25,12 @@ namespace BattleMages
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
             this.text = text;
             velocity = new Vector2(((float)r.NextDouble() - 0.5f) * xSpeedMax, ySpeed);
+
+            Listen<UpdateMsg>(Update);
+            Listen<DrawMsg>(Draw);
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             velocity += new Vector2(0, 200) * GameWorld.DeltaTime;
 
@@ -40,11 +43,11 @@ namespace BattleMages
             }
         }
 
-        public void Draw(Drawer drawer)
+        public void Draw(DrawMsg msg)
         {
             Color c = Color.Purple;
             c.A = (byte)(alpha * 255);
-            drawer[DrawLayer.Foreground].DrawString(font, text, GameObject.Transform.Position, c);
+            msg.Drawer[DrawLayer.Foreground].DrawString(font, text, GameObject.Transform.Position, c);
         }
     }
 }
