@@ -19,6 +19,8 @@ namespace BattleMages
 
         public LobbyScene()
         {
+            //Sound and music handled through SoundManager
+            MediaPlayer.Volume = 0.5f;
             GameWorld.SoundManager.Music("HubBGM");
 
             var content = GameWorld.Instance.Content;
@@ -54,7 +56,6 @@ namespace BattleMages
         {
             //Playing ambient sound in low volume using SoundManager
             GameWorld.SoundManager.PlaySound("AmbienceSound");                
-
 
             keyState = Keyboard.GetState();
 

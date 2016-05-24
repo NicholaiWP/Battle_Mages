@@ -17,8 +17,6 @@ namespace BattleMages
 
         public GameScene()
         {
-            GameWorld.SoundManager.Music("CombatBGM");
-
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
@@ -30,7 +28,10 @@ namespace BattleMages
             GameWorld.Camera.Target = playerGameObject.Transform;
 
             //Changes the sound volume
-            GameWorld.SoundManager.AmbienceVolume = 0.05f;
+            GameWorld.SoundManager.AmbienceVolume = 0.10f;
+
+            //Music and soundhandling through SoundManager
+            GameWorld.SoundManager.Music("CombatBGM");
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
@@ -45,6 +46,7 @@ namespace BattleMages
 
         public override void Update()
         {
+            MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
             //Playing ambient sounds using SoundManager
             GameWorld.SoundManager.PlaySound("AmbienceSound");

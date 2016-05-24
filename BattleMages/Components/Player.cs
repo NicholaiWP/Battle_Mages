@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace BattleMages
         private bool canUseSpells;
         private int selectedSpell;
         private KeyboardState oldKbState;
-        private Color barColor;
+
 
         private float cooldownTimer;
 

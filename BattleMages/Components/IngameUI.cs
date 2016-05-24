@@ -17,13 +17,17 @@ namespace BattleMages
         private Texture2D spellThreeSprite;
         private Texture2D spellFourSprite;
         private Texture2D coinsSprite;
-        
+
+        float healthbarSize = 1f;
+
+        Player player;
 
         private SpriteFont haxFont;
 
         public IngameUI(GameObject gameObject) : base(gameObject)
         {
             Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
         }
 
@@ -39,7 +43,16 @@ namespace BattleMages
             coinsSprite = GameWorld.Load<Texture2D>("images/coinsSprite");
         }
 
-        public void Draw(DrawMsg msg)
+        private void Update(UpdateMsg msg)
+        {
+            player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
+            if (player != null)
+            {
+                healthbarSize = MathHelper.Lerp(healthbarSize, player.CurrentHealth / 100f, GameWorld.DeltaTime * 10f);
+            }
+        }
+
+        private void Draw(DrawMsg msg)
         {
             int offset = 6;
             int halfOffset = offset / 2;
@@ -53,11 +66,10 @@ namespace BattleMages
             //    drawer[DrawLayer.UI].DrawString(haxFont, "Health: " + player.Health, topLeft, Color.Purple);
             //}
 
-            Player player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
             if (player != null)
             {
                 player.Health = healthBar.Width;
-                msg.Drawer[DrawLayer.UI].Draw(healthBar,  destinationRectangle: new Rectangle((int)topLeft.X, (int)topLeft.Y, player.CurrentHealth, healthBar.Height), color: Color.White);
+                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: topLeft, scale: new Vector2(healthbarSize,1), color: Color.White);
                 msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height));
 
             }
