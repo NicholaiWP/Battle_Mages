@@ -92,11 +92,11 @@ namespace BattleMages
             //Create 4 test spell for both the bar and the book
             for (int i = 0; i < 4; i++)
             {
-                PlayerSpell ps = new PlayerSpell();
-                ps.SetSpell(i);
+                SpellInfo ps = new SpellInfo();
+                ps.SetBaseRune(i);
                 for (int j = 0; j < i; j++)
                 {
-                    ps.SetRune(j, 0);
+                    ps.SetAttributeRune(j, 0);
                 }
                 state.SpellBook.Add(ps);
                 state.SpellBar.Add(state.SpellBook.IndexOf(ps));

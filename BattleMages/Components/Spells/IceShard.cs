@@ -19,7 +19,7 @@ namespace BattleMages
             Damage = 5;
             CooldownTime = 0.6f;
             ManaCost = 20;
-            ApplyRunes();
+            ApplyAttributeRunes();
 
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
@@ -34,7 +34,7 @@ namespace BattleMages
                     //Set aim target to be rotated based on which shard this is
                     Vector2 target = Utils.RotateVector(diff, i == 0 ? 20 : -20);
 
-                    newShardGameObject.AddComponent(new IceShard(newShardGameObject, new SpellCreationParams(p.Runes, target + GameObject.Transform.Position, p.VelocityOffset), false));
+                    newShardGameObject.AddComponent(new IceShard(newShardGameObject, new SpellCreationParams(p.AttributeRunes, target + GameObject.Transform.Position, p.VelocityOffset), false));
                     GameWorld.CurrentScene.AddObject(newShardGameObject);
                 }
             }

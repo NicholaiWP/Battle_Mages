@@ -8,7 +8,7 @@ namespace BattleMages
 {
     public abstract class Spell : Component
     {
-        private RuneInfo[] runes;
+        private AttributeRune[] runes;
 
         //BASE STATS
         //These stats are used by spells to modify behaviour in different ways.
@@ -20,13 +20,13 @@ namespace BattleMages
 
         public Spell(GameObject go, SpellCreationParams p) : base(go)
         {
-            runes = p.Runes;
+            runes = p.AttributeRunes;
         }
 
         /// <summary>
         /// Call after setting spell stats
         /// </summary>
-        protected void ApplyRunes()
+        protected void ApplyAttributeRunes()
         {
             foreach (var r in runes)
             {

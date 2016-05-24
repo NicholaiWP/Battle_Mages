@@ -21,7 +21,7 @@ namespace BattleMages
         private int selectedSpell;
         private KeyboardState oldKbState;
 
-        private float[] cooldownTimers = new float[PlayerSpell.PlayerRuneCount];
+        private float[] cooldownTimers = new float[SpellInfo.AttributeRuneSlotCount];
 
         public const int MaxHealth = 100;
         public const float MaxMana = 100;
@@ -72,22 +72,22 @@ namespace BattleMages
             //Spellcasting
             if (canUseSpells && mState.LeftButton == ButtonState.Pressed && cooldownTimers[selectedSpell] <= 0 && CurrentMana > 0)
             {
-                PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
+                SpellInfo spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
 
                 //Fetch base spell and runes
-                var baseSpell = spellToCast.GetSpell();
-                RuneInfo[] runes = new RuneInfo[spellToCast.RuneCount];
-                for (int i = 0; i < spellToCast.RuneCount; i++)
+                var baseRune = spellToCast.GetBaseRune();
+                AttributeRune[] attrRunes = new AttributeRune[SpellInfo.AttributeRuneSlotCount];
+                for (int i = 0; i < SpellInfo.AttributeRuneSlotCount; i++)
                 {
-                    runes[i] = spellToCast.GetRune(i);
+                    attrRunes[i] = spellToCast.GetAttributeRune(i);
                 }
 
                 //Create spell object and add it to the world
                 float manaCost;
                 GameWorld.CurrentScene.AddObject(
                     ObjectBuilder.BuildSpell(transform.Position,
-                    baseSpell,
-                    new SpellCreationParams(runes, GameWorld.Cursor.Position, character.Velocity),
+                    baseRune,
+                    new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity),
                     out cooldownTimers[selectedSpell],
                     out manaCost));
                 CurrentMana -= manaCost;

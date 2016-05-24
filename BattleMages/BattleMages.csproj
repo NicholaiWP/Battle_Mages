@@ -87,7 +87,7 @@
     <Compile Include="Library\Cursor.cs" />
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\GameWorld.cs" />
-    <Compile Include="Library\PlayerSpell.cs" />
+    <Compile Include="Library\SpellInfo.cs" />
     <Compile Include="Messages\AnimationDoneMsg.cs" />
     <Compile Include="Messages\DestroyMsg.cs" />
     <Compile Include="Messages\DrawMsg.cs" />
@@ -106,14 +106,14 @@
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
     <Compile Include="Scenes\SpellbookScene.cs" />
-    <Compile Include="Library\SpellInfo.cs" />
+    <Compile Include="Library\BaseRune.cs" />
     <Compile Include="Library\StaticData.cs" />
     <Compile Include="Library\Utils.cs" />
     <Compile Include="Library\SoundManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\Spell.cs" />
-    <Compile Include="Library\RuneInfo.cs" />
+    <Compile Include="Library\AttributeRune.cs" />
     <Compile Include="Components\Spells\Fireball.cs" />
     <Compile Include="Components\Spells\IceShard.cs" />
   </ItemGroup>

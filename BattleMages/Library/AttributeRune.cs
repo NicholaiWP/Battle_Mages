@@ -8,7 +8,7 @@ namespace BattleMages
     /// <summary>
     /// Stores information about a rune that can be applied to a base spell to alter its stats.
     /// </summary>
-    public class RuneInfo
+    public class AttributeRune
     {
         public delegate void RuneAction(Spell targetSpell);
 
@@ -19,12 +19,12 @@ namespace BattleMages
         public string TextureName { get; }
 
         /// <summary>
-        /// Creates a new instance of RuneInfo with a name, a description, and a delegate method to call when applying the rune to a spell.
+        /// Creates a new attribute rune with a name, a description, and a delegate method to call when applying the rune to a spell.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="action"></param>
-        public RuneInfo(string name, string description, string textureName, RuneAction action)
+        public AttributeRune(string name, string description, string textureName, RuneAction action)
         {
             Name = name;
             Description = description;

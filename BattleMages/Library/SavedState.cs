@@ -12,11 +12,11 @@ namespace BattleMages
     /// </summary>
     public class SavedState
     {
-        private List<PlayerSpell> spellBook = new List<PlayerSpell>();
+        private List<SpellInfo> spellBook = new List<SpellInfo>();
         private List<int> spellBar = new List<int>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
 
-        public List<PlayerSpell> SpellBook { get { return spellBook; } }
+        public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
 
         public void Save()
