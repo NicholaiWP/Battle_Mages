@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    public class Enemy : Component, ICanBeLoaded, ICanUpdate, ICanBeAnimated
+    public class Enemy : Component
     {
         private float attackRange;
         private float targetingRange;
@@ -33,6 +33,10 @@ namespace BattleMages
             health = startHealth;
             this.attackRange = attackRange;
             this.targetingRange = targetingRange;
+
+            Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
+            Listen<AnimationDoneMsg>(AnimationDone);
         }
 
         public void DealDamage(int points)
@@ -44,7 +48,7 @@ namespace BattleMages
             }
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
@@ -64,7 +68,7 @@ namespace BattleMages
         /// the enemy will attempt to attack the player,
         /// if the player isnt in the enemy's range the enemy will be put into its idle state.
         /// </summary>
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             Move();
         }
@@ -80,7 +84,7 @@ namespace BattleMages
             character.MoveDirection = Vector2.Zero;
         }
 
-        public void OnAnimationDone(string animationsName)
+        private void AnimationDone(AnimationDoneMsg msg)
         {
         }
     }

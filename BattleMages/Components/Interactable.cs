@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
-    internal class Interactable : Component, ICanBeLoaded, ICanUpdate
+    internal class Interactable : Component
     {
         private Collider collider;
         private Action action;
@@ -15,14 +15,16 @@ namespace BattleMages
         public Interactable(GameObject gameObject, Action action) : base(gameObject)
         {
             this.action = action;
+            Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             collider = GameObject.GetComponent<Collider>();
         }
 
-        public void Update()
+        private void Update(UpdateMsg msg)
         {
             if (collider.CalcColliderRect().Contains(GameWorld.Cursor.Position))
             {

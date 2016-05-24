@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
-    public class SpriteRenderer : Component, ICanBeLoaded, ICanBeDrawn
+    public class SpriteRenderer : Component
     {
         //Fields
         private string spriteName;
@@ -37,26 +37,21 @@ namespace BattleMages
                 color = Color.Transparent;
             }
             this.spriteName = spriteName;
+
+            Listen<InitializeMsg>(Initialize);
+            Listen<DrawMsg>(Draw);
         }
 
-        /// <summary>
-        /// Method for loading the starting content of the sprite renderer this is only called once
-        /// </summary>
-        /// <param name="content"></param>
-        public void LoadContent(ContentManager content)
+        void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
-            sprite = content.Load<Texture2D>(spriteName);
+            sprite = GameWorld.Load<Texture2D>(spriteName);
             rectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
         }
 
-        /// <summary>
-        /// The method for drawing
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        public void Draw(Drawer drawer)
+        private void Draw(DrawMsg msg)
         {
-            drawer[DrawLayer.Gameplay].Draw(sprite, position: GameObject.Transform.Position - new Vector2(sprite.Width / 2, sprite.Height / 2) + offset,
+            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, position: GameObject.Transform.Position - new Vector2(sprite.Width / 2, sprite.Height / 2) + offset,
                 sourceRectangle: rectangle,
                 origin: Vector2.Zero,
                 rotation: 0f,

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
-    public class Collider : Component, ICanBeLoaded, ICanBeDrawn
+    public class Collider : Component
     {
         //Static list of all colliders created
         private Transform transform;
@@ -22,6 +22,9 @@ namespace BattleMages
             Size = size;
             Solid = solid;
             debugTexture = GameWorld.Instance.Content.Load<Texture2D>("Images/CollisionTexture");
+
+            Listen<InitializeMsg>(Initialize);
+            Listen<DrawMsg>(Draw);
         }
 
         public Rectangle CalcColliderRect()
@@ -70,12 +73,12 @@ namespace BattleMages
             return CalcColliderRect().Intersects(other.CalcColliderRect());
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             transform = GameObject.Transform;
         }
 
-        public void Draw(Drawer drawer)
+        private void Draw(DrawMsg msg)
         {
             //drawer[DrawLayer.Gameplay].Draw(debugTexture, CalcColliderRect(), new Color(Color.Red, 0.5f));
         }

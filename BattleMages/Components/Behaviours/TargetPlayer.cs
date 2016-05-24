@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BattleMages
 {
-    public class TargetPlayer : Component, ICanBeLoaded, IBehaviour
+    public class TargetPlayer : Component, IBehaviour
     {
         private Transform transform;
         private Character character;
@@ -20,9 +20,11 @@ namespace BattleMages
         {
             closeRange = 25;
             attackTimer = 0;
+
+            Listen<InitializeMsg>(Initialize);
         }
 
-        public void LoadContent(ContentManager content)
+        private void Initialize(InitializeMsg msg)
         {
             transform = GameObject.Transform;
             character = GameObject.GetComponent<Character>();
