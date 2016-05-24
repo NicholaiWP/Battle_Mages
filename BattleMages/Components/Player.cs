@@ -25,7 +25,7 @@ namespace BattleMages
 
         public const int MaxHealth = 100;
         public const float MaxMana = 100;
-        float rechargeDelayTimer = 0;
+        private float rechargeDelayTimer = 0;
 
         public const float ManaRechargeSpeed = 20;
         public const float ManaRechargeDelay = 1;
@@ -55,7 +55,7 @@ namespace BattleMages
         private void Update(UpdateMsg msg)
         {
             //Timers
-            for (int i=0;i<cooldownTimers.Length;i++)
+            for (int i = 0; i < cooldownTimers.Length; i++)
             {
                 if (cooldownTimers[i] > 0)
                     cooldownTimers[i] -= GameWorld.DeltaTime;
@@ -152,8 +152,8 @@ namespace BattleMages
         {
         }
 
-        public void DealDamage(int points)
-        {          
+        public void TakeDamage(int points)
+        {
             CurrentHealth -= points;
             if (CurrentHealth <= 0)
             {

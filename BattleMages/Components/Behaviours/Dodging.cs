@@ -8,7 +8,7 @@ namespace BattleMages
 {
     public class Dodging : IBehaviour
     {
-        public void ExecuteBehaviour(float attackRange, float targetingRange)
+        public void ExecuteBehaviour()
         {
             throw new NotImplementedException();
         }

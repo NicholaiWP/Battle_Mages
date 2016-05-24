@@ -14,17 +14,21 @@ namespace BattleMages
         private Character character;
         private int closeRange;
         private float attackTimer;
+        private float attackRange;
+        private Animator animator;
 
-        public Attack(Enemy enemy)
+        public Attack(Enemy enemy, float attackRange, float targetingRange)
         {
             closeRange = 35;
             attackTimer = 0;
             this.enemy = enemy;
+            this.attackRange = attackRange;
             transform = enemy.GameObject.Transform;
             character = enemy.GameObject.GetComponent<Character>();
+            animator = enemy.GameObject.GetComponent<Animator>();
         }
 
-        public void ExecuteBehaviour(float attackRange, float targetingRange)
+        public void ExecuteBehaviour()
         {
             if (attackTimer >= 0)
                 attackTimer -= GameWorld.DeltaTime;
@@ -35,7 +39,7 @@ namespace BattleMages
                 {
                     Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
                     float lengthToTarget = vecToTarget.Length();
-                    if (InAttackRange(lengthToTarget, attackRange))
+                    if (InAttackRange(lengthToTarget))
                     {
                         if (attackRange <= closeRange)
                         {
@@ -46,6 +50,7 @@ namespace BattleMages
                             RangeAttack(potentialTarget);
                         }
                     }
+                    break;
                 }
             }
         }
@@ -65,12 +70,12 @@ namespace BattleMages
         {
             if (attackTimer <= 0)
             {
-                potentialTarget.GetComponent<Player>().DealDamage(enemy.Damage);
+                potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
                 attackTimer = enemy.CooldownTimer;
             }
         }
 
-        private bool InAttackRange(float lengthToTarget, float attackRange)
+        private bool InAttackRange(float lengthToTarget)
         {
             if (lengthToTarget <= attackRange)
             {
