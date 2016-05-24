@@ -18,6 +18,7 @@ namespace BattleMages
         {
             Damage = 5;
             CooldownTime = 0.6f;
+            ManaCost = 20;
             ApplyRunes();
 
             diff = p.AimTarget - GameObject.Transform.Position;
@@ -60,9 +61,10 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.DealDamage(Damage);
+					enemy.TakeDamage(Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
+ 
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }

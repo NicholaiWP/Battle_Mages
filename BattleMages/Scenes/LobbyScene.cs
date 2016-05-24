@@ -19,6 +19,8 @@ namespace BattleMages
 
         public LobbyScene()
         {
+            //Sound and music handled through SoundManager
+            MediaPlayer.Volume = 0.5f;
             GameWorld.SoundManager.Music("HubBGM");
 
             var content = GameWorld.Instance.Content;

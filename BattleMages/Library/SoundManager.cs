@@ -15,7 +15,7 @@ namespace BattleMages
         private Song hubBGM;
         private Song combatBGM;
         private bool isPlaying, isPLaying1;
-
+        
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
@@ -25,8 +25,8 @@ namespace BattleMages
         /// </summary>
         public SoundManager()
         {
-            SoundVolume = 0.25f;
-            MusicVolume = 0.20f;
+            SoundVolume = 0.20f;
+            MediaPlayer.Volume = 0.5f;
         }
 
         /// <summary>
@@ -41,7 +41,9 @@ namespace BattleMages
             sounds.Add("openHallwayDoor1", content.Load<SoundEffect>("sounds/openHallwayDoor1").CreateInstance());
             sounds.Add("teleport", content.Load<SoundEffect>("sounds/teleport").CreateInstance());
             sounds.Add("AmbienceSound", content.Load<SoundEffect>("Sounds/AmbienceSound").CreateInstance());
-            //sounds.Add("Lightning", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
+            sounds.Add("ElectricitySound", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
+            sounds.Add("FireSound", content.Load<SoundEffect>("Sounds/FireSound").CreateInstance());
+            sounds.Add("IceSound", content.Load<SoundEffect>("Sounds/IceSound").CreateInstance());
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
             hubBGM = content.Load<Song>("Sounds/HubMusic");
             combatBGM = content.Load<Song>("Sounds/CombatMusic");
@@ -54,22 +56,23 @@ namespace BattleMages
         /// </summary>
         public void Music(string soundName)
         {
+            if (MediaPlayer.Volume > 0.8f)
+            {
+                MediaPlayer.Volume = 0.8f;
+            }
             if (soundName == "CombatBGM" && isPLaying1 == false)
             {
-                MusicVolume = 0.20f;
                     MediaPlayer.Play(combatBGM);
                 isPlaying = false;
                 isPLaying1 = true;
             }
-            if (soundName == "HubBGM" && isPlaying== false)
+            if (soundName == "HubBGM" && isPlaying == false)
             {
-                MusicVolume = 0.20f;
                     MediaPlayer.Play(hubBGM);
                    isPlaying = true;
                 isPLaying1 = false;
-            }
-         
-                }
+            } 
+        }
 
         /// <summary>
         /// Method for playing a sound by the soundName
@@ -79,11 +82,11 @@ namespace BattleMages
         {
             if (sounds.ContainsKey(soundName))
             {
-                if(soundName == "AmbienceSound")
+                if (soundName == "AmbienceSound")
                 {
-                    if (AmbienceVolume > 0.12f)
+                    if (AmbienceVolume > 0.26f)
                     {                       
-                        AmbienceVolume = 0.12f; 
+                        AmbienceVolume = 0.26f; 
                     }
                     if (AmbienceVolume < 0.02f)
                     {
@@ -91,6 +94,7 @@ namespace BattleMages
                     }
                     sounds[soundName].Volume = AmbienceVolume;
                     sounds[soundName].Play();
+                    
                 }
                 
                 if (sounds[soundName].State == SoundState.Stopped)

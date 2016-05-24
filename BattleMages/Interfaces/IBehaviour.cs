@@ -8,6 +8,6 @@ namespace BattleMages
 {
     public interface IBehaviour
     {
-        void ExecuteBehaviour(float targetingRange, float attackRange);
+        void ExecuteBehaviour(float attackRange, float targetingRange);
     }
 }

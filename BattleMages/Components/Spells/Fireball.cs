@@ -17,6 +17,7 @@ namespace BattleMages
         {
             Damage = 15;
             CooldownTime = 0.8f;
+            ManaCost = 15;
             ApplyRunes();
 
             var diff = p.AimTarget - GameObject.Transform.Position;
@@ -46,7 +47,7 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.DealDamage(Damage);
+                    enemy.TakeDamage(Damage);
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }

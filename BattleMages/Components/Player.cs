@@ -17,46 +17,25 @@ namespace BattleMages
         private SpriteRenderer spriteRenderer;
         private Transform transform;
         private Collider collider;
-        private int health;
-        private int currentHealth;
         private bool canUseSpells;
         private int selectedSpell;
         private KeyboardState oldKbState;
 
+        private float[] cooldownTimers = new float[PlayerSpell.PlayerRuneCount];
 
-        private float cooldownTimer;
+        public const int MaxHealth = 100;
+        public const float MaxMana = 100;
+        float rechargeDelayTimer = 0;
 
-        public int Health
-        {
-            get
-            {
-                return health;
-            }
+        public const float ManaRechargeSpeed = 20;
+        public const float ManaRechargeDelay = 1;
 
-            set
-            {
-                health = value;
-            }
-        }
-
-        public int CurrentHealth
-        {
-            get
-            {
-                return currentHealth;
-            }
-
-            set
-            {
-                currentHealth = value;
-            }
-        }
+        public int CurrentHealth { get; private set; } = MaxHealth;
+        public float CurrentMana { get; private set; } = MaxMana;
 
         public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
-            health = 100;
             this.canUseSpells = canUseSpells;
-            currentHealth = health;
 
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
@@ -75,15 +54,23 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            if (cooldownTimer > 0)
+            //Timers
+            for (int i=0;i<cooldownTimers.Length;i++)
             {
-                cooldownTimer -= GameWorld.DeltaTime;
+                if (cooldownTimers[i] > 0)
+                    cooldownTimers[i] -= GameWorld.DeltaTime;
             }
 
+            rechargeDelayTimer = Math.Max(rechargeDelayTimer - GameWorld.DeltaTime / ManaRechargeDelay, 0);
+            if (rechargeDelayTimer <= 0)
+                CurrentMana = Math.Min(CurrentMana + GameWorld.DeltaTime * ManaRechargeSpeed, MaxMana);
+
+            //Gather input
             MouseState mState = Mouse.GetState();
             KeyboardState kbState = Keyboard.GetState();
 
-            if (canUseSpells && mState.LeftButton == ButtonState.Pressed && cooldownTimer <= 0)
+            //Spellcasting
+            if (canUseSpells && mState.LeftButton == ButtonState.Pressed && cooldownTimers[selectedSpell] <= 0 && CurrentMana > 0)
             {
                 PlayerSpell spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
 
@@ -96,15 +83,24 @@ namespace BattleMages
                 }
 
                 //Create spell object and add it to the world
+                float manaCost;
                 GameWorld.CurrentScene.AddObject(
-                    ObjectBuilder.BuildSpell(transform.Position, baseSpell, new SpellCreationParams(runes, GameWorld.Cursor.Position, character.Velocity), out cooldownTimer));
+                    ObjectBuilder.BuildSpell(transform.Position,
+                    baseSpell,
+                    new SpellCreationParams(runes, GameWorld.Cursor.Position, character.Velocity),
+                    out cooldownTimers[selectedSpell],
+                    out manaCost));
+                CurrentMana -= manaCost;
+                rechargeDelayTimer = ManaRechargeDelay;
             }
 
+            //Spellbook opening
             if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab))
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.CurrentScene));
             }
 
+            //Spell selection
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell1)))
                 selectedSpell = 0;
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell2)))
@@ -114,7 +110,10 @@ namespace BattleMages
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell4)))
                 selectedSpell = 3;
 
-                Move(kbState);
+            //Movement
+            Move(kbState);
+
+            oldKbState = kbState;
         }
 
         private void Move(KeyboardState kbState)
@@ -147,7 +146,6 @@ namespace BattleMages
             }
 
             character.Movement();
-            oldKbState = kbState;
         }
 
         private void AnimationDone(AnimationDoneMsg msg)
@@ -156,8 +154,8 @@ namespace BattleMages
 
         public void TakeDamage(int points)
         {          
-            currentHealth -= points;
-            if (currentHealth <= 0)
+            CurrentHealth -= points;
+            if (CurrentHealth <= 0)
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());

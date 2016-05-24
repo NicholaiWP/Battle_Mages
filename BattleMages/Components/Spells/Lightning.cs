@@ -22,7 +22,9 @@ namespace BattleMages
             GameObject.Transform.Position = p.AimTarget;
             Damage = 40;
             CooldownTime = 2f;
+            ManaCost = 50;
             ApplyRunes();
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
@@ -53,7 +55,7 @@ namespace BattleMages
                     var enemy = other.GameObject.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.DealDamage(Damage);
+                        enemy.TakeDamage(Damage);
                         GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position,
                             Damage.ToString()));
                     }

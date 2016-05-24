@@ -8,35 +8,25 @@ using System.Threading.Tasks;
 
 namespace BattleMages
 {
-    public class Hunt : Component, IBehaviour
-
+    public class Hunt : IBehaviour
     {
         private Transform transform;
-        private Character character;
         private Enemy enemy;
+        private Character character;
         private int closeRange;
         private float attackTimer;
 
-        public Hunt(GameObject gameObject) : base(gameObject)
+        public Hunt(Enemy enemy)
         {
             closeRange = 25;
             attackTimer = 0;
-
-            Listen<InitializeMsg>(Initialize);
-        }
-
-        private void Initialize(InitializeMsg msg)
-        {
-            transform = GameObject.Transform;
-            character = GameObject.GetComponent<Character>();
-            enemy = GameObject.GetComponent<Enemy>();
+            this.enemy = enemy;
+            transform = enemy.GameObject.Transform;
+            character = enemy.GameObject.GetComponent<Character>();
         }
 
         public void ExecuteBehaviour(float attackRange, float targetingRange)
         {
-            if (attackTimer >= 0)
-                attackTimer -= GameWorld.DeltaTime;
-
             foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
@@ -57,41 +47,11 @@ namespace BattleMages
                             movement.X += 1;
                         character.MoveDirection = movement;
                     }
-                    else if (InAttackRange(lengthToTarget, attackRange))
-                    {
-                        if (attackRange == closeRange)
-                        {
-                            CloseAttack(potentialTarget);
-                        }
-                        else if (attackRange > closeRange)
-                        {
-                            RangeAttack(potentialTarget);
-                        }
-                    }
                     break;
                 }
             }
         }
 
-        private void RangeAttack(GameObject potentialTarget)
-        {
-            if (attackTimer <= 0)
-            {
-                attackTimer = 2;
-                GameObject projectile = new GameObject(transform.Position);
-                projectile.AddComponent(new Projectile(projectile, enemy, potentialTarget.Transform.Position));
-                GameWorld.CurrentScene.AddObject(projectile);
-            }
-        }
-
-        private void CloseAttack(GameObject potentialTarget)
-        {
-            if (attackTimer <= 0)
-            {
-                potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
-                attackTimer = 4;
-            }
-        }
 
         private bool InAttackRange(float lengthToTarget, float attackRange)
         {
