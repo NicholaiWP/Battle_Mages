@@ -17,6 +17,7 @@ namespace BattleMages
         public int Damage { get; set; }
         public int ManaCost { get; set; }
         public float CooldownTime { get; set; }
+        public float SpeedUpAProjectile { get; set; }
 
         public Spell(GameObject go, SpellCreationParams p) : base(go)
         {

@@ -14,6 +14,8 @@ namespace BattleMages
         private float timer;
         private float damageTimer;
 
+        public float Timer {get {return timer;} set {timer = value;}}
+
         public EarthSpikes(GameObject go, SpellCreationParams p) : base(go, p)
         {
             GameObject.Transform.Position = p.AimTarget;
@@ -27,7 +29,7 @@ namespace BattleMages
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
             collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
             GameObject.AddComponent(collider);
-            timer = 4;
+            Timer = 4;
 
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
@@ -45,8 +47,8 @@ namespace BattleMages
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                 }
             }
-            timer -= GameWorld.DeltaTime;
-            if (timer <= 0)
+            Timer -= GameWorld.DeltaTime;
+            if (Timer <= 0)
             {
                 GameWorld.CurrentScene.RemoveObject(GameObject);
             }

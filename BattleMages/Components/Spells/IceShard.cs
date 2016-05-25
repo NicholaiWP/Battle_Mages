@@ -14,6 +14,34 @@ namespace BattleMages
         private Vector2 diff;
         private Collider collider;
 
+        #region Properties
+        public Vector2 Velocity
+        {
+            get
+            {
+                return velocity;
+            }
+
+            set
+            {
+                velocity = value;
+            }
+        }
+
+        public Vector2 Diff
+        {
+            get
+            {
+                return diff;
+            }
+
+            set
+            {
+                diff = value;
+            }
+        }
+        #endregion
+
         public IceShard(GameObject go, SpellCreationParams p, bool spawnSubshards) : base(go, p)
         {
             Damage = 5;
@@ -21,9 +49,9 @@ namespace BattleMages
             ManaCost = 20;
             ApplyRunes();
 
-            diff = p.AimTarget - GameObject.Transform.Position;
-            diff.Normalize();
-            velocity = diff * 100f;
+            Diff = p.AimTarget - GameObject.Transform.Position;
+            Diff.Normalize();
+            Velocity = Diff * 100f;
 
             if (spawnSubshards)
             {
@@ -32,7 +60,7 @@ namespace BattleMages
                     GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
 
                     //Set aim target to be rotated based on which shard this is
-                    Vector2 target = Utils.RotateVector(diff, i == 0 ? 20 : -20);
+                    Vector2 target = Utils.RotateVector(Diff, i == 0 ? 20 : -20);
 
                     newShardGameObject.AddComponent(new IceShard(newShardGameObject, new SpellCreationParams(p.Runes, target + GameObject.Transform.Position, p.VelocityOffset), false));
                     GameWorld.CurrentScene.AddObject(newShardGameObject);
@@ -55,7 +83,7 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
+            GameObject.Transform.Position += Velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 var enemy = other.GameObject.GetComponent<Enemy>();
