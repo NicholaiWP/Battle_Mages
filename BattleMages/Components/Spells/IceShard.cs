@@ -34,7 +34,9 @@ namespace BattleMages
                     //Set aim target to be rotated based on which shard this is
                     Vector2 target = Utils.RotateVector(diff, i == 0 ? 20 : -20);
 
-                    newShardGameObject.AddComponent(new IceShard(newShardGameObject, new SpellCreationParams(p.AttributeRunes, target + GameObject.Transform.Position, p.VelocityOffset), false));
+                    newShardGameObject.AddComponent(new IceShard(newShardGameObject,
+                        new SpellCreationParams(p.AttributeRunes, target + GameObject.Transform.Position, p.VelocityOffset),
+                        false));
                     GameWorld.CurrentScene.AddObject(newShardGameObject);
                 }
             }
@@ -42,7 +44,6 @@ namespace BattleMages
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
-
 
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
@@ -61,10 +62,10 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-					enemy.TakeDamage(Damage);
+                    enemy.TakeDamage(Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
- 
+
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }

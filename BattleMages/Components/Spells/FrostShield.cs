@@ -14,44 +14,35 @@ namespace BattleMages
         private Texture2D sprite;
         private float radius;
         private float angle;
-        private float period;
+        private float speed;
+        private float frameTime;
 
-        public FrostShield(GameObject go, SpellCreationParams p, bool spawnSubshards) : base(go, p)
+        public FrostShield(GameObject go, SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(go, p)
         {
-            period = 2;
+            frameTime = GameWorld.DeltaTime;
+            speed = 2;
             radius = 50;
             Damage = 15;
             CooldownTime = 2;
             ManaCost = 40;
             ApplyAttributeRunes();
+            angle = MathHelper.ToRadians(angleDegrees);
 
-            /*if (spawnSubshards)
+            if (spawnSubshards)
             {
                 for (int i = 0; i <= 2; i++)
                 {
-                    Vector2 pos = Vector2.Zero;
-
-                    foreach (GameObject player in GameWorld.CurrentScene.ActiveObjects)
-                    {
-                        if (player.GetComponent<Player>() != null)
-                        {
-                            pos = player.Transform.Position;
-                        }
-                    }
-
-                    GameObject newShardGameObject = new GameObject(pos);
-
+                    GameObject newShardGameObject = new GameObject(Vector2.Zero);
                     newShardGameObject.AddComponent(new FrostShield(newShardGameObject,
-                        new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position,
-                        p.VelocityOffset), false));
-
+                           new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
+                           false, 90 * (i + 1)));
                     GameWorld.CurrentScene.AddObject(newShardGameObject);
                 }
-        }*/
+            }
 
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
 
-            collider = private newCollider(GameObject, private newVector2(sprite.Width, sprite.Height));
+            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
 
             GameObject.AddComponent(collider);
 
@@ -59,47 +50,53 @@ namespace BattleMages
             Listen<DrawMsg>(Draw);
         }
 
-    private void Update(UpdateMsg message)
-    {
-        #region collision detect
-
-        foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
+        private void Update(UpdateMsg message)
         {
-            var enemy = other.GameObject.GetComponent<Enemy>();
-            var projectile = other.GameObject.GetComponent<Projectile>();
+            #region collision detect
 
-            if (enemy != null)
+            foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
-                enemy.TakeDamage(Damage);
-                GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                var enemy = other.GameObject.GetComponent<Enemy>();
+
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(Damage);
+                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                }
+                else if (other.GameObject.GetComponent<Projectile>() != null)
+                {
+                    GameWorld.CurrentScene.RemoveObject(other.GameObject);
+                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                }
             }
-            else if (projectile != null)
+
+            #endregion collision detect
+
+            foreach (GameObject go in GameWorld.CurrentScene.ActiveObjects)
             {
-                GameWorld.CurrentScene.RemoveObject(other.GameObject);
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                if (go.GetComponent<Player>() != null)
+                {
+                    Vector2 center = go.Transform.Position;
+
+                    angle += speed * GameWorld.DeltaTime;
+                    float x = (float)Math.Cos(angle) * radius + center.X;
+                    float y = (float)Math.Sin(angle) * radius + center.Y;
+                    GameObject.Transform.Position = new Vector2(x, y);
+                }
             }
         }
 
-        #endregion collision detect
-
-        foreach (GameObject go in GameWorld.CurrentScene.ActiveObjects)
+        private void Draw(DrawMsg msg)
         {
-            if (go.GetComponent<Player>() != null)
+            if (frameTime > 0)
             {
-                Vector2 center = go.Transform.Position;
-
-                angle += period * GameWorld.DeltaTime;
-                float x = (float)Math.Cos(angle) * radius + center.X;
-                float y = (float)Math.Sin(angle) * radius + center.Y;
-                GameObject.Transform.Position = new Vector2(x, y);
+                frameTime -= GameWorld.DeltaTime;
+            }
+            else
+            {
+                msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
             }
         }
     }
-
-    private void Draw(DrawMsg msg)
-    {
-        msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
-    }
-}
 }
