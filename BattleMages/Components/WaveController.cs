@@ -14,7 +14,9 @@ namespace BattleMages
         public WaveController(GameObject gameObject, GameScene scene) : base(gameObject)
         {
             this.scene = scene;
-            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 20), new Golem(null)));
+            //scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 20), new Golem(null)));
+            scene.AddObject(ObjectBuilder.BuildEnemy(new Vector2(50, 20), new Orb(null)));
+
         }
 
         public void NewWave()

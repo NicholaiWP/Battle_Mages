@@ -23,6 +23,7 @@ namespace BattleMages
             base.Initialize(msg);
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
+            behaviours.Add(new Dodging(this));
         }
     }
 }
