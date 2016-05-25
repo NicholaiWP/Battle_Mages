@@ -16,7 +16,7 @@ namespace BattleMages
         {
             this.action = action;
             Listen<InitializeMsg>(Initialize);
-            Listen<UpdateMsg>(Update);
+            Listen<UpdateMsg>(Update);  
         }
 
         private void Initialize(InitializeMsg msg)

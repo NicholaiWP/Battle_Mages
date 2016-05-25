@@ -35,10 +35,14 @@ namespace BattleMages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
+            sounds.Add("fireball", content.Load<SoundEffect>("sounds/fireball").CreateInstance());
+            sounds.Add("iceshardsbreaking", content.Load<SoundEffect>("sounds/iceshardsbreaking").CreateInstance());
+            sounds.Add("lightningStrike", content.Load<SoundEffect>("sounds/lightningStrike").CreateInstance());
+            sounds.Add("openHallwayDoor1", content.Load<SoundEffect>("sounds/openHallwayDoor1").CreateInstance());
+            sounds.Add("teleport", content.Load<SoundEffect>("sounds/teleport").CreateInstance());
             sounds.Add("AmbienceSound", content.Load<SoundEffect>("Sounds/AmbienceSound").CreateInstance());
             sounds.Add("ElectricitySound", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
-            sounds.Add("FireSound", content.Load<SoundEffect>("Sounds/FireSound").CreateInstance());
-            sounds.Add("IceSound", content.Load<SoundEffect>("Sounds/IceSound").CreateInstance());
+            sounds.Add("Fireball", content.Load<SoundEffect>("Sounds/Fireball").CreateInstance());
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
             hubBGM = content.Load<Song>("Sounds/HubMusic");
             combatBGM = content.Load<Song>("Sounds/CombatMusic");

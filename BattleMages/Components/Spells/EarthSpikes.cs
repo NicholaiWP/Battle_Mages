@@ -21,7 +21,9 @@ namespace BattleMages
             Damage = 8;
             damageTimer = 0;
             CooldownTime = 5;
-            ApplyRunes();
+            ManaCost = 80;
+            ApplyAttributeRunes();
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
             collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
             GameObject.AddComponent(collider);
@@ -39,7 +41,7 @@ namespace BattleMages
                 if (enemy != null && damageTimer <= 0)
                 {
                     damageTimer = 0.6f;
-                    enemy.DealDamage(Damage);
+                    enemy.TakeDamage(Damage);
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                 }
             }

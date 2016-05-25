@@ -20,27 +20,31 @@ namespace BattleMages
             return gameObject;
         }
 
-        public static GameObject BuildEnemy(Vector2 position, float targetingRange, float attackRange, List<IBehaviour> behaviours)
+        public static GameObject BuildEnemy(Vector2 position, Enemy enemy)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+
+            if (enemy is Slime)
+            {
+                gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+            }
+            else if (enemy is Golem)
+            {
+                gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+            }
+            else if (enemy is Orb)
+            {
+                gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+            }
+
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject) { MoveSpeed = 40 });
 
-            //All behaviours in the list have a null gameObject
-            foreach (IBehaviour behaviour in behaviours)
-            {
-                //Using the activator to create a new instance of the same type as the behaviour with the gameobject,
-                //so the behaviour which the gameObject adds will have a connection to the gameObject
-                var alikeBehaviour = Activator.CreateInstance(behaviour.GetType(), gameObject);
-                if (behaviour is Component)
-                {
-                    //Adding the alikeBehaviour to the gameObject
-                    gameObject.AddComponent(alikeBehaviour as Component);
-                }
-            }
+            //Using the activator to create a new instance of the same type as the enemy which is given as a
+            //parameter. The activator then gives the enemy a gameobject.
+            var alikeEnemy = Activator.CreateInstance(enemy.GetType(), gameObject);
 
-            gameObject.AddComponent(new Enemy(gameObject, 100, targetingRange, attackRange));
+            gameObject.AddComponent(alikeEnemy as Component);
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
             return gameObject;
         }
@@ -59,12 +63,13 @@ namespace BattleMages
             return gameObject;
         }
 
-        public static GameObject BuildSpell(Vector2 position, SpellInfo baseSpell, SpellCreationParams creationParams, out float cooldownTime)
+        public static GameObject BuildSpell(Vector2 position, BaseRune baseRune, SpellCreationParams creationParams, out float cooldownTime, out float manaCost)
         {
             GameObject gameObject = new GameObject(position);
-            Spell s = baseSpell.CreateSpell(gameObject, creationParams);
+            Spell s = baseRune.CreateSpell(gameObject, creationParams);
             gameObject.AddComponent(s);
             cooldownTime = s.CooldownTime;
+            manaCost = s.ManaCost;
             return gameObject;
         }
 

@@ -20,14 +20,17 @@ namespace BattleMages
         public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
         {
             GameObject.Transform.Position = p.AimTarget;
-            Damage = 25;
-            CooldownTime = 0.9f;
-            ApplyRunes();
+            Damage = 40;
+            CooldownTime = 2f;
+            ManaCost = 50;
+            ApplyAttributeRunes();
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
-
+            GameWorld.SoundManager.PlaySound("lightningStrike");
+            GameWorld.SoundManager.SoundVolume = 0.7f;
             Listen<UpdateMsg>(Update);
             Listen <DrawMsg>(Draw);
         }
@@ -52,7 +55,7 @@ namespace BattleMages
                     var enemy = other.GameObject.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.DealDamage(Damage);
+                        enemy.TakeDamage(Damage);
                         GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position,
                             Damage.ToString()));
                     }

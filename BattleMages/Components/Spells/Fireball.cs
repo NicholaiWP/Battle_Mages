@@ -15,9 +15,10 @@ namespace BattleMages
 
         public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
         {
-            Damage = 10;
-            CooldownTime = 0.3f;
-            ApplyRunes();
+            Damage = 15;
+            CooldownTime = 0.8f;
+            ManaCost = 15;
+            ApplyAttributeRunes();
 
             var diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
@@ -26,6 +27,8 @@ namespace BattleMages
 
             collider = new Collider(GameObject, new Vector2(8, 8));
             GameObject.AddComponent(collider);
+            GameWorld.SoundManager.PlaySound("fireball");
+            GameWorld.SoundManager.SoundVolume = 0.9f;
 
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
@@ -44,7 +47,7 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.DealDamage(Damage);
+                    enemy.TakeDamage(Damage);
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }

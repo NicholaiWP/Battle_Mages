@@ -820,3 +820,39 @@
 /processorParam:TextureFormat=Color
 /build:Rune Images/rune9.png
 
+#begin Sounds/ElectricitySound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/ElectricitySound.wav
+
+#begin Sounds/fireball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/fireball.wav
+
+#begin Sounds/lightningStrike.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/lightningStrike.wav
+
+#begin Sounds/iceshardsbreaking.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/iceshardsbreaking.wav
+
+#begin Sounds/openHallwayDoor1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/openHallwayDoor1.wav
+
+#begin Sounds/teleport.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/teleport.wav
+
