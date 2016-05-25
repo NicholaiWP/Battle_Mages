@@ -154,9 +154,13 @@ namespace BattleMages
                 newSpellSpr2,
                 () =>
                 {
-                    SpellInfo newSpell = new SpellInfo();
-                    GameWorld.State.SpellBook.Add(newSpell);
-                    OpenRunesTab(newSpell);
+                    //Limits amount of times you can make spells
+                    if (objectsInTab.Count < 25)
+                    {
+                        SpellInfo newSpell = new SpellInfo();
+                        GameWorld.State.SpellBook.Add(newSpell);
+                        OpenRunesTab(newSpell);
+                    }
                 }
                 ));
             var playerSpellSpr1 = content.Load<Texture2D>("Images/Button_PlayerSpell");
@@ -223,7 +227,7 @@ namespace BattleMages
             //Done button
             var doneSpr1 = content.Load<Texture2D>("Images/Button_Done");
             var doneSpr2 = content.Load<Texture2D>("Images/Button_Done_Hover");
-            AddTabObject(ObjectBuilder.BuildButton(
+                AddTabObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
                 doneSpr1,
                 doneSpr2,
@@ -233,7 +237,6 @@ namespace BattleMages
                     OpenSpellsTab();
                 }
                 ));
-
             var runeSpr1 = content.Load<Texture2D>("Images/Button_Rune");
             var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
             int nextRuneX = 0;
@@ -288,8 +291,7 @@ namespace BattleMages
                     nextRuneX = 0;
                 }
             }
-
-            UpdateRuneGrid();
+                UpdateRuneGrid();
         }
 
         #endregion
