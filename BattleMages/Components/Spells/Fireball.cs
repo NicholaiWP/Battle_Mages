@@ -12,35 +12,6 @@ namespace BattleMages
         private Texture2D sprite;
         private Vector2 velocity;
         private Collider collider;
-        private Vector2 diff;
-
-        #region Properties
-        public Vector2 Velocity
-        {
-           get
-            {
-                return velocity;
-            }
-
-            set
-            {
-                velocity = value;
-            }
-        }
-
-        public Vector2 Diff
-        {
-            get
-            {
-                return diff;
-            }
-
-            set
-            {
-                diff = value;
-            }
-        }
-        #endregion
 
         public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
         {
@@ -49,9 +20,9 @@ namespace BattleMages
             ManaCost = 15;
             ApplyRunes();
 
-            Diff = p.AimTarget - GameObject.Transform.Position;
-            Diff.Normalize();
-            Velocity = Diff * 120f;
+            var diff = p.AimTarget - GameObject.Transform.Position;
+            diff.Normalize();
+            velocity = diff * 120f;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
@@ -70,7 +41,7 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            GameObject.Transform.Position += Velocity * GameWorld.DeltaTime;
+            GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 var enemy = other.GameObject.GetComponent<Enemy>();
