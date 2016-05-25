@@ -894,3 +894,15 @@
 /processorParam:TextureFormat=Color
 /build:Player Images/player.png
 
+#begin Sounds/Earthspikes.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Earthspikes.wav
+
+#begin Sounds/FrostShield.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/FrostShield.wav
+

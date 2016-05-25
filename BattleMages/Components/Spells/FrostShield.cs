@@ -22,11 +22,15 @@ namespace BattleMages
             frameTime = GameWorld.DeltaTime;
             speed = 2;
             radius = 50;
-            Damage = 15;
+            Damage = 8;
             CooldownTime = 2;
             ManaCost = 40;
             ApplyAttributeRunes();
             angle = MathHelper.ToRadians(angleDegrees);
+
+            //needs to be looped till all the frost shield objects are removed.
+            GameWorld.SoundManager.PlaySound("FrostShield");
+            GameWorld.SoundManager.SoundVolume = 1f;
 
             if (spawnSubshards)
             {
@@ -61,6 +65,8 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
+                    GameWorld.SoundManager.PlaySound("iceshardsbreaking");
+                    GameWorld.SoundManager.SoundVolume = 0.9f;
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
                 }

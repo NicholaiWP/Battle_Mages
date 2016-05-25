@@ -18,14 +18,22 @@ namespace BattleMages
         {
             GameObject.Transform.Position = p.AimTarget;
 
-            Damage = 8;
+            Damage = 10;
             damageTimer = 0;
-            CooldownTime = 5;
-            ManaCost = 80;
+            CooldownTime = 3;
+            ManaCost = 70;
             ApplyAttributeRunes();
 
+            //bgEffect = Content.Load<SoundEffect>("background_music");
+            //SoundEffectInstance soundEffectInstance = bgEffect.CreateInstance();
+            //soundEffectInstance.IsLooped = true;
+
+            
+            GameWorld.SoundManager.PlaySound("Earthspikes");
+            GameWorld.SoundManager.SoundVolume = 1f;
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
-            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
+            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height), true);
             GameObject.AddComponent(collider);
             timer = 4;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -46,9 +48,14 @@ namespace BattleMages
                 DecreaseManaCostRune),
 
                 new AttributeRune("Lower spell cooldown",
-                "-30% cooldown on spells",
+                "reduces Cooldown on spells",
                 "rune3",
                 DescreaseCooldown),
+
+                //new AttributeRune("Projectile block",
+                //"your spells can block enemy projectiles",
+                //"rune4",
+                //CollideAbilityRune),
             };
 
             //Add new base runes to this array
@@ -94,6 +101,11 @@ namespace BattleMages
         private static void DescreaseCooldown(Spell spell)
         {
             spell.CooldownTime -= (int)(spell.CooldownTime * 0.30f);
+        }
+
+        private static void CollideAbilityRune(Spell spell)
+        {
+            //work in progress
         }
     }
 }
