@@ -21,7 +21,7 @@ namespace BattleMages
         {
             GameObject.Transform.Position = p.AimTarget;
             Damage = 40;
-            CooldownTime = 2f;
+            CooldownTime = 4.323696f;
             ManaCost = 50;
             ApplyAttributeRunes();
 
@@ -29,16 +29,16 @@ namespace BattleMages
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
-            GameWorld.SoundManager.PlaySound("lightningStrike");
-            GameWorld.SoundManager.SoundVolume = 0.7f;
             Listen<UpdateMsg>(Update);
-            Listen <DrawMsg>(Draw);
+            Listen<DrawMsg>(Draw);
         }
 
         private void Draw(DrawMsg msg)
         {
             if (waitTimer <= 0)
             {
+                GameWorld.SoundManager.PlaySound("lightningStrike");
+                GameWorld.SoundManager.SoundVolume = 0.7f;
                 msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(0, sprite.Height), Color.White);
             }
         }
