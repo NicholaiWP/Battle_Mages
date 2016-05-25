@@ -83,14 +83,14 @@ namespace BattleMages
                 }
 
                 //Create spell object and add it to the world
-                float manaCost;
-                GameWorld.CurrentScene.AddObject(
-                    ObjectBuilder.BuildSpell(transform.Position,
-                    baseRune,
-                    new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity),
-                    out cooldownTimers[selectedSpell],
-                    out manaCost));
-                CurrentMana -= manaCost;
+                GameObject spellObject = new GameObject(transform.Position);
+                Spell spellComponent = baseRune.CreateSpell(spellObject,
+                    new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
+                spellObject.AddComponent(spellComponent);
+                GameWorld.CurrentScene.AddObject(spellObject);
+
+                CurrentMana -= spellComponent.ManaCost;
+                cooldownTimers[selectedSpell] = spellComponent.CooldownTime;
                 rechargeDelayTimer = ManaRechargeDelay;
             }
 
