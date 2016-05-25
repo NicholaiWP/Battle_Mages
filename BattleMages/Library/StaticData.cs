@@ -39,6 +39,11 @@ namespace BattleMages
                 "+damage",
                 "rune1",
                 DamageUpRune),
+
+                new AttributeRune("Decrease mana cost",
+                "-Mana cost",
+                "rune2",
+                DecreaseManaCostRune),
             };
 
             //Add new base runes to this array
@@ -78,7 +83,7 @@ namespace BattleMages
 
         private static void DecreaseManaCostRune(Spell spell)
         {
-            spell.ManaCost -= (int)(spell.ManaCost * 0.15f);
+            spell.ManaCost -= (int)(spell.ManaCost * 0.50f);
         }
     }
 }
