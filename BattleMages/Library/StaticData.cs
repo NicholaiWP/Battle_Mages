@@ -63,6 +63,11 @@ namespace BattleMages
                 "Hard spikes will rise from the\n ground",
                 "earthspikesRune",
                (go, p) => {return new EarthSpikes(go, p); }),
+
+                new BaseRune("FrostShield",
+                "Make 4 orbs of ice that rotate around you",
+                "iceshardsRune",
+                (go, p) => {return new FrostShield(go, p, true); })
             };
         }
 
