@@ -637,12 +637,6 @@
 /processorParam:TextureFormat=Color
 /build:Backgrounds/Hallway_proto.png
 
-#begin Sounds/ElectricitySound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/ElectricitySound.wav
-
 #begin Sounds/FireSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -855,4 +849,48 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/teleport.wav
+
+#begin Enemy Images/golemEnemy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Enemy Images/golemEnemy.png
+
+#begin Enemy Images/orbEnemy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Enemy Images/orbEnemy.png
+
+#begin Enemy Images/slimeEnemy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Enemy Images/slimeEnemy.png
+
+#begin Player Images/player.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Player Images/player.png
 

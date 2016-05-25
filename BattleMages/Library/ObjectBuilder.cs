@@ -12,7 +12,7 @@ namespace BattleMages
         public static GameObject BuildPlayer(Vector2 position, bool canUseSpells)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/GdMageBM"));
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "Player Images/player"));
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Player(gameObject, canUseSpells));
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
@@ -26,15 +26,15 @@ namespace BattleMages
 
             if (enemy is Slime)
             {
-                gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+                gameObject.AddComponent(new SpriteRenderer(gameObject, "Enemy Images/slimeEnemy"));
             }
             else if (enemy is Golem)
             {
-                gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+                gameObject.AddComponent(new SpriteRenderer(gameObject, "Enemy Images/golemEnemy"));
             }
             else if (enemy is Orb)
             {
-                gameObject.AddComponent(new SpriteRenderer(gameObject, "Images/EvilMageBM"));
+                gameObject.AddComponent(new SpriteRenderer(gameObject, "Enemy Images/orbEnemy"));
             }
 
             gameObject.AddComponent(new Animator(gameObject));
