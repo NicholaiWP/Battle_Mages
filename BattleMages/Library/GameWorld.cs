@@ -91,7 +91,7 @@ namespace BattleMages
             state = new SavedState();
 
             //Create 4 test spell for both the bar and the book
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i < 5; i++)
             {
                 SpellInfo ps = new SpellInfo();
                 ps.SetBaseRune(i);

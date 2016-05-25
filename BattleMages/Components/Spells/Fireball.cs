@@ -12,6 +12,7 @@ namespace BattleMages
         private Texture2D sprite;
         private Vector2 velocity;
         private Collider collider;
+        private Vector2 diff;
 
         public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
         {
@@ -20,7 +21,7 @@ namespace BattleMages
             ManaCost = 15;
             ApplyAttributeRunes();
 
-            var diff = p.AimTarget - GameObject.Transform.Position;
+            diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 120f;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
