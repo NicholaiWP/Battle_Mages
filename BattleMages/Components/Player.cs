@@ -27,7 +27,7 @@ namespace BattleMages
         public const float MaxMana = 100;
         private float rechargeDelayTimer = 0;
 
-        public const float ManaRechargeSpeed = 20;
+        public const float ManaRechargeSpeed = 30;
         public const float ManaRechargeDelay = 1;
 
         public int CurrentHealth { get; private set; } = MaxHealth;
