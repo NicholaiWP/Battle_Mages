@@ -36,14 +36,19 @@ namespace BattleMages
             attributeRunes = new AttributeRune[]
             {
                 new AttributeRune("Damage up rune",
-                "+damage",
+                "Increase damage on spell",
                 "rune1",
                 DamageUpRune),
 
                 new AttributeRune("Decrease mana cost",
-                "-Mana cost",
+                "Lower Mana cost by half",
                 "rune2",
                 DecreaseManaCostRune),
+
+                new AttributeRune("Lower spell cooldown",
+                "-30% cooldown on spells",
+                "rune3",
+                DescreaseCooldown),
             };
 
             //Add new base runes to this array
@@ -84,6 +89,11 @@ namespace BattleMages
         private static void DecreaseManaCostRune(Spell spell)
         {
             spell.ManaCost -= (int)(spell.ManaCost * 0.50f);
+        }
+
+        private static void DescreaseCooldown(Spell spell)
+        {
+            spell.CooldownTime -= (int)(spell.CooldownTime * 0.30f);
         }
     }
 }
