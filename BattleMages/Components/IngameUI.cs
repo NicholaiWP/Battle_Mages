@@ -32,10 +32,10 @@ namespace BattleMages
             haxFont = GameWorld.Load<SpriteFont>("FontBM");
             healthBar = GameWorld.Load<Texture2D>("images/healthBar");
             manaBar = GameWorld.Load<Texture2D>("images/manaBar");
-            spellOneSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
-            spellTwoSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
-            spellThreeSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
-            spellFourSprite = GameWorld.Load<Texture2D>("images/BMspellSprite");
+            spellOneSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
+            spellTwoSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
+            spellThreeSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
+            spellFourSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
             coinsSprite = GameWorld.Load<Texture2D>("images/coinsSprite");
         }
 
