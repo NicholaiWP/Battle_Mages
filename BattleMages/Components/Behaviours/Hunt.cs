@@ -13,15 +13,11 @@ namespace BattleMages
         private Transform transform;
         private Enemy enemy;
         private Character character;
-        private int closeRange;
-        private float attackTimer;
         private float attackRange;
         private float targetingRange;
 
         public Hunt(Enemy enemy, float attackRange, float targetingRange)
         {
-            closeRange = 25;
-            attackTimer = 0;
             this.enemy = enemy;
             this.attackRange = attackRange;
             this.targetingRange = targetingRange;
@@ -41,13 +37,13 @@ namespace BattleMages
                     if (lengthToTarget <= targetingRange && !InAttackRange(lengthToTarget))
                     {
                         Vector2 movement = Vector2.Zero;
-                        if (transform.Position.Y - 10 > potentialTarget.Transform.Position.Y + 10)
+                        if (transform.Position.Y - 1 > potentialTarget.Transform.Position.Y + 1)
                             movement.Y -= 1;
-                        if (transform.Position.Y + 10 < potentialTarget.Transform.Position.Y - 10)
+                        if (transform.Position.Y + 1 < potentialTarget.Transform.Position.Y - 1)
                             movement.Y += 1;
-                        if (transform.Position.X > potentialTarget.Transform.Position.X)
+                        if (transform.Position.X - 1 > potentialTarget.Transform.Position.X + 1)
                             movement.X -= 1;
-                        if (transform.Position.X < potentialTarget.Transform.Position.X)
+                        if (transform.Position.X + 1 < potentialTarget.Transform.Position.X - 1)
                             movement.X += 1;
                         character.MoveDirection = movement;
                     }
