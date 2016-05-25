@@ -63,10 +63,10 @@ namespace BattleMages
             return gameObject;
         }
 
-        public static GameObject BuildSpell(Vector2 position, SpellInfo baseSpell, SpellCreationParams creationParams, out float cooldownTime, out float manaCost)
+        public static GameObject BuildSpell(Vector2 position, BaseRune baseRune, SpellCreationParams creationParams, out float cooldownTime, out float manaCost)
         {
             GameObject gameObject = new GameObject(position);
-            Spell s = baseSpell.CreateSpell(gameObject, creationParams);
+            Spell s = baseRune.CreateSpell(gameObject, creationParams);
             gameObject.AddComponent(s);
             cooldownTime = s.CooldownTime;
             manaCost = s.ManaCost;

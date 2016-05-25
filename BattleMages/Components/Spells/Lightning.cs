@@ -23,7 +23,7 @@ namespace BattleMages
             Damage = 40;
             CooldownTime = 2f;
             ManaCost = 50;
-            ApplyRunes();
+            ApplyAttributeRunes();
 
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
             waitTimer = 0.3f;
