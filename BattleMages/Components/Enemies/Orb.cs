@@ -16,11 +16,13 @@ namespace BattleMages
             attackSpeed = 0;
             targetingRange = 750;
             attackRange = 300;
+
         }
 
         protected override void Initialize(InitializeMsg msg)
         {
             base.Initialize(msg);
+            MoveSpeed = 120;
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
             behaviours.Add(new Dodging(this));

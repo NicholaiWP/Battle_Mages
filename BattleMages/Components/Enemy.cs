@@ -10,13 +10,16 @@ namespace BattleMages
 {
     public abstract class Enemy : Component
     {
-        protected float attackRange;
-        protected float targetingRange;
+        //Component caching
         private SpriteRenderer spriteRenderer;
         private Animator animator;
         private Transform transform;
         private Character character;
         private Collider collider;
+
+
+        protected float attackRange;
+        protected float targetingRange;
         protected int damage;
         protected int health;
         protected float attackSpeed;
@@ -24,6 +27,12 @@ namespace BattleMages
         protected List<IBehaviour> behaviours = new List<IBehaviour>();
         public int Damage { get { return damage; } }
         public float CooldownTimer { get { return cooldownTimer; } }
+
+        protected float MoveSpeed
+        {
+            get { return character.MoveSpeed; }
+            set { character.MoveSpeed = value; }
+        }
 
         protected Enemy(GameObject gameObject) : base(gameObject)
         {
