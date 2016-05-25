@@ -21,9 +21,9 @@ namespace BattleMages
             ManaCost = 15;
             ApplyAttributeRunes();
 
-            var Diff = p.AimTarget - GameObject.Transform.Position;
-            Diff.Normalize();
-            velocity = Diff * 120f;
+            diff = p.AimTarget - GameObject.Transform.Position;
+            diff.Normalize();
+            velocity = diff * 120f;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
