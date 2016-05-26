@@ -72,7 +72,6 @@
     <Compile Include="Components\Spells\EarthSpikes.cs" />
     <Compile Include="Components\Spells\FrostShield.cs" />
     <Compile Include="Components\Spells\Lightning.cs" />
-    <Compile Include="Components\Spells\Storm.cs" />
     <Compile Include="Components\WaveController.cs" />
     <Compile Include="Interfaces\IBehaviour.cs" />
     <Compile Include="Library\Challenges.cs" />
