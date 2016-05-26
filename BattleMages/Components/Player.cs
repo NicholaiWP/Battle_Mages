@@ -50,6 +50,8 @@ namespace BattleMages
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
             //TODO: Create animations here
+            animator.CreateAnimation("WalkRight", new Animation(framesCount: 27, yPos: 0, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
         }
 
         private void Update(UpdateMsg msg)
@@ -161,6 +163,5 @@ namespace BattleMages
                 GameWorld.ChangeScene(new DeathScene());
             }
         }
-      
-        }
     }
+}

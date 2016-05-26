@@ -26,6 +26,7 @@ namespace BattleMages
         /// Max move speed of this character in units/second
         /// </summary>
         public float MoveSpeed { get; set; } = 100;
+
         /// <summary>
         /// Number of units/second this character accelerates with to reach its max speed
         /// </summary>
@@ -93,7 +94,7 @@ namespace BattleMages
 
             //Limit the translation (along with the velocity) based on horizontal collisions
             if ((translation.X > 0 && collisionRight) || (translation.X < 0 && collisionLeft))
-            { 
+            {
                 translation.X = 0;
                 Velocity = new Vector2(0, Velocity.Y);
             }
@@ -102,6 +103,11 @@ namespace BattleMages
             {
                 translation.Y = 0;
                 Velocity = new Vector2(Velocity.X, 0);
+            }
+
+            if (translation.X > 0 && GameObject.GetComponent<Player>() != null)
+            {
+                GameObject.GetComponent<Animator>().PlayAnimation("WalkRight");
             }
 
             GameObject.Transform.Translate(translation);

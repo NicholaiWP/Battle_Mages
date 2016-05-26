@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -12,6 +12,7 @@ namespace BattleMages
     {
         //Fields
         private string spriteName;
+
         private Color color = Color.White;
         private Rectangle rectangle;
         private Vector2 offset;
@@ -42,21 +43,38 @@ namespace BattleMages
             Listen<DrawMsg>(Draw);
         }
 
-        void Initialize(InitializeMsg msg)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             sprite = GameWorld.Load<Texture2D>(spriteName);
-            rectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
+            if (spriteName != "Player Images/playerSpriteSheet")
+                rectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
+            else
+                rectangle = new Rectangle(0, 0, 32, 32);
         }
 
         private void Draw(DrawMsg msg)
         {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, position: GameObject.Transform.Position - new Vector2(sprite.Width / 2, sprite.Height / 2) + offset,
-                sourceRectangle: rectangle,
-                origin: Vector2.Zero,
-                rotation: 0f,
-                color: color,
-                effects: SpriteEffects.None);
+            if (spriteName != "Player Images/playerSpriteSheet")
+            {
+                msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
+                    position: GameObject.Transform.Position - new Vector2(sprite.Width / 2, sprite.Height / 2) + offset,
+                    sourceRectangle: rectangle,
+                    origin: Vector2.Zero,
+                    rotation: 0f,
+                    color: color,
+                    effects: SpriteEffects.None);
+            }
+            else
+            {
+                msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
+                   position: GameObject.Transform.Position - new Vector2(32 / 2, 32 / 2) + offset,
+                   sourceRectangle: rectangle,
+                   origin: Vector2.Zero,
+                   rotation: 0f,
+                   color: color,
+                   effects: SpriteEffects.None);
+            }
         }
     }
 }

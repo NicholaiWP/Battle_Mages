@@ -12,7 +12,7 @@ namespace BattleMages
         public static GameObject BuildPlayer(Vector2 position, bool canUseSpells)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer(gameObject, "Player Images/player"));
+            gameObject.AddComponent(new SpriteRenderer(gameObject, "Player Images/playerSpriteSheet"));
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Player(gameObject, canUseSpells));
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
