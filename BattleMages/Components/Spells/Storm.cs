@@ -23,7 +23,7 @@ namespace BattleMages
         {
             if (existenceTimer <= 0)
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
             else
             {
@@ -34,7 +34,7 @@ namespace BattleMages
             {
                 lightningTimer = 1;
                 Vector2 center = Vector2.Zero;
-                foreach (GameObject go in GameWorld.CurrentScene.ActiveObjects)
+                foreach (GameObject go in GameWorld.Scene.ActiveObjects)
                 {
                     if (go.GetComponent<Player>() != null)
                     {

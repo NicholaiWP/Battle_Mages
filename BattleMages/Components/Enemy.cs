@@ -46,7 +46,7 @@ namespace BattleMages
             health -= points;
             if (health <= 0)
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
 

@@ -28,7 +28,7 @@ namespace BattleMages
 
         public void ExecuteBehaviour()
         {
-            IEnumerable<Collider> collidersInScene = GameWorld.CurrentScene.ActiveObjects //Find all game objects
+            IEnumerable<Collider> collidersInScene = GameWorld.Scene.ActiveObjects //Find all game objects
                 .Where(a => a.GetComponent<Spell>() != null) //That have a spell component
                 .Select(a => a.GetComponent<Collider>()) //Get their colliders
                 .Where(a => a != null); //Filter out those who don't have any

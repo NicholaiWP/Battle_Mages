@@ -49,14 +49,14 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
-                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
 
             if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
     }

@@ -45,13 +45,13 @@ namespace BattleMages
                 {
                     damageTimer = 0.6f;
                     enemy.TakeDamage(Damage);
-                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                 }
             }
             timer -= GameWorld.DeltaTime;
             if (timer <= 0)
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
             if (damageTimer > 0)
             {

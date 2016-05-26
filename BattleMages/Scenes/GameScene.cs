@@ -38,7 +38,7 @@ namespace BattleMages
             AddObject(ingameUI);
 
             waveController = new GameObject(Vector2.Zero);
-            waveController.AddComponent(new WaveController(waveController, this));
+            waveController.AddComponent(new WaveController(waveController));
             waveController.SendMessage(new UpdateMsg());
             //Get all objects on the list before the first run of Update()
             base.Update();

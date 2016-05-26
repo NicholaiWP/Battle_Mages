@@ -39,12 +39,12 @@ namespace BattleMages
                 if (player != null)
                 {
                     player.TakeDamage(damage);
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
             if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
 
