@@ -15,11 +15,9 @@ namespace BattleMages
         private float radius;
         private float angle;
         private float speed;
-        private float frameTime;
 
         public FrostShield(GameObject go, SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(go, p)
         {
-            frameTime = GameWorld.DeltaTime;
             speed = 2;
             radius = 50;
             Damage = 8;
@@ -32,7 +30,7 @@ namespace BattleMages
             {
                 for (int i = 0; i <= 2; i++)
                 {
-                    GameObject newShardGameObject = new GameObject(Vector2.Zero);
+                    GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
                     newShardGameObject.AddComponent(new FrostShield(newShardGameObject,
                            new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
                            false, 90 * (i + 1)));
@@ -89,21 +87,14 @@ namespace BattleMages
                     angle += speed * GameWorld.DeltaTime;
                     float x = (float)Math.Cos(angle) * radius + center.X;
                     float y = (float)Math.Sin(angle) * radius + center.Y;
-                    GameObject.Transform.Position = new Vector2(x, y);
+                    GameObject.Transform.Position = Vector2.Lerp(GameObject.Transform.Position, new Vector2(x, y), GameWorld.DeltaTime * 8);
                 }
             }
         }
 
         private void Draw(DrawMsg msg)
         {
-            if (frameTime > 0)
-            {
-                frameTime -= GameWorld.DeltaTime;
-            }
-            else
-            {
                 msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
-            }
         }
     }
 }
