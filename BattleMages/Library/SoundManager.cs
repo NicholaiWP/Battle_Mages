@@ -36,8 +36,8 @@ namespace BattleMages
         public void LoadContent(ContentManager content)
         {
             sounds.Add("fireball", content.Load<SoundEffect>("sounds/fireball").CreateInstance());
-            sounds.Add("FrostShield", content.Load<SoundEffect>("sounds/FrostShield").CreateInstance());
-            sounds.Add("Earthspikes", content.Load<SoundEffect>("sounds/Earthspikes").CreateInstance());
+            //sounds.Add("FrostShield", content.Load<SoundEffect>("sounds/FrostShield").CreateInstance());
+            //sounds.Add("Earthspikes", content.Load<SoundEffect>("sounds/Earthspikes").CreateInstance());
             sounds.Add("iceshardsbreaking", content.Load<SoundEffect>("sounds/iceshardsbreaking").CreateInstance());
             sounds.Add("lightningStrike", content.Load<SoundEffect>("sounds/lightningStrike").CreateInstance());
             sounds.Add("openHallwayDoor1", content.Load<SoundEffect>("sounds/openHallwayDoor1").CreateInstance());
