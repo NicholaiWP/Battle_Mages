@@ -13,9 +13,8 @@ namespace BattleMages
         //Fields
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
 
-        private Song hubBGM;
-        private Song combatBGM;
-        private bool isPlaying, isPLaying1;
+        private Dictionary<string, Song> music = new Dictionary<string, Song>();
+        string musicCurrentlyPlaying;
 
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
@@ -47,8 +46,10 @@ namespace BattleMages
             sounds.Add("ElectricitySound", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
             sounds.Add("Fireball", content.Load<SoundEffect>("Sounds/Fireball").CreateInstance());
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
-            hubBGM = content.Load<Song>("Sounds/HubMusic");
-            combatBGM = content.Load<Song>("Sounds/CombatMusic");
+
+            music.Add("HubMusic", content.Load<Song>("Sounds/HubMusic"));
+            music.Add("CombatMusic", content.Load<Song>("Sounds/CombatMusic"));
+
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = MusicVolume;
         }
@@ -56,23 +57,16 @@ namespace BattleMages
         /// <summary>
         /// Method for playing music that is looped
         /// </summary>
-        public void Music(string soundName)
+        public void PlayMusic(string soundName)
         {
             if (MediaPlayer.Volume > 0.8f)
             {
                 MediaPlayer.Volume = 0.8f;
             }
-            if (soundName == "CombatBGM" && isPLaying1 == false)
+            if (musicCurrentlyPlaying != soundName)
             {
-                MediaPlayer.Play(combatBGM);
-                isPlaying = false;
-                isPLaying1 = true;
-            }
-            if (soundName == "HubBGM" && isPlaying == false)
-            {
-                MediaPlayer.Play(hubBGM);
-                isPlaying = true;
-                isPLaying1 = false;
+                MediaPlayer.Play(music[soundName]);
+                musicCurrentlyPlaying = soundName;
             }
         }
 

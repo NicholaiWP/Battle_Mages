@@ -144,7 +144,7 @@ namespace BattleMages
 
             if (currentScene is MenuScene || CurrentScene is LobbyScene || currentScene is HallwayScene)
             {
-                SoundManager.Music("HubBGM");
+                SoundManager.PlayMusic("HubMusic");
             }
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

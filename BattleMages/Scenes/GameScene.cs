@@ -31,7 +31,7 @@ namespace BattleMages
             GameWorld.SoundManager.AmbienceVolume = 0.10f;
 
             //Music and soundhandling through SoundManager
-            GameWorld.SoundManager.Music("CombatBGM");
+            GameWorld.SoundManager.PlayMusic("CombatMusic");
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI(ingameUI));
