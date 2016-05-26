@@ -100,7 +100,7 @@ namespace BattleMages
 
         private static void DescreaseCooldown(Spell spell)
         {
-            spell.CooldownTime -= (int)(spell.CooldownTime * 0.30f);
+            spell.CooldownTime -= spell.CooldownTime * 0.30f;
         }
 
         private static void CollideAbilityRune(Spell spell)
