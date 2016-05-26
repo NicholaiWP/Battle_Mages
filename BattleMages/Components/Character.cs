@@ -32,9 +32,9 @@ namespace BattleMages
             if (MoveDirection != Vector2.Zero)
                 MoveDirection.Normalize(); //Make sure MoveDirection is normalized
 
-            float angle = (float)Math.Atan2(MoveDirection.X, MoveDirection.Y);
-
-            System.Diagnostics.Debug.WriteLine(angle);
+            //TODO: Use this for setting the FacingDirection
+            //float angle = (float)Math.Atan2(MoveDirection.X, MoveDirection.Y);
+            //System.Diagnostics.Debug.WriteLine(angle);
 
             /*if (Right)
                 fDirection = FacingDirection.Right;
