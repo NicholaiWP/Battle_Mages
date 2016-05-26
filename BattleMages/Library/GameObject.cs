@@ -36,6 +36,7 @@ namespace BattleMages
             if (!components.Any(a => a.GetType() == component.GetType()))
             {
                 componentsToAdd.Add(component);
+                component.GameObject = this;
             }
             else
             {
