@@ -33,11 +33,12 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-160 - 8, 0), new Vector2(16, 180 + 32)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
 
-            //Door trigger          
+            //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
             doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
-            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => 
-            { GameWorld.ChangeScene(new HallwayScene()); GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () =>
+            {
+                GameWorld.ChangeScene(new HallwayScene()); GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                 GameWorld.SoundManager.SoundVolume = 1f;
             }));
             AddObject(doorTriggerGameObject);
@@ -57,11 +58,11 @@ namespace BattleMages
         public override void Update()
         {
             //Playing ambient sound in low volume using SoundManager
-            GameWorld.SoundManager.PlaySound("AmbienceSound");          
-        
+            GameWorld.SoundManager.PlaySound("AmbienceSound");
+
             keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.P))
+            if (keyState.IsKeyDown(Keys.Escape))
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }

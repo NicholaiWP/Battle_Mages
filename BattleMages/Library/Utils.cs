@@ -56,6 +56,13 @@ namespace BattleMages
             return isObjectInside;
         }
 
+        public static Vector2 PosInsideCircle(Vector2 midPos, float circleRadius)
+        {
+            Vector2 pos = Vector2.Zero;
+
+            return pos;
+        }
+
         public static Vector2 RotateVector(Vector2 vector, float rotationDegrees)
         {
             float angleTowardsTarget = (float)Math.Atan2(vector.Y, vector.X);

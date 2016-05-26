@@ -33,7 +33,7 @@ namespace BattleMages
             if (attackTimer >= 0)
                 attackTimer -= GameWorld.DeltaTime;
 
-            foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
+            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
                 {
@@ -62,7 +62,7 @@ namespace BattleMages
                 attackTimer = enemy.CooldownTimer;
                 GameObject projectile = new GameObject(transform.Position);
                 projectile.AddComponent(new Projectile(projectile, enemy, potentialTarget.Transform.Position));
-                GameWorld.CurrentScene.AddObject(projectile);
+                GameWorld.Scene.AddObject(projectile);
             }
         }
 

@@ -37,6 +37,12 @@ namespace BattleMages
             set { character.MoveSpeed = value; }
         }
 
+        protected float MoveAccel
+        {
+            get { return character.MoveAccel; }
+            set { character.MoveAccel = value; }
+        }
+
         protected Enemy(GameObject gameObject) : base(gameObject)
         {
             Listen<InitializeMsg>(Initialize);
@@ -47,11 +53,10 @@ namespace BattleMages
         public void TakeDamage(int points)
         {
             health -= points;
-            GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
+            GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
             if (health <= 0)
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
-
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
 

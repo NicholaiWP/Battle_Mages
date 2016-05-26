@@ -14,7 +14,7 @@ namespace BattleMages
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
 
         private Dictionary<string, Song> music = new Dictionary<string, Song>();
-        string musicCurrentlyPlaying;
+        private string musicCurrentlyPlaying;
 
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
@@ -63,6 +63,7 @@ namespace BattleMages
             {
                 MediaPlayer.Volume = 0.8f;
             }
+
             if (musicCurrentlyPlaying != soundName)
             {
                 MediaPlayer.Volume = MusicVolume;
@@ -103,6 +104,10 @@ namespace BattleMages
 
         public void StopSound(string soundName)
         {
+            if (sounds.ContainsKey(soundName))
+            {
+                sounds[soundName].Stop();
+            }
         }
 
         public void Update(string soundName)

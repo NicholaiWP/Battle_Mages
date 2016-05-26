@@ -15,28 +15,36 @@ namespace BattleMages
         private float radius;
         private float angle;
         private float speed;
-        private float frameTime;
 
         public FrostShield(GameObject go, SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(go, p)
         {
-            frameTime = GameWorld.DeltaTime;
             speed = 2;
-            radius = 50;
+            radius = 32;
             Damage = 8;
             CooldownTime = 2;
             ManaCost = 40;
             ApplyAttributeRunes();
-            angle = MathHelper.ToRadians(angleDegrees);
 
+            //This makes sure all FrostShields have the same starting angle so that their rotation looks amazing
+            FrostShield firstOtherFrostshield = GameWorld.Scene.ActiveObjects
+                .Select(a => a.GetComponent<FrostShield>())
+                .Where(a => a != null && a != this)
+                .FirstOrDefault();
+            if (firstOtherFrostshield != null)
+            {
+                angle = firstOtherFrostshield.angle;
+            }
+
+            //Spawn 2 other frostshields if told to
             if (spawnSubshards)
             {
-                for (int i = 0; i <= 2; i++)
+                for (int i = 0; i <= 1; i++)
                 {
-                    GameObject newShardGameObject = new GameObject(Vector2.Zero);
+                    GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
                     newShardGameObject.AddComponent(new FrostShield(newShardGameObject,
                            new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
                            false, 90 * (i + 1)));
-                    GameWorld.CurrentScene.AddObject(newShardGameObject);
+                    GameWorld.Scene.AddObject(newShardGameObject);
                 }
             }
 
@@ -55,52 +63,59 @@ namespace BattleMages
             GameWorld.SoundManager.PlaySound("FrostShield");
             GameWorld.SoundManager.SoundVolume = 1f;
 
-            #region collision detect
+            #region Collision detection
 
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 var enemy = other.GameObject.GetComponent<Enemy>();
+                var projectile = other.GameObject.GetComponent<Projectile>();
 
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.Scene.RemoveObject(GameObject);
+                    GameWorld.SoundManager.StopSound("FrostShield");
+
                 }
-                else if (other.GameObject.GetComponent<Projectile>() != null)
+                else if (projectile != null)
                 {
-                    GameWorld.CurrentScene.RemoveObject(other.GameObject);
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.RemoveObject(other.GameObject);
+                    GameWorld.Scene.RemoveObject(GameObject);
+                    GameWorld.SoundManager.StopSound("FrostShield");
                 }
             }
 
-            #endregion collision detect
+            #endregion Collision detection
 
-            foreach (GameObject go in GameWorld.CurrentScene.ActiveObjects)
+            //Find out where in the circle of FrostShields this one should be
+            List<FrostShield> totalFrostShields = GameWorld.Scene.ActiveObjects.Select(a => a.GetComponent<FrostShield>()).Where(a => a != null).ToList();
+            int myIndex = totalFrostShields.IndexOf(this);
+            int shieldCount = totalFrostShields.Count;
+
+            float rotationOffset = myIndex / (float)shieldCount * ((float)Math.PI * 2);
+
+            foreach (GameObject go in GameWorld.Scene.ActiveObjects)
             {
                 if (go.GetComponent<Player>() != null)
                 {
                     Vector2 center = go.Transform.Position;
 
                     angle += speed * GameWorld.DeltaTime;
-                    float x = (float)Math.Cos(angle) * radius + center.X;
-                    float y = (float)Math.Sin(angle) * radius + center.Y;
-                    GameObject.Transform.Position = new Vector2(x, y);
+                    float finalAngle = angle + rotationOffset;
+                    float x = (float)Math.Cos(finalAngle) * radius + center.X;
+                    float y = (float)Math.Sin(finalAngle) * radius + center.Y;
+                    GameObject.Transform.Position = Vector2.Lerp(GameObject.Transform.Position, new Vector2(x, y), GameWorld.DeltaTime * 8);
                 }
             }
         }
 
         private void Draw(DrawMsg msg)
         {
-            if (frameTime > 0)
-            {
-                frameTime -= GameWorld.DeltaTime;
-            }
-            else
-            {
-                msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
-            }
+            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(sprite.Width,sprite.Height) / 2, Color.White);
         }
     }
 }

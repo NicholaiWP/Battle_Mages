@@ -12,11 +12,13 @@ namespace BattleMages
 {
     public class GameScene : Scene
     {
+        private int waveCounter;
         private KeyboardState keyState;
         private GameObject waveController;
 
         public GameScene()
         {
+            waveCounter = 1;
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
@@ -38,7 +40,7 @@ namespace BattleMages
             AddObject(ingameUI);
 
             waveController = new GameObject(Vector2.Zero);
-            waveController.AddComponent(new WaveController(waveController, this));
+            waveController.AddComponent(new WaveController(waveController));
             waveController.SendMessage(new UpdateMsg());
             //Get all objects on the list before the first run of Update()
             base.Update();
@@ -55,7 +57,7 @@ namespace BattleMages
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene
-            if (keyState.IsKeyDown(Keys.P))
+            if (keyState.IsKeyDown(Keys.Escape))
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }
@@ -72,7 +74,8 @@ namespace BattleMages
 
             if (enemyCount == 0)
             {
-                waveController.GetComponent<WaveController>().NewWave();
+                waveController.GetComponent<WaveController>().NewWave(waveCounter);
+                waveCounter++;
             }
 
             base.Update();

@@ -16,16 +16,18 @@ namespace BattleMages
             attackSpeed = 0;
             targetingRange = 750;
             attackRange = 300;
-
+            if (GameObject != null)
+                GameObject.AddComponent(new SpriteRenderer(GameObject, "Enemy Images/orbEnemy"));
         }
 
         protected override void Initialize(InitializeMsg msg)
         {
             base.Initialize(msg);
-            MoveSpeed = 70;
+            MoveSpeed = 95;
+            MoveAccel = 200;
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
-            behaviours.Add(new Dodging(this));
+            behaviours.Add(new Dodging(this, 96));
         }
     }
 }

@@ -14,17 +14,36 @@ namespace BattleMages
 
     public class Character : Component
     {
-        private FacingDirection fDirection;
+        //private FacingDirection fDirection;
+        private Collider collider;
 
-        //bool properties
-        public Vector2 MoveDirection;
+        /// <summary>
+        /// The direction this character should move in.
+        /// </summary>
+        public Vector2 MoveDirection { get; set; }
 
+        /// <summary>
+        /// Max move speed of this character in units/second
+        /// </summary>
         public float MoveSpeed { get; set; } = 100;
+        /// <summary>
+        /// Number of units/second this character accelerates with to reach its max speed
+        /// </summary>
+        public float MoveAccel { get; set; } = 1000;
 
+        /// <summary>
+        /// Current velocity of this character in units/second
+        /// </summary>
         public Vector2 Velocity { get; private set; }
 
         public Character(GameObject gameObject) : base(gameObject)
         {
+            Listen<InitializeMsg>(Initialize);
+        }
+
+        private void Initialize(InitializeMsg msg)
+        {
+            collider = GameObject.GetComponent<Collider>();
         }
 
         public void Movement()
@@ -45,10 +64,23 @@ namespace BattleMages
             else if (Down)
                 fDirection = FacingDirection.Front;*/
 
-            Collider collider = GameObject.GetComponent<Collider>();
+            //Move velocity towards target velocity using MoveAccel
+            Vector2 targetVelocity = MoveDirection * MoveSpeed;
+
+            if (Velocity != targetVelocity)
+            {
+                Vector2 start = Velocity;
+                float dist = Vector2.Distance(start, targetVelocity);
+
+                Velocity += Vector2.Normalize(targetVelocity - Velocity) * MoveAccel * GameWorld.DeltaTime;
+                if (Vector2.Distance(start, Velocity) > dist)
+                {
+                    Velocity = targetVelocity;
+                }
+            }
 
             //'translation' is the exact movement the character will perform
-            Vector2 translation = MoveDirection * MoveSpeed * GameWorld.DeltaTime;
+            Vector2 translation = Velocity * GameWorld.DeltaTime;
 
             //Collision checking
             float xDist = Math.Abs(translation.X);
@@ -59,15 +91,20 @@ namespace BattleMages
             bool collisionUp = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, -yDist), true);
             bool collisionDown = collider.CheckCollisionAtPosition(GameObject.Transform.Position + new Vector2(0, yDist), true);
 
-            //Limit the translation based on horizontal collisions
+            //Limit the translation (along with the velocity) based on horizontal collisions
             if ((translation.X > 0 && collisionRight) || (translation.X < 0 && collisionLeft))
+            { 
                 translation.X = 0;
+                Velocity = new Vector2(0, Velocity.Y);
+            }
             //Same for vertical collisions
             if ((translation.Y > 0 && collisionDown) || (translation.Y < 0 && collisionUp))
+            {
                 translation.Y = 0;
+                Velocity = new Vector2(Velocity.X, 0);
+            }
 
             GameObject.Transform.Translate(translation);
-            Velocity = translation;
 
             //Limiting position to circle
             GameObject.Transform.Position = Utils.LimitToCircle(GameObject.Transform.Position, Vector2.Zero, 320);

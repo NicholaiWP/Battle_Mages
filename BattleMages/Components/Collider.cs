@@ -64,7 +64,7 @@ namespace BattleMages
 
         private IEnumerable<Collider> GetCollidersInScene()
         {
-            return GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
+            return GameWorld.Scene.ActiveObjects.Select(a => a.GetComponent<Collider>()).Where(a => a != null);
         }
 
         public bool CheckCollision(Collider other)

@@ -37,7 +37,7 @@ namespace BattleMages
                     newShardGameObject.AddComponent(new IceShard(newShardGameObject,
                         new SpellCreationParams(p.AttributeRunes, target + GameObject.Transform.Position, p.VelocityOffset),
                         false));
-                    GameWorld.CurrentScene.AddObject(newShardGameObject);
+                    GameWorld.Scene.AddObject(newShardGameObject);
                 }
             }
 
@@ -66,12 +66,13 @@ namespace BattleMages
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
 
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
             if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
     }
