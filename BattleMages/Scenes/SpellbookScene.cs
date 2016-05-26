@@ -155,7 +155,7 @@ namespace BattleMages
                 () =>
                 {
                     //Limits amount of times you can make spells
-                    if (objectsInTab.Count < 25)
+                    if (objectsInTab.Count < 28)
                     {
                         SpellInfo newSpell = new SpellInfo();
                         GameWorld.State.SpellBook.Add(newSpell);

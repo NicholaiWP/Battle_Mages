@@ -23,7 +23,7 @@ namespace BattleMages
 
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
-            velocity = diff * 120f;
+            velocity = diff * 300;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
