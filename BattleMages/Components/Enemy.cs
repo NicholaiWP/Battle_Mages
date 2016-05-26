@@ -34,6 +34,12 @@ namespace BattleMages
             set { character.MoveSpeed = value; }
         }
 
+        protected float MoveAccel
+        {
+            get { return character.MoveAccel; }
+            set { character.MoveAccel = value; }
+        }
+
         protected Enemy(GameObject gameObject) : base(gameObject)
         {
             Listen<InitializeMsg>(Initialize);
