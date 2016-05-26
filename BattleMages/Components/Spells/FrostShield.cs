@@ -76,7 +76,6 @@ namespace BattleMages
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
 
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.Scene.RemoveObject(GameObject);
                     GameWorld.SoundManager.StopSound("FrostShield");
 

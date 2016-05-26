@@ -53,7 +53,6 @@ namespace BattleMages
                     enemy.TakeDamage(Damage);
                     enemy.Onfire(6);
 
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
