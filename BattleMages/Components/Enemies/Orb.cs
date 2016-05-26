@@ -23,10 +23,11 @@ namespace BattleMages
         protected override void Initialize(InitializeMsg msg)
         {
             base.Initialize(msg);
-            MoveSpeed = 70;
+            MoveSpeed = 95;
+            MoveAccel = 200;
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
-            behaviours.Add(new Dodging(this));
+            behaviours.Add(new Dodging(this, 96));
         }
     }
 }
