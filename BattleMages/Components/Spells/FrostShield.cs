@@ -28,10 +28,6 @@ namespace BattleMages
             ApplyAttributeRunes();
             angle = MathHelper.ToRadians(angleDegrees);
 
-            //needs to be looped till all the frost shield objects are removed.
-            GameWorld.SoundManager.PlaySound("FrostShield");
-            GameWorld.SoundManager.SoundVolume = 1f;
-
             if (spawnSubshards)
             {
                 for (int i = 0; i <= 2; i++)
@@ -56,6 +52,9 @@ namespace BattleMages
 
         private void Update(UpdateMsg message)
         {
+            GameWorld.SoundManager.PlaySound("FrostShield");
+            GameWorld.SoundManager.SoundVolume = 1f;
+
             #region collision detect
 
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))

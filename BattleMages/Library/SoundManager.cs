@@ -12,10 +12,11 @@ namespace BattleMages
     {
         //Fields
         private Dictionary<string, SoundEffectInstance> sounds = new Dictionary<string, SoundEffectInstance>();
+
         private Song hubBGM;
         private Song combatBGM;
         private bool isPlaying, isPLaying1;
-        
+
         public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
@@ -63,16 +64,16 @@ namespace BattleMages
             }
             if (soundName == "CombatBGM" && isPLaying1 == false)
             {
-                    MediaPlayer.Play(combatBGM);
+                MediaPlayer.Play(combatBGM);
                 isPlaying = false;
                 isPLaying1 = true;
             }
             if (soundName == "HubBGM" && isPlaying == false)
             {
-                    MediaPlayer.Play(hubBGM);
-                   isPlaying = true;
+                MediaPlayer.Play(hubBGM);
+                isPlaying = true;
                 isPLaying1 = false;
-            } 
+            }
         }
 
         /// <summary>
@@ -86,8 +87,8 @@ namespace BattleMages
                 if (soundName == "AmbienceSound")
                 {
                     if (AmbienceVolume > 0.26f)
-                    {                       
-                        AmbienceVolume = 0.26f; 
+                    {
+                        AmbienceVolume = 0.26f;
                     }
                     if (AmbienceVolume < 0.02f)
                     {
@@ -95,9 +96,8 @@ namespace BattleMages
                     }
                     sounds[soundName].Volume = AmbienceVolume;
                     sounds[soundName].Play();
-                    
                 }
-                
+
                 if (sounds[soundName].State == SoundState.Stopped)
                 {
                     sounds[soundName].Volume = SoundVolume;
@@ -106,9 +106,12 @@ namespace BattleMages
             }
         }
 
+        public void StopSound(string soundName)
+        {
+        }
+
         public void Update(string soundName)
         {
-           
         }
     }
 }
