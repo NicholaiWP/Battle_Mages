@@ -50,6 +50,20 @@ namespace BattleMages
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
             //TODO: Create animations here
+            animator.CreateAnimation("WalkRight", new Animation(framesCount: 27, yPos: 0, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+
+            animator.CreateAnimation("WalkLeft", new Animation(framesCount: 27, yPos: 32, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+
+            animator.CreateAnimation("WalkDown", new Animation(framesCount: 14, yPos: 64, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+
+            animator.CreateAnimation("WalkUp", new Animation(framesCount: 14, yPos: 96, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+
+            animator.CreateAnimation("CastRight", new Animation(framesCount: 17, yPos: 128, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
         }
 
         private void Update(UpdateMsg msg)
@@ -92,6 +106,7 @@ namespace BattleMages
                 CurrentMana -= spellComponent.ManaCost;
                 cooldownTimers[selectedSpell] = spellComponent.CooldownTime;
                 rechargeDelayTimer = ManaRechargeDelay;
+                animator.PlayAnimation("CastRight");
             }
 
             //Spellbook opening
@@ -122,18 +137,22 @@ namespace BattleMages
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
             {
                 movement.Y -= 1;
+                animator.PlayAnimation("WalkUp");
             }
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
             {
                 movement.Y += 1;
+                animator.PlayAnimation("WalkDown");
             }
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
             {
                 movement.X -= 1;
+                animator.PlayAnimation("WalkLeft");
             }
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
             {
                 movement.X += 1;
+                animator.PlayAnimation("WalkRight");
             }
             character.MoveDirection = movement;
 
@@ -161,6 +180,5 @@ namespace BattleMages
                 GameWorld.ChangeScene(new DeathScene());
             }
         }
-      
-        }
     }
+}

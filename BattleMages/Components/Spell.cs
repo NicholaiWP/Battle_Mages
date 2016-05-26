@@ -15,6 +15,7 @@ namespace BattleMages
         //Spells should also define base stats in their constructor.
         //These stats will then be modified by runes.
         public int Damage { get; set; }
+        public int BurnDamage { get; set; }
         public int ManaCost { get; set; }
         public float CooldownTime { get; set; }
 

@@ -14,6 +14,7 @@ namespace BattleMages
         private Collider collider;
         private Vector2 diff;
 
+
         public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
         {
             Damage = 15;
@@ -23,7 +24,7 @@ namespace BattleMages
 
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
-            velocity = diff * 300;
+            velocity = diff * 150;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
@@ -42,6 +43,7 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
+
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
@@ -49,7 +51,8 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    enemy.Onfire(6);
+
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
             }

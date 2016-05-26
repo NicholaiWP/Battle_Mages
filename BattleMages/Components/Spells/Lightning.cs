@@ -55,8 +55,6 @@ namespace BattleMages
                     if (enemy != null)
                     {
                         enemy.TakeDamage(Damage);
-                        GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position,
-                            Damage.ToString()));
                     }
                 }
             }

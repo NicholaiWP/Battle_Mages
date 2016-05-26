@@ -16,7 +16,7 @@ namespace BattleMages
         private Transform transform;
         private Character character;
         private Collider collider;
-
+        private float burnDamageTimer = 6;
 
         protected float attackRange;
         protected float targetingRange;
@@ -27,6 +27,9 @@ namespace BattleMages
         protected List<IBehaviour> behaviours = new List<IBehaviour>();
         public int Damage { get { return damage; } }
         public float CooldownTimer { get { return cooldownTimer; } }
+        private bool burned;
+        private int burnDmg;
+        private float burnDuration;
 
         protected float MoveSpeed
         {
@@ -50,10 +53,27 @@ namespace BattleMages
         public void TakeDamage(int points)
         {
             health -= points;
+            GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
             if (health <= 0)
             {
                 GameWorld.Scene.RemoveObject(GameObject);
             }
+        }
+
+        public void Onfire(int burnPoints)
+        {
+            //timer dmg timer, når nul..if the timer in update is <= 0, enemy.takedamge. add gameObject to show
+           
+                Random rand = new Random();
+                int chance = rand.Next(1, 101);
+
+                if (chance <= 25) // probability of 25%
+                {
+                    burnDmg = burnPoints;
+                    burned = true;
+                    burnDuration = 5;
+                    burnDamageTimer = 0.5f;
+                }                  
         }
 
         protected virtual void Initialize(InitializeMsg msg)
@@ -77,6 +97,26 @@ namespace BattleMages
         /// </summary>
         private void Update(UpdateMsg msg)
         {
+            if (burned)
+            {
+                if(burnDamageTimer<= 0)
+                {
+                    TakeDamage(burnDmg);
+                    burnDamageTimer = 0.5f;
+                }
+                else
+                {
+                    burnDamageTimer -= GameWorld.DeltaTime;
+                }
+                if(burnDuration <= 0)
+                {
+                    burned = false;
+                }
+                else
+                {
+                    burnDuration -= GameWorld.DeltaTime;
+                }
+            }
             Move();
         }
 

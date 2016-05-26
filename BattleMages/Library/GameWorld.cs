@@ -15,6 +15,7 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
+
         public const int GameHeight = 180;
 
         //Fields
@@ -83,11 +84,14 @@ namespace BattleMages
         {
             ScalingVector = new Vector2(Utils.CalculateWidthScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width),
                 Utils.CalculateHeightScale(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height));
+
             playerControls = new PlayerControls();
             soundManager = new SoundManager();
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
+            currentScene = new MenuScene();
+            drawer = new Drawer(GraphicsDevice);
 
             //Create 4 test spell for both the bar and the book
             for (int i = 1; i < 5; i++)
@@ -101,7 +105,6 @@ namespace BattleMages
                 state.SpellBook.Add(ps);
                 state.SpellBar.Add(state.SpellBook.IndexOf(ps));
             }
-            currentScene = new MenuScene();
 
             base.Initialize();
         }
@@ -113,7 +116,6 @@ namespace BattleMages
         protected override void LoadContent()
         {
             // Create a new Drawer, which can be used to draw textures.
-            drawer = new Drawer(GraphicsDevice);
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);
         }
@@ -164,10 +166,7 @@ namespace BattleMages
             {
                 Cursor.CanClick = true;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
+
             currentScene.Update();
 
             base.Update(gameTime);

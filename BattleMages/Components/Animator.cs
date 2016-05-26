@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -10,6 +10,7 @@ namespace BattleMages
     {
         //Fields
         private float timeElapsed;
+
         private int currentIndex;
         private string animationName;
         private float fps;
@@ -29,10 +30,15 @@ namespace BattleMages
         /// <param name="gameObject"></param>
         public Animator(GameObject gameObject) : base(gameObject)
         {
-            this.spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             animations = new Dictionary<string, Animation>();
 
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
+        }
+
+        private void Initialize(InitializeMsg message)
+        {
+            spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -50,19 +56,19 @@ namespace BattleMages
         /// </summary>
         private void Update(UpdateMsg msg)
         {
-            /*timeElapsed += GameWorld.GetInstance.GetDeltaTime;
-
-            currentIndex = (int)(timeElapsed * animations[animationName].GetFps);
-
-            if (currentIndex >= frames.Length)
+            timeElapsed += GameWorld.DeltaTime;
+            if (animationName != null)
+                currentIndex = (int)(timeElapsed * animations[animationName].Fps);
+            if (frames != null)
             {
-                GetGameObject.OnAnimationDone(animationName);
-                timeElapsed = 0;
-                currentIndex = 0;
-            }
+                if (currentIndex >= frames.Length)
+                {
+                    timeElapsed = 0;
+                    currentIndex = 0;
+                }
 
-            spriteRenderer.Rectangle = frames[currentIndex];
-            */
+                spriteRenderer.Rectangle = frames[currentIndex];
+            }
         }
 
         /// <summary>
@@ -75,15 +81,15 @@ namespace BattleMages
             if (this.animationName != animationName)
             {
                 //Sets the rectangles
-                this.frames = animations[animationName].GetFrames;
+                this.frames = animations[animationName].Frames;
                 //Resets the rectangle
                 this.spriteRenderer.Rectangle = frames[0];
                 //Sets the offset
-                this.spriteRenderer.Offset = animations[animationName].GetOffset;
+                this.spriteRenderer.Offset = animations[animationName].Offset;
                 //Sets the animation name
                 this.animationName = animationName;
                 //Sets the fps
-                this.fps = animations[animationName].GetFps;
+                this.fps = animations[animationName].Fps;
                 //Resets the animation
                 timeElapsed = 0;
                 currentIndex = 0;
