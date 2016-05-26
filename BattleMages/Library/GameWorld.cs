@@ -15,6 +15,7 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
+
         public const int GameHeight = 180;
 
         //Fields
@@ -164,10 +165,7 @@ namespace BattleMages
             {
                 Cursor.CanClick = true;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
+
             currentScene.Update();
 
             base.Update(gameTime);

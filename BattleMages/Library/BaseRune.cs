@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -15,10 +15,12 @@ namespace BattleMages
         /// A list of runes to be applied to the spell on creation.
         /// </summary>
         public AttributeRune[] AttributeRunes { get; }
+
         /// <summary>
         /// The target in world coordinates the spell should aim for.
         /// </summary>
         public Vector2 AimTarget { get; }
+
         /// <summary>
         /// Offset used by moving spells. Usually set to the speed of the player.
         /// </summary>
