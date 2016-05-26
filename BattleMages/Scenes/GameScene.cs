@@ -12,11 +12,13 @@ namespace BattleMages
 {
     public class GameScene : Scene
     {
+        private int waveCounter;
         private KeyboardState keyState;
         private GameObject waveController;
 
         public GameScene()
         {
+            waveCounter = 1;
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
@@ -72,7 +74,8 @@ namespace BattleMages
 
             if (enemyCount == 0)
             {
-                waveController.GetComponent<WaveController>().NewWave(1);
+                waveController.GetComponent<WaveController>().NewWave(waveCounter);
+                waveCounter++;
             }
 
             base.Update();

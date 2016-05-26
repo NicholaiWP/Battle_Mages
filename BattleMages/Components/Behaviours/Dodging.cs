@@ -12,16 +12,16 @@ namespace BattleMages
         private Enemy enemy;
         private Collider collider;
         private Character character;
-        private float currentLengthToSpell;
-        private float previousLengthToSpell;
+        private float dodgeRange;
 
         Collider tracking;
         Vector2 latestTrackedPos;
         Vector2 dodgeDir;
 
-        public Dodging(Enemy enemy)
+        public Dodging(Enemy enemy, float dodgeRange)
         {
             this.enemy = enemy;
+            this.dodgeRange = dodgeRange;
             collider = enemy.GameObject.GetComponent<Collider>();
             character = enemy.GameObject.GetComponent<Character>();
         }
@@ -43,7 +43,7 @@ namespace BattleMages
                     float currentDist = (enemy.GameObject.Transform.Position - closestCollider.GameObject.Transform.Position).Length();
                     float lastDist = (enemy.GameObject.Transform.Position - latestTrackedPos).Length();
 
-                    if (currentDist <= lastDist && currentDist < 128)
+                    if (currentDist <= lastDist && currentDist < dodgeRange)
                     {
                         character.MoveDirection = dodgeDir;
                     }
@@ -57,8 +57,6 @@ namespace BattleMages
                 }
                 latestTrackedPos = closestCollider.GameObject.Transform.Position;
             }
-            previousLengthToSpell = currentLengthToSpell;
-            currentLengthToSpell = 0;
         }
     }
 }
