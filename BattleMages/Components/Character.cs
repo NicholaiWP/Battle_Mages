@@ -105,9 +105,12 @@ namespace BattleMages
                 Velocity = new Vector2(Velocity.X, 0);
             }
 
-            if (translation.X > 0 && GameObject.GetComponent<Player>() != null)
+            if (translation == Vector2.Zero)
             {
-                GameObject.GetComponent<Animator>().PlayAnimation("WalkRight");
+                if (GameObject.GetComponent<Animator>() != null)
+                {
+                    //GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
+                }
             }
 
             GameObject.Transform.Translate(translation);
