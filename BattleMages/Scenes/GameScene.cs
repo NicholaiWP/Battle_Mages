@@ -71,7 +71,7 @@ namespace BattleMages
 
             if (enemyCount == 0)
             {
-                waveController.GetComponent<WaveController>().NewWave();
+                waveController.GetComponent<WaveController>().NewWave(1);
             }
 
             base.Update();

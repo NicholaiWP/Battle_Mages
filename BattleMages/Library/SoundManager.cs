@@ -62,12 +62,14 @@ namespace BattleMages
             {
                 MediaPlayer.Volume = 0.8f;
             }
+
             if (soundName == "CombatBGM" && isPLaying1 == false)
             {
                 MediaPlayer.Play(combatBGM);
                 isPlaying = false;
                 isPLaying1 = true;
             }
+
             if (soundName == "HubBGM" && isPlaying == false)
             {
                 MediaPlayer.Play(hubBGM);
@@ -108,6 +110,10 @@ namespace BattleMages
 
         public void StopSound(string soundName)
         {
+            if (sounds.ContainsKey(soundName))
+            {
+                sounds[soundName].Stop();
+            }
         }
 
         public void Update(string soundName)

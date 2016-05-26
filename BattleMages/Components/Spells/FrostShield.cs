@@ -68,11 +68,13 @@ namespace BattleMages
                     GameWorld.SoundManager.SoundVolume = 0.9f;
                     GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                     GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.SoundManager.StopSound("FrostShield");
                 }
                 else if (other.GameObject.GetComponent<Projectile>() != null)
                 {
                     GameWorld.CurrentScene.RemoveObject(other.GameObject);
                     GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.SoundManager.StopSound("FrostShield");
                 }
             }
 

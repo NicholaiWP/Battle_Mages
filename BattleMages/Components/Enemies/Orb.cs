@@ -16,7 +16,8 @@ namespace BattleMages
             attackSpeed = 0;
             targetingRange = 750;
             attackRange = 300;
-
+            if (GameObject != null)
+                GameObject.AddComponent(new SpriteRenderer(GameObject, "Enemy Images/orbEnemy"));
         }
 
         protected override void Initialize(InitializeMsg msg)

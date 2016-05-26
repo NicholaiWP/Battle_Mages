@@ -24,19 +24,6 @@ namespace BattleMages
         {
             GameObject gameObject = new GameObject(position);
 
-            if (enemy is Slime)
-            {
-                gameObject.AddComponent(new SpriteRenderer(gameObject, "Enemy Images/slimeEnemy"));
-            }
-            else if (enemy is Golem)
-            {
-                gameObject.AddComponent(new SpriteRenderer(gameObject, "Enemy Images/golemEnemy"));
-            }
-            else if (enemy is Orb)
-            {
-                gameObject.AddComponent(new SpriteRenderer(gameObject, "Enemy Images/orbEnemy"));
-            }
-
             gameObject.AddComponent(new Animator(gameObject));
             gameObject.AddComponent(new Character(gameObject) { MoveSpeed = 40 });
 
@@ -44,7 +31,7 @@ namespace BattleMages
             //parameter. The activator then gives the enemy a gameobject.
             var alikeEnemy = Activator.CreateInstance(enemy.GetType(), gameObject);
 
-            gameObject.AddComponent(alikeEnemy as Component);
+            gameObject.AddComponent(alikeEnemy as Enemy);
             gameObject.AddComponent(new Collider(gameObject, new Vector2(32, 32)));
             return gameObject;
         }
