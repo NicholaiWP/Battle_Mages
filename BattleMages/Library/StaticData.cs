@@ -83,7 +83,7 @@ namespace BattleMages
 
                 new BaseRune("FrostShield",
                 "Make 4 orbs of ice that rotate around you",
-                "iceshardsRune",
+                "frostShieldRune",
                 (go, p) => {return new FrostShield(go, p, true, 0); })
             };
         }

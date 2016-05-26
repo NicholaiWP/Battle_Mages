@@ -23,7 +23,7 @@ namespace BattleMages
 
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
-            velocity = diff * 120f;
+            velocity = diff * 300;
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
@@ -49,14 +49,14 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
-                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
 
             if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
     }

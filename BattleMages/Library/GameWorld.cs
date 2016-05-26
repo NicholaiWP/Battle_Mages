@@ -15,7 +15,6 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
-
         public const int GameHeight = 180;
 
         //Fields
@@ -38,7 +37,7 @@ namespace BattleMages
         public static SavedState State { get { return Instance.state; } }
         public static float DeltaTime { get { return Instance.deltaTime; } }
         public static GraphicsDeviceManager Graphics { get { return Instance.graphics; } }
-        public static Scene CurrentScene { get { return Instance.currentScene; } }
+        public static Scene Scene { get { return Instance.currentScene; } }
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public Vector2 ScalingVector { get; set; }
@@ -142,9 +141,20 @@ namespace BattleMages
         {
             cursor.Update();
 
-            if (currentScene is MenuScene || CurrentScene is LobbyScene || currentScene is HallwayScene)
+            if (currentScene is MenuScene || currentScene is PauseScene || currentScene is SettingsScene || currentScene is SpellbookScene)
             {
                 SoundManager.PlayMusic("HubMusic");
+                SoundManager.StopSound("AmbienceSound");
+            }
+            if (currentScene is LobbyScene || currentScene is HallwayScene)
+            {
+                SoundManager.PlayMusic("HubMusic");
+                SoundManager.PlaySound("AmbienceSound");
+            }
+            if (currentScene is GameScene)
+            {
+                SoundManager.PlayMusic("CombatMusic");
+                SoundManager.PlaySound("AmbienceSound");
             }
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

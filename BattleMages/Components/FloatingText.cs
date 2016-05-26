@@ -39,7 +39,7 @@ namespace BattleMages
             alpha -= GameWorld.DeltaTime;
             if (alpha <= 0f)
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
 

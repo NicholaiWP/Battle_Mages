@@ -38,7 +38,7 @@ namespace BattleMages
             AddObject(ingameUI);
 
             waveController = new GameObject(Vector2.Zero);
-            waveController.AddComponent(new WaveController(waveController, this));
+            waveController.AddComponent(new WaveController(waveController));
             waveController.SendMessage(new UpdateMsg());
             //Get all objects on the list before the first run of Update()
             base.Update();
@@ -48,6 +48,7 @@ namespace BattleMages
         {
             MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
+
             //Playing ambient sounds using SoundManager
             GameWorld.SoundManager.PlaySound("AmbienceSound");
 
@@ -71,7 +72,7 @@ namespace BattleMages
 
             if (enemyCount == 0)
             {
-                waveController.GetComponent<WaveController>().NewWave();
+                waveController.GetComponent<WaveController>().NewWave(1);
             }
 
             base.Update();

@@ -87,7 +87,7 @@ namespace BattleMages
                 Spell spellComponent = baseRune.CreateSpell(spellObject,
                     new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
                 spellObject.AddComponent(spellComponent);
-                GameWorld.CurrentScene.AddObject(spellObject);
+                GameWorld.Scene.AddObject(spellObject);
 
                 CurrentMana -= spellComponent.ManaCost;
                 cooldownTimers[selectedSpell] = spellComponent.CooldownTime;
@@ -97,7 +97,7 @@ namespace BattleMages
             //Spellbook opening
             if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab))
             {
-                GameWorld.ChangeScene(new SpellbookScene(GameWorld.CurrentScene));
+                GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
             }
 
             //Spell selection
@@ -157,7 +157,7 @@ namespace BattleMages
             CurrentHealth -= points;
             if (CurrentHealth <= 0)
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
                 GameWorld.ChangeScene(new DeathScene());
             }
         }

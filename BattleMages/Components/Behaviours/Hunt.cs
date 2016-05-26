@@ -27,7 +27,7 @@ namespace BattleMages
 
         public void ExecuteBehaviour()
         {
-            foreach (GameObject potentialTarget in GameWorld.CurrentScene.ActiveObjects)
+            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
             {
                 if (potentialTarget.GetComponent<Player>() != null)
                 {

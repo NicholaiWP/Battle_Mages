@@ -36,7 +36,7 @@ namespace BattleMages
                     newShardGameObject.AddComponent(new FrostShield(newShardGameObject,
                            new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
                            false, 90 * (i + 1)));
-                    GameWorld.CurrentScene.AddObject(newShardGameObject);
+                    GameWorld.Scene.AddObject(newShardGameObject);
                 }
             }
 
@@ -66,19 +66,21 @@ namespace BattleMages
                     enemy.TakeDamage(Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
-                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    GameWorld.Scene.RemoveObject(GameObject);
+                    GameWorld.SoundManager.StopSound("FrostShield");
                 }
                 else if (other.GameObject.GetComponent<Projectile>() != null)
                 {
-                    GameWorld.CurrentScene.RemoveObject(other.GameObject);
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.RemoveObject(other.GameObject);
+                    GameWorld.Scene.RemoveObject(GameObject);
+                    GameWorld.SoundManager.StopSound("FrostShield");
                 }
             }
 
             #endregion collision detect
 
-            foreach (GameObject go in GameWorld.CurrentScene.ActiveObjects)
+            foreach (GameObject go in GameWorld.Scene.ActiveObjects)
             {
                 if (go.GetComponent<Player>() != null)
                 {

@@ -20,7 +20,7 @@ namespace BattleMages
             var diff = targetPos - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 120f;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Images/orbProjectile");
             //GameWorld.SoundManager.PlaySound("Lightning");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
@@ -39,12 +39,12 @@ namespace BattleMages
                 if (player != null)
                 {
                     player.TakeDamage(damage);
-                    GameWorld.CurrentScene.RemoveObject(GameObject);
+                    GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
             if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
-                GameWorld.CurrentScene.RemoveObject(GameObject);
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
 
