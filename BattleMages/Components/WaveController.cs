@@ -16,8 +16,15 @@ namespace BattleMages
                 new Vector2(-20, -30), new Vector2(120, 90)},
                 new List<Enemy> { new Golem(null), new Orb(null), new Slime(null) }));
 
-            // waves.Add(2, new Wave()
+            waves.Add(2, new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300), new Vector2(-300, 0), new Vector2(0, -300) },
+                new List<Enemy> { new Golem(null),new Golem(null),new Golem(null),new Golem(null),}));
+
+            waves.Add(3, new Wave(new List<Vector2> { new Vector2(200,0), new Vector2(200, 10), new Vector2(200, -10), new Vector2(200, 20),
+            new Vector2(200,-20), new Vector2(210,0), new Vector2(190,0), new Vector2(220,0), new Vector2(180,0)},
+            new List<Enemy> { new Orb(null), new Orb(null), new Orb(null), new Orb(null), new Orb(null),
+            new Orb(null),new Orb(null),new Orb(null),new Orb(null) }));
         }
+
 
         public void NewWave(int waveNumber)
         {
@@ -28,6 +35,10 @@ namespace BattleMages
                     GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[waveNumber].positions[i],
                         waves[waveNumber].enemies[i]));
                 }
+            }
+            else
+            {
+                GameWorld.ChangeScene(new LobbyScene());
             }
         }
     }
