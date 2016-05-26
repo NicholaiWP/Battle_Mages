@@ -45,7 +45,6 @@ namespace BattleMages
                 {
                     damageTimer = 0.6f;
                     enemy.TakeDamage(Damage);
-                    GameWorld.CurrentScene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                 }
             }
             timer -= GameWorld.DeltaTime;

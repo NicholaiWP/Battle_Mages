@@ -105,7 +105,7 @@ namespace BattleMages
 
         private static void CollideAbilityRune(Spell spell)
         {
-            //work in progress
+            
         }
     }
 }
