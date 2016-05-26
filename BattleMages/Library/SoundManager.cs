@@ -26,7 +26,7 @@ namespace BattleMages
         public SoundManager()
         {
             SoundVolume = 0.20f;
-            MediaPlayer.Volume = 0.5f;
+            MusicVolume = 1f;
         }
 
         /// <summary>
@@ -65,6 +65,7 @@ namespace BattleMages
             }
             if (musicCurrentlyPlaying != soundName)
             {
+                MediaPlayer.Volume = MusicVolume;
                 MediaPlayer.Play(music[soundName]);
                 musicCurrentlyPlaying = soundName;
             }

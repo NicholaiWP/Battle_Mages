@@ -19,9 +19,8 @@ namespace BattleMages
 
         public LobbyScene()
         {
-            //Sound and music handled through SoundManager
+            //Volume handled through SoundManager
             MediaPlayer.Volume = 0.5f;
-            GameWorld.SoundManager.PlayMusic("HubMusic");
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);

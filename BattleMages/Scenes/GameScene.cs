@@ -48,6 +48,7 @@ namespace BattleMages
         {
             MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
+
             //Playing ambient sounds using SoundManager
             GameWorld.SoundManager.PlaySound("AmbienceSound");
 

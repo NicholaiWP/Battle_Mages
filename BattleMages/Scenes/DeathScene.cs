@@ -30,8 +30,7 @@ namespace BattleMages
             //if "R" is pressed, return to the menu
             if (keyState.IsKeyDown(Keys.R))
             {
-               GameWorld.ChangeScene(new MenuScene());
-                               
+               GameWorld.ChangeScene(new MenuScene());               
             }
 
             base.Update();
