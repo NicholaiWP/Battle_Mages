@@ -8,7 +8,7 @@ namespace BattleMages
 {
     public class Orb : Enemy
     {
-        public Orb(GameObject gameObject) : base(gameObject)
+        public Orb()
         {
             health = 100;
             damage = 15;
@@ -16,13 +16,12 @@ namespace BattleMages
             attackSpeed = 0;
             targetingRange = 750;
             attackRange = 300;
-            if (GameObject != null)
-                GameObject.AddComponent(new SpriteRenderer(GameObject, "Enemy Images/orbEnemy"));
         }
 
         protected override void Initialize(InitializeMsg msg)
         {
             base.Initialize(msg);
+            GameObject.AddComponent(new SpriteRenderer("Enemy Images/orbEnemy"));
             MoveSpeed = 95;
             MoveAccel = 200;
             behaviours.Add(new Hunt(this, attackRange, targetingRange));

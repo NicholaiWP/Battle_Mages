@@ -12,11 +12,11 @@ namespace BattleMages
     {
         //Component caching
         private SpriteRenderer spriteRenderer;
+
         private Animator animator;
         private Transform transform;
         private Character character;
         private Collider collider;
-
 
         protected float attackRange;
         protected float targetingRange;
@@ -40,7 +40,7 @@ namespace BattleMages
             set { character.MoveAccel = value; }
         }
 
-        protected Enemy(GameObject gameObject) : base(gameObject)
+        protected Enemy()
         {
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);

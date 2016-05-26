@@ -39,7 +39,7 @@ namespace BattleMages
     /// </summary>
     public class BaseRune
     {
-        public delegate Spell SpellSpawnDelegate(GameObject go, SpellCreationParams creationParams);
+        public delegate Spell SpellSpawnDelegate(SpellCreationParams creationParams);
 
         public string Name { get; }
         public string Description { get; }
@@ -68,7 +68,7 @@ namespace BattleMages
         /// <returns></returns>
         public Spell CreateSpell(GameObject go, SpellCreationParams creationParams)
         {
-            return spawnFunc(go, creationParams);
+            return spawnFunc(creationParams);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace BattleMages
             {
                 attackTimer = enemy.CooldownTimer;
                 GameObject projectile = new GameObject(transform.Position);
-                projectile.AddComponent(new Projectile(projectile, enemy, potentialTarget.Transform.Position));
+                projectile.AddComponent(new Projectile(enemy, potentialTarget.Transform.Position));
                 GameWorld.Scene.AddObject(projectile);
             }
         }

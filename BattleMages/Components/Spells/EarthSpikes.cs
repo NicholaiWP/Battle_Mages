@@ -13,11 +13,11 @@ namespace BattleMages
         private Texture2D sprite;
         private float timer;
         private float damageTimer;
+        private SpellCreationParams p;
 
-        public EarthSpikes(GameObject go, SpellCreationParams p) : base(go, p)
+        public EarthSpikes(SpellCreationParams p) : base(p)
         {
-            GameObject.Transform.Position = p.AimTarget;
-
+            this.p = p;
             Damage = 10;
             damageTimer = 0;
             CooldownTime = 3;
@@ -28,12 +28,18 @@ namespace BattleMages
             GameWorld.SoundManager.SoundVolume = 1f;
 
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
-            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
-            GameObject.AddComponent(collider);
-            timer = 4;
+            collider = new Collider(new Vector2(sprite.Width, sprite.Height));
 
+            timer = 4;
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
+        }
+
+        private void Initialize(InitializeMsg message)
+        {
+            GameObject.Transform.Position = p.AimTarget;
+            GameObject.AddComponent(collider);
         }
 
         private void Update(UpdateMsg msg)

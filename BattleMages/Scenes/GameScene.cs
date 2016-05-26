@@ -21,7 +21,7 @@ namespace BattleMages
             waveCounter = 1;
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
-            ellipse.AddComponent(new SpriteRenderer(ellipse, "Images/BMarena"));
+            ellipse.AddComponent(new SpriteRenderer("Images/BMarena"));
             AddObject(ellipse);
 
             //Making a player
@@ -36,11 +36,11 @@ namespace BattleMages
             GameWorld.SoundManager.PlayMusic("CombatMusic");
 
             var ingameUI = new GameObject(new Vector2(100, 100));
-            ingameUI.AddComponent(new IngameUI(ingameUI));
+            ingameUI.AddComponent(new IngameUI());
             AddObject(ingameUI);
 
             waveController = new GameObject(Vector2.Zero);
-            waveController.AddComponent(new WaveController(waveController));
+            waveController.AddComponent(new WaveController());
             waveController.SendMessage(new UpdateMsg());
             //Get all objects on the list before the first run of Update()
             base.Update();

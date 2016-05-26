@@ -33,7 +33,7 @@ namespace BattleMages
         public int CurrentHealth { get; private set; } = MaxHealth;
         public float CurrentMana { get; private set; } = MaxMana;
 
-        public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
+        public Player(bool canUseSpells)
         {
             this.canUseSpells = canUseSpells;
 
@@ -161,6 +161,5 @@ namespace BattleMages
                 GameWorld.ChangeScene(new DeathScene());
             }
         }
-      
-        }
     }
+}

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -10,6 +10,7 @@ namespace BattleMages
     {
         //Fields
         private float timeElapsed;
+
         private int currentIndex;
         private string animationName;
         private float fps;
@@ -27,12 +28,16 @@ namespace BattleMages
         /// The animator´s constructor
         /// </summary>
         /// <param name="gameObject"></param>
-        public Animator(GameObject gameObject) : base(gameObject)
+        public Animator()
         {
-            this.spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             animations = new Dictionary<string, Animation>();
-
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
+        }
+
+        private void Initialize(InitializeMsg message)
+        {
+            spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
         }
 
         /// <summary>

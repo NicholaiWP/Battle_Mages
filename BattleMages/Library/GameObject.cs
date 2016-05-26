@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 
 namespace BattleMages
 {
@@ -23,7 +23,7 @@ namespace BattleMages
         /// <param name="position"></param>
         public GameObject(Vector2 position)
         {
-            Transform = new Transform(this, position);
+            Transform = new Transform(position);
             AddComponent(Transform);
         }
 

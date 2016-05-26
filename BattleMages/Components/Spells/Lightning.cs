@@ -9,17 +9,17 @@ using System.Text;
 namespace BattleMages
 {
     public class Lightning : Spell
-
     {
         private Texture2D sprite;
         private Collider collider;
         private float waitTimer;
         private float existenceTimer;
         private bool hadACollider;
+        private SpellCreationParams p;
 
-        public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
+        public Lightning(SpellCreationParams p) : base(p)
         {
-            GameObject.Transform.Position = p.AimTarget;
+            this.p = p;
             Damage = 50;
             CooldownTime = 2f;
             ManaCost = 40;
@@ -30,8 +30,15 @@ namespace BattleMages
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
+
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
+        }
+
+        private void Initialize(InitializeMsg message)
+        {
+            GameObject.Transform.Position = p.AimTarget;
         }
 
         private void Draw(DrawMsg msg)
@@ -46,7 +53,7 @@ namespace BattleMages
         {
             if (waitTimer <= 0 && !hadACollider)
             {
-                collider = new Collider(GameObject, new Vector2(10, 10));
+                collider = new Collider(new Vector2(10, 10));
                 hadACollider = true;
 
                 foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))

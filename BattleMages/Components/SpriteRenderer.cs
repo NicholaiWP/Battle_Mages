@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -12,6 +12,7 @@ namespace BattleMages
     {
         //Fields
         private string spriteName;
+
         private Color color = Color.White;
         private Rectangle rectangle;
         private Vector2 offset;
@@ -30,7 +31,7 @@ namespace BattleMages
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="spriteName"></param>
-        public SpriteRenderer(GameObject gameObject, string spriteName) : base(gameObject)
+        public SpriteRenderer(string spriteName)
         {
             if (spriteName == "CollisionTexture")
             {
@@ -42,7 +43,7 @@ namespace BattleMages
             Listen<DrawMsg>(Draw);
         }
 
-        void Initialize(InitializeMsg msg)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             sprite = GameWorld.Load<Texture2D>(spriteName);

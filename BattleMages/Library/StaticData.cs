@@ -64,27 +64,27 @@ namespace BattleMages
                 new BaseRune("Fireball",
                 "A ball of fire",
                 "fireballRune",
-                (go, p) => { return new Fireball(go, p); }),
+                (p) => { return new Fireball( p); }),
 
                 new BaseRune("Icicle",
                 "Sharp chunks of ice",
                 "iceshardsRune",
-                (go, p) => { return new IceShard(go, p, true); }),
+                ( p) => { return new IceShard( p, true); }),
 
                 new BaseRune("Lightning",
                 "A fierce lightning which strikes\n from the sky",
                 "lightningRune",
-                (go, p) => {return new Lightning(go, p); }),
+                ( p) => {return new Lightning( p); }),
 
                 new BaseRune("EarthSpikes",
                 "Hard spikes will rise from the\n ground",
                 "earthspikesRune",
-               (go, p) => {return new EarthSpikes(go, p); }),
+               ( p) => {return new EarthSpikes( p); }),
 
                 new BaseRune("FrostShield",
                 "Make 4 orbs of ice that rotate around you",
                 "frostShieldRune",
-                (go, p) => {return new FrostShield(go, p, true, 0); })
+                ( p) => {return new FrostShield( p, true, 0); })
             };
         }
 
