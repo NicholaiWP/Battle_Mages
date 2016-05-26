@@ -20,7 +20,7 @@ namespace BattleMages
             var diff = targetPos - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 120f;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Images/orbProjectile");
             //GameWorld.SoundManager.PlaySound("Lightning");
 
             collider = new Collider(GameObject, new Vector2(8, 8));
