@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -30,8 +30,10 @@ namespace BattleMages
             //teleport trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -180 + 64 - 64 / 2));
             doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(64, 64)));
-            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () => { GameWorld.ChangeScene(new GameScene()); GameWorld.SoundManager.PlaySound("teleport");
-            GameWorld.SoundManager.SoundVolume = 0.9f;
+            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () =>
+            {
+                GameWorld.ChangeScene(new GameScene()); GameWorld.SoundManager.PlaySound("teleport");
+                GameWorld.SoundManager.SoundVolume = 0.9f;
             }));
             AddObject(doorTriggerGameObject);
 
@@ -46,7 +48,7 @@ namespace BattleMages
             //Get all objects on the list before the first run of Update()
             ProcessObjectLists();
         }
-        
+
         public override void Update()
         {
             //Plays ambience sound looped using SoundManager & Sets volume
@@ -57,8 +59,8 @@ namespace BattleMages
             }
 
             keyState = Keyboard.GetState();
-            
-            if (keyState.IsKeyDown(Keys.P))
+
+            if (keyState.IsKeyDown(Keys.Escape))
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }

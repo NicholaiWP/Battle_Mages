@@ -15,8 +15,6 @@ namespace BattleMages
             waves.Add(1, new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
                 new List<Enemy> { new Golem(null), new Orb(null), new Slime(null) }));
-
-            // waves.Add(2, new Wave()
         }
 
         public void NewWave(int waveNumber)
