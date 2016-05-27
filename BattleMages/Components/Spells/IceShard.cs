@@ -13,40 +13,37 @@ namespace BattleMages
         private Vector2 velocity;
         private Vector2 diff;
         private Collider collider;
+        private bool spawnSubshards;
+        private SpellCreationParams p;
 
-        public IceShard(GameObject go, SpellCreationParams p, bool spawnSubshards) : base(go, p)
+        public IceShard(SpellCreationParams p, bool spawnSubshards) : base(p)
         {
+            this.spawnSubshards = spawnSubshards;
+            this.p = p;
             Damage = 5;
             CooldownTime = 0.6f;
             ManaCost = 20;
             ApplyAttributeRunes();
 
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
+            collider = new Collider(new Vector2(8, 8));
+
+            Listen<InitializeMsg>(Initialize);
+            Listen<PreInitializeMsg>(PreInitialize);
+            Listen<UpdateMsg>(Update);
+            Listen<DrawMsg>(Draw);
+        }
+
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(collider);
+        }
+
+        private void Initialize(InitializeMsg msg)
+        {
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 100f;
-
-            if (spawnSubshards)
-            {
-                for (int i = 0; i <= 1; i++)
-                {
-                    GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
-
-                    //Set aim target to be rotated based on which shard this is
-                    Vector2 target = Utils.RotateVector(diff, i == 0 ? 20 : -20);
-
-                    newShardGameObject.AddComponent(new IceShard(newShardGameObject,
-                        new SpellCreationParams(p.AttributeRunes, target + GameObject.Transform.Position, p.VelocityOffset),
-                        false));
-                    GameWorld.Scene.AddObject(newShardGameObject);
-                }
-            }
-
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
-            collider = new Collider(GameObject, new Vector2(8, 8));
-            GameObject.AddComponent(collider);
-
-            Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
         }
 
         private void Draw(DrawMsg msg)
@@ -56,6 +53,22 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
+            if (spawnSubshards)
+            {
+                spawnSubshards = false;
+                for (int i = 0; i <= 1; i++)
+                {
+                    GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
+
+                    //Set aim target to be rotated based on which shard this is
+                    Vector2 target = Utils.RotateVector(diff, i == 0 ? 20 : -20);
+
+                    newShardGameObject.AddComponent(new IceShard(
+                        new SpellCreationParams(p.AttributeRunes, target + GameObject.Transform.Position, p.VelocityOffset),
+                        false));
+                    GameWorld.Scene.AddObject(newShardGameObject);
+                }
+            }
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {

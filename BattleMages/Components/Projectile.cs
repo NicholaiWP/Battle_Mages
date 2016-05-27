@@ -13,21 +13,34 @@ namespace BattleMages
         private Vector2 velocity;
         private Texture2D sprite;
         private Collider collider;
+        private Vector2 targetPos;
 
-        public Projectile(GameObject go, Enemy enemy, Vector2 targetPos) : base(go)
+        public Projectile(Enemy enemy, Vector2 targetPos)
         {
+            this.targetPos = targetPos;
             damage = enemy.Damage;
-            var diff = targetPos - GameObject.Transform.Position;
-            diff.Normalize();
-            velocity = diff * 120f;
+
             sprite = GameWorld.Instance.Content.Load<Texture2D>("Images/orbProjectile");
             //GameWorld.SoundManager.PlaySound("Lightning");
 
-            collider = new Collider(GameObject, new Vector2(8, 8));
-            GameObject.AddComponent(collider);
+            collider = new Collider(new Vector2(8, 8));
 
+            Listen<PreInitializeMsg>(PreInitialize);
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
+        }
+            
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(collider);
+        }
+
+        private void Initialize(InitializeMsg msg)
+        {
+            var diff = targetPos - GameObject.Transform.Position;
+            diff.Normalize();
+            velocity = diff * 120f;
         }
 
         private void Update(UpdateMsg msg)

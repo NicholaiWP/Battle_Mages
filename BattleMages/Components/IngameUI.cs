@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -18,14 +18,14 @@ namespace BattleMages
         private Texture2D spellFourSprite;
         private Texture2D coinsSprite;
 
-        float healthbarSize = 1f;
-        float manabarSize = 1f;
+        private float healthbarSize = 1f;
+        private float manabarSize = 1f;
 
-        Player player;
+        private Player player;
 
         private SpriteFont haxFont;
 
-        public IngameUI(GameObject gameObject) : base(gameObject)
+        public IngameUI()
         {
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
@@ -50,7 +50,7 @@ namespace BattleMages
             if (player != null)
             {
                 healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / (float)Player.MaxHealth, GameWorld.DeltaTime * 10f));
-                manabarSize = Math.Max(0,MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
+                manabarSize = Math.Max(0, MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
             }
         }
 
@@ -70,8 +70,8 @@ namespace BattleMages
 
             if (player != null)
             {
-                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: topLeft, scale: new Vector2(healthbarSize,1));
-                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height), scale: new Vector2(manabarSize,1));
+                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: topLeft, scale: new Vector2(healthbarSize, 1));
+                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height), scale: new Vector2(manabarSize, 1));
             }
 
             msg.Drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset)) - (spellOneSprite.Width * 2), bottomMiddle.Y));
@@ -79,9 +79,6 @@ namespace BattleMages
             msg.Drawer[DrawLayer.UI].Draw(spellThreeSprite, position: new Vector2((bottomMiddle.X + halfOffset), bottomMiddle.Y));
             msg.Drawer[DrawLayer.UI].Draw(spellFourSprite, position: new Vector2((bottomMiddle.X + (offset + halfOffset)) + (spellOneSprite.Width), bottomMiddle.Y));
             msg.Drawer[DrawLayer.UI].Draw(coinsSprite, position: new Vector2(topRight.X - (coinsSprite.Width + offset), topRight.Y));
-
         }
-
     }
-      
 }

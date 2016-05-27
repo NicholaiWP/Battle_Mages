@@ -33,7 +33,7 @@ namespace BattleMages
         public int CurrentHealth { get; private set; } = MaxHealth;
         public float CurrentMana { get; private set; } = MaxMana;
 
-        public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
+        public Player(bool canUseSpells)
         {
             this.canUseSpells = canUseSpells;
 
@@ -122,8 +122,7 @@ namespace BattleMages
 
                 //Create spell object and add it to the world
                 GameObject spellObject = new GameObject(transform.Position);
-                Spell spellComponent = baseRune.CreateSpell(spellObject,
-                    new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
+                Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
                 spellObject.AddComponent(spellComponent);
                 GameWorld.Scene.AddObject(spellObject);
 

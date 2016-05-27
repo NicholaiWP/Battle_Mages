@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -12,12 +12,13 @@ namespace BattleMages
     {
         //Static list of all colliders created
         private Transform transform;
+
         private Texture2D debugTexture;
 
         public Vector2 Size { get; }
         public bool Solid { get; }
 
-        public Collider(GameObject gameObject, Vector2 size, bool solid = false) : base(gameObject)
+        public Collider(Vector2 size, bool solid = false)
         {
             Size = size;
             Solid = solid;

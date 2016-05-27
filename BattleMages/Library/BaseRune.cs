@@ -39,7 +39,7 @@ namespace BattleMages
     /// </summary>
     public class BaseRune
     {
-        public delegate Spell SpellSpawnDelegate(GameObject go, SpellCreationParams creationParams);
+        public delegate Spell SpellSpawnDelegate(SpellCreationParams creationParams);
 
         public string Name { get; }
         public string Description { get; }
@@ -66,9 +66,9 @@ namespace BattleMages
         /// <param name="go">Game object to own the created component. The component should be added to this object using AddComponent().</param>
         /// <param name="creationParams">Arguments used by the created spell to alter behaviour.</param>
         /// <returns></returns>
-        public Spell CreateSpell(GameObject go, SpellCreationParams creationParams)
+        public Spell CreateSpell(SpellCreationParams creationParams)
         {
-            return spawnFunc(go, creationParams);
+            return spawnFunc(creationParams);
         }
     }
 }
