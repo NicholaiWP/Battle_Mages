@@ -88,6 +88,18 @@ namespace BattleMages
             };
         }
 
+        public static void LoadContent()
+        {
+            foreach(AttributeRune attrRune in attributeRunes)
+            {
+                attrRune.LoadContent();
+            }
+            foreach(BaseRune baseRune in baseRunes)
+            {
+                baseRune.LoadContent();
+            }
+        }
+
         private static void DamageUpRune(Spell spell)
         {
             spell.Damage = (int)(spell.Damage * 1.25f);
