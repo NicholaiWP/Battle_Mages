@@ -37,7 +37,7 @@ namespace BattleMages
         /// </summary>
         public Vector2 Velocity { get; private set; }
 
-        public Character(GameObject gameObject) : base(gameObject)
+        public Character()
         {
             Listen<InitializeMsg>(Initialize);
         }

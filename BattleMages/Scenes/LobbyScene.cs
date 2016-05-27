@@ -35,12 +35,12 @@ namespace BattleMages
 
             //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
-            doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
-            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () =>
-            {
-                GameWorld.ChangeScene(new HallwayScene()); GameWorld.SoundManager.PlaySound("openHallwayDoor1");
-                GameWorld.SoundManager.SoundVolume = 1f;
-            }));
+            doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
+            doorTriggerGameObject.AddComponent(new Interactable(() =>
+           {
+               GameWorld.ChangeScene(new HallwayScene()); GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+               GameWorld.SoundManager.SoundVolume = 1f;
+           }));
             AddObject(doorTriggerGameObject);
 
             //Sets the sound volume for this scene

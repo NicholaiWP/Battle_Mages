@@ -29,12 +29,12 @@ namespace BattleMages
 
             //teleport trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -180 + 64 - 64 / 2));
-            doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(64, 64)));
-            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () =>
-            {
-                GameWorld.ChangeScene(new GameScene()); GameWorld.SoundManager.PlaySound("teleport");
-                GameWorld.SoundManager.SoundVolume = 0.9f;
-            }));
+            doorTriggerGameObject.AddComponent(new Collider(new Vector2(64, 64)));
+            doorTriggerGameObject.AddComponent(new Interactable(() =>
+           {
+               GameWorld.ChangeScene(new GameScene()); GameWorld.SoundManager.PlaySound("teleport");
+               GameWorld.SoundManager.SoundVolume = 0.9f;
+           }));
             AddObject(doorTriggerGameObject);
 
             //Sets sound volume semi-low

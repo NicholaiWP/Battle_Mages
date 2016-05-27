@@ -31,7 +31,7 @@ namespace BattleMages
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="spriteName"></param>
-        public SpriteRenderer(GameObject gameObject, string spriteName) : base(gameObject)
+        public SpriteRenderer(string spriteName)
         {
             if (spriteName == "CollisionTexture")
             {

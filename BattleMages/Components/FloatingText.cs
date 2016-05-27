@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -19,7 +19,7 @@ namespace BattleMages
 
         private float alpha = 1;
 
-        public FloatingText(GameObject gameObject, string text) : base(gameObject)
+        public FloatingText(string text)
         {
             Random r = new Random();
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");

@@ -28,10 +28,9 @@ namespace BattleMages
         /// The animator´s constructor
         /// </summary>
         /// <param name="gameObject"></param>
-        public Animator(GameObject gameObject) : base(gameObject)
+        public Animator()
         {
             animations = new Dictionary<string, Animation>();
-
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
         }

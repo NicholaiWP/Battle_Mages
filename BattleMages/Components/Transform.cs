@@ -19,7 +19,7 @@ namespace BattleMages
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="position"></param>
-        public Transform(GameObject gameObject, Vector2 position) : base(gameObject)
+        public Transform(Vector2 position)
         {
             this.position = position;
         }

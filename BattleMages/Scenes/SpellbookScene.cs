@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -24,15 +24,18 @@ namespace BattleMages
 
         //Holds objects in a tab to delete them on tab change
         private List<GameObject> objectsInTab = new List<GameObject>();
+
         //Same for the rune grid
         private List<GameObject> objectsInRuneGrid = new List<GameObject>();
 
         //Seperate ints to keep track of each tab's current page so that they are kept when switching tabs.
         private int spellListPage = 0;
+
         private int runeListPage = 0;
 
         //NULL if no spell is being edited. Determines if runes or player spells should be shown.
         private SpellInfo currentlyEditing;
+
         private BaseRune selectedBaseRune;
         private AttributeRune selectedAttrRune;
         private int selectedSpellBarSlot = -1;
@@ -116,11 +119,11 @@ namespace BattleMages
         private GameObject RuneIcon(Vector2 position, string textureName)
         {
             GameObject go = new GameObject(position);
-            go.AddComponent(new SpriteRenderer(go, "Rune Images/" + textureName));
+            go.AddComponent(new SpriteRenderer("Rune Images/" + textureName));
             return go;
         }
 
-        #endregion
+        #endregion General purpose methods
 
         #region Tabs (Left pane)
 
@@ -227,16 +230,16 @@ namespace BattleMages
             //Done button
             var doneSpr1 = content.Load<Texture2D>("Images/Button_Done");
             var doneSpr2 = content.Load<Texture2D>("Images/Button_Done_Hover");
-                AddTabObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
-                doneSpr1,
-                doneSpr2,
-                () =>
-                {
-                    currentlyEditing = null;
-                    OpenSpellsTab();
-                }
-                ));
+            AddTabObject(ObjectBuilder.BuildButton(
+            new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
+            doneSpr1,
+            doneSpr2,
+            () =>
+            {
+                currentlyEditing = null;
+                OpenSpellsTab();
+            }
+            ));
             var runeSpr1 = content.Load<Texture2D>("Images/Button_Rune");
             var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
             int nextRuneX = 0;
@@ -291,10 +294,10 @@ namespace BattleMages
                     nextRuneX = 0;
                 }
             }
-                UpdateRuneGrid();
+            UpdateRuneGrid();
         }
 
-        #endregion
+        #endregion Tabs (Left pane)
 
         #region Rune grid (Right pane)
 
@@ -336,7 +339,7 @@ namespace BattleMages
             }
         }
 
-        #endregion
+        #endregion Rune grid (Right pane)
 
         public override void Update()
         {
