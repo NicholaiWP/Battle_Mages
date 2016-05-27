@@ -30,10 +30,6 @@ namespace BattleMages
             runeSprite = content.Load<Texture2D>("Images/Button_Rune");
             font = content.Load<SpriteFont>("FontBM");
 
-            shopItemPositions = new Vector2[]
-            {
-                itemPosition + new Vector2(20, -100)
-            };
         }
             
         private void AddShopItem (GameObject go)
@@ -46,14 +42,12 @@ namespace BattleMages
         {
             Color textColor = new Color(120, 100, 80);
             drawer[DrawLayer.UI].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
-            drawer[DrawLayer.UI].Draw(runeSprite, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 9, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 18));
 
             base.Draw(drawer);
         }
 
         public override void Update()
         {
-  
         }
 
     }

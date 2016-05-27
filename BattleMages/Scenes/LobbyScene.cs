@@ -51,7 +51,7 @@ namespace BattleMages
 
 
             GameObject ShopKeeper = new GameObject(shopKeeperPosition);
-            ShopKeeper.AddComponent(new Collider(ShopKeeper, new Vector2(75, 65)));
+            ShopKeeper.AddComponent(new Collider(ShopKeeper, new Vector2(49,49), true));
             ShopKeeper.AddComponent(new Interactable(ShopKeeper, () =>
             {
                 GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
