@@ -8,7 +8,7 @@ namespace BattleMages
 {
     public class Golem : Enemy
     {
-        public Golem(GameObject gameObject) : base(gameObject)
+        public Golem()
         {
             health = 240;
             damage = 25;
@@ -16,8 +16,12 @@ namespace BattleMages
             attackSpeed = 0;
             targetingRange = 700;
             attackRange = 25;
-            if (GameObject != null)
-                GameObject.AddComponent(new SpriteRenderer(GameObject, "Enemy Images/golemEnemy"));
+        }
+
+        protected override void PreInitialize(PreInitializeMsg msg)
+        {
+            base.PreInitialize(msg);
+            GameObject.AddComponent(new SpriteRenderer("Enemy Images/golemEnemy"));
         }
 
         protected override void Initialize(InitializeMsg msg)

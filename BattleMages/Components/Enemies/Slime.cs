@@ -8,7 +8,7 @@ namespace BattleMages
 {
     public class Slime : Enemy
     {
-        public Slime(GameObject gameObject) : base(gameObject)
+        public Slime()
         {
             health = 75;
             damage = 10;
@@ -16,8 +16,12 @@ namespace BattleMages
             attackSpeed = 0;
             targetingRange = 400;
             attackRange = 25;
-            if (GameObject != null)
-                GameObject.AddComponent(new SpriteRenderer(GameObject, "Enemy Images/slimeEnemy"));
+        }
+
+        protected override void PreInitialize(PreInitializeMsg msg)
+        {
+            base.PreInitialize(msg);
+            GameObject.AddComponent(new SpriteRenderer("Enemy Images/slimeEnemy"));
         }
 
         protected override void Initialize(InitializeMsg msg)

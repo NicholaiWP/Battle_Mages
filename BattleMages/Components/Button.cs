@@ -12,8 +12,8 @@ namespace BattleMages
     public class Button : Component
     {
         private bool hovering;
-        Texture2D normalTex;
-        Texture2D hoverTex;
+        private Texture2D normalTex;
+        private Texture2D hoverTex;
         private Texture2D[] sprites = new Texture2D[2];
         private Rectangle rectangle;
 
@@ -33,19 +33,23 @@ namespace BattleMages
             }
         }
 
-        public Button(GameObject gameObject, Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false) : base(gameObject)
+        public Button(Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false)
         {
-            startPos = GameObject.Transform.Position;
-            offset = GameObject.Transform.Position.Y * 0.02f;
-
             this.normalTex = normalTex;
             this.hoverTex = hoverTex;
             this.onClick = onClick;
             this.onRightClick = onRightClick;
             this.wiggle = wiggle;
 
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
+        }
+
+        private void Initialize(InitializeMsg message)
+        {
+            startPos = GameObject.Transform.Position;
+            offset = GameObject.Transform.Position.Y * 0.02f;
         }
 
         private void Update(UpdateMsg msg)

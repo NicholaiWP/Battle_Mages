@@ -11,24 +11,37 @@ namespace BattleMages
     public class Component
     {
         private GameObject gameObject;
-
         private Dictionary<Type, object> handlers = new Dictionary<Type, object>();
 
+        /// <summary>
+        /// The game object this component is attached to.
+        /// </summary>
         public GameObject GameObject
         {
             get
             {
+                if (gameObject == null) throw new NullReferenceException("This component does not have a game object attached. Are you trying to access it from the constructor?");
                 return gameObject;
+            }
+            set
+            {
+                if (value == null) throw new ArgumentNullException();
+                if (gameObject == null)
+                {
+                    gameObject = value;
+                }
+                else
+                {
+                    throw new InvalidOperationException("This component alreay has a game object assigned.");
+                }
             }
         }
 
         /// <summary>
-        /// Constructor for the component with a gameObject
+        /// Constructor for the component. Do not try to access GameObject from here! It has not been set yet.
         /// </summary>
-        /// <param name="gameObject"></param>
-        public Component(GameObject gameObject)
+        public Component()
         {
-            this.gameObject = gameObject;
         }
 
         /// <summary>

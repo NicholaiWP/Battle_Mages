@@ -12,6 +12,7 @@ namespace BattleMages
     {
         //Component caching
         private SpriteRenderer spriteRenderer;
+
         private Animator animator;
         private Transform transform;
         private Character character;
@@ -43,8 +44,9 @@ namespace BattleMages
             set { character.MoveAccel = value; }
         }
 
-        protected Enemy(GameObject gameObject) : base(gameObject)
+        protected Enemy()
         {
+            Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
@@ -63,17 +65,22 @@ namespace BattleMages
         public void Onfire(int burnPoints)
         {
             //timer dmg timer, når nul..if the timer in update is <= 0, enemy.takedamge. add gameObject to show
-           
-                Random rand = new Random();
-                int chance = rand.Next(1, 101);
 
-                if (chance <= 25) // probability of 25%
-                {
-                    burnDmg = burnPoints;
-                    burned = true;
-                    burnDuration = 5;
-                    burnDamageTimer = 0.5f;
-                }                  
+            Random rand = new Random();
+            int chance = rand.Next(1, 101);
+
+            if (chance <= 25) // probability of 25%
+            {
+                burnDmg = burnPoints;
+                burned = true;
+                burnDuration = 5;
+                burnDamageTimer = 0.5f;
+            }
+        }
+
+        protected virtual void PreInitialize(PreInitializeMsg msg)
+        {
+
         }
 
         protected virtual void Initialize(InitializeMsg msg)

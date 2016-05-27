@@ -15,9 +15,13 @@ namespace BattleMages
         private float radius;
         private float angle;
         private float speed;
+        private bool spawnSubshards;
+        private SpellCreationParams p;
 
-        public FrostShield(GameObject go, SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(go, p)
+        public FrostShield(SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(p)
         {
+            this.spawnSubshards = spawnSubshards;
+            this.p = p;
             speed = 2;
             radius = 32;
             Damage = 8;
@@ -35,31 +39,35 @@ namespace BattleMages
                 angle = firstOtherFrostshield.angle;
             }
 
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
+
+            collider = new Collider(new Vector2(sprite.Width, sprite.Height));
+
+            Listen<PreInitializeMsg>(PreInitialize);
+            Listen<UpdateMsg>(Update);
+            Listen<DrawMsg>(Draw);
+        }
+
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(collider);
+        }
+
+        private void Update(UpdateMsg msg)
+        {
             //Spawn 2 other frostshields if told to
             if (spawnSubshards)
             {
+                spawnSubshards = false;
                 for (int i = 0; i <= 1; i++)
                 {
                     GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
-                    newShardGameObject.AddComponent(new FrostShield(newShardGameObject,
+                    newShardGameObject.AddComponent(new FrostShield(
                            new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
                            false, 90 * (i + 1)));
                     GameWorld.Scene.AddObject(newShardGameObject);
                 }
             }
-
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
-
-            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
-
-            GameObject.AddComponent(collider);
-
-            Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
-        }
-
-        private void Update(UpdateMsg message)
-        {
             GameWorld.SoundManager.PlaySound("FrostShield");
             GameWorld.SoundManager.SoundVolume = 1f;
 
@@ -114,7 +122,7 @@ namespace BattleMages
 
         private void Draw(DrawMsg msg)
         {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(sprite.Width,sprite.Height) / 2, Color.White);
+            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(sprite.Width, sprite.Height) / 2, Color.White);
         }
     }
 }

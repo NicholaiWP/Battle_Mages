@@ -97,6 +97,7 @@
     <Compile Include="Messages\DrawMsg.cs" />
     <Compile Include="Messages\InitializeMsg.cs" />
     <Compile Include="Library\Msg.cs" />
+    <Compile Include="Messages\PreInitializeMsg.cs" />
     <Compile Include="Messages\UpdateMsg.cs" />
     <Compile Include="Scenes\DeathScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
