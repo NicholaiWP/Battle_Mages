@@ -37,7 +37,7 @@ namespace BattleMages
             }
             else
             {
-                GameWorld.ChangeScene(new LobbyScene());
+                GameWorld.ChangeScene(new LobbyScene(GameWorld.Scene));
             }
         }
     }

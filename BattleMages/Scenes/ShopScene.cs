@@ -11,6 +11,7 @@ namespace BattleMages
 {
     public class ShopScene : Scene
     {
+        private Scene oldScene;
         private Texture2D background;
         private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
         private Texture2D runeSprite;
@@ -21,9 +22,9 @@ namespace BattleMages
         KeyboardState kbState = Keyboard.GetState();
         private List<GameObject> runeList = new List<GameObject>();
 
-        public ShopScene()
+        public ShopScene(Scene oldScene)
         {
-            oldKbState = kbState;
+            this.oldScene = oldScene;
             var content = GameWorld.Instance.Content;
             background = content.Load<Texture2D>("Backgrounds/Shop");
             runeSprite = content.Load<Texture2D>("Images/Button_Rune");
@@ -34,7 +35,7 @@ namespace BattleMages
                 itemPosition + new Vector2(20, -100)
             };
         }
-
+            
         private void AddShopItem (GameObject go)
         {
             runeList.Add(go);
@@ -52,12 +53,7 @@ namespace BattleMages
 
         public override void Update()
         {
-            
-            base.Update();
-            //if (oldKbState.IsKeyUp(Keys.M) && kbState.IsKeyDown(Keys.M))
-            //{
-            //    GameWorld.ChangeScene(new LobbyScene());
-            //}
+  
         }
 
     }

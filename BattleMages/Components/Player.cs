@@ -99,7 +99,15 @@ namespace BattleMages
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
             }
-            
+
+            //Close shop
+            if (GameWorld.Scene is ShopScene)
+            {
+                if (oldKbState.IsKeyUp(Keys.Escape) && kbState.IsKeyDown(Keys.Escape))
+                {
+                    GameWorld.ChangeScene(new LobbyScene(GameWorld.Scene));
+                }
+            }
 
             //Spell selection
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell1)))

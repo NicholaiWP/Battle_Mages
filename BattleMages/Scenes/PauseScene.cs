@@ -47,7 +47,7 @@ namespace BattleMages
                     GameWorld.Camera.Position + new Vector2(-ForfeitSpr1.Width / 2, ForfeitSpr1.Height * 1f),
                     ForfeitSpr1,
                     ForfeitSpr2,
-                    () => { GameWorld.ChangeScene(new LobbyScene()); }
+                    () => { GameWorld.ChangeScene(new LobbyScene(GameWorld.Scene)); }
                     ));
             }
 

@@ -18,9 +18,11 @@ namespace BattleMages
         private Vector2 lobbyTexturePosition;
         private Vector2 shopKeeperPosition;
         private KeyboardState keyState;
+        private Scene oldScene;
 
-        public LobbyScene()
+        public LobbyScene(Scene oldScene)
         {
+            this.oldScene = oldScene;
             //Volume handled through SoundManager
             MediaPlayer.Volume = 0.5f;
 
@@ -52,7 +54,7 @@ namespace BattleMages
             ShopKeeper.AddComponent(new Collider(ShopKeeper, new Vector2(75, 65)));
             ShopKeeper.AddComponent(new Interactable(ShopKeeper, () =>
             {
-                GameWorld.ChangeScene(new ShopScene());
+                GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
             }));
             AddObject(ShopKeeper);
 
