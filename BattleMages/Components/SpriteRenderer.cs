@@ -13,7 +13,6 @@ namespace BattleMages
         //Fields
         private string spriteName;
 
-        private Color color = Color.White;
         private Rectangle rectangle;
         private Vector2 offset;
         private Vector2 position;
@@ -27,6 +26,8 @@ namespace BattleMages
         public Texture2D Sprite { get { return sprite; } }
 
         public Vector2 Offset { get { return offset; } set { offset = value; } }
+
+        public float Opacity { get; set; } = 1;
 
         /// <summary>
         /// A constructor for the sprite renderer
@@ -51,6 +52,7 @@ namespace BattleMages
 
         private void Draw(DrawMsg msg)
         {
+            Color color = new Color(Opacity, Opacity, Opacity, Opacity);
             msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
                 position: GameObject.Transform.Position -
                 new Vector2(rectangle.Width / 2, rectangle.Height / 2) + offset,
