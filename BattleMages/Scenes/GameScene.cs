@@ -51,7 +51,7 @@ namespace BattleMages
 
         public override void Update()
         {
-            MediaPlayer.Volume = 0.01f;
+            //MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
 
             //Playing ambient sounds using SoundManager

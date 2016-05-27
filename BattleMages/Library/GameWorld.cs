@@ -94,8 +94,9 @@ namespace BattleMages
             drawer = new Drawer(GraphicsDevice);
 
             //Create 4 test spell for both the bar and the book
-            for (int i = 1; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
+                if (i == 3) continue;
                 SpellInfo ps = new SpellInfo();
                 ps.SetBaseRune(i);
                 for (int j = 0; j < i; j++)
