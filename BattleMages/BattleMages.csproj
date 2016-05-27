@@ -110,6 +110,7 @@
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
+    <Compile Include="Scenes\ShopScene.cs" />
     <Compile Include="Scenes\SpellbookScene.cs" />
     <Compile Include="Library\BaseRune.cs" />
     <Compile Include="Library\StaticData.cs" />
