@@ -11,29 +11,19 @@ namespace BattleMages
 {
     public class ShopScene : Scene
     {
-        private bool C_Pressed = true;
         private Texture2D background;
-        private SpriteFont spriteFont;
-        private LobbyScene lobbyScene;
         private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
         private Texture2D runeSprite;
         private SpriteFont font;
         private Vector2 itemPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
         private Vector2[] shopItemPositions;
+        KeyboardState oldKbState = Keyboard.GetState();
+        KeyboardState kbState = Keyboard.GetState();
         private List<GameObject> runeList = new List<GameObject>();
-
-        private Scene oldScene;
 
         public ShopScene()
         {
-            Update();
-
-        }
-
-        public ShopScene(Scene oldScene)
-        {
-            this.oldScene = oldScene;
-
+            oldKbState = kbState;
             var content = GameWorld.Instance.Content;
             background = content.Load<Texture2D>("Backgrounds/Shop");
             runeSprite = content.Load<Texture2D>("Images/Button_Rune");
@@ -62,19 +52,12 @@ namespace BattleMages
 
         public override void Update()
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.C))
-            {
-                if (C_Pressed)
-                    GameWorld.ChangeScene(lobbyScene);
-            }
-            else
-            {
-                if (!C_Pressed)
-                    C_Pressed = false;
-            }
-
+            
             base.Update();
+            //if (oldKbState.IsKeyUp(Keys.M) && kbState.IsKeyDown(Keys.M))
+            //{
+            //    GameWorld.ChangeScene(new LobbyScene());
+            //}
         }
 
     }

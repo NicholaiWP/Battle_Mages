@@ -56,7 +56,6 @@ namespace BattleMages
             }));
             AddObject(ShopKeeper);
 
-
             //Sets the sound volume for this scene
             GameWorld.SoundManager.AmbienceVolume = 0.02f;
 
