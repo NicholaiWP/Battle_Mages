@@ -180,9 +180,12 @@ namespace BattleMages
                     {
                         if (selectedSpellBarSlot >= 0)
                         {
-                            GameWorld.State.SpellBar[selectedSpellBarSlot] = GameWorld.State.SpellBook.IndexOf(thisSpell);
-                            selectedSpellBarSlot = -1;
-                            OpenSpellsTab();
+                            if (thisSpell.GetBaseRune() != null)
+                            {
+                                GameWorld.State.SpellBar[selectedSpellBarSlot] = GameWorld.State.SpellBook.IndexOf(thisSpell);
+                                selectedSpellBarSlot = -1;
+                                OpenSpellsTab();
+                            }
                         }
                         else
                         {
@@ -240,8 +243,8 @@ namespace BattleMages
                 OpenSpellsTab();
             }
             ));
-            var runeSpr1 = content.Load<Texture2D>("Images/Button_Rune");
-            var runeSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
+            var runeBtnSpr1 = content.Load<Texture2D>("Images/Button_Rune");
+            var runeBtnSpr2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
             int nextRuneX = 0;
             int nextRuneY = 0;
             int nextRunePos = 0;
@@ -249,10 +252,11 @@ namespace BattleMages
             foreach (var spell in StaticData.BaseRunes)
             {
                 BaseRune thisSpell = spell;
+                Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY);
                 AddTabObject(ObjectBuilder.BuildButton(
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
-                    content.Load<Texture2D>("Rune Images/" + thisSpell.TextureName),
-                    runeSpr2,
+                    pos,
+                    runeBtnSpr1,
+                    runeBtnSpr2,
                     () =>
                     {
                         bottomLeftText = thisSpell.Name + Environment.NewLine + thisSpell.Description;
@@ -260,6 +264,10 @@ namespace BattleMages
                         selectedBaseRune = thisSpell;
                     }
                     ));
+                GameObject runeImageObj = new GameObject(pos + Vector2.One * 8);
+                runeImageObj.AddComponent(new SpriteRenderer("Rune Images/" + thisSpell.TextureName));
+                AddTabObject(runeImageObj);
+
                 nextRunePos++;
                 nextRuneX += 16;
                 if (nextRunePos % 8 == 0)
@@ -275,10 +283,12 @@ namespace BattleMages
             foreach (var rune in StaticData.AttributeRunes)
             {
                 AttributeRune thisRune = rune;
+                Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY);
                 AddTabObject(ObjectBuilder.BuildButton(
                     new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
-                    content.Load<Texture2D>("Rune Images/" + thisRune.TextureName),
-                    runeSpr2,
+                    //content.Load<Texture2D>("Rune Images/" + thisRune.TextureName),
+                    runeBtnSpr1,
+                    runeBtnSpr2,
                     () =>
                     {
                         bottomLeftText = thisRune.Name + Environment.NewLine + thisRune.Description;
@@ -286,6 +296,10 @@ namespace BattleMages
                         selectedBaseRune = null;
                     }
                     ));
+                GameObject runeImageObj = new GameObject(pos + Vector2.One * 8);
+                runeImageObj.AddComponent(new SpriteRenderer("Rune Images/" + thisRune.TextureName));
+                AddTabObject(runeImageObj);
+
                 nextRunePos++;
                 nextRuneX += 16;
                 if (nextRunePos % 8 == 0)
