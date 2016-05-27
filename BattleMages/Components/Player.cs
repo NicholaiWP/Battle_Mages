@@ -26,7 +26,7 @@ namespace BattleMages
         public const int MaxHealth = 100;
         public const float MaxMana = 100;
         private float rechargeDelayTimer = 0;
-
+        private bool deathAnimationStarted;
         public const float ManaRechargeSpeed = 30;
         public const float ManaRechargeDelay = 1;
 
@@ -36,7 +36,7 @@ namespace BattleMages
         public Player(GameObject gameObject, bool canUseSpells) : base(gameObject)
         {
             this.canUseSpells = canUseSpells;
-
+            deathAnimationStarted = false;
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
@@ -202,10 +202,10 @@ namespace BattleMages
         public void TakeDamage(int points)
         {
             CurrentHealth -= points;
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0 && !deathAnimationStarted)
             {
+                deathAnimationStarted = true;
                 animator.PlayAnimation("Death");
-                GameObject.SendMessage(new AnimationDoneMsg("Death"));
             }
         }
     }

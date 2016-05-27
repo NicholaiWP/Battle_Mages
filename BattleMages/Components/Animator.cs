@@ -63,6 +63,7 @@ namespace BattleMages
             {
                 if (currentIndex >= frames.Length)
                 {
+                    GameObject.SendMessage(new AnimationDoneMsg(animationName));
                     timeElapsed = 0;
                     currentIndex = 0;
                 }
