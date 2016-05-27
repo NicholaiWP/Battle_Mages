@@ -19,7 +19,9 @@ namespace BattleMages
         private Texture2D spellThreeSprite;
         private Texture2D spellFourSprite;
         private Texture2D coinsSprite;
-        private Texture2D waveCount; 
+        private Texture2D waveCount;
+        private Texture2D aboveUI;
+        private Texture2D behindUI;
 
         float healthbarSize = 1f;
         float manabarSize = 1f;
@@ -37,6 +39,8 @@ namespace BattleMages
 
         private void Initialize(InitializeMsg msg)
         {
+            behindUI = GameWorld.Load<Texture2D>("images/behindUI");
+            aboveUI = GameWorld.Load<Texture2D>("images/aboveUI");
             haxFont = GameWorld.Load<SpriteFont>("FontBM");
             healthBar = GameWorld.Load<Texture2D>("images/healthBar");
             manaBar = GameWorld.Load<Texture2D>("images/manaBar");
@@ -65,7 +69,10 @@ namespace BattleMages
             Vector2 topLeft = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             Vector2 topRight = GameWorld.Camera.Position - new Vector2((-GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             Vector2 bottomMiddle = GameWorld.Camera.Position - new Vector2(0, ((-GameWorld.GameHeight / 2 + offset) + spellOneSprite.Height));
-            
+
+            Vector2 healthBarPos = new Vector2(topLeft.X + 13, topLeft.Y + 2);
+            Vector2 manaBarPos = new Vector2(topLeft.X + 2, topLeft.Y + 15);
+
             //Player player = GameWorld.CurrentScene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
             //if (player != null)
             //{
@@ -73,11 +80,13 @@ namespace BattleMages
             //}
 
             if (player != null)
+                msg.Drawer[DrawLayer.Gameplay].Draw(behindUI, position: topLeft);
             {
-                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: topLeft, scale: new Vector2(healthbarSize,1));
-                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: new Vector2(topLeft.X, topLeft.Y + healthBar.Height), scale: new Vector2(manabarSize,1));
+                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthBarPos, scale: new Vector2(healthbarSize,1));
+                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize,1));
             }
             
+            msg.Drawer[DrawLayer.AboveUI].Draw(aboveUI, position: topLeft);
             msg.Drawer[DrawLayer.UI].Draw(spellOneSprite, position: new Vector2((bottomMiddle.X - (offset + halfOffset)) - (spellOneSprite.Width * 2), bottomMiddle.Y));
             msg.Drawer[DrawLayer.UI].Draw(spellTwoSprite, position: new Vector2((bottomMiddle.X - halfOffset) - (spellOneSprite.Width), bottomMiddle.Y));
             msg.Drawer[DrawLayer.UI].Draw(spellThreeSprite, position: new Vector2((bottomMiddle.X + halfOffset), bottomMiddle.Y));
