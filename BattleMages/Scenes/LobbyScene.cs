@@ -13,8 +13,10 @@ namespace BattleMages
     public class LobbyScene : Scene
     {
         private Texture2D lobbyTexture;
+        private Texture2D shopKeeperTexture;
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
+        private Vector2 shopKeeperPosition;
         private KeyboardState keyState;
 
         public LobbyScene()
@@ -24,8 +26,10 @@ namespace BattleMages
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
+            shopKeeperPosition = new Vector2(114, -30);
             lobbyTexture = content.Load<Texture2D>("Backgrounds/Tavern");
             lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
+            shopKeeperTexture = content.Load<Texture2D>("Images/WZRD");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 90 + 8), new Vector2(320, 16)));
@@ -42,6 +46,16 @@ namespace BattleMages
                 GameWorld.SoundManager.SoundVolume = 1f;
             }));
             AddObject(doorTriggerGameObject);
+
+
+            GameObject ShopKeeper = new GameObject(shopKeeperPosition);
+            ShopKeeper.AddComponent(new Collider(ShopKeeper, new Vector2(75, 65)));
+            ShopKeeper.AddComponent(new Interactable(ShopKeeper, () =>
+            {
+                GameWorld.ChangeScene(new ShopScene());
+            }));
+            AddObject(ShopKeeper);
+
 
             //Sets the sound volume for this scene
             GameWorld.SoundManager.AmbienceVolume = 0.02f;
@@ -76,6 +90,7 @@ namespace BattleMages
         {
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
             drawer[DrawLayer.Foreground].Draw(lobbyTextureForeground, lobbyTexturePosition, Color.White);
+            drawer[DrawLayer.Gameplay].Draw(shopKeeperTexture, shopKeeperPosition, Color.White);
 
             base.Draw(drawer);
         }
