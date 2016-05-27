@@ -12,13 +12,11 @@ namespace BattleMages
 {
     public class GameScene : Scene
     {
-        private int waveCounter;
         private KeyboardState keyState;
-        private GameObject waveController;
+        private GameObject goWaveController;
 
         public GameScene()
         {
-            waveCounter = 1;
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer("Images/BMarena"));
@@ -38,10 +36,15 @@ namespace BattleMages
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI());
             AddObject(ingameUI);
+            string challenge = "Normal";
 
-            waveController = new GameObject(Vector2.Zero);
-            waveController.AddComponent(new WaveController());
-            waveController.SendMessage(new UpdateMsg());
+            WaveController waveController = StaticData.challenges[challenge].MakeWaveController(challenge);
+
+            goWaveController = new GameObject(Vector2.Zero);
+
+            goWaveController.AddComponent(waveController);
+            goWaveController.SendMessage(new UpdateMsg());
+
             //Get all objects on the list before the first run of Update()
             base.Update();
         }
@@ -74,10 +77,8 @@ namespace BattleMages
 
             if (enemyCount == 0)
             {
-                waveController.GetComponent<WaveController>().NewWave(waveCounter);
-                waveCounter++;
+                goWaveController.GetComponent<WaveController>().UpdateWave();
             }
-
             base.Update();
         }
     }

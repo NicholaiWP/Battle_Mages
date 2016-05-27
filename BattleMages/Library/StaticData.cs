@@ -15,6 +15,7 @@ namespace BattleMages
     {
         private static AttributeRune[] attributeRunes;
         private static BaseRune[] baseRunes;
+        public static Dictionary<string, Challenge> challenges = new Dictionary<string, Challenge>();
 
         public static ReadOnlyCollection<BaseRune> BaseRunes
         {
@@ -86,6 +87,9 @@ namespace BattleMages
                 "frostShieldRune",
                 (p) => {return new FrostShield(p, true, 0); })
             };
+
+            challenges.Add("Normal", new Challenge(
+                (wm) => { return new WaveController(wm); }));
         }
 
         private static void DamageUpRune(Spell spell)
@@ -105,7 +109,6 @@ namespace BattleMages
 
         private static void CollideAbilityRune(Spell spell)
         {
-            
         }
     }
 }
