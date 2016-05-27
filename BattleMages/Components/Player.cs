@@ -51,19 +51,43 @@ namespace BattleMages
             collider = GameObject.GetComponent<Collider>();
             //TODO: Create animations here
             animator.CreateAnimation("WalkRight", new Animation(framesCount: 27, yPos: 0, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 60, offset: Vector2.Zero));
 
             animator.CreateAnimation("WalkLeft", new Animation(framesCount: 27, yPos: 32, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 60, offset: Vector2.Zero));
 
             animator.CreateAnimation("WalkDown", new Animation(framesCount: 14, yPos: 64, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
 
             animator.CreateAnimation("WalkUp", new Animation(framesCount: 14, yPos: 96, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
 
             animator.CreateAnimation("CastRight", new Animation(framesCount: 17, yPos: 128, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+
+            animator.CreateAnimation("CastLeft", new Animation(framesCount: 17, yPos: 160, xStartFrame: 0,
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+
+            animator.CreateAnimation("CastDown", new Animation(framesCount: 17, yPos: 192, xStartFrame: 0,
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+
+            animator.CreateAnimation("CastUp", new Animation(framesCount: 16, yPos: 224, xStartFrame: 0,
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+
+            animator.CreateAnimation("IdleFront", new Animation(framesCount: 1, yPos: 64, xStartFrame: 0,
+                width: 32, height: 32, fps: 1, offset: Vector2.Zero));
+
+            animator.CreateAnimation("IdleLeft", new Animation(framesCount: 1, yPos: 32, xStartFrame: 0,
+                width: 32, height: 32, fps: 1, offset: Vector2.Zero));
+
+            animator.CreateAnimation("IdleRight", new Animation(framesCount: 1, yPos: 0, xStartFrame: 0,
+                width: 32, height: 32, fps: 1, offset: Vector2.Zero));
+
+            animator.CreateAnimation("IdleUp", new Animation(framesCount: 1, yPos: 96, xStartFrame: 0,
+                width: 32, height: 32, fps: 1, offset: Vector2.Zero));
+
+            animator.CreateAnimation("Death", new Animation(framesCount: 23, yPos: 384, xStartFrame: 0,
+                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
         }
 
         private void Update(UpdateMsg msg)
@@ -169,6 +193,10 @@ namespace BattleMages
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
+            if (msg.AnimationName == "Death")
+            {
+                GameWorld.ChangeScene(new DeathScene());
+            }
         }
 
         public void TakeDamage(int points)
@@ -176,8 +204,8 @@ namespace BattleMages
             CurrentHealth -= points;
             if (CurrentHealth <= 0)
             {
-                GameWorld.Scene.RemoveObject(GameObject);
-                GameWorld.ChangeScene(new DeathScene());
+                animator.PlayAnimation("Death");
+                GameObject.SendMessage(new AnimationDoneMsg("Death"));
             }
         }
     }
