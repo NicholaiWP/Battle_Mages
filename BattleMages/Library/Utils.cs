@@ -69,5 +69,14 @@ namespace BattleMages
             float angleCw = angleTowardsTarget + MathHelper.ToRadians(rotationDegrees);
             return new Vector2((float)Math.Cos(angleCw), (float)Math.Sin(angleCw));
         }
+
+        public static bool ContainsSubstring(string haystack, string needle)
+        {
+            if (haystack == null)
+            {
+                return false;
+            }
+            return haystack.Substring(0, 4).Contains(needle);
+        }
     }
 }

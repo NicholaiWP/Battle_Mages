@@ -9,7 +9,7 @@ namespace BattleMages
 {
     public enum FacingDirection
     {
-        Left, Right, Back, Front
+        Left, Right, Up, Down
     }
 
     public class Character : Component
@@ -37,9 +37,12 @@ namespace BattleMages
         /// </summary>
         public Vector2 Velocity { get; private set; }
 
+        public FacingDirection FDirection { set { fDirection = value; } }
+
         public Character()
         {
             Listen<InitializeMsg>(Initialize);
+            fDirection = FacingDirection.Down;
         }
 
         private void Initialize(InitializeMsg msg)
@@ -51,10 +54,6 @@ namespace BattleMages
         {
             if (MoveDirection != Vector2.Zero)
                 MoveDirection.Normalize(); //Make sure MoveDirection is normalized
-
-            //TODO: Use this for setting the FacingDirection
-            //float angle = (float)Math.Atan2(MoveDirection.X, MoveDirection.Y);
-            //System.Diagnostics.Debug.WriteLine(angle);
 
             //Move velocity towards target velocity using MoveAccel
             Vector2 targetVelocity = MoveDirection * MoveSpeed;
@@ -102,6 +101,11 @@ namespace BattleMages
                 {
                     GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
                 }
+            }
+            else
+            {
+                if (GameObject.GetComponent<Player>() != null)
+                    GameObject.GetComponent<Animator>().PlayAnimation("Walk" + fDirection.ToString());
             }
 
             GameObject.Transform.Translate(translation);

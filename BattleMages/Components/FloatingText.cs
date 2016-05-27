@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BattleMages
 {
-    internal class FloatingText : Component
+    public class FloatingText : Component
     {
         private SpriteFont font;
         private string text;

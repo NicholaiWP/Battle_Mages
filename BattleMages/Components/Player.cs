@@ -22,11 +22,11 @@ namespace BattleMages
         private KeyboardState oldKbState;
 
         private float[] cooldownTimers = new float[SpellInfo.AttributeRuneSlotCount];
-
+        private bool canMove;
         public const int MaxHealth = 100;
         public const float MaxMana = 100;
         private float rechargeDelayTimer = 0;
-
+        private bool deathAnimationStarted;
         public const float ManaRechargeSpeed = 30;
         public const float ManaRechargeDelay = 1;
 
@@ -35,8 +35,9 @@ namespace BattleMages
 
         public Player(bool canUseSpells)
         {
+            canMove = true;
             this.canUseSpells = canUseSpells;
-
+            deathAnimationStarted = false;
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
@@ -50,17 +51,17 @@ namespace BattleMages
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
             //TODO: Create animations here
-            animator.CreateAnimation("WalkRight", new Animation(framesCount: 27, yPos: 0, xStartFrame: 0,
-                width: 32, height: 32, fps: 60, offset: Vector2.Zero));
+            animator.CreateAnimation("WalkRight", new Animation(framesCount: 25, yPos: 0, xStartFrame: 0,
+                width: 32, height: 32, fps: 25, offset: Vector2.Zero));
 
-            animator.CreateAnimation("WalkLeft", new Animation(framesCount: 27, yPos: 32, xStartFrame: 0,
-                width: 32, height: 32, fps: 60, offset: Vector2.Zero));
+            animator.CreateAnimation("WalkLeft", new Animation(framesCount: 25, yPos: 32, xStartFrame: 0,
+                width: 32, height: 32, fps: 25, offset: Vector2.Zero));
 
             animator.CreateAnimation("WalkDown", new Animation(framesCount: 14, yPos: 64, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 14, offset: Vector2.Zero));
 
             animator.CreateAnimation("WalkUp", new Animation(framesCount: 14, yPos: 96, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 14, offset: Vector2.Zero));
 
             animator.CreateAnimation("CastRight", new Animation(framesCount: 17, yPos: 128, xStartFrame: 0,
                 width: 32, height: 32, fps: 40, offset: Vector2.Zero));
@@ -74,7 +75,7 @@ namespace BattleMages
             animator.CreateAnimation("CastUp", new Animation(framesCount: 16, yPos: 224, xStartFrame: 0,
                 width: 32, height: 32, fps: 40, offset: Vector2.Zero));
 
-            animator.CreateAnimation("IdleFront", new Animation(framesCount: 1, yPos: 64, xStartFrame: 0,
+            animator.CreateAnimation("IdleDown", new Animation(framesCount: 1, yPos: 64, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
 
             animator.CreateAnimation("IdleLeft", new Animation(framesCount: 1, yPos: 32, xStartFrame: 0,
@@ -87,7 +88,7 @@ namespace BattleMages
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
 
             animator.CreateAnimation("Death", new Animation(framesCount: 23, yPos: 384, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 12, offset: Vector2.Zero));
         }
 
         private void Update(UpdateMsg msg)
@@ -129,7 +130,31 @@ namespace BattleMages
                 CurrentMana -= spellComponent.ManaCost;
                 cooldownTimers[selectedSpell] = spellComponent.CooldownTime;
                 rechargeDelayTimer = ManaRechargeDelay;
-                animator.PlayAnimation("CastRight");
+
+                Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
+                float angle = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
+                float degrees = MathHelper.ToDegrees(angle);
+
+                if (degrees >= -45 && degrees <= 45)
+                {
+                    animator.PlayAnimation("CastRight");
+                    character.FDirection = FacingDirection.Right;
+                }
+                else if (degrees >= -135 && degrees <= -45)
+                {
+                    animator.PlayAnimation("CastUp");
+                    character.FDirection = FacingDirection.Up;
+                }
+                else if (degrees >= 135 || degrees <= -135)
+                {
+                    animator.PlayAnimation("CastLeft");
+                    character.FDirection = FacingDirection.Left;
+                }
+                else if (degrees >= 45 && degrees <= 135)
+                {
+                    animator.PlayAnimation("CastDown");
+                    character.FDirection = FacingDirection.Down;
+                }
             }
 
             //Spellbook opening
@@ -148,8 +173,11 @@ namespace BattleMages
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell4)))
                 selectedSpell = 3;
 
-            //Movement
-            Move(kbState);
+            if (canMove)
+            {
+                //Movement
+                Move(kbState);
+            }
 
             oldKbState = kbState;
         }
@@ -160,22 +188,22 @@ namespace BattleMages
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
             {
                 movement.Y -= 1;
-                animator.PlayAnimation("WalkUp");
+                character.FDirection = FacingDirection.Up;
             }
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
             {
                 movement.Y += 1;
-                animator.PlayAnimation("WalkDown");
+                character.FDirection = FacingDirection.Down;
             }
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
             {
                 movement.X -= 1;
-                animator.PlayAnimation("WalkLeft");
+                character.FDirection = FacingDirection.Left;
             }
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
             {
                 movement.X += 1;
-                animator.PlayAnimation("WalkRight");
+                character.FDirection = FacingDirection.Right;
             }
             character.MoveDirection = movement;
 
@@ -192,6 +220,10 @@ namespace BattleMages
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
+            if (Utils.ContainsSubstring(msg.AnimationName, "Cast"))
+            {
+                animator.PlayAnimation("WalkRight");
+            }
             if (msg.AnimationName == "Death")
             {
                 GameWorld.ChangeScene(new DeathScene());
@@ -201,10 +233,12 @@ namespace BattleMages
         public void TakeDamage(int points)
         {
             CurrentHealth -= points;
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0 && !deathAnimationStarted)
             {
+                canMove = false;
+                canUseSpells = false;
+                deathAnimationStarted = true;
                 animator.PlayAnimation("Death");
-                GameObject.SendMessage(new AnimationDoneMsg("Death"));
             }
         }
     }
