@@ -13,7 +13,6 @@ namespace BattleMages
         //Fields
         private string spriteName;
 
-        private Color color = Color.White;
         private Rectangle rectangle;
         private Vector2 offset;
         private Animator animator;
@@ -26,6 +25,8 @@ namespace BattleMages
 
         public Vector2 Offset { get { return offset; } set { offset = value; } }
 
+        public float Opacity { get; set; } = 1;
+
         /// <summary>
         /// A constructor for the sprite renderer
         /// </summary>
@@ -33,10 +34,6 @@ namespace BattleMages
         /// <param name="spriteName"></param>
         public SpriteRenderer(string spriteName)
         {
-            if (spriteName == "CollisionTexture")
-            {
-                color = Color.Transparent;
-            }
             this.spriteName = spriteName;
 
             Listen<InitializeMsg>(Initialize);
@@ -55,6 +52,7 @@ namespace BattleMages
 
         private void Draw(DrawMsg msg)
         {
+            Color color = new Color(Opacity, Opacity, Opacity, Opacity);
             if (spriteName != "Player Images/playerSpriteSheet")
             {
                 msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
