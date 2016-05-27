@@ -116,6 +116,7 @@ namespace BattleMages
         protected override void LoadContent()
         {
             // Create a new Drawer, which can be used to draw textures.
+            StaticData.LoadContent();
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);
         }
