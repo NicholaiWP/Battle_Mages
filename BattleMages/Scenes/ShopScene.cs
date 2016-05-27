@@ -11,16 +11,24 @@ namespace BattleMages
 {
     public class ShopScene : Scene
     {
+        private bool C_Pressed = true;
         private Texture2D background;
+        private SpriteFont spriteFont;
+        private LobbyScene lobbyScene;
+        private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
         private Texture2D runeSprite;
         private SpriteFont font;
-        private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
-
         private Vector2 itemPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
         private Vector2[] shopItemPositions;
         private List<GameObject> runeList = new List<GameObject>();
 
         private Scene oldScene;
+
+        public ShopScene()
+        {
+            Update();
+
+        }
 
         public ShopScene(Scene oldScene)
         {
@@ -50,6 +58,23 @@ namespace BattleMages
             drawer[DrawLayer.UI].Draw(runeSprite, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 9, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 18));
 
             base.Draw(drawer);
+        }
+
+        public override void Update()
+        {
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.C))
+            {
+                if (C_Pressed)
+                    GameWorld.ChangeScene(lobbyScene);
+            }
+            else
+            {
+                if (!C_Pressed)
+                    C_Pressed = false;
+            }
+
+            base.Update();
         }
 
     }
