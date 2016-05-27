@@ -62,7 +62,7 @@ namespace BattleMages
             baseRunes = new BaseRune[]
             {
                 new BaseRune("Fireball",
-                "A ball of fire",
+                "A ball of fire\nwith a chance of igniting\nthe enemy with fire",
                 "fireballRune",
                 (p) => { return new Fireball(p); }),
 
