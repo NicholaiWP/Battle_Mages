@@ -77,22 +77,29 @@ namespace BattleMages
         /// <param name="animationName"></param>
         public void PlayAnimation(string animationName)
         {
-            //Checks if it’s a new animation
-            if (this.animationName != animationName)
+            if (this.animationName == "Death" || Utils.ContainsSubstring(this.animationName, "Cast")
+                && Utils.ContainsSubstring(animationName, "Idle"))
             {
-                //Sets the rectangles
-                this.frames = animations[animationName].Frames;
-                //Resets the rectangle
-                this.spriteRenderer.Rectangle = frames[0];
-                //Sets the offset
-                this.spriteRenderer.Offset = animations[animationName].Offset;
-                //Sets the animation name
-                this.animationName = animationName;
-                //Sets the fps
-                this.fps = animations[animationName].Fps;
-                //Resets the animation
-                timeElapsed = 0;
-                currentIndex = 0;
+            }
+            else
+            {
+                //Checks if it’s a new animation
+                if (this.animationName != animationName)
+                {
+                    //Sets the rectangles
+                    this.frames = animations[animationName].Frames;
+                    //Resets the rectangle
+                    this.spriteRenderer.Rectangle = frames[0];
+                    //Sets the offset
+                    this.spriteRenderer.Offset = animations[animationName].Offset;
+                    //Sets the animation name
+                    this.animationName = animationName;
+                    //Sets the fps
+                    this.fps = animations[animationName].Fps;
+                    //Resets the animation
+                    timeElapsed = 0;
+                    currentIndex = 0;
+                }
             }
         }
     }

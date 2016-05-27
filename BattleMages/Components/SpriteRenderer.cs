@@ -16,8 +16,10 @@ namespace BattleMages
         private Color color = Color.White;
         private Rectangle rectangle;
         private Vector2 offset;
+        private Vector2 position;
         private Animator animator;
         private Texture2D sprite;
+        private bool usingSpritesheet;
 
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
@@ -31,14 +33,10 @@ namespace BattleMages
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="spriteName"></param>
-        public SpriteRenderer(string spriteName)
+        public SpriteRenderer(string spriteName, bool usingSpritesheet = false)
         {
-            if (spriteName == "CollisionTexture")
-            {
-                color = Color.Transparent;
-            }
             this.spriteName = spriteName;
-
+            this.usingSpritesheet = usingSpritesheet;
             Listen<InitializeMsg>(Initialize);
             Listen<DrawMsg>(Draw);
         }
@@ -47,34 +45,20 @@ namespace BattleMages
         {
             animator = GameObject.GetComponent<Animator>();
             sprite = GameWorld.Load<Texture2D>(spriteName);
-            if (spriteName != "Player Images/playerSpriteSheet")
+            if (!usingSpritesheet)
                 rectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
-            else
-                rectangle = new Rectangle(0, 0, 32, 32);
         }
 
         private void Draw(DrawMsg msg)
         {
-            if (spriteName != "Player Images/playerSpriteSheet")
-            {
-                msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
-                    position: GameObject.Transform.Position - new Vector2(sprite.Width / 2, sprite.Height / 2) + offset,
-                    sourceRectangle: rectangle,
-                    origin: Vector2.Zero,
-                    rotation: 0f,
-                    color: color,
-                    effects: SpriteEffects.None);
-            }
-            else
-            {
-                msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
-                   position: GameObject.Transform.Position - new Vector2(32 / 2, 32 / 2) + offset,
-                   sourceRectangle: rectangle,
-                   origin: Vector2.Zero,
-                   rotation: 0f,
-                   color: color,
-                   effects: SpriteEffects.None);
-            }
+            msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
+                position: GameObject.Transform.Position -
+                new Vector2(rectangle.Width / 2, rectangle.Height / 2) + offset,
+                sourceRectangle: rectangle,
+                origin: Vector2.Zero,
+                rotation: 0f,
+                color: color,
+                effects: SpriteEffects.None);
         }
     }
 }
