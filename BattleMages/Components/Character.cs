@@ -14,7 +14,7 @@ namespace BattleMages
 
     public class Character : Component
     {
-        //private FacingDirection fDirection;
+        private FacingDirection fDirection;
         private Collider collider;
 
         /// <summary>
@@ -55,15 +55,6 @@ namespace BattleMages
             //TODO: Use this for setting the FacingDirection
             //float angle = (float)Math.Atan2(MoveDirection.X, MoveDirection.Y);
             //System.Diagnostics.Debug.WriteLine(angle);
-
-            /*if (Right)
-                fDirection = FacingDirection.Right;
-            else if (Left)
-                fDirection = FacingDirection.Left;
-            else if (Up)
-                fDirection = FacingDirection.Back;
-            else if (Down)
-                fDirection = FacingDirection.Front;*/
 
             //Move velocity towards target velocity using MoveAccel
             Vector2 targetVelocity = MoveDirection * MoveSpeed;
@@ -107,9 +98,9 @@ namespace BattleMages
 
             if (translation == Vector2.Zero)
             {
-                if (GameObject.GetComponent<Animator>() != null)
+                if (GameObject.GetComponent<Animator>() != null && GameObject.GetComponent<Player>() != null)
                 {
-                    //GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
+                    GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
                 }
             }
 
