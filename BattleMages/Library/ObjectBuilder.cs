@@ -26,10 +26,6 @@ namespace BattleMages
 
             gameObject.AddComponent(new Animator());
             gameObject.AddComponent(new Character() { MoveSpeed = 40 });
-
-            //Using the activator to create a new instance of the same type as the enemy which is given as a
-            //parameter. The activator then gives the enemy a gameobject.
-
             gameObject.AddComponent(enemy);
             gameObject.AddComponent(new Collider(new Vector2(32, 32)));
             return gameObject;

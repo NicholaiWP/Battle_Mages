@@ -42,6 +42,7 @@ namespace BattleMages
 
         protected Enemy()
         {
+            Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
@@ -54,6 +55,11 @@ namespace BattleMages
             {
                 GameWorld.Scene.RemoveObject(GameObject);
             }
+        }
+
+        protected virtual void PreInitialize(PreInitializeMsg msg)
+        {
+
         }
 
         protected virtual void Initialize(InitializeMsg msg)

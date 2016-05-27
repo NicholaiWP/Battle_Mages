@@ -43,17 +43,17 @@ namespace BattleMages
 
             collider = new Collider(new Vector2(sprite.Width, sprite.Height));
 
-            Listen<InitializeMsg>(Initialize);
+            Listen<PreInitializeMsg>(PreInitialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
         }
 
-        private void Initialize(InitializeMsg message)
+        private void PreInitialize(PreInitializeMsg msg)
         {
             GameObject.AddComponent(collider);
         }
 
-        private void Update(UpdateMsg message)
+        private void Update(UpdateMsg msg)
         {
             //Spawn 2 other frostshields if told to
             if (spawnSubshards)

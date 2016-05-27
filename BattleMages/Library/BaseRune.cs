@@ -66,7 +66,7 @@ namespace BattleMages
         /// <param name="go">Game object to own the created component. The component should be added to this object using AddComponent().</param>
         /// <param name="creationParams">Arguments used by the created spell to alter behaviour.</param>
         /// <returns></returns>
-        public Spell CreateSpell(GameObject go, SpellCreationParams creationParams)
+        public Spell CreateSpell(SpellCreationParams creationParams)
         {
             return spawnFunc(creationParams);
         }

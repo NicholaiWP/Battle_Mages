@@ -31,15 +31,20 @@ namespace BattleMages
             collider = new Collider(new Vector2(sprite.Width, sprite.Height));
 
             timer = 4;
+            Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
         }
 
-        private void Initialize(InitializeMsg message)
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(collider);
+        }
+
+        private void Initialize(InitializeMsg msg)
         {
             GameObject.Transform.Position = p.AimTarget;
-            GameObject.AddComponent(collider);
         }
 
         private void Update(UpdateMsg msg)

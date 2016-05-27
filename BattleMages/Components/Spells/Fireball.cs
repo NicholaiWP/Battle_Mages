@@ -29,17 +29,22 @@ namespace BattleMages
             GameWorld.SoundManager.PlaySound("fireball");
             GameWorld.SoundManager.SoundVolume = 0.9f;
 
+            Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
         }
 
-        private void Initialize(InitializeMsg message)
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(collider);
+        }
+
+        private void Initialize(InitializeMsg msg)
         {
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 150;
-            GameObject.AddComponent(collider);
         }
 
         private void Draw(DrawMsg msg)

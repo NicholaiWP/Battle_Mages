@@ -18,10 +18,15 @@ namespace BattleMages
             attackRange = 25;
         }
 
+        protected override void PreInitialize(PreInitializeMsg msg)
+        {
+            base.PreInitialize(msg);
+            GameObject.AddComponent(new SpriteRenderer("Enemy Images/slimeEnemy"));
+        }
+
         protected override void Initialize(InitializeMsg msg)
         {
             base.Initialize(msg);
-            GameObject.AddComponent(new SpriteRenderer("Enemy Images/slimeEnemy"));
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
         }

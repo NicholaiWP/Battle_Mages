@@ -84,8 +84,7 @@ namespace BattleMages
 
                 //Create spell object and add it to the world
                 GameObject spellObject = new GameObject(transform.Position);
-                Spell spellComponent = baseRune.CreateSpell(spellObject,
-                    new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
+                Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
                 spellObject.AddComponent(spellComponent);
                 GameWorld.Scene.AddObject(spellObject);
 
