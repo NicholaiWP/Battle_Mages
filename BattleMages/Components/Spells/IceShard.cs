@@ -13,6 +13,7 @@ namespace BattleMages
         private Vector2 velocity;
         private Vector2 diff;
         private Collider collider;
+        private SpriteRenderer spriteRenderer;
         private bool spawnSubshards;
         private SpellCreationParams p;
 
@@ -25,17 +26,17 @@ namespace BattleMages
             ManaCost = 20;
             ApplyAttributeRunes();
 
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
+            spriteRenderer = new SpriteRenderer("Spell Images/ice");
             collider = new Collider(new Vector2(8, 8));
 
             Listen<InitializeMsg>(Initialize);
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
         }
 
         private void PreInitialize(PreInitializeMsg msg)
         {
+            GameObject.AddComponent(spriteRenderer);
             GameObject.AddComponent(collider);
         }
 
@@ -44,11 +45,6 @@ namespace BattleMages
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
             velocity = diff * 100f;
-        }
-
-        private void Draw(DrawMsg msg)
-        {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
         }
 
         private void Update(UpdateMsg msg)

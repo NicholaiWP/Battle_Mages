@@ -38,7 +38,7 @@ namespace BattleMages
             AddObject(ingameUI);
             string challenge = "Normal";
 
-            WaveController waveController = StaticData.challenges[challenge].MakeWaveController(challenge);
+            WaveController waveController = StaticData.challenges[challenge].MakeWaveController();
 
             goWaveController = new GameObject(Vector2.Zero);
 
