@@ -83,6 +83,7 @@ namespace BattleMages
             camera = new Camera2D();
             state = new SavedState();
             currentScene = new MenuScene();
+            state.SpellBook.Add(new PlayerSpell(0, new[] { 0, 0, 0, 0 }));
 
             base.Initialize();
         }
@@ -145,6 +146,7 @@ namespace BattleMages
             }
             if (Keyboard.GetState().IsKeyDown(Keys.O))
             {
+                state.CreateDatabaseFile();
                 state.Save();
             }
             currentScene.Update();
