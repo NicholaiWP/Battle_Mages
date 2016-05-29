@@ -55,14 +55,15 @@ namespace BattleMages
         {
             connection.Open();
 
-            foreach (PlayerSpell spell in spellBook)
+            for (int i = 0; i < spellBook.Count; i++)
             {
-                using (SQLiteCommand command = new SQLiteCommand(@"Insert into SpellBook Values(null, @spellId)",
+                using (SQLiteCommand command = new SQLiteCommand("",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@SpellId", spell.SpellId);
-                    command.ExecuteNonQuery();
                 }
+            }
+            foreach (PlayerSpell spell in spellBook)
+            {
                 using (SQLiteCommand command = new SQLiteCommand(@"Select Id from SpellBook where spellId like @SpellId",
                     connection))
                 {
