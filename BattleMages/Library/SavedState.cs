@@ -22,57 +22,58 @@ namespace BattleMages
         public List<PlayerSpell> SpellBook { get { return spellBook; } }
         public List<PlayerSpell> SpellBar { get { return spellBar; } }
 
-        public void Save()
+        public void CreateDatabaseFile()
         {
-            if (File.Exists(databaseFileName))
+            if (!File.Exists(databaseFileName))
             {
-                try
+                SQLiteConnection.CreateFile(databaseFileName);
+
+                connection.Open();
+
+                using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(Id integer primary key, spellId int)",
+                    connection))
                 {
-                    File.Delete(databaseFileName);
+                    command.ExecuteNonQuery();
                 }
-                catch (IOException)
+
+                using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS Runes(Id integer primary key,RuneId integer, SBId integer REFERENCES SpellBook(Id))",
+                    connection))
                 {
-                    throw;
+                    command.ExecuteNonQuery();
                 }
+                using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(Id integer primary key, SBId integer REFERENCES SpellBook(Id))",
+                    connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
             }
-            SQLiteConnection.CreateFile(databaseFileName);
-            CreateTables();
-            InsertToTables();
         }
 
-        private void CreateTables()
+        public void Save()
         {
             connection.Open();
 
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(Id integer primary key, spellId int)",
-                connection))
+            foreach (PlayerSpell spell in spellBook)
             {
-                command.ExecuteNonQuery();
+                using (SQLiteCommand command = new SQLiteCommand(@"Select Id from SpellBook where spellId like @SpellId"))
+                {
+                    command.Parameters.AddWithValue("@SpellId", spell.SpellId);
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        int SBId = reader.GetInt32(reader.GetOrdinal("Id"));
+                    }
+                }
             }
-
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS Runes(RuneId integer, SBId integer REFERENCES SpellBook(Id))",
-                connection))
-            {
-                command.ExecuteNonQuery();
-            }
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBar(SpellBarId integer primary key, SBId integer REFERENCES SpellBook(Id))",
-                connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS ChallengesCompleted(challengeId int)",
-                connection))
-            {
-                command.ExecuteNonQuery();
-            }
-            connection.Close();
         }
 
-        private void InsertToTables()
+        private void InsertAndUpdate()
         {
             connection.Open();
             int sbPrimaryId = 1;
+
             foreach (PlayerSpell spell in spellBook)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Insert into SpellBook Values(null, @spellId)",
@@ -119,7 +120,7 @@ namespace BattleMages
                     SQLiteDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        loadSpellIds.Add(reader.GetInt32(0));
+                        loadSpellIds.Add(reader.GetInt32(reader.GetOrdinal("")));
                     }
                     reader.Close();
                 }

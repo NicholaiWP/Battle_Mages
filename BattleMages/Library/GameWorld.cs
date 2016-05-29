@@ -145,7 +145,7 @@ namespace BattleMages
             }
             if (Keyboard.GetState().IsKeyDown(Keys.O))
             {
-                state.Load();
+                state.Save();
             }
             currentScene.Update();
 
