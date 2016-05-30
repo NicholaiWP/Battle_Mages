@@ -71,6 +71,7 @@ namespace BattleMages
 
             if (chance <= 25) // probability of 25%
             {
+                GameWorld.SoundManager.PlaySound("BurnSound");
                 burnDmg = burnPoints;
                 burned = true;
                 burnDuration = 5;

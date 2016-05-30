@@ -11,7 +11,7 @@ namespace BattleMages
         public Slime()
         {
             health = 75;
-            damage = 10;
+            damage = 15;
             cooldownTimer = 1;
             attackSpeed = 0;
             targetingRange = 400;

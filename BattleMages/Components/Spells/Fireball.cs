@@ -19,8 +19,8 @@ namespace BattleMages
         {
             this.p = p;
             Damage = 15;
-            CooldownTime = 0.8f;
-            ManaCost = 15;
+            CooldownTime = 0.7f;
+            ManaCost = 12;
             ApplyAttributeRunes();
             spriteRenderer = new SpriteRenderer("Spell Images/fireball");
             collider = new Collider(new Vector2(8, 8));
