@@ -15,22 +15,23 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
-
         public const int GameHeight = 180;
 
         //Fields
-        private GraphicsDeviceManager graphics;
 
         private Drawer drawer;
-        private Scene currentScene;
+
+        //Subsystems
+        private Scene scene;
         private PlayerControls playerControls;
         private SoundManager soundManager;
         private Cursor cursor;
         private Camera2D camera;
         private SavedState state;
         private float deltaTime;
-        private static GameWorld instance;
+        private GraphicsDeviceManager graphics;
 
+        public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
         public static Cursor Cursor { get { return Instance.cursor; } }
@@ -38,11 +39,14 @@ namespace BattleMages
         public static SavedState State { get { return Instance.state; } }
         public static float DeltaTime { get { return Instance.deltaTime; } }
         public static GraphicsDeviceManager Graphics { get { return Instance.graphics; } }
-        public static Scene Scene { get { return Instance.currentScene; } }
+
+        //Misc properties
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public Vector2 ScalingVector { get; set; }
 
+        //Singleton pattern
+        private static GameWorld instance;
         public static GameWorld Instance
         {
             get
@@ -90,7 +94,7 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
-            currentScene = new MenuScene();
+            scene = new MenuScene();
             drawer = new Drawer(GraphicsDevice);
 
             //Create 4 test spell for both the bar and the book
@@ -133,7 +137,7 @@ namespace BattleMages
 
         public static void ChangeScene(Scene targetScene)
         {
-            Instance.currentScene = targetScene;
+            Instance.scene = targetScene;
         }
 
         /// <summary>
@@ -145,17 +149,17 @@ namespace BattleMages
         {
             cursor.Update();
 
-            if (currentScene is MenuScene || currentScene is PauseScene || currentScene is SettingsScene || currentScene is SpellbookScene)
+            if (scene is MenuScene || scene is PauseScene || scene is SettingsScene || scene is SpellbookScene)
             {
                 SoundManager.PlayMusic("HubMusic");
                 SoundManager.StopSound("AmbienceSound");
             }
-            if (currentScene is LobbyScene || currentScene is HallwayScene)
+            if (scene is LobbyScene || scene is HallwayScene)
             {
                 SoundManager.PlayMusic("HubMusic");
                 SoundManager.PlaySound("AmbienceSound");
             }
-            if (currentScene is GameScene)
+            if (scene is GameScene)
             {
                 SoundManager.PlayMusic("CombatMusic");
                 SoundManager.PlaySound("AmbienceSound");
@@ -169,7 +173,7 @@ namespace BattleMages
                 Cursor.CanClick = true;
             }
 
-            currentScene.Update();
+            scene.Update();
 
             base.Update(gameTime);
         }
@@ -185,7 +189,7 @@ namespace BattleMages
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
 
-            currentScene.Draw(drawer);
+            scene.Draw(drawer);
             cursor.Draw(drawer[DrawLayer.Cursor]);
 
             drawer.EndBatches();
