@@ -80,7 +80,6 @@ namespace BattleMages
 
         protected virtual void PreInitialize(PreInitializeMsg msg)
         {
-
         }
 
         protected virtual void Initialize(InitializeMsg msg)
@@ -106,7 +105,7 @@ namespace BattleMages
         {
             if (burned)
             {
-                if(burnDamageTimer<= 0)
+                if (burnDamageTimer <= 0)
                 {
                     TakeDamage(burnDmg);
                     burnDamageTimer = 0.5f;
@@ -115,7 +114,7 @@ namespace BattleMages
                 {
                     burnDamageTimer -= GameWorld.DeltaTime;
                 }
-                if(burnDuration <= 0)
+                if (burnDuration <= 0)
                 {
                     burned = false;
                 }
