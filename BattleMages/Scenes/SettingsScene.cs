@@ -19,6 +19,7 @@ namespace BattleMages
         private string currentResolutionString;
         private GraphicsDeviceManager graphics;
         private CursorLockToken keybindSwappingLock;
+        private SpriteFont fontBM;
 
         public int ElementAtNumber { get; set; }
         public PlayerBind ChosenKeyToRebind { get; set; }

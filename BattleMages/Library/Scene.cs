@@ -13,10 +13,6 @@ namespace BattleMages
         private List<GameObject> activeObjects = new List<GameObject>();
         private List<GameObject> objectsToAdd = new List<GameObject>();
         private List<GameObject> objectsToRemove = new List<GameObject>();
-        protected bool combatState;
-        protected SpriteFont fontBM;
-
-        public bool CombatState;
 
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
