@@ -161,6 +161,12 @@ namespace BattleMages
                 SoundManager.PlaySound("AmbienceSound");
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                state.CreateDatabaseFile();
+                state.Save();
+            }
+
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             var s = Mouse.GetState();
