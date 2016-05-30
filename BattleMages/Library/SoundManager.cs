@@ -46,6 +46,7 @@ namespace BattleMages
             sounds.Add("ElectricitySound", content.Load<SoundEffect>("Sounds/ElectricitySound").CreateInstance());
             sounds.Add("Fireball", content.Load<SoundEffect>("Sounds/Fireball").CreateInstance());
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
+            sounds.Add("BurnSound", content.Load<SoundEffect>("Sounds/BurnSound").CreateInstance());
 
             music.Add("HubMusic", content.Load<Song>("Sounds/HubMusic"));
             music.Add("CombatMusic", content.Load<Song>("Sounds/CombatMusic"));

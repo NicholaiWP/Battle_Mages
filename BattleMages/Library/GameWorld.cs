@@ -103,10 +103,10 @@ namespace BattleMages
                 if (i == 3) continue;
                 SpellInfo ps = new SpellInfo();
                 ps.SetBaseRune(i);
-                for (int j = 0; j < i; j++)
-                {
-                    ps.SetAttributeRune(j, 0);
-                }
+                //for (int j = 0; j < i; j++)
+                //{
+                //    ps.SetAttributeRune(j, 0);
+                //}
                 state.SpellBook.Add(ps);
                 state.SpellBar.Add(state.SpellBook.IndexOf(ps));
             }

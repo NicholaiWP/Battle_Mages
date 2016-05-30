@@ -11,7 +11,7 @@ namespace BattleMages
         public Orb()
         {
             health = 100;
-            damage = 15;
+            damage = 10;
             cooldownTimer = 2;
             attackSpeed = 0;
             targetingRange = 750;
