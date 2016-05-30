@@ -62,6 +62,13 @@ namespace BattleMages
             int attrRuneID = 1;
             connection.Open();
 
+            using (SQLiteCommand command = new SQLiteCommand(@"Delete from SpellBook where ID > @ID",
+                connection))
+            {
+                command.Parameters.AddWithValue("@ID", spellBook.Count);
+                command.ExecuteNonQuery();
+            }
+
             for (int i = 0; i < spellBook.Count; i++)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID like @ID",
