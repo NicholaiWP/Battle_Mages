@@ -68,6 +68,7 @@ namespace BattleMages
                     connection))
                 {
                     command.Parameters.AddWithValue("@ID", i + 1);
+
                     SQLiteDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
