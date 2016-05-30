@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -18,9 +18,9 @@ namespace BattleMages
         private List<DisplayMode> resolutions = new List<DisplayMode>();
         private string currentResolutionString;
         private GraphicsDeviceManager graphics;
+        private CursorLockToken keybindSwappingLock;
 
         public int ElementAtNumber { get; set; }
-        public bool SwappingKeyBind { get; set; } = false;
         public PlayerBind ChosenKeyToRebind { get; set; }
 
         public SettingsScene()
@@ -39,16 +39,16 @@ namespace BattleMages
              settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindLeft));
              settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindRight));*/
             //Keybind up
-            /*var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
+            var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
                 keyBindUpSpr,
                 keyBindUpSpr,
                 () =>
                 {
-                    SwappingKeyBind = true;
+                    keybindSwappingLock = GameWorld.Cursor.Lock();
                     ChosenKeyToRebind = PlayerBind.Up;
-                }));*/
+                }));
             //Res down
             var resDown = content.Load<Texture2D>("Images/ResDown");
             AddObject(ObjectBuilder.BuildButton(
@@ -93,9 +93,8 @@ namespace BattleMages
 
         public override void Update()
         {
-            if (SwappingKeyBind)
+            if (keybindSwappingLock != null)
             {
-                GameWorld.Cursor.CanClick = false;
                 ReadNewKey();
             }
             if (ElementAtNumber >= resolutions.Count) ElementAtNumber = 0;
@@ -132,8 +131,8 @@ namespace BattleMages
             if (keyPressed.Length == 1)
             {
                 GameWorld.PlayerControls.ChangeBinding(ChosenKeyToRebind, keyPressed[0]);
-                SwappingKeyBind = false;
-                GameWorld.Cursor.CanClick = true;
+                keybindSwappingLock.Unlock();
+                keybindSwappingLock = null;
             }
         }
 

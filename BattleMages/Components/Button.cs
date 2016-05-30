@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -67,16 +67,12 @@ namespace BattleMages
             {
                 hovering = true;
 
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    GameWorld.Cursor.CanClick)
+                if (GameWorld.Cursor.LeftButtonPressed)
                 {
-                    GameWorld.Cursor.CanClick = false;
-                    //Invoke the onClick delegate when the button is clicked
-                    onClick();
+                    onClick?.Invoke();
                 }
-                else if (Mouse.GetState().RightButton == ButtonState.Pressed && GameWorld.Cursor.CanClick)
+                else if (GameWorld.Cursor.RightButtonPressed)
                 {
-                    GameWorld.Cursor.CanClick = false;
                     onRightClick?.Invoke();
                 }
             }

@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace BattleMages
 {
@@ -15,6 +15,7 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
+
         public const int GameHeight = 180;
 
         //Fields
@@ -23,6 +24,7 @@ namespace BattleMages
 
         //Subsystems
         private Scene scene;
+
         private PlayerControls playerControls;
         private SoundManager soundManager;
         private Cursor cursor;
@@ -42,11 +44,13 @@ namespace BattleMages
 
         //Misc properties
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
+
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public Vector2 ScalingVector { get; set; }
 
         //Singleton pattern
         private static GameWorld instance;
+
         public static GameWorld Instance
         {
             get
@@ -166,12 +170,6 @@ namespace BattleMages
             }
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            var s = Mouse.GetState();
-            if (!Cursor.CanClick && s.LeftButton == ButtonState.Released && s.RightButton == ButtonState.Released)
-            {
-                Cursor.CanClick = true;
-            }
 
             scene.Update();
 
