@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -42,6 +42,18 @@ namespace BattleMages
                GameWorld.SoundManager.SoundVolume = 1f;
            }));
             AddObject(doorTriggerGameObject);
+
+            //Door guard
+            GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
+            doorGuardObj.AddComponent(new SpriteRenderer("Images/GdMageBM"));
+            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
+            doorGuardObj.AddComponent(new Interactable(() =>
+            {
+                GameObject dialougeObj = new GameObject(Vector2.Zero);
+                dialougeObj.AddComponent(new DialougeBox("hurr durr gurr hurr durr gurr hurr durr gurr hurr durr gurr hurr durr gurr hurr durr gurr hurr durr gurr hurr durr gurr hurr durrdurr gurr hurr durr jurr jurr jurr jurr jurr r"));
+                AddObject(dialougeObj);
+            }));
+            AddObject(doorGuardObj);
 
             //Sets the sound volume for this scene
             GameWorld.SoundManager.AmbienceVolume = 0.02f;
