@@ -15,6 +15,7 @@ namespace BattleMages
     {
         private static AttributeRune[] attributeRunes;
         private static BaseRune[] baseRunes;
+        public static Dictionary<string, Challenge> challenges = new Dictionary<string, Challenge>();
 
         public static ReadOnlyCollection<BaseRune> BaseRunes
         {
@@ -86,15 +87,37 @@ namespace BattleMages
                 "frostShieldRune",
                 (p) => {return new FrostShield(p, true, 0); })
             };
+
+            challenges.Add("Normal", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(25,30),
+                new Vector2(-20, -30), new Vector2(120, 90)},
+               new List<Enemy> { new Golem(), new Orb(), new Slime() }),
+                new Wave(new List<Vector2> { new Vector2(300, 0),
+                new Vector2(0, 300),
+                    new Vector2(-300, 0), new Vector2(0, -300) },
+                    new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem()}),
+            new Wave(new List<Vector2> { new Vector2(200,0), new Vector2(200, 10), new Vector2(200, -10),
+                new Vector2(200, 20), new Vector2(200,-20), new Vector2(210,0),
+                new Vector2(190,0), new Vector2(220,0), new Vector2(180,0)},
+            new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Orb(),
+            new Orb(),new Orb(),new Orb(),new Orb() })}));
+
+            challenges.Add("Hard", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+            new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)}, new List<Enemy> {new Golem(),
+            new Golem(), new Orb(), new Orb()}),
+                new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
+                    new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+                new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Golem(), new Golem(),
+                new Golem(), new Golem(), new Slime(), new Slime(), new Slime(), new Slime()})}));
         }
 
         public static void LoadContent()
         {
-            foreach(AttributeRune attrRune in attributeRunes)
+            foreach (AttributeRune attrRune in attributeRunes)
             {
                 attrRune.LoadContent();
             }
-            foreach(BaseRune baseRune in baseRunes)
+            foreach (BaseRune baseRune in baseRunes)
             {
                 baseRune.LoadContent();
             }
@@ -117,7 +140,6 @@ namespace BattleMages
 
         private static void CollideAbilityRune(Spell spell)
         {
-            
         }
     }
 }

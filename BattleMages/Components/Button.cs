@@ -14,7 +14,6 @@ namespace BattleMages
         private bool hovering;
         private Texture2D normalTex;
         private Texture2D hoverTex;
-        private Texture2D[] sprites = new Texture2D[2];
         private Rectangle rectangle;
 
         private ClickDelegate onClick;

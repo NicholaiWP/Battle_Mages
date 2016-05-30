@@ -12,13 +12,11 @@ namespace BattleMages
 {
     public class GameScene : Scene
     {
-        private int waveCounter;
         private KeyboardState keyState;
-        private GameObject waveController;
+        private GameObject goWaveController;
 
-        public GameScene()
+        public GameScene(string challengeName)
         {
-            waveCounter = 1;
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
             ellipse.AddComponent(new SpriteRenderer("Images/BMarena"));
@@ -39,16 +37,21 @@ namespace BattleMages
             ingameUI.AddComponent(new IngameUI());
             AddObject(ingameUI);
 
-            waveController = new GameObject(Vector2.Zero);
-            waveController.AddComponent(new WaveController());
-            waveController.SendMessage(new UpdateMsg());
+            if (StaticData.challenges.ContainsKey(challengeName))
+            {
+                WaveController waveController = StaticData.challenges[challengeName].MakeWaveController();
+                goWaveController = new GameObject(Vector2.Zero);
+                goWaveController.AddComponent(waveController);
+                goWaveController.SendMessage(new UpdateMsg());
+            }
+
             //Get all objects on the list before the first run of Update()
             base.Update();
         }
 
         public override void Update()
         {
-            MediaPlayer.Volume = 0.01f;
+            //MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
 
             //Playing ambient sounds using SoundManager
@@ -74,10 +77,8 @@ namespace BattleMages
 
             if (enemyCount == 0)
             {
-                waveController.GetComponent<WaveController>().NewWave(waveCounter);
-                waveCounter++;
+                goWaveController.GetComponent<WaveController>().UpdateWave();
             }
-
             base.Update();
         }
     }

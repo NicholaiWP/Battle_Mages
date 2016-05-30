@@ -39,7 +39,7 @@ namespace BattleMages
              settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindLeft));
              settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindRight));*/
             //Keybind up
-            var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
+            /*var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
                 keyBindUpSpr,
@@ -48,7 +48,7 @@ namespace BattleMages
                 {
                     SwappingKeyBind = true;
                     ChosenKeyToRebind = PlayerBind.Up;
-                }));
+                }));*/
             //Res down
             var resDown = content.Load<Texture2D>("Images/ResDown");
             AddObject(ObjectBuilder.BuildButton(

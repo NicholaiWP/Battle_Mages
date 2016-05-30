@@ -38,7 +38,7 @@ namespace BattleMages
             doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
             doorTriggerGameObject.AddComponent(new Interactable(() =>
            {
-               GameWorld.ChangeScene(new HallwayScene()); GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+               GameWorld.ChangeScene(new ChallengeScene());
                GameWorld.SoundManager.SoundVolume = 1f;
            }));
             AddObject(doorTriggerGameObject);

@@ -9,9 +9,9 @@ namespace BattleMages
 {
     public class Fireball : Spell
     {
-        private Texture2D sprite;
         private Vector2 velocity;
         private Collider collider;
+        private SpriteRenderer spriteRenderer;
         private Vector2 diff;
         private SpellCreationParams p;
 
@@ -22,9 +22,7 @@ namespace BattleMages
             CooldownTime = 0.8f;
             ManaCost = 15;
             ApplyAttributeRunes();
-
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
-
+            spriteRenderer = new SpriteRenderer("Spell Images/fireball");
             collider = new Collider(new Vector2(8, 8));
             GameWorld.SoundManager.PlaySound("fireball");
             GameWorld.SoundManager.SoundVolume = 0.9f;
@@ -32,11 +30,11 @@ namespace BattleMages
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
         }
 
         private void PreInitialize(PreInitializeMsg msg)
         {
+            GameObject.AddComponent(spriteRenderer);
             GameObject.AddComponent(collider);
         }
 
@@ -47,14 +45,8 @@ namespace BattleMages
             velocity = diff * 150;
         }
 
-        private void Draw(DrawMsg msg)
-        {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
-        }
-
         private void Update(UpdateMsg msg)
         {
-
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
