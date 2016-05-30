@@ -21,10 +21,10 @@ namespace BattleMages
         {
             if (waves.Count > waveNumber)
             {
-                for (int i = 0; i < waves[waveNumber].enemies.Count; i++)
+                for (int i = 0; i < waves[waveNumber].Enemies.Count; i++)
                 {
                     GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[waveNumber].positions[i],
-                        waves[waveNumber].enemies[i]));
+                        waves[waveNumber].Enemies[i]));
                 }
                 waveNumber++;
             }
