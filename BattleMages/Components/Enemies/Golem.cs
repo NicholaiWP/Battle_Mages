@@ -30,7 +30,7 @@ namespace BattleMages
             MoveSpeed = 20;
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
-            behaviours.Add(new AreaAttack(this, 85, 0.8f, 0.6f, 3f, 80, 40));
+            behaviours.Add(new AreaAttack(this, 85, 0.8f, 0.6f, 3f, 80, 25));
         }
     }
 }

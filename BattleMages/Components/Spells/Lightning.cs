@@ -19,7 +19,7 @@ namespace BattleMages
         public Lightning(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            Damage = 50;
+            Damage = 40;
             CooldownTime = 2f;
             ManaCost = 40;
             ApplyAttributeRunes();
