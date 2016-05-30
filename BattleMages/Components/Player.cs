@@ -30,8 +30,14 @@ namespace BattleMages
         public const float ManaRechargeSpeed = 30;
         public const float ManaRechargeDelay = 1;
 
+        private const float invincibleTime = 1;
+        private float invincibleTimer;
+        private const float blinkTime = 0.1f;
+        private float blinkTimer;
+
         public int CurrentHealth { get; private set; } = MaxHealth;
         public float CurrentMana { get; private set; } = MaxMana;
+        public bool Invincible { get { return invincibleTimer > 0f; } }
 
         public Player(bool canUseSpells)
         {
@@ -103,6 +109,26 @@ namespace BattleMages
             rechargeDelayTimer = Math.Max(rechargeDelayTimer - GameWorld.DeltaTime / ManaRechargeDelay, 0);
             if (rechargeDelayTimer <= 0)
                 CurrentMana = Math.Min(CurrentMana + GameWorld.DeltaTime * ManaRechargeSpeed, MaxMana);
+
+            //Invincibility timer
+            if (invincibleTimer > 0)
+            {
+                blinkTimer -= GameWorld.DeltaTime;
+                if (blinkTimer <= 0)
+                {
+                    if (spriteRenderer.Opacity < 1)
+                        spriteRenderer.Opacity = 1;
+                    else
+                        spriteRenderer.Opacity = 0.5f;
+                    blinkTimer += blinkTime;
+                }
+
+                invincibleTimer -= GameWorld.DeltaTime;
+                if (invincibleTimer <= 0)
+                {
+                    spriteRenderer.Opacity = 1;
+                }
+            }
 
             //Gather input
             KeyboardState kbState = Keyboard.GetState();
@@ -231,6 +257,8 @@ namespace BattleMages
 
         public void TakeDamage(int points)
         {
+            if (Invincible || deathAnimationStarted) return;
+
             CurrentHealth -= points;
             if (CurrentHealth <= 0 && !deathAnimationStarted)
             {
@@ -238,6 +266,11 @@ namespace BattleMages
                 canUseSpells = false;
                 deathAnimationStarted = true;
                 animator.PlayAnimation("Death");
+            }
+            else
+            {
+                invincibleTimer = invincibleTime;
+                spriteRenderer.Opacity = 0.5f;
             }
         }
     }
