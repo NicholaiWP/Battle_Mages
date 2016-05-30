@@ -69,6 +69,13 @@ namespace BattleMages
                 command.ExecuteNonQuery();
             }
 
+            using (SQLiteCommand command = new SQLiteCommand(@"Delete from AttributeRunes where SpellBookID > @SBID",
+                 connection))
+            {
+                command.Parameters.AddWithValue("@SBID", spellBook.Count);
+                command.ExecuteNonQuery();
+            }
+
             for (int i = 0; i < spellBook.Count; i++)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID like @ID",
@@ -90,6 +97,7 @@ namespace BattleMages
                             }
                         }
                     }
+                    reader.Close();
                 }
                 using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AttributeRunes where SpellBookID like @SBID",
                     connection))
@@ -112,6 +120,7 @@ namespace BattleMages
                         attrRuneID++;
                         runeCount++;
                     }
+                    reader.Close();
                 }
 
                 using (SQLiteCommand command = new SQLiteCommand(@"Select Count(*) from SpellBook",
@@ -140,6 +149,7 @@ namespace BattleMages
                             }
                         }
                     }
+                    reader.Close();
                 }
             }
             for (int i = 0; i < spellBar.Count; i++)
@@ -152,10 +162,14 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
             }
+            connection.Close();
         }
 
         public void Load()
         {
+            if (File.Exists(databaseFileName))
+            {
+            }
         }
     }
 }
