@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -82,10 +82,11 @@ namespace BattleMages
             objectsToAdd.Clear();
 
             //Removal
-            foreach (GameObject gameObject in objectsToRemove)
+            List<GameObject> tempRemovalList = new List<GameObject>(objectsToRemove);
+            foreach (GameObject gameObject in tempRemovalList)
                 activeObjects.Remove(gameObject);
 
-            foreach (GameObject gameObject in objectsToRemove)
+            foreach (GameObject gameObject in tempRemovalList)
                 gameObject.SendMessage(new DestroyMsg());
 
             objectsToRemove.Clear();

@@ -66,6 +66,7 @@ namespace BattleMages
             if (rectangle.Contains(GameWorld.Cursor.Position))
             {
                 hovering = true;
+                GameWorld.Cursor.SetCursor(CursorStyle.Interactable);
 
                 if (GameWorld.Cursor.LeftButtonPressed)
                 {

@@ -18,6 +18,8 @@ namespace BattleMages
         private float timer = 0;
         private const float charShowInterval = 0.03f;
 
+        private GameObject closeBtnObj;
+
         public DialougeBox(string text)
         {
             this.text = text;
@@ -25,12 +27,18 @@ namespace BattleMages
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
+            Listen<DestroyMsg>(Destroy);
         }
 
         private void Initialize(InitializeMsg msg)
         {
             boxTexture = GameWorld.Load<Texture2D>("Images/DialougeBox");
             textFont = GameWorld.Load<SpriteFont>("FontBM");
+
+            Texture2D closeBtnTex = GameWorld.Load<Texture2D>("Images/Button_Rune");
+            Texture2D closeBtnTex2 = GameWorld.Load<Texture2D>("Images/Button_Rune_Hover");
+            closeBtnObj = ObjectBuilder.BuildButton(new Vector2(0, 0), closeBtnTex, closeBtnTex2, () => { GameWorld.Scene.RemoveObject(GameObject); });
+            GameWorld.Scene.AddObject(closeBtnObj);
         }
 
         private void Update(UpdateMsg msg)
@@ -52,6 +60,11 @@ namespace BattleMages
             Vector2 pos = GameWorld.Camera.Position + new Vector2(-boxTexture.Width / 2, GameWorld.GameHeight / 2 - boxTexture.Height);
             msg.Drawer[DrawLayer.UI].Draw(boxTexture, pos, Color.White);
             msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
+        }
+
+        private void Destroy(DestroyMsg msg)
+        {
+            GameWorld.Scene.RemoveObject(closeBtnObj);
         }
     }
 }
