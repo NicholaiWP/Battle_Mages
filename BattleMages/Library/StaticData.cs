@@ -88,7 +88,7 @@ namespace BattleMages
                 (p) => {return new FrostShield(p, true, 0); })
             };
 
-            challenges.Add("Normal", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(25,30),
+            challenges.Add("Novice", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
                 () =>  new List<Enemy> { new Golem(), new Orb(), new Slime() }),
                 new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300),
@@ -100,7 +100,7 @@ namespace BattleMages
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Orb(),
                 new Orb(),new Orb(),new Orb(),new Orb() })}));
 
-            challenges.Add("Hard", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+            challenges.Add("Skilled", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
                 () => new List<Enemy> {new Golem(), new Golem(), new Orb(), new Orb()}),
                 new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
