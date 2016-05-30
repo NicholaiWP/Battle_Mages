@@ -39,7 +39,7 @@ namespace BattleMages
                 angle = firstOtherFrostshield.angle;
             }
 
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Images/IceCube");
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
 
             collider = new Collider(new Vector2(sprite.Width, sprite.Height));
 

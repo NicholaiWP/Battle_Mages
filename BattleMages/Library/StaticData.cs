@@ -37,18 +37,18 @@ namespace BattleMages
             //Add new attribute runes to this array
             attributeRunes = new AttributeRune[]
             {
-                new AttributeRune("Damage up rune",
-                "Increase damage on spell",
+                new AttributeRune("Rune of Might",
+                "Increases the damage of\nthis spell.",
                 "rune1",
                 DamageUpRune),
 
-                new AttributeRune("Decrease mana cost",
-                "Lower Mana cost by half",
+                new AttributeRune("Rune of Persistence",
+                "Makes this spell use\nless mana.",
                 "rune2",
                 DecreaseManaCostRune),
 
-                new AttributeRune("Lower spell cooldown",
-                "reduces Cooldown on spells",
+                new AttributeRune("Rune of Haste",
+                "Lets you cast this spell faster.",
                 "rune3",
                 DescreaseCooldown),
 
@@ -67,22 +67,22 @@ namespace BattleMages
                 (p) => { return new Fireball(p); }),
 
                 new BaseRune("Icicle",
-                "Sharp chunks of ice",
+                "Three sharp chunks of ice\nwill spread outwards",
                 "iceshardsRune",
                 (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
-                "A fierce lightning which strikes\n from the sky",
+                "Powerful arcane lightning that\nstrikes from the sky",
                 "lightningRune",
                 (p) => {return new Lightning(p); }),
 
                 new BaseRune("EarthSpikes",
-                "Hard spikes will rise from the\n ground",
+                "Sharp spikes will rise from the\nground and damage over time",
                 "earthspikesRune",
                 (p) => {return new EarthSpikes(p); }),
 
                 new BaseRune("FrostShield",
-                "Make 4 orbs of ice that rotate around you",
+                "Three orbs of frost that rotate\naround you and protect\nagainst projectiles",
                 "frostShieldRune",
                 (p) => {return new FrostShield(p, true, 0); })
             };
@@ -107,7 +107,7 @@ namespace BattleMages
 
         private static void DecreaseManaCostRune(Spell spell)
         {
-            spell.ManaCost -= (int)(spell.ManaCost * 0.50f);
+            spell.ManaCost = (int)(spell.ManaCost * 0.80f);
         }
 
         private static void DescreaseCooldown(Spell spell)

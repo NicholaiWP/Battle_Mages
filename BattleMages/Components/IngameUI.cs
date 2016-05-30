@@ -79,14 +79,15 @@ namespace BattleMages
             //{
             //    drawer[DrawLayer.UI].DrawString(haxFont, "Health: " + player.Health, topLeft, Color.Purple);
             //}
+            msg.Drawer[DrawLayer.Gameplay].Draw(behindUI, position: topLeft);
 
             if (player != null)
-                msg.Drawer[DrawLayer.Gameplay].Draw(behindUI, position: topLeft);
             {
                 msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthBarPos, scale: new Vector2(healthbarSize,1));
                 msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize,1));
             }
 
+            msg.Drawer[DrawLayer.AboveUI].Draw(aboveUI, position: topLeft);
             Vector2 spellBarCenter = GameWorld.Camera.Position + new Vector2(0, GameWorld.GameHeight / 2 - spellbarBgTex.Height / 2 - 8);
 
             int space = spellbarBgTex.Width + 8;
