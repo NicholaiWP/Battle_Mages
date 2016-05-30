@@ -10,7 +10,7 @@ namespace BattleMages
     {
         public Orb()
         {
-            health = 100;
+            health = 85;
             damage = 10;
             cooldownTimer = 2;
             attackSpeed = 0;
