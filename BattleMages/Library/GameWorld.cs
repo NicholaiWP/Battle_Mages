@@ -93,20 +93,6 @@ namespace BattleMages
             currentScene = new MenuScene();
             drawer = new Drawer(GraphicsDevice);
 
-            //Create 4 test spell for both the bar and the book
-            for (int i = 0; i < 5; i++)
-            {
-                if (i == 3) continue;
-                SpellInfo ps = new SpellInfo();
-                ps.SetBaseRune(i);
-                for (int j = 0; j < i; j++)
-                {
-                    ps.SetAttributeRune(j, 0);
-                }
-                state.SpellBook.Add(ps);
-                state.SpellBar.Add(state.SpellBook.IndexOf(ps));
-            }
-
             base.Initialize();
         }
 
@@ -163,7 +149,6 @@ namespace BattleMages
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
-                state.CreateDatabaseFile();
                 state.Save();
             }
 

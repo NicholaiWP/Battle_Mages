@@ -20,7 +20,24 @@ namespace BattleMages
         public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
 
-        public void CreateDatabaseFile()
+        public void NewGame()
+        {
+            //Create 4 test spells for both the bar and the book
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 3) continue;
+                SpellInfo ps = new SpellInfo();
+                ps.SetBaseRune(i);
+                for (int j = 0; j < i; j++)
+                {
+                    ps.SetAttributeRune(j, 0);
+                }
+                spellBook.Add(ps);
+                spellBar.Add(spellBook.IndexOf(ps));
+            }
+        }
+
+        private void CreateDatabaseFile()
         {
             if (!File.Exists(databaseFileName))
             {
@@ -43,15 +60,6 @@ namespace BattleMages
                     connection))
                 {
                     command.ExecuteNonQuery();
-                    for (int i = 0; i < spellBar.Count; i++)
-                    {
-                        using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBar Values(null, @SBID)",
-                            connection))
-                        {
-                            cmd.Parameters.AddWithValue("@SBID", spellBar[i]);
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
                 }
                 connection.Close();
             }
@@ -59,6 +67,7 @@ namespace BattleMages
 
         public void Save()
         {
+            CreateDatabaseFile();
             int attrRuneID = 1;
             connection.Open();
 
@@ -167,8 +176,51 @@ namespace BattleMages
 
         public void Load()
         {
+            int SBID = 1;
+            int runePos = 0;
+
             if (File.Exists(databaseFileName))
             {
+                connection.Open();
+                using (SQLiteCommand command = new SQLiteCommand("Select BaseRuneID from SpellBook",
+                    connection))
+                {
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        SpellInfo si = new SpellInfo();
+                        si.SetBaseRune(reader.GetInt32(0));
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(@"Select RuneID from AttributeRunes Where SpellBookID like @SBID",
+                            connection))
+                        {
+                            cmd.Parameters.AddWithValue("@SBID", SBID);
+                            SQLiteDataReader read = cmd.ExecuteReader();
+                            while (read.Read())
+                            {
+                                si.SetAttributeRune(runePos, read.GetInt32(0));
+                                runePos++;
+                            }
+                            runePos = 0;
+                            read.Close();
+                        }
+                        spellBook.Add(si);
+                        SBID++;
+                    }
+                    reader.Close();
+                }
+                using (SQLiteCommand command = new SQLiteCommand("Select SpellBookID from SpellBar",
+                    connection))
+                {
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        spellBar.Add(reader.GetInt32(0));
+                    }
+                    reader.Close();
+                }
+                connection.Close();
+                GameWorld.ChangeScene(new LobbyScene());
             }
         }
     }
