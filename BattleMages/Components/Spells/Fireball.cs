@@ -18,7 +18,7 @@ namespace BattleMages
         public Fireball(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            Damage = 15;
+            Damage = 12;
             CooldownTime = 0.7f;
             ManaCost = 12;
             ApplyAttributeRunes();

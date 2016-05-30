@@ -10,7 +10,7 @@ namespace BattleMages
     {
         public Slime()
         {
-            health = 75;
+            health = 100;
             damage = 15;
             cooldownTimer = 1;
             attackSpeed = 0;

@@ -139,7 +139,7 @@ namespace BattleMages
 
         private static void DecreaseManaCostRune(Spell spell)
         {
-            spell.ManaCost = (int)(spell.ManaCost * 0.80f);
+            spell.ManaCost = (int)(spell.ManaCost * 0.75f);
         }
 
         private static void DescreaseCooldown(Spell spell)
