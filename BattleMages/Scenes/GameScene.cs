@@ -15,7 +15,7 @@ namespace BattleMages
         private KeyboardState keyState;
         private GameObject goWaveController;
 
-        public GameScene()
+        public GameScene(string challengeName)
         {
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
@@ -36,14 +36,14 @@ namespace BattleMages
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI());
             AddObject(ingameUI);
-            string challenge = "Normal";
 
-            WaveController waveController = StaticData.challenges[challenge].MakeWaveController(challenge);
-
-            goWaveController = new GameObject(Vector2.Zero);
-
-            goWaveController.AddComponent(waveController);
-            goWaveController.SendMessage(new UpdateMsg());
+            if (StaticData.challenges.ContainsKey(challengeName))
+            {
+                WaveController waveController = StaticData.challenges[challengeName].MakeWaveController();
+                goWaveController = new GameObject(Vector2.Zero);
+                goWaveController.AddComponent(waveController);
+                goWaveController.SendMessage(new UpdateMsg());
+            }
 
             //Get all objects on the list before the first run of Update()
             base.Update();

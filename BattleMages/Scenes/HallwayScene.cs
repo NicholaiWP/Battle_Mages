@@ -15,7 +15,7 @@ namespace BattleMages
         private Vector2 lobbyTexturePosition;
         private KeyboardState keyState;
 
-        public HallwayScene()
+        public HallwayScene(string challengeName)
         {
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
@@ -32,7 +32,7 @@ namespace BattleMages
             doorTriggerGameObject.AddComponent(new Collider(new Vector2(64, 64)));
             doorTriggerGameObject.AddComponent(new Interactable(() =>
            {
-               GameWorld.ChangeScene(new GameScene()); GameWorld.SoundManager.PlaySound("teleport");
+               GameWorld.ChangeScene(new GameScene(challengeName)); GameWorld.SoundManager.PlaySound("teleport");
                GameWorld.SoundManager.SoundVolume = 0.9f;
            }));
             AddObject(doorTriggerGameObject);

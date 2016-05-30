@@ -11,12 +11,13 @@ namespace BattleMages
     public class FrostShield : Spell
     {
         private Collider collider;
-        private Texture2D sprite;
+        private SpriteRenderer spriteRenderer;
         private float radius;
         private float angle;
         private float speed;
         private bool spawnSubshards;
         private SpellCreationParams p;
+        private float existenceTimer;
 
         public FrostShield(SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(p)
         {
@@ -26,9 +27,11 @@ namespace BattleMages
             radius = 32;
             Damage = 8;
             CooldownTime = 2;
+            existenceTimer = 7;
             ManaCost = 40;
             ApplyAttributeRunes();
-
+            spriteRenderer = new SpriteRenderer("Spell Images/ice");
+            collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
             //This makes sure all FrostShields have the same starting angle so that their rotation looks amazing
             FrostShield firstOtherFrostshield = GameWorld.Scene.ActiveObjects
                 .Select(a => a.GetComponent<FrostShield>())
@@ -39,17 +42,13 @@ namespace BattleMages
                 angle = firstOtherFrostshield.angle;
             }
 
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
-
-            collider = new Collider(new Vector2(sprite.Width, sprite.Height));
-
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
         }
 
         private void PreInitialize(PreInitializeMsg msg)
         {
+            GameObject.AddComponent(spriteRenderer);
             GameObject.AddComponent(collider);
         }
 
@@ -86,7 +85,6 @@ namespace BattleMages
 
                     GameWorld.Scene.RemoveObject(GameObject);
                     GameWorld.SoundManager.StopSound("FrostShield");
-
                 }
                 else if (projectile != null)
                 {
@@ -118,11 +116,15 @@ namespace BattleMages
                     GameObject.Transform.Position = Vector2.Lerp(GameObject.Transform.Position, new Vector2(x, y), GameWorld.DeltaTime * 8);
                 }
             }
-        }
 
-        private void Draw(DrawMsg msg)
-        {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(sprite.Width, sprite.Height) / 2, Color.White);
+            if (existenceTimer <= 0)
+            {
+                GameWorld.Scene.RemoveObject(GameObject);
+            }
+            else
+            {
+                existenceTimer -= GameWorld.DeltaTime;
+            }
         }
     }
 }
