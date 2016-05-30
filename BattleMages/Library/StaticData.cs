@@ -108,6 +108,16 @@ namespace BattleMages
                 new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Slime(), new Slime(), new Slime(), new Slime()})}));
+
+            //Goltastic
+            challenges.Add("Intermediate", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+                new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
+                () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem()}),
+                new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
+                new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+                () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
+                new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
         }
 
         public static void LoadContent()
