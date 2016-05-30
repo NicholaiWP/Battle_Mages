@@ -415,17 +415,6 @@
 /processorParam:TextureFormat=Color
 /build:Backgrounds/TavernLighting.png
 
-#begin Backgrounds/Tavern.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Backgrounds/Tavern.png
-
 #begin Backgrounds/Hallway.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -972,6 +961,17 @@
 /processorParam:TextureFormat=Color
 /build:Images/behindUI.png
 
+#begin Backgrounds/BMtavern.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/BMtavern.png
+
 #begin Sounds/BurnSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1043,4 +1043,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Images/Skilled_hover.png
+
 
