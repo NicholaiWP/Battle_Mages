@@ -11,7 +11,8 @@ namespace BattleMages
 {
     public enum CursorStyle
     {
-        Interactable
+        Interactable,
+        Dialouge
     }
 
     public class CursorLockToken
@@ -34,6 +35,7 @@ namespace BattleMages
         private Dictionary<CursorStyle, Texture2D> variations = new Dictionary<CursorStyle, Texture2D>();
 
         private Texture2D activeTex;
+        private int activeTexIndex = -1;
 
         private Vector2 position;
 
@@ -103,6 +105,7 @@ namespace BattleMages
             activeTex = defaultTex;
 
             variations.Add(CursorStyle.Interactable, content.Load<Texture2D>("Textures/Cursors/Interactable"));
+            variations.Add(CursorStyle.Dialouge, content.Load<Texture2D>("Textures/Cursors/Dialouge"));
         }
 
         public void Update()
@@ -165,7 +168,11 @@ namespace BattleMages
 
         public void SetCursor(CursorStyle style)
         {
-            activeTex = variations[style];
+            if (activeTexIndex < (int)style)
+            {
+                activeTex = variations[style];
+                activeTexIndex = (int)style;
+            }
         }
 
         /// <summary>
@@ -180,6 +187,7 @@ namespace BattleMages
                 color: Color.White,
                 effects: SpriteEffects.None);
             activeTex = defaultTex;
+            activeTexIndex = -1;
         }
     }
 }
