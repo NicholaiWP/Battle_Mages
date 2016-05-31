@@ -22,7 +22,7 @@ namespace BattleMages
 
         public void NewGame()
         {
-            //Create 4 test spells for both the bar and the book
+            //Making the starting spells for the player
             for (int i = 0; i < 5; i++)
             {
                 if (i == 3) continue;
@@ -37,6 +37,9 @@ namespace BattleMages
             }
         }
 
+        /// <summary>
+        /// The database file is created in this method with the database´s tables
+        /// </summary>
         private void CreateDatabaseFile()
         {
             if (!File.Exists(databaseFileName))
@@ -65,10 +68,17 @@ namespace BattleMages
             }
         }
 
+        /// <summary>
+        /// In this method all spells, gold and challenges that have been completed are saved
+        /// </summary>
         public void Save()
         {
             CreateDatabaseFile();
+
+            //This int is used for updating the RuneIDs in the table AttributeRunes,
+            //it is the indicator of the id in the table.
             int attrRuneID = 1;
+
             connection.Open();
 
             using (SQLiteCommand command = new SQLiteCommand(@"Delete from SpellBook where ID > @ID",
@@ -113,26 +123,29 @@ namespace BattleMages
                 {
                     command.Parameters.AddWithValue("@SBID", i + 1);
                     SQLiteDataReader reader = command.ExecuteReader();
-                    int runeCount = 0;
+
+                    //This int is the runePos in Attribute rune ids from the spellbook
+                    int runePos = 0;
+
                     while (reader.Read())
                     {
-                        if (spellBook[i].AttrRuneIDs[runeCount] != reader.GetInt32(0))
+                        if (spellBook[i].AttrRuneIDs[runePos] != reader.GetInt32(0))
                         {
                             using (SQLiteCommand cmd = new SQLiteCommand(@"Update AttributeRunes Set RuneID = @runeID where ID like @ID",
                                 connection))
                             {
                                 cmd.Parameters.AddWithValue("@ID", attrRuneID);
-                                cmd.Parameters.AddWithValue("@runeID", spellBook[i].AttrRuneIDs[runeCount]);
+                                cmd.Parameters.AddWithValue("@runeID", spellBook[i].AttrRuneIDs[runePos]);
                                 cmd.ExecuteReader();
                             }
                         }
                         attrRuneID++;
-                        runeCount++;
+                        runePos++;
                     }
                     reader.Close();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand(@"Select Count(*) from SpellBook",
+                using (SQLiteCommand command = new SQLiteCommand("Select Count(*) from SpellBook",
                     connection))
                 {
                     SQLiteDataReader reader = command.ExecuteReader();
@@ -163,6 +176,23 @@ namespace BattleMages
             }
             for (int i = 0; i < spellBar.Count; i++)
             {
+                using (SQLiteCommand command = new SQLiteCommand("Select Count(*) from SpellBar",
+                    connection))
+                {
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        if (i + 1 > reader.GetInt32(0))
+                        {
+                            using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBar Values(null, @SBID)",
+                            connection))
+                            {
+                                cmd.Parameters.AddWithValue("@SBID", spellBar[i]);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
                 using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID like @ID",
                     connection))
                 {
@@ -176,7 +206,10 @@ namespace BattleMages
 
         public void Load()
         {
+            //This int is the spellbook id for the foreignkeys
             int SBID = 1;
+
+            //This is the position of the rune in the array
             int runePos = 0;
 
             if (File.Exists(databaseFileName))
@@ -209,6 +242,7 @@ namespace BattleMages
                     }
                     reader.Close();
                 }
+
                 using (SQLiteCommand command = new SQLiteCommand("Select SpellBookID from SpellBar",
                     connection))
                 {
@@ -218,6 +252,13 @@ namespace BattleMages
                         spellBar.Add(reader.GetInt32(0));
                     }
                     reader.Close();
+                }
+
+                using (SQLiteCommand command = new SQLiteCommand(@"Delete from SpellBar where ID > @ID",
+                    connection))
+                {
+                    command.Parameters.AddWithValue("@ID", spellBar.Count);
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
                 GameWorld.ChangeScene(new LobbyScene());
