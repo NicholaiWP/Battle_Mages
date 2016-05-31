@@ -12,18 +12,13 @@ namespace BattleMages
     public class ShopScene : Scene
     {
         private Scene oldScene;
-        private Texture2D background;  
+        private Texture2D background;
         private SpriteFont font;
         private SpriteFont titleFont;
         private Texture2D rune1;
         private Texture2D rune2;
         private Texture2D rune3;
-        private string bottomLeftText1 = string.Empty;
-        private string bottomLeftText2 = string.Empty;
-        private string bottomLeftText3 = string.Empty;
-        private Vector2 bottomLeftText1Pos1;
-        private Vector2 bottomLeftText2Pos2;
-        private Vector2 bottomLeftText3Pos3;
+        private string bottomLeftText = string.Empty;
         private Dictionary<string, Vector2> descriptionPlacement = new Dictionary<string, Vector2>();
         private int cost;
 
@@ -34,7 +29,6 @@ namespace BattleMages
 
         public ShopScene(Scene oldScene)
         {
-           
             var content = GameWorld.Instance.Content;
 
             this.oldScene = oldScene;
@@ -48,45 +42,29 @@ namespace BattleMages
             rune2 = content.Load<Texture2D>("Rune Images/rune2");
             rune3 = content.Load<Texture2D>("Rune Images/rune3");
 
-    //Fixes that needs to be done: IF A BUTTON IS CLICKED TWICE, IT CURSES AN ERROR -.-" also the text overlaps instead of being replaced by each other..
-            var Button_Rune = content.Load<Texture2D>("Images/Button_Rune");
-            var Button_Rune_Hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 15, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15), Button_Rune, Button_Rune_Hover,
-                () =>
+            int xPos = 0;
+            int yPos = 0;
+
+            foreach (AttributeRune attrRune in StaticData.AttributeRunes)
+            {
+                var Button_Rune = content.Load<Texture2D>("Images/Button_Rune");
+                var Button_Rune_Hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
+                AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 15 + xPos * 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15 + yPos * 16), Button_Rune, Button_Rune_Hover,
+                    () =>
+                    {
+                        bottomLeftText = attrRune.Description;
+                    },
+                    null, false));
+
+                xPos++;
+                if (xPos >= 2)
                 {
-                    bottomLeftText1 = StaticData.AttributeRunes[0].Description;
-                    bottomLeftText1Pos1 = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 140);
-                    descriptionPlacement.Add(bottomLeftText1, bottomLeftText1Pos1);
-                },
-                null, false));
-                                   
-            var Button_Rune1 = content.Load<Texture2D>("Images/Button_Rune");
-            var Button_Rune_Hover1 = content.Load<Texture2D>("Images/Button_Rune_Hover");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 15, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 34), Button_Rune1, Button_Rune_Hover1,
-                () =>
-                {
-                    bottomLeftText2 = StaticData.AttributeRunes[1].Description;
-                    bottomLeftText2Pos2 = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 140);
-                    descriptionPlacement.Add(bottomLeftText2, bottomLeftText2Pos2);
-                },
-                null, false));
-
-
-            var Button_Rune2 = content.Load<Texture2D>("Images/Button_Rune");
-            var Button_Rune_Hover2 = content.Load<Texture2D>("Images/Button_Rune_Hover");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 15, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 54), Button_Rune2, Button_Rune_Hover2,
-                () =>
-                {
-                    bottomLeftText3 = StaticData.AttributeRunes[2].Description;
-                    bottomLeftText3Pos3 = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 140);
-                    descriptionPlacement.Add(bottomLeftText3, bottomLeftText3Pos3);
-                },
-                null, false));
-
-
+                    yPos++;
+                    xPos = 0;
+                }
+            }
         }
 
-   
         public override void Draw(Drawer drawer)
         {
             Color textColor = new Color(120, 100, 80);
@@ -99,10 +77,8 @@ namespace BattleMages
             drawer[DrawLayer.UI].DrawString(titleFont, "Cost", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 250, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15), Color.Black);
 
             //Draws the descriptions
-            drawer[DrawLayer.UI].DrawString(font, bottomLeftText1, bottomLeftText1Pos1, Color.Black);
-            drawer[DrawLayer.UI].DrawString(font, bottomLeftText2, bottomLeftText2Pos2, Color.Black);
-            drawer[DrawLayer.UI].DrawString(font, bottomLeftText3, bottomLeftText3Pos3, Color.Black);
-         
+            var bottomLeftTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 140);
+            drawer[DrawLayer.UI].DrawString(font, bottomLeftText, bottomLeftTextPos, Color.Black);
 
             //Runes
             drawer[DrawLayer.UI].Draw(rune1, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 20), Color.White);
@@ -131,4 +107,3 @@ namespace BattleMages
         }
     }
 }
-
