@@ -39,17 +39,17 @@ namespace BattleMages
             attributeRunes = new AttributeRune[]
             {
                 new AttributeRune("Rune of Might",
-                "Increases the damage of\nthis spell.",
+                "Increases the damage of\n a spell.",
                 "rune1",
                 DamageUpRune),
 
                 new AttributeRune("Rune of Persistence",
-                "Makes this spell use\nless mana.",
+                "Makes a spell use\nless mana.",
                 "rune2",
                 DecreaseManaCostRune),
 
                 new AttributeRune("Rune of Haste",
-                "Lets you cast this spell faster.",
+                "Lets you cast a spell faster.",
                 "rune3",
                 DescreaseCooldown),
 
