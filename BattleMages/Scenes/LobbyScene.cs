@@ -13,10 +13,8 @@ namespace BattleMages
     public class LobbyScene : Scene
     {
         private Texture2D lobbyTexture;
-        private Texture2D shopKeeperTexture;
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
-        private Vector2 shopKeeperPosition;
         private KeyboardState keyState;
         private Scene oldScene;
 
@@ -29,11 +27,8 @@ namespace BattleMages
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
 
-            shopKeeperPosition = new Vector2(114, -30);
-    
             lobbyTexture = content.Load<Texture2D>("Backgrounds/BMtavern");
             lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
-            shopKeeperTexture = content.Load<Texture2D>("Images/WZRD");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 90 + 8), new Vector2(320, 16)));
@@ -63,14 +58,14 @@ namespace BattleMages
             }));
             AddObject(doorGuardObj);
 
-
-            GameObject ShopKeeper = new GameObject(shopKeeperPosition);
-            ShopKeeper.AddComponent(new Collider(new Vector2(49,49), true));
-            ShopKeeper.AddComponent(new Interactable(() =>
+            GameObject shopKeeper = new GameObject(new Vector2(114 + 24, -30 + 24));
+            shopKeeper.AddComponent(new SpriteRenderer("Images/WZRD"));
+            shopKeeper.AddComponent(new Collider(new Vector2(49, 49), true));
+            shopKeeper.AddComponent(new Interactable(() =>
             {
                 GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
             }));
-            AddObject(ShopKeeper);
+            AddObject(shopKeeper);
 
             //Sets the sound volume for this scene
             GameWorld.SoundManager.AmbienceVolume = 0.02f;
@@ -105,7 +100,6 @@ namespace BattleMages
         {
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
             drawer[DrawLayer.Foreground].Draw(lobbyTextureForeground, lobbyTexturePosition, Color.White);
-            drawer[DrawLayer.Gameplay].Draw(shopKeeperTexture, shopKeeperPosition, Color.White);
 
             base.Draw(drawer);
         }
