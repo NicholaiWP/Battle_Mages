@@ -106,6 +106,7 @@
     <Compile Include="Scenes\DeathScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\HallwayScene.cs" />
+    <Compile Include="Scenes\IntroductionScene.cs" />
     <Compile Include="Scenes\LobbyScene.cs" />
     <Compile Include="Scenes\MenuScene.cs" />
     <Compile Include="Scenes\PauseScene.cs" />

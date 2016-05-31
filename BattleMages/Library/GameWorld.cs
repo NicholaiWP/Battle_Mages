@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleMages
 {
@@ -101,20 +101,6 @@ namespace BattleMages
             scene = new MenuScene();
             drawer = new Drawer(GraphicsDevice);
 
-            //Create 4 test spell for both the bar and the book
-            for (int i = 0; i < 5; i++)
-            {
-                if (i == 3) continue;
-                SpellInfo ps = new SpellInfo();
-                ps.SetBaseRune(i);
-                //for (int j = 0; j < i; j++)
-                //{
-                //    ps.SetAttributeRune(j, 0);
-                //}
-                state.SpellBook.Add(ps);
-                state.SpellBar.Add(state.SpellBook.IndexOf(ps));
-            }
-
             base.Initialize();
         }
 
@@ -167,6 +153,11 @@ namespace BattleMages
             {
                 SoundManager.PlayMusic("CombatMusic");
                 SoundManager.PlaySound("AmbienceSound");
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                state.Save();
             }
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

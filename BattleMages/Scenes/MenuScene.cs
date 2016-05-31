@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +23,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - playSpr1.Width / 2, GameWorld.Camera.Position.Y + playSpr1.Height * -1f),
                 playSpr1,
                 playSpr2,
-                () => { GameWorld.ChangeScene(new LobbyScene()); },
+                () => { GameWorld.ChangeScene(new IntroductionScene()); GameWorld.State.NewGame(); },
                 null,
                 true
                 ));
@@ -34,7 +34,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - loadSpr1.Width / 2, GameWorld.Camera.Position.Y + 0),
                 loadSpr1,
                 loadSpr2,
-                () => { },
+                () => { GameWorld.State.Load(); },
                 null,
                 true
                 ));
