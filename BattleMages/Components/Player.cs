@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -57,44 +57,46 @@ namespace BattleMages
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
             //TODO: Create animations here
-            animator.CreateAnimation("WalkRight", new Animation(framesCount: 25, yPos: 0, xStartFrame: 0,
+            animator.CreateAnimation("WalkRight", new Animation(priority: 2, framesCount: 25, yPos: 0, xStartFrame: 0,
                 width: 32, height: 32, fps: 25, offset: Vector2.Zero));
 
-            animator.CreateAnimation("WalkLeft", new Animation(framesCount: 25, yPos: 32, xStartFrame: 0,
+            animator.CreateAnimation("WalkLeft", new Animation(priority: 2, framesCount: 25, yPos: 32, xStartFrame: 0,
                 width: 32, height: 32, fps: 25, offset: Vector2.Zero));
 
-            animator.CreateAnimation("WalkDown", new Animation(framesCount: 14, yPos: 64, xStartFrame: 0,
+            animator.CreateAnimation("WalkDown", new Animation(priority: 2, framesCount: 14, yPos: 64, xStartFrame: 0,
                 width: 32, height: 32, fps: 14, offset: Vector2.Zero));
 
-            animator.CreateAnimation("WalkUp", new Animation(framesCount: 14, yPos: 96, xStartFrame: 0,
+            animator.CreateAnimation("WalkUp", new Animation(priority: 2, framesCount: 14, yPos: 96, xStartFrame: 0,
                 width: 32, height: 32, fps: 14, offset: Vector2.Zero));
 
-            animator.CreateAnimation("CastRight", new Animation(framesCount: 17, yPos: 128, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+            animator.CreateAnimation("CastRight", new Animation(priority: 1, framesCount: 17, yPos: 128, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
 
-            animator.CreateAnimation("CastLeft", new Animation(framesCount: 17, yPos: 160, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+            animator.CreateAnimation("CastLeft", new Animation(priority: 1, framesCount: 17, yPos: 160, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
 
-            animator.CreateAnimation("CastDown", new Animation(framesCount: 17, yPos: 192, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+            animator.CreateAnimation("CastDown", new Animation(priority: 1, framesCount: 17, yPos: 192, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
 
-            animator.CreateAnimation("CastUp", new Animation(framesCount: 16, yPos: 224, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
+            animator.CreateAnimation("CastUp", new Animation(priority: 1, framesCount: 16, yPos: 224, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
 
-            animator.CreateAnimation("IdleDown", new Animation(framesCount: 1, yPos: 64, xStartFrame: 0,
+            animator.CreateAnimation("IdleDown", new Animation(priority: 2, framesCount: 1, yPos: 64, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
 
-            animator.CreateAnimation("IdleLeft", new Animation(framesCount: 1, yPos: 32, xStartFrame: 0,
+            animator.CreateAnimation("IdleLeft", new Animation(priority: 2, framesCount: 1, yPos: 32, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
 
-            animator.CreateAnimation("IdleRight", new Animation(framesCount: 1, yPos: 0, xStartFrame: 0,
+            animator.CreateAnimation("IdleRight", new Animation(priority: 2, framesCount: 1, yPos: 0, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
 
-            animator.CreateAnimation("IdleUp", new Animation(framesCount: 1, yPos: 96, xStartFrame: 0,
+            animator.CreateAnimation("IdleUp", new Animation(priority: 2, framesCount: 1, yPos: 96, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
 
-            animator.CreateAnimation("Death", new Animation(framesCount: 23, yPos: 384, xStartFrame: 0,
+            animator.CreateAnimation("Death", new Animation(priority: 0, framesCount: 23, yPos: 384, xStartFrame: 0,
                 width: 32, height: 32, fps: 12, offset: Vector2.Zero));
+
+            animator.AnimationName = "IdleDown";
         }
 
         private void Update(UpdateMsg msg)
@@ -180,6 +182,7 @@ namespace BattleMages
                     animator.PlayAnimation("CastDown");
                     character.FDirection = FacingDirection.Down;
                 }
+                canMove = false;
             }
 
             //Spellbook opening
@@ -245,10 +248,9 @@ namespace BattleMages
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
-            if (Utils.ContainsSubstring(msg.AnimationName, "Cast"))
-            {
-                animator.PlayAnimation("WalkRight");
-            }
+            canMove = true;
+            animator.PlayAnimation("Idle" + character.FDirection);
+
             if (msg.AnimationName == "Death")
             {
                 GameWorld.ChangeScene(new DeathScene());

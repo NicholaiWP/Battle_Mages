@@ -37,12 +37,12 @@ namespace BattleMages
         /// </summary>
         public Vector2 Velocity { get; private set; }
 
-        public FacingDirection FDirection { set { fDirection = value; } }
+        public FacingDirection FDirection { get { return fDirection; } set { fDirection = value; } }
 
         public Character()
         {
             Listen<InitializeMsg>(Initialize);
-            fDirection = FacingDirection.Down;
+            fDirection = FacingDirection.Left;
         }
 
         private void Initialize(InitializeMsg msg)
@@ -97,14 +97,15 @@ namespace BattleMages
 
             if (translation == Vector2.Zero)
             {
-                if (GameObject.GetComponent<Animator>() != null && GameObject.GetComponent<Player>() != null)
+                if (GameObject.GetComponent<Animator>() != null && GameObject.GetComponent<Player>() != null ||
+                    GameObject.GetComponent<Golem>() != null)
                 {
                     GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
                 }
             }
             else
             {
-                if (GameObject.GetComponent<Player>() != null)
+                if (GameObject.GetComponent<Player>() != null || GameObject.GetComponent<Golem>() != null)
                     GameObject.GetComponent<Animator>().PlayAnimation("Walk" + fDirection.ToString());
             }
 

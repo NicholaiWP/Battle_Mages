@@ -19,7 +19,7 @@ namespace BattleMages
 
         public Attack(Enemy enemy, float attackRange, float targetingRange)
         {
-            closeRange = 35;
+            closeRange = 45;
             attackTimer = 0;
             this.enemy = enemy;
             this.attackRange = attackRange;
@@ -32,47 +32,49 @@ namespace BattleMages
         {
             if (attackTimer >= 0)
                 attackTimer -= GameWorld.DeltaTime;
-
-            foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
+            else
             {
-                if (potentialTarget.GetComponent<Player>() != null)
+                foreach (GameObject potentialTarget in GameWorld.Scene.ActiveObjects)
                 {
-                    Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
-                    float lengthToTarget = vecToTarget.Length();
-                    if (InAttackRange(lengthToTarget))
+                    if (potentialTarget.GetComponent<Player>() != null)
                     {
-                        if (attackRange <= closeRange)
+                        Vector2 vecToTarget = Vector2.Subtract(transform.Position, potentialTarget.Transform.Position);
+                        float lengthToTarget = vecToTarget.Length();
+                        if (InAttackRange(lengthToTarget))
                         {
-                            CloseAttack(potentialTarget);
+                            if (attackRange <= closeRange)
+                            {
+                                CloseAttack(potentialTarget);
+                            }
+                            else
+                            {
+                                RangeAttack(potentialTarget);
+                            }
                         }
-                        else
-                        {
-                            RangeAttack(potentialTarget);
-                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
 
         private void RangeAttack(GameObject potentialTarget)
         {
-            if (attackTimer <= 0)
-            {
-                attackTimer = enemy.CooldownTimer;
-                GameObject projectile = new GameObject(transform.Position);
-                projectile.AddComponent(new Projectile(enemy, potentialTarget.Transform.Position));
-                GameWorld.Scene.AddObject(projectile);
-            }
+            attackTimer = enemy.CooldownTimer;
+            GameObject projectile = new GameObject(transform.Position);
+            projectile.AddComponent(new Projectile(enemy, potentialTarget.Transform.Position));
+            GameWorld.Scene.AddObject(projectile);
         }
 
         private void CloseAttack(GameObject potentialTarget)
         {
-            if (attackTimer <= 0)
+            if (enemy.GameObject.GetComponent<Animator>() != null &&
+                enemy.GameObject.GetComponent<Golem>() != null)
             {
-                potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
-                attackTimer = enemy.CooldownTimer;
+                enemy.GameObject.GetComponent<Animator>().PlayAnimation(
+                    "Attack" + enemy.GameObject.GetComponent<Character>().FDirection);
             }
+            potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
+            attackTimer = enemy.CooldownTimer;
         }
 
         private bool InAttackRange(float lengthToTarget)

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -61,6 +61,8 @@ namespace BattleMages
                 Player player;
                 if (PlayerInRange(maxRange, out player))
                 {
+                    enemy.GameObject.GetComponent<Animator>().PlayAnimation("Ground" +
+                        enemy.GameObject.GetComponent<Character>().FDirection.ToString());
                     state = AtkState.Beginning;
                     timer = attackDelay;
                     oldMoveSpeed = character.MoveSpeed;

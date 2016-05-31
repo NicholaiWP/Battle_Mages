@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -23,6 +24,22 @@ namespace BattleMages
 
         //Array
         private Rectangle[] frames;
+
+        public string AnimationName
+        {
+            set
+            {
+                if (animationName == null)
+                {
+                    animationName = value;
+                }
+            }
+        }
+
+        public ReadOnlyDictionary<string, Animation> Animations
+        {
+            get { return new ReadOnlyDictionary<string, Animation>(animations); }
+        }
 
         /// <summary>
         /// The animator´s constructor
@@ -77,11 +94,8 @@ namespace BattleMages
         /// <param name="animationName"></param>
         public void PlayAnimation(string animationName)
         {
-            if (this.animationName == "Death" || Utils.ContainsSubstring(this.animationName, "Cast")
-                && Utils.ContainsSubstring(animationName, "Idle"))
-            {
-            }
-            else
+            if (animations[this.animationName].Priority >= animations[animationName].Priority ||
+                currentIndex >= frames.Length)
             {
                 //Checks if it’s a new animation
                 if (this.animationName != animationName)

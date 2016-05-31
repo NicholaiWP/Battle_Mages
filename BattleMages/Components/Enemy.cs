@@ -13,11 +13,11 @@ namespace BattleMages
         //Component caching
         private SpriteRenderer spriteRenderer;
 
-        private Animator animator;
         private Transform transform;
         private Character character;
         private Collider collider;
         private float burnDamageTimer = 6;
+        protected Animator animator;
 
         protected float attackRange;
         protected float targetingRange;
@@ -140,6 +140,7 @@ namespace BattleMages
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
+            animator.PlayAnimation("Walk" + character.FDirection);
         }
     }
 }
