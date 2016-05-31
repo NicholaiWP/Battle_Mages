@@ -262,6 +262,8 @@ namespace BattleMages
             CurrentHealth -= points;
             if (CurrentHealth <= 0 && !deathAnimationStarted)
             {
+                GameWorld.State.SpellBar.Clear();
+                GameWorld.State.SpellBook.Clear();
                 canMove = false;
                 canUseSpells = false;
                 deathAnimationStarted = true;
