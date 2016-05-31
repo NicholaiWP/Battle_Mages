@@ -22,7 +22,7 @@ namespace BattleMages
         protected override void PreInitialize(PreInitializeMsg msg)
         {
             base.PreInitialize(msg);
-            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/orbSpriteSheet", true)
+            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/Orb", true)
             { Rectangle = new Rectangle(0, 0, 32, 32) });
         }
 

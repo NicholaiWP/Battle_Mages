@@ -22,8 +22,8 @@ namespace BattleMages
         protected override void PreInitialize(PreInitializeMsg msg)
         {
             base.PreInitialize(msg);
-            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/slimeSpriteSheet")
-            { Rectangle = new Rectangle(0, 0, 32, 32});
+            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/Slime")
+            { Rectangle = new Rectangle(0, 0, 32, 32) });
         }
 
         protected override void Initialize(InitializeMsg msg)
