@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace BattleMages
     {
         private Vector2 backgroundPos;
         private Texture2D background;
-		
+
         public MenuScene()
         {
             var content = GameWorld.Instance.Content;
@@ -24,7 +24,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - playSpr1.Width / 2, GameWorld.Camera.Position.Y + playSpr1.Height * -1f),
                 playSpr1,
                 playSpr2,
-                () => { GameWorld.ChangeScene(new IntroductionScene()); },
+                () => { GameWorld.ChangeScene(new IntroductionScene()); GameWorld.State.NewGame(); },
                 null,
                 true
                 ));
@@ -35,7 +35,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - loadSpr1.Width / 2, GameWorld.Camera.Position.Y + 0),
                 loadSpr1,
                 loadSpr2,
-                () => { },
+                () => { GameWorld.State.Load(); },
                 null,
                 true
                 ));

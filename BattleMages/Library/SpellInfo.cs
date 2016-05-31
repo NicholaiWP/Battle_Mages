@@ -18,6 +18,9 @@ namespace BattleMages
         private int baseRuneID;
         private int[] attrRuneIDs = new int[AttributeRuneSlotCount];
 
+        public int BaseRuneID { get { return baseRuneID; } }
+        public int[] AttrRuneIDs { get { return attrRuneIDs; } }
+
         public SpellInfo()
         {
             baseRuneID = -1;
