@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,7 +33,6 @@ namespace BattleMages
         private SavedState state;
         private float deltaTime;
         private GraphicsDeviceManager graphics;
-
         public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -156,9 +156,10 @@ namespace BattleMages
                 //SoundManager.PlaySound("AmbienceSound");
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && !state.Saving)
             {
-                state.Save();
+                Thread t = new Thread(() => state.Save());
+                t.Start();
             }
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
