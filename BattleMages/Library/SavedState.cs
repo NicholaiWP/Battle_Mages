@@ -19,6 +19,7 @@ namespace BattleMages
         private string databaseFileName = "BMdatabase.db";
         public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
+        public bool Saving { get; private set; } = false;
 
         public void NewGame()
         {
@@ -73,6 +74,7 @@ namespace BattleMages
         /// </summary>
         public void Save()
         {
+            Saving = true;
             CreateDatabaseFile();
 
             //This int is used for updating the RuneIDs in the table AttributeRunes,
@@ -203,6 +205,7 @@ namespace BattleMages
                 }
             }
             connection.Close();
+            Saving = false;
         }
 
         public void Load()
