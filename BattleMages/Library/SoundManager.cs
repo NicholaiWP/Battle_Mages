@@ -30,7 +30,6 @@ namespace BattleMages
         private Dictionary<string, Song> music = new Dictionary<string, Song>();
         private string musicCurrentlyPlaying;
 
-        public float AmbienceVolume { get; set; }
         public float SoundVolume { get; set; }
         public float MusicVolume { get; set; }
 
@@ -96,23 +95,8 @@ namespace BattleMages
         {
             if (sounds.ContainsKey(soundName))
             {
-                float volumeToUse = SoundVolume;
-
-                if (soundName == "AmbienceSound")
-                {
-                    if (AmbienceVolume > 0.26f)
-                    {
-                        AmbienceVolume = 0.26f;
-                    }
-                    if (AmbienceVolume < 0.02f)
-                    {
-                        AmbienceVolume = 0.02f;
-                    }
-                    volumeToUse = AmbienceVolume;
-                }
-
                 SoundEffectInstance effect = sounds[soundName].CreateInstance();
-                effect.Volume = volumeToUse;
+                effect.Volume = SoundVolume;
                 effect.IsLooped = loop;
                 effect.Play();
                 playingSounds.Add(new PlayingSound(soundName, effect));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,8 @@ namespace BattleMages
     {
         private KeyboardState keyState;
         private GameObject goWaveController;
+
+        private SoundEffectInstance crowdSnd;
 
         public GameScene(string challengeName)
         {
@@ -27,11 +30,10 @@ namespace BattleMages
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
-            //Changes the sound volume
-            GameWorld.SoundManager.AmbienceVolume = 0.10f;
-
             //Music and soundhandling through SoundManager
             GameWorld.SoundManager.PlayMusic("CombatMusic");
+            crowdSnd = GameWorld.SoundManager.PlaySound("AmbienceSound", true);
+            crowdSnd.Volume = 0;
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI());
@@ -53,12 +55,16 @@ namespace BattleMages
             //Playing ambient sounds using SoundManager
             //GameWorld.SoundManager.PlaySound("AmbienceSound");
 
+            if (crowdSnd.Volume < 1)
+                crowdSnd.Volume = MathHelper.Min(crowdSnd.Volume + GameWorld.DeltaTime, 0.5f);
+
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene
             if (keyState.IsKeyDown(Keys.Escape))
             {
-                GameWorld.ChangeScene(new PauseScene(this));
+                crowdSnd.Pause();
+                GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
             }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);

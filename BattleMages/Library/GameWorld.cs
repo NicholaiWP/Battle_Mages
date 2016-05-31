@@ -98,7 +98,6 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
-            scene = new MenuScene();
             drawer = new Drawer(GraphicsDevice);
 
             base.Initialize();
@@ -114,6 +113,8 @@ namespace BattleMages
             StaticData.LoadContent();
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);
+
+            scene = new MenuScene();
         }
 
         /// <summary>
@@ -139,22 +140,6 @@ namespace BattleMages
         {
             cursor.Update();
             soundManager.Update();
-
-            if (scene is MenuScene || scene is PauseScene || scene is SettingsScene || scene is SpellbookScene)
-            {
-                SoundManager.PlayMusic("HubMusic");
-                //SoundManager.StopSound("AmbienceSound");
-            }
-            if (scene is LobbyScene || scene is HallwayScene)
-            {
-                SoundManager.PlayMusic("HubMusic");
-                //SoundManager.PlaySound("AmbienceSound");
-            }
-            if (scene is GameScene)
-            {
-                SoundManager.PlayMusic("CombatMusic");
-                //SoundManager.PlaySound("AmbienceSound");
-            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && !state.Saving)
             {

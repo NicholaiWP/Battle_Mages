@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -52,8 +52,7 @@ namespace BattleMages
             }));
             AddObject(doorGuardObj);
 
-            //Sets the sound volume for this scene
-            GameWorld.SoundManager.AmbienceVolume = 0.02f;
+            GameWorld.SoundManager.PlayMusic("HubMusic");
 
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);

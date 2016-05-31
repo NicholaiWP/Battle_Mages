@@ -45,15 +45,13 @@ namespace BattleMages
            }));
             AddObject(doorTriggerGameObject);
 
-            //Sets sound volume semi-low
-            GameWorld.SoundManager.AmbienceVolume = 0.02f;
-
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, 180 - 32), false);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
             crowdSnd = GameWorld.SoundManager.PlaySound("AmbienceSound", true);
+            crowdSnd.Volume = 0;
         }
 
         public override void Update()
@@ -62,7 +60,8 @@ namespace BattleMages
 
             if (keyState.IsKeyDown(Keys.Escape))
             {
-                GameWorld.ChangeScene(new PauseScene(this));
+                crowdSnd.Pause();
+                GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
             }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);

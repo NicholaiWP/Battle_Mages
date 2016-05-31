@@ -13,7 +13,7 @@ namespace BattleMages
         private Texture2D pauseTexture;
         private Vector2 position;
 
-        public PauseScene(Scene oldScene)
+        public PauseScene(Scene oldScene, Action onReturn = null)
         {
             var content = GameWorld.Instance.Content;
             pauseTexture = content.Load<Texture2D>("Textures/Backgrounds/Pause");
@@ -25,7 +25,7 @@ namespace BattleMages
                 GameWorld.Camera.Position + new Vector2(-ContinueSpr1.Width / 2, ContinueSpr1.Height * -1f),
                 ContinueSpr1,
                 ContinueSpr2,
-                () => { GameWorld.ChangeScene(oldScene); }
+                () => { onReturn?.Invoke(); GameWorld.ChangeScene(oldScene); }
                 ));
 
             //Quit button for pause screen
