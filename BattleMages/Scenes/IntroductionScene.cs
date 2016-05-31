@@ -16,9 +16,9 @@ namespace BattleMages
         public IntroductionScene()
         {
             var content = GameWorld.Instance.Content;
-                
-            var continueButton = content.Load<Texture2D>("Images/BMContinueButton1");
-            var continueButton2 = content.Load<Texture2D>("Images/BMContinueButton_hover7");
+
+            var continueButton = content.Load<Texture2D>("Textures/UI/Menu/Continue");
+            var continueButton2 = content.Load<Texture2D>("Textures/UI/Menu/Continue_Hover");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - continueButton.Width / 2, GameWorld.Camera.Position.Y + continueButton.Height * -2.5f),
                 continueButton,
@@ -33,6 +33,4 @@ namespace BattleMages
             AddObject(dialougeObj);
         }
     }
- }
-
-
+}
