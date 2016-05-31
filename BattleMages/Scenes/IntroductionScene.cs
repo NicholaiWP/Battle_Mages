@@ -23,7 +23,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - continueButton.Width / 2, GameWorld.Camera.Position.Y + continueButton.Height * -2.5f),
                 continueButton,
                 continueButton2,
-                () => { GameWorld.ChangeScene(new LobbyScene()); },
+                () => { GameWorld.ChangeScene(new LobbyScene(GameWorld.Scene)); },
                 null,
                 false
                 ));
