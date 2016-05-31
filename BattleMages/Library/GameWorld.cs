@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace BattleMages
 {
@@ -138,21 +138,22 @@ namespace BattleMages
         protected override void Update(GameTime gameTime)
         {
             cursor.Update();
+            soundManager.Update();
 
             if (scene is MenuScene || scene is PauseScene || scene is SettingsScene || scene is SpellbookScene)
             {
                 SoundManager.PlayMusic("HubMusic");
-                SoundManager.StopSound("AmbienceSound");
+                //SoundManager.StopSound("AmbienceSound");
             }
             if (scene is LobbyScene || scene is HallwayScene)
             {
                 SoundManager.PlayMusic("HubMusic");
-                SoundManager.PlaySound("AmbienceSound");
+                //SoundManager.PlaySound("AmbienceSound");
             }
             if (scene is GameScene)
             {
                 SoundManager.PlayMusic("CombatMusic");
-                SoundManager.PlaySound("AmbienceSound");
+                //SoundManager.PlaySound("AmbienceSound");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))

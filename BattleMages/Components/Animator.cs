@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -23,6 +23,9 @@ namespace BattleMages
 
         //Array
         private Rectangle[] frames;
+
+        public string PlayingAnimationName { get { return animationName; } }
+        public int CurrentIndex { get { return currentIndex; } }
 
         /// <summary>
         /// The animator´s constructor

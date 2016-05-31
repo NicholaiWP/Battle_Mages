@@ -53,8 +53,6 @@ namespace BattleMages
 
             position = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
-
-            ProcessObjectLists();
         }
 
         public override void Draw(Drawer drawer)

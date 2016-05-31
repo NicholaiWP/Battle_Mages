@@ -44,18 +44,14 @@ namespace BattleMages
                 goWaveController.AddComponent(waveController);
                 goWaveController.SendMessage(new UpdateMsg());
             }
-
-            //Get all objects on the list before the first run of Update()
-            base.Update();
         }
 
         public override void Update()
         {
-            //MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
 
             //Playing ambient sounds using SoundManager
-            GameWorld.SoundManager.PlaySound("AmbienceSound");
+            //GameWorld.SoundManager.PlaySound("AmbienceSound");
 
             keyState = Keyboard.GetState();
 

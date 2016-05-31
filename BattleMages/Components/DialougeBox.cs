@@ -18,7 +18,8 @@ namespace BattleMages
         private int charactersToDraw = 0;
 
         private float timer = 0;
-        private const float charShowInterval = 0.03f;
+        private const float charShowInterval = 0.04f;
+        private const float punctationShowInterval = 0.05f;
 
         private CursorLockToken cursorLock;
         private MouseState prevState;
@@ -55,6 +56,13 @@ namespace BattleMages
                 {
                     charactersToDraw++;
                     timer += charShowInterval;
+                    char latest = text[charactersToDraw - 1];
+
+                    if (char.IsPunctuation(latest))
+                        timer += punctationShowInterval;
+
+                    if (!char.IsWhiteSpace(latest))
+                        GameWorld.SoundManager.PlaySound("DialougeSound");
                 }
             }
 

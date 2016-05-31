@@ -39,6 +39,8 @@ namespace BattleMages
         public float CurrentMana { get; private set; } = MaxMana;
         public bool Invincible { get { return invincibleTimer > 0f; } }
 
+        private int latestWalkIndex = -1;
+
         public Player(bool canUseSpells)
         {
             canMove = true;
@@ -232,12 +234,24 @@ namespace BattleMages
             }
             character.MoveDirection = movement;
 
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down))
-                || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up))
-                || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left))
-                || kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
+            if (movement != Vector2.Zero)
             {
-                GameWorld.SoundManager.PlaySound("WalkSound");
+                if (animator.PlayingAnimationName == "WalkLeft" || animator.PlayingAnimationName == "WalkRight")
+                {
+                    if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 12 && latestWalkIndex != 12))
+                    {
+                        GameWorld.SoundManager.PlaySound("WalkSound");
+                        latestWalkIndex = animator.CurrentIndex;
+                    }
+                }
+                if (animator.PlayingAnimationName == "WalkUp" || animator.PlayingAnimationName == "WalkDown")
+                {
+                    if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 4 && latestWalkIndex != 4) || (animator.CurrentIndex == 8 && latestWalkIndex != 8))
+                    {
+                        GameWorld.SoundManager.PlaySound("WalkSound");
+                        latestWalkIndex = animator.CurrentIndex;
+                    }
+                }
             }
 
             character.Movement();
