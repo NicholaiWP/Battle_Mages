@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -28,7 +28,7 @@ namespace BattleMages
             GameWorld.SoundManager.PlaySound("Earthspikes");
             GameWorld.SoundManager.SoundVolume = 1f;
 
-            spriteRenderer = new SpriteRenderer("Spell Images/earthspikes");
+            spriteRenderer = new SpriteRenderer("Textures/Spells/EarthSpikes");
 
             timer = 4;
             Listen<PreInitializeMsg>(PreInitialize);

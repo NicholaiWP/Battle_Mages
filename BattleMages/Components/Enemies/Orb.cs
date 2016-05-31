@@ -21,7 +21,7 @@ namespace BattleMages
         protected override void PreInitialize(PreInitializeMsg msg)
         {
             base.PreInitialize(msg);
-            GameObject.AddComponent(new SpriteRenderer("Enemy Images/orbEnemy"));
+            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/Orb"));
         }
 
         protected override void Initialize(InitializeMsg msg)

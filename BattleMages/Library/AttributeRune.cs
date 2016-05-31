@@ -12,6 +12,7 @@ namespace BattleMages
     public class AttributeRune
     {
         public delegate void RuneAction(Spell targetSpell);
+
         private RuneAction action;
 
         public string Name { get; }
@@ -44,7 +45,7 @@ namespace BattleMages
 
         public void LoadContent()
         {
-            Texture = GameWorld.Load<Texture2D>("Rune Images/" + TextureName);
+            Texture = GameWorld.Load<Texture2D>(StaticData.RuneImagePath + TextureName);
         }
     }
 }

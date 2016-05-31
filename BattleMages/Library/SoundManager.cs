@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace BattleMages
 {
@@ -48,8 +48,8 @@ namespace BattleMages
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound").CreateInstance());
             sounds.Add("BurnSound", content.Load<SoundEffect>("Sounds/BurnSound").CreateInstance());
 
-            music.Add("HubMusic", content.Load<Song>("Sounds/HubMusic"));
-            music.Add("CombatMusic", content.Load<Song>("Sounds/CombatMusic"));
+            music.Add("HubMusic", content.Load<Song>("Music/Hub"));
+            music.Add("CombatMusic", content.Load<Song>("Music/Combat"));
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = MusicVolume;

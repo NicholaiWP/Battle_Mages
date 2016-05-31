@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -22,7 +22,7 @@ namespace BattleMages
             CooldownTime = 0.7f;
             ManaCost = 12;
             ApplyAttributeRunes();
-            spriteRenderer = new SpriteRenderer("Spell Images/fireball");
+            spriteRenderer = new SpriteRenderer("Textures/Spells/Fireball");
             collider = new Collider(new Vector2(8, 8));
             GameWorld.SoundManager.PlaySound("fireball");
             GameWorld.SoundManager.SoundVolume = 0.9f;

@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -13,6 +13,7 @@ namespace BattleMages
     /// </summary>
     public static class StaticData
     {
+        public const string RuneImagePath = "Textures/Runes/";
         private static AttributeRune[] attributeRunes;
         private static BaseRune[] baseRunes;
         public static Dictionary<string, Challenge> challenges = new Dictionary<string, Challenge>();
@@ -64,27 +65,27 @@ namespace BattleMages
             {
                 new BaseRune("Fireball",
                 "A ball of fire\nwith a chance of igniting\nthe enemy with fire",
-                "fireballRune",
+                "FireballRune",
                 (p) => { return new Fireball(p); }),
 
                 new BaseRune("Icicle",
                 "Three sharp chunks of ice\nwill spread outwards",
-                "iceshardsRune",
+                "IceShardsRune",
                 (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
                 "Powerful arcane lightning that\nstrikes from the sky",
-                "lightningRune",
+                "LightningRune",
                 (p) => {return new Lightning(p); }),
 
                 new BaseRune("EarthSpikes",
                 "Sharp spikes will rise from the\nground and damage over time",
-                "earthspikesRune",
+                "EarthSpikesRune",
                 (p) => {return new EarthSpikes(p); }),
 
                 new BaseRune("FrostShield",
                 "Three orbs of frost that rotate\naround you and protect\nagainst projectiles",
-                "frostShieldRune",
+                "FrostShieldRune",
                 (p) => {return new FrostShield(p, true, 0); })
             };
 

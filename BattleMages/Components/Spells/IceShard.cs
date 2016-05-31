@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -26,7 +26,7 @@ namespace BattleMages
             ManaCost = 20;
             ApplyAttributeRunes();
 
-            spriteRenderer = new SpriteRenderer("Spell Images/ice");
+            spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(8, 8));
 
             Listen<InitializeMsg>(Initialize);

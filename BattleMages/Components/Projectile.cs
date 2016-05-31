@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -20,7 +20,7 @@ namespace BattleMages
             this.targetPos = targetPos;
             damage = enemy.Damage;
 
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Images/orbProjectile");
+            sprite = GameWorld.Instance.Content.Load<Texture2D>("Textures/Misc/OrbProjectile");
             //GameWorld.SoundManager.PlaySound("Lightning");
 
             collider = new Collider(new Vector2(8, 8));
@@ -30,7 +30,7 @@ namespace BattleMages
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
         }
-            
+
         private void PreInitialize(PreInitializeMsg msg)
         {
             GameObject.AddComponent(collider);

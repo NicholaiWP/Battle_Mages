@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -30,7 +30,7 @@ namespace BattleMages
             existenceTimer = 7;
             ManaCost = 40;
             ApplyAttributeRunes();
-            spriteRenderer = new SpriteRenderer("Spell Images/ice");
+            spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
             //This makes sure all FrostShields have the same starting angle so that their rotation looks amazing
             FrostShield firstOtherFrostshield = GameWorld.Scene.ActiveObjects

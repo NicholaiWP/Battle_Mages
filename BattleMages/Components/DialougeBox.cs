@@ -32,11 +32,11 @@ namespace BattleMages
 
         private void Initialize(InitializeMsg msg)
         {
-            boxTexture = GameWorld.Load<Texture2D>("Images/DialougeBox");
+            boxTexture = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialougeBox");
             textFont = GameWorld.Load<SpriteFont>("FontBM");
 
-            Texture2D closeBtnTex = GameWorld.Load<Texture2D>("Images/Button_Rune");
-            Texture2D closeBtnTex2 = GameWorld.Load<Texture2D>("Images/Button_Rune_Hover");
+            Texture2D closeBtnTex = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            Texture2D closeBtnTex2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
             closeBtnObj = ObjectBuilder.BuildButton(new Vector2(0, 0), closeBtnTex, closeBtnTex2, () => { GameWorld.Scene.RemoveObject(GameObject); });
             GameWorld.Scene.AddObject(closeBtnObj);
         }

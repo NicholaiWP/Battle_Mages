@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -22,7 +22,7 @@ namespace BattleMages
         {
             Size = size;
             Solid = solid;
-            debugTexture = GameWorld.Instance.Content.Load<Texture2D>("Images/CollisionTexture");
+            debugTexture = GameWorld.Instance.Content.Load<Texture2D>("Textures/Misc/CollisionTexture");
 
             Listen<InitializeMsg>(Initialize);
             Listen<DrawMsg>(Draw);

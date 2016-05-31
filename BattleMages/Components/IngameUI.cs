@@ -23,10 +23,10 @@ namespace BattleMages
         private Texture2D aboveUI;
         private Texture2D behindUI;
 
-        float healthbarSize = 1f;
-        float manabarSize = 1f;
+        private float healthbarSize = 1f;
+        private float manabarSize = 1f;
 
-        Player player;
+        private Player player;
 
         private SpriteFont haxFont;
 
@@ -39,17 +39,17 @@ namespace BattleMages
 
         private void Initialize(InitializeMsg msg)
         {
-            behindUI = GameWorld.Load<Texture2D>("images/behindUI");
-            aboveUI = GameWorld.Load<Texture2D>("images/aboveUI");
             haxFont = GameWorld.Load<SpriteFont>("FontBM");
-            healthBar = GameWorld.Load<Texture2D>("images/healthBar");
-            manaBar = GameWorld.Load<Texture2D>("images/manaBar");
-            spellbarBgTex = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
-            spellTwoSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
-            spellThreeSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
-            spellFourSprite = GameWorld.Load<Texture2D>("images/spellSpriteBackground1");
-            coinsSprite = GameWorld.Load<Texture2D>("images/coinsSprite");
-            
+
+            behindUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIBackground");
+            aboveUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIForeground");
+            healthBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/HealthBar");
+            manaBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/ManaBar");
+            spellbarBgTex = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarSpell");
+            spellTwoSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarSpell");
+            spellThreeSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarSpell");
+            spellFourSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarSpell");
+            coinsSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/Coin");
         }
 
         private void Update(UpdateMsg msg)
@@ -58,7 +58,7 @@ namespace BattleMages
             if (player != null)
             {
                 healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / (float)Player.MaxHealth, GameWorld.DeltaTime * 10f));
-                manabarSize = Math.Max(0,MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
+                manabarSize = Math.Max(0, MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
             }
         }
 
@@ -83,8 +83,8 @@ namespace BattleMages
 
             if (player != null)
             {
-                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthBarPos, scale: new Vector2(healthbarSize,1));
-                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize,1));
+                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthBarPos, scale: new Vector2(healthbarSize, 1));
+                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize, 1));
             }
 
             msg.Drawer[DrawLayer.AboveUI].Draw(aboveUI, position: topLeft);
@@ -93,18 +93,18 @@ namespace BattleMages
             int space = spellbarBgTex.Width + 8;
             int num = GameWorld.State.SpellBar.Count;
 
-            for (int i=0;i<num;i++)
+            for (int i = 0; i < num; i++)
             {
                 SpellInfo spell = GameWorld.State.SpellBook[GameWorld.State.SpellBar[i]];
-                
-                Vector2 pos = new Vector2(spellBarCenter.X - (space * num)/2f + space * i, spellBarCenter.Y);
+
+                Vector2 pos = new Vector2(spellBarCenter.X - (space * num) / 2f + space * i, spellBarCenter.Y);
                 msg.Drawer[DrawLayer.UI].Draw(spellbarBgTex, position: pos - GetHalfSize(spellbarBgTex));
 
                 Texture2D baseRuneTex = spell.GetBaseRune().Texture;
                 msg.Drawer[DrawLayer.UI].Draw(baseRuneTex, position: pos - GetHalfSize(baseRuneTex));
 
                 Vector2[] runePositions = new Vector2[] { new Vector2(0, -6), new Vector2(6, 0), new Vector2(0, 6), new Vector2(-6, 0) };
-                for (int j=0;j<SpellInfo.AttributeRuneSlotCount;j++)
+                for (int j = 0; j < SpellInfo.AttributeRuneSlotCount; j++)
                 {
                     AttributeRune attrRune = spell.GetAttributeRune(j);
                     if (attrRune != null)
@@ -121,12 +121,9 @@ namespace BattleMages
             msg.Drawer[DrawLayer.UI].Draw(coinsSprite, position: new Vector2(topRight.X - (coinsSprite.Width + offset), topRight.Y));
         }
 
-        Vector2 GetHalfSize(Texture2D tex)
+        private Vector2 GetHalfSize(Texture2D tex)
         {
             return new Vector2(tex.Width, tex.Height) / 2f;
         }
-
-
     }
-      
 }

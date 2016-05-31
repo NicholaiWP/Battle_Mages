@@ -99,10 +99,10 @@ namespace BattleMages
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            defaultTex = content.Load<Texture2D>("Images/Bmcursor2");
+            defaultTex = content.Load<Texture2D>("Textures/Cursors/Normal");
             activeTex = defaultTex;
 
-            variations.Add(CursorStyle.Interactable, content.Load<Texture2D>("Images/Bmcursor1"));
+            variations.Add(CursorStyle.Interactable, content.Load<Texture2D>("Textures/Cursors/Interactable"));
         }
 
         public void Update()

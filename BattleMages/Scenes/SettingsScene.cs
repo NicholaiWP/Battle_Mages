@@ -29,7 +29,7 @@ namespace BattleMages
             graphics = GameWorld.Graphics;
             var content = GameWorld.Instance.Content;
             //Back button
-            var backSpr = content.Load<Texture2D>("Images/Back");
+            var backSpr = content.Load<Texture2D>("Textures/UI/Menu/Back");
             AddObject(ObjectBuilder.BuildButton(
                     new Vector2(GameWorld.Camera.Position.X - backSpr.Width / 2, GameWorld.Camera.Position.Y + backSpr.Height * 2f),
                     backSpr,
@@ -40,7 +40,7 @@ namespace BattleMages
              settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindLeft));
              settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindRight));*/
             //Keybind up
-            var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
+            var keyBindUpSpr = content.Load<Texture2D>("Textures/UI/Menu/Rebind");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
                 keyBindUpSpr,
@@ -51,7 +51,7 @@ namespace BattleMages
                     ChosenKeyToRebind = PlayerBind.Up;
                 }));
             //Res down
-            var resDown = content.Load<Texture2D>("Images/ResDown");
+            var resDown = content.Load<Texture2D>("Textures/UI/Menu/ResDown");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - 64 - resDown.Width / 2, GameWorld.Camera.Position.Y - 50),
                 resDown,
@@ -59,7 +59,7 @@ namespace BattleMages
                 () => { ElementAtNumber--; }
                 ));
             //Res up
-            var resUp = content.Load<Texture2D>("Images/ResUp");
+            var resUp = content.Load<Texture2D>("Textures/UI/Menu/ResUp");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X + 64 - resUp.Width / 2, GameWorld.Camera.Position.Y - 50),
                 resUp,
@@ -68,7 +68,7 @@ namespace BattleMages
                 ));
 
             fontBM = content.Load<SpriteFont>("FontBM");
-            background = content.Load<Texture2D>("Images/BMmenu");
+            background = content.Load<Texture2D>("Textures/Backgrounds/Menu");
             DisplayMode lastResolution = null;
             int i = 0;
             foreach (DisplayMode dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)

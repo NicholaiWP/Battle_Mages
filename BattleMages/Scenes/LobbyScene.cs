@@ -24,8 +24,8 @@ namespace BattleMages
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
-            lobbyTexture = content.Load<Texture2D>("Backgrounds/BMtavern");
-            lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
+            lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Lobby");
+            lobbyTextureForeground = content.Load<Texture2D>("Textures/Backgrounds/LobbyLighting");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 90 + 8), new Vector2(320, 16)));
@@ -45,7 +45,7 @@ namespace BattleMages
 
             //Door guard
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
-            doorGuardObj.AddComponent(new SpriteRenderer("Images/GdMageBM"));
+            doorGuardObj.AddComponent(new SpriteRenderer("Textures/Misc/apple"));
             doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
             doorGuardObj.AddComponent(new Interactable(() =>
             {

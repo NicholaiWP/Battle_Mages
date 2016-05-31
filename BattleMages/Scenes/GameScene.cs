@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -19,7 +19,7 @@ namespace BattleMages
         {
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
-            ellipse.AddComponent(new SpriteRenderer("Images/BMarena"));
+            ellipse.AddComponent(new SpriteRenderer("Textures/Backgrounds/Arena"));
             AddObject(ellipse);
 
             //Making a player

@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -12,7 +12,7 @@ namespace BattleMages
         public static GameObject BuildPlayer(Vector2 position, bool canUseSpells)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer("Player Images/playerSpriteSheet", true)
+            gameObject.AddComponent(new SpriteRenderer("Textures/Player/PlayerSheet", true)
             { Rectangle = new Rectangle(0, 0, 32, 32) });
             gameObject.AddComponent(new Animator());
             gameObject.AddComponent(new Player(canUseSpells));

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
-   public class DeathScene: Scene
+    public class DeathScene : Scene
     {
         private Texture2D deathTexture;
         private Vector2 deathPos;
@@ -19,9 +19,9 @@ namespace BattleMages
         public DeathScene()
         {
             var content = GameWorld.Instance.Content;
-            Vector2 middle = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth/2), (GameWorld.GameHeight/2));
+            Vector2 middle = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             deathPos = middle;
-            deathTexture = content.Load<Texture2D>("Images/died_new");
+            deathTexture = content.Load<Texture2D>("Textures/Backgrounds/Death");
         }
 
         public override void Update()
@@ -30,7 +30,7 @@ namespace BattleMages
             //if "R" is pressed, return to the menu
             if (keyState.IsKeyDown(Keys.R))
             {
-               GameWorld.ChangeScene(new MenuScene());               
+                GameWorld.ChangeScene(new MenuScene());
             }
 
             base.Update();

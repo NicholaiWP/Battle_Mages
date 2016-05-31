@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace BattleMages
 {
@@ -19,7 +19,7 @@ namespace BattleMages
         {
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
-            lobbyTexture = content.Load<Texture2D>("Backgrounds/Hallway_proto");
+            lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Hallway");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 180 + 8), new Vector2(64, 16)));
