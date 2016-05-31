@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -68,6 +68,40 @@ namespace BattleMages
             float angleTowardsTarget = (float)Math.Atan2(vector.Y, vector.X);
             float angleCw = angleTowardsTarget + MathHelper.ToRadians(rotationDegrees);
             return new Vector2((float)Math.Cos(angleCw), (float)Math.Sin(angleCw));
+        }
+
+        public static bool ContainsSubstring(string haystack, string needle)
+        {
+            if (haystack == null)
+            {
+                return false;
+            }
+            return haystack.Substring(0, 4).Contains(needle);
+        }
+
+        public static string WarpText(string text, int width, SpriteFont font)
+        {
+            int lastWhitespace = 0;
+            Vector2 currentTargetSize;
+            StringBuilder output = new StringBuilder();
+
+            string newline = Environment.NewLine;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+                if (char.IsWhiteSpace(c))
+                    lastWhitespace = output.Length;
+                output.Append(c);
+                currentTargetSize = font.MeasureString(output);
+                if (currentTargetSize.X > width)
+                {
+                    output.Insert(lastWhitespace, newline);
+                    output.Remove(lastWhitespace + newline.Length, 1);
+                }
+            }
+
+            return output.ToString();
         }
     }
 }

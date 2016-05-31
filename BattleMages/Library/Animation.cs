@@ -17,10 +17,10 @@ namespace BattleMages
         private Rectangle[] frames;
 
         //Properties
-        public float GetFps { get { return fps; } }
+        public float Fps { get { return fps; } }
 
-        public Vector2 GetOffset { get { return offset; } }
-        public Rectangle[] GetFrames { get { return frames; } }
+        public Vector2 Offset { get { return offset; } }
+        public Rectangle[] Frames { get { return frames; } }
 
         /// <summary>
         /// The Constructer for the animation
@@ -34,13 +34,13 @@ namespace BattleMages
         /// <param name="offset"></param>
         public Animation(int framesCount, int yPos, int xStartFrame, int width, int height, float fps, Vector2 offset)
         {
-            this.frames = new Rectangle[framesCount];
+            frames = new Rectangle[framesCount];
             this.offset = offset;
             this.fps = fps;
 
             for (int i = 0; i < framesCount; i++)
             {
-                GetFrames[i] = new Rectangle((i + xStartFrame) * width, yPos, width, height);
+                frames[i] = new Rectangle((i + xStartFrame) * width, yPos, width, height);
             }
         }
     }

@@ -23,7 +23,7 @@ namespace BattleMages
         /// <param name="position"></param>
         public GameObject(Vector2 position)
         {
-            Transform = new Transform(this, position);
+            Transform = new Transform(position);
             AddComponent(Transform);
         }
 
@@ -36,6 +36,8 @@ namespace BattleMages
             if (!components.Any(a => a.GetType() == component.GetType()))
             {
                 componentsToAdd.Add(component);
+                component.GameObject = this;
+                component.SendMessage(new PreInitializeMsg());
             }
             else
             {
@@ -74,12 +76,17 @@ namespace BattleMages
 
             if (message is UpdateMsg)
             {
+                //Add components to be added
+                //Step 1: Add to component list
                 foreach (Component comp in componentsToAdd)
                     components.Add(comp);
 
-                foreach (Component comp in componentsToAdd)
+                List<Component> componentsToInitialize = new List<Component>(componentsToAdd);
+                //Step 2: Initialize
+                foreach (Component comp in componentsToInitialize)
                     comp.SendMessage(new InitializeMsg());
 
+                //Remove components to be removed
                 foreach (Component comp in componentsToRemove)
                     components.Remove(comp);
 

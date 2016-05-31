@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -11,12 +12,12 @@ namespace BattleMages
     public class AttributeRune
     {
         public delegate void RuneAction(Spell targetSpell);
-
         private RuneAction action;
 
         public string Name { get; }
         public string Description { get; }
         public string TextureName { get; }
+        public Texture2D Texture { get; private set; }
 
         /// <summary>
         /// Creates a new attribute rune with a name, a description, and a delegate method to call when applying the rune to a spell.
@@ -39,6 +40,11 @@ namespace BattleMages
         public void ApplyChanges(Spell targetSpell)
         {
             action(targetSpell);
+        }
+
+        public void LoadContent()
+        {
+            Texture = GameWorld.Load<Texture2D>("Rune Images/" + TextureName);
         }
     }
 }

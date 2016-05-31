@@ -1,20 +1,19 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
     public class Button : Component
     {
         private bool hovering;
-        Texture2D normalTex;
-        Texture2D hoverTex;
-        private Texture2D[] sprites = new Texture2D[2];
+        private Texture2D normalTex;
+        private Texture2D hoverTex;
         private Rectangle rectangle;
 
         private ClickDelegate onClick;
@@ -33,19 +32,23 @@ namespace BattleMages
             }
         }
 
-        public Button(GameObject gameObject, Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false) : base(gameObject)
+        public Button(Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false)
         {
-            startPos = GameObject.Transform.Position;
-            offset = GameObject.Transform.Position.Y * 0.02f;
-
             this.normalTex = normalTex;
             this.hoverTex = hoverTex;
             this.onClick = onClick;
             this.onRightClick = onRightClick;
             this.wiggle = wiggle;
 
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
+        }
+
+        private void Initialize(InitializeMsg message)
+        {
+            startPos = GameObject.Transform.Position;
+            offset = GameObject.Transform.Position.Y * 0.02f;
         }
 
         private void Update(UpdateMsg msg)
@@ -63,17 +66,14 @@ namespace BattleMages
             if (rectangle.Contains(GameWorld.Cursor.Position))
             {
                 hovering = true;
+                GameWorld.Cursor.SetCursor(CursorStyle.Interactable);
 
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed &&
-                    GameWorld.Cursor.CanClick)
+                if (GameWorld.Cursor.LeftButtonPressed)
                 {
-                    GameWorld.Cursor.CanClick = false;
-                    //Invoke the onClick delegate when the button is clicked
-                    onClick();
+                    onClick?.Invoke();
                 }
-                else if (Mouse.GetState().RightButton == ButtonState.Pressed && GameWorld.Cursor.CanClick)
+                else if (GameWorld.Cursor.RightButtonPressed)
                 {
-                    GameWorld.Cursor.CanClick = false;
                     onRightClick?.Invoke();
                 }
             }

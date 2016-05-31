@@ -10,14 +10,15 @@ namespace BattleMages
     public class EarthSpikes : Spell
     {
         private Collider collider;
+        private SpriteRenderer spriteRenderer;
         private Texture2D sprite;
         private float timer;
         private float damageTimer;
+        private SpellCreationParams p;
 
-        public EarthSpikes(GameObject go, SpellCreationParams p) : base(go, p)
+        public EarthSpikes(SpellCreationParams p) : base(p)
         {
-            GameObject.Transform.Position = p.AimTarget;
-
+            this.p = p;
             Damage = 10;
             damageTimer = 0;
             CooldownTime = 3;
@@ -27,17 +28,33 @@ namespace BattleMages
             GameWorld.SoundManager.PlaySound("Earthspikes");
             GameWorld.SoundManager.SoundVolume = 1f;
 
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/earthspikes");
-            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
-            GameObject.AddComponent(collider);
-            timer = 4;
+            spriteRenderer = new SpriteRenderer("Spell Images/earthspikes");
 
+            timer = 4;
+            Listen<PreInitializeMsg>(PreInitialize);
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
+        }
+
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(spriteRenderer);
+        }
+
+        private void Initialize(InitializeMsg msg)
+        {
+            GameObject.Transform.Position = p.AimTarget;
         }
 
         private void Update(UpdateMsg msg)
         {
+            if (GameObject.GetComponent<Collider>() == null)
+            {
+                collider = new Collider(new Vector2(GameObject.GetComponent<SpriteRenderer>().Sprite.Width,
+                    GameObject.GetComponent<SpriteRenderer>().Sprite.Height));
+                GameObject.AddComponent(collider);
+            }
+
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 var enemy = other.GameObject.GetComponent<Enemy>();
@@ -45,7 +62,6 @@ namespace BattleMages
                 {
                     damageTimer = 0.6f;
                     enemy.TakeDamage(Damage);
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
                 }
             }
             timer -= GameWorld.DeltaTime;
@@ -57,11 +73,6 @@ namespace BattleMages
             {
                 damageTimer -= GameWorld.DeltaTime;
             }
-        }
-
-        private void Draw(DrawMsg msg)
-        {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
         }
     }
 }

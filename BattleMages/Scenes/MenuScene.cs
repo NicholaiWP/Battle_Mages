@@ -24,7 +24,7 @@ namespace BattleMages
                 new Vector2(GameWorld.Camera.Position.X - playSpr1.Width / 2, GameWorld.Camera.Position.Y + playSpr1.Height * -1f),
                 playSpr1,
                 playSpr2,
-                () => { GameWorld.ChangeScene(new LobbyScene(GameWorld.Scene)); },
+                () => { GameWorld.ChangeScene(new IntroductionScene()); },
                 null,
                 true
                 ));

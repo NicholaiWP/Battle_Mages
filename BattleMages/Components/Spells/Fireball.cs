@@ -9,35 +9,40 @@ namespace BattleMages
 {
     public class Fireball : Spell
     {
-        private Texture2D sprite;
         private Vector2 velocity;
         private Collider collider;
+        private SpriteRenderer spriteRenderer;
         private Vector2 diff;
+        private SpellCreationParams p;
 
-        public Fireball(GameObject go, SpellCreationParams p) : base(go, p)
+        public Fireball(SpellCreationParams p) : base(p)
         {
-            Damage = 15;
-            CooldownTime = 0.8f;
-            ManaCost = 15;
+            this.p = p;
+            Damage = 12;
+            CooldownTime = 0.7f;
+            ManaCost = 12;
             ApplyAttributeRunes();
-
-            diff = p.AimTarget - GameObject.Transform.Position;
-            diff.Normalize();
-            velocity = diff * 150;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/fireball");
-
-            collider = new Collider(GameObject, new Vector2(8, 8));
-            GameObject.AddComponent(collider);
+            spriteRenderer = new SpriteRenderer("Spell Images/fireball");
+            collider = new Collider(new Vector2(8, 8));
             GameWorld.SoundManager.PlaySound("fireball");
             GameWorld.SoundManager.SoundVolume = 0.9f;
 
+            Listen<PreInitializeMsg>(PreInitialize);
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
         }
 
-        private void Draw(DrawMsg msg)
+        private void PreInitialize(PreInitializeMsg msg)
         {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position, Color.White);
+            GameObject.AddComponent(spriteRenderer);
+            GameObject.AddComponent(collider);
+        }
+
+        private void Initialize(InitializeMsg msg)
+        {
+            diff = p.AimTarget - GameObject.Transform.Position;
+            diff.Normalize();
+            velocity = diff * 150;
         }
 
         private void Update(UpdateMsg msg)
@@ -49,7 +54,8 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+                    enemy.Onfire(6);
+
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
             }

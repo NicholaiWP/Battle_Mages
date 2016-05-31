@@ -9,12 +9,12 @@ namespace BattleMages
 {
     public enum FacingDirection
     {
-        Left, Right, Back, Front
+        Left, Right, Up, Down
     }
 
     public class Character : Component
     {
-        //private FacingDirection fDirection;
+        private FacingDirection fDirection;
         private Collider collider;
 
         /// <summary>
@@ -26,6 +26,7 @@ namespace BattleMages
         /// Max move speed of this character in units/second
         /// </summary>
         public float MoveSpeed { get; set; } = 100;
+
         /// <summary>
         /// Number of units/second this character accelerates with to reach its max speed
         /// </summary>
@@ -36,9 +37,12 @@ namespace BattleMages
         /// </summary>
         public Vector2 Velocity { get; private set; }
 
-        public Character(GameObject gameObject) : base(gameObject)
+        public FacingDirection FDirection { set { fDirection = value; } }
+
+        public Character()
         {
             Listen<InitializeMsg>(Initialize);
+            fDirection = FacingDirection.Down;
         }
 
         private void Initialize(InitializeMsg msg)
@@ -50,19 +54,6 @@ namespace BattleMages
         {
             if (MoveDirection != Vector2.Zero)
                 MoveDirection.Normalize(); //Make sure MoveDirection is normalized
-
-            //TODO: Use this for setting the FacingDirection
-            //float angle = (float)Math.Atan2(MoveDirection.X, MoveDirection.Y);
-            //System.Diagnostics.Debug.WriteLine(angle);
-
-            /*if (Right)
-                fDirection = FacingDirection.Right;
-            else if (Left)
-                fDirection = FacingDirection.Left;
-            else if (Up)
-                fDirection = FacingDirection.Back;
-            else if (Down)
-                fDirection = FacingDirection.Front;*/
 
             //Move velocity towards target velocity using MoveAccel
             Vector2 targetVelocity = MoveDirection * MoveSpeed;
@@ -93,7 +84,7 @@ namespace BattleMages
 
             //Limit the translation (along with the velocity) based on horizontal collisions
             if ((translation.X > 0 && collisionRight) || (translation.X < 0 && collisionLeft))
-            { 
+            {
                 translation.X = 0;
                 Velocity = new Vector2(0, Velocity.Y);
             }
@@ -102,6 +93,19 @@ namespace BattleMages
             {
                 translation.Y = 0;
                 Velocity = new Vector2(Velocity.X, 0);
+            }
+
+            if (translation == Vector2.Zero)
+            {
+                if (GameObject.GetComponent<Animator>() != null && GameObject.GetComponent<Player>() != null)
+                {
+                    GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
+                }
+            }
+            else
+            {
+                if (GameObject.GetComponent<Player>() != null)
+                    GameObject.GetComponent<Animator>().PlayAnimation("Walk" + fDirection.ToString());
             }
 
             GameObject.Transform.Translate(translation);

@@ -15,6 +15,7 @@ namespace BattleMages
     {
         private static AttributeRune[] attributeRunes;
         private static BaseRune[] baseRunes;
+        public static Dictionary<string, Challenge> challenges = new Dictionary<string, Challenge>();
 
         public static ReadOnlyCollection<BaseRune> BaseRunes
         {
@@ -37,18 +38,18 @@ namespace BattleMages
             //Add new attribute runes to this array
             attributeRunes = new AttributeRune[]
             {
-                new AttributeRune("Damage up rune",
-                "Increase damage on spell",
+                new AttributeRune("Rune of Might",
+                "Increases the damage of\nthis spell.",
                 "rune1",
                 DamageUpRune),
 
-                new AttributeRune("Decrease mana cost",
-                "Lower Mana cost by half",
+                new AttributeRune("Rune of Persistence",
+                "Makes this spell use\nless mana.",
                 "rune2",
                 DecreaseManaCostRune),
 
-                new AttributeRune("Lower spell cooldown",
-                "reduces Cooldown on spells",
+                new AttributeRune("Rune of Haste",
+                "Lets you cast this spell faster.",
                 "rune3",
                 DescreaseCooldown),
 
@@ -62,30 +63,73 @@ namespace BattleMages
             baseRunes = new BaseRune[]
             {
                 new BaseRune("Fireball",
-                "A ball of fire",
+                "A ball of fire\nwith a chance of igniting\nthe enemy with fire",
                 "fireballRune",
-                (go, p) => { return new Fireball(go, p); }),
+                (p) => { return new Fireball(p); }),
 
                 new BaseRune("Icicle",
-                "Sharp chunks of ice",
+                "Three sharp chunks of ice\nwill spread outwards",
                 "iceshardsRune",
-                (go, p) => { return new IceShard(go, p, true); }),
+                (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
-                "A fierce lightning which strikes\n from the sky",
+                "Powerful arcane lightning that\nstrikes from the sky",
                 "lightningRune",
-                (go, p) => {return new Lightning(go, p); }),
+                (p) => {return new Lightning(p); }),
 
                 new BaseRune("EarthSpikes",
-                "Hard spikes will rise from the\n ground",
+                "Sharp spikes will rise from the\nground and damage over time",
                 "earthspikesRune",
-               (go, p) => {return new EarthSpikes(go, p); }),
+                (p) => {return new EarthSpikes(p); }),
 
                 new BaseRune("FrostShield",
-                "Make 4 orbs of ice that rotate around you",
+                "Three orbs of frost that rotate\naround you and protect\nagainst projectiles",
                 "frostShieldRune",
-                (go, p) => {return new FrostShield(go, p, true, 0); })
+                (p) => {return new FrostShield(p, true, 0); })
             };
+
+            challenges.Add("Novice", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(25,30),
+                new Vector2(-20, -30), new Vector2(120, 90)},
+                () =>  new List<Enemy> { new Golem(), new Orb(), new Slime() }),
+                new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300),
+                new Vector2(-300, 0), new Vector2(0, -300) },
+                () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem() }),
+                new Wave(new List<Vector2> { new Vector2(200,0), new Vector2(200, 10), new Vector2(200, -10),
+                new Vector2(200, 20), new Vector2(200,-20), new Vector2(210,0),
+                new Vector2(190,0), new Vector2(220,0), new Vector2(180,0)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Orb(),
+                new Orb(),new Orb(),new Orb(),new Orb() })}));
+
+            challenges.Add("Skilled", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+                new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
+                () => new List<Enemy> {new Golem(), new Golem(), new Orb(), new Orb()}),
+                new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
+                new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Golem(), new Golem(),
+                new Golem(), new Golem(), new Slime(), new Slime(), new Slime(), new Slime()})}));
+
+            //Goltastic
+            challenges.Add("Intermediate", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+                new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
+                () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem()}),
+                new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
+                new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+                () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
+                new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
+        }
+
+        public static void LoadContent()
+        {
+            foreach (AttributeRune attrRune in attributeRunes)
+            {
+                attrRune.LoadContent();
+            }
+            foreach (BaseRune baseRune in baseRunes)
+            {
+                baseRune.LoadContent();
+            }
         }
 
         private static void DamageUpRune(Spell spell)
@@ -95,7 +139,7 @@ namespace BattleMages
 
         private static void DecreaseManaCostRune(Spell spell)
         {
-            spell.ManaCost -= (int)(spell.ManaCost * 0.50f);
+            spell.ManaCost = (int)(spell.ManaCost * 0.75f);
         }
 
         private static void DescreaseCooldown(Spell spell)
@@ -105,7 +149,6 @@ namespace BattleMages
 
         private static void CollideAbilityRune(Spell spell)
         {
-            //work in progress
         }
     }
 }

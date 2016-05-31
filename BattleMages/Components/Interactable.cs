@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
@@ -12,11 +14,11 @@ namespace BattleMages
         private Collider collider;
         private Action action;
 
-        public Interactable(GameObject gameObject, Action action) : base(gameObject)
+        public Interactable(Action action)
         {
             this.action = action;
             Listen<InitializeMsg>(Initialize);
-            Listen<UpdateMsg>(Update);  
+            Listen<UpdateMsg>(Update);
         }
 
         private void Initialize(InitializeMsg msg)
@@ -26,10 +28,9 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            if (collider.CalcColliderRect().Contains(GameWorld.Cursor.Position))
+            if (collider.CalcColliderRect().Contains(GameWorld.Cursor.Position) && !GameWorld.Cursor.CursorLocked)
             {
                 GameWorld.Cursor.SetCursor(CursorStyle.Interactable);
-                MouseState mouseState = Mouse.GetState();
                 if (GameWorld.Cursor.LeftButtonPressed)
                 {
                     action();

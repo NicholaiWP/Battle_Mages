@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -14,17 +14,36 @@ namespace BattleMages
         Interactable
     }
 
+    public class CursorLockToken
+    {
+        public event EventHandler OnUnlock;
+
+        public CursorLockToken()
+        {
+        }
+
+        public void Unlock()
+        {
+            OnUnlock?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     public class Cursor
     {
-        Texture2D defaultTex;
-        Dictionary<CursorStyle, Texture2D> variations = new Dictionary<CursorStyle, Texture2D>();
+        private Texture2D defaultTex;
+        private Dictionary<CursorStyle, Texture2D> variations = new Dictionary<CursorStyle, Texture2D>();
 
-        Texture2D activeTex;
+        private Texture2D activeTex;
 
         private Vector2 position;
-        private bool canClick = true;
 
-        private bool leftButtonHeld = false;
+        //As long as this list has entries mouse clicks will not be registered
+        private List<CursorLockToken> lockTokens = new List<CursorLockToken>();
+
+        private bool leftButtonPressed;
+        private bool leftButtonHeld;
+        private bool rightButtonPressed;
+        private bool rightButtonHeld;
 
         /// <summary>
         /// In this property the position is set equal to the transformed mouse position,
@@ -48,9 +67,30 @@ namespace BattleMages
             }
         }
 
-        public bool CanClick { get { return canClick; } set { canClick = value; } }
+        /// <summary>
+        /// Returns true if the cursor is currently locked.
+        /// </summary>
+        public bool CursorLocked { get { return lockTokens.Count > 0; } }
 
-        public bool LeftButtonPressed { get; private set; }
+        /// <summary>
+        /// Returns true if the left mouse button has been pressed this frame.
+        /// </summary>
+        public bool LeftButtonPressed { get { return leftButtonPressed && !CursorLocked; } }
+
+        /// <summary>
+        /// Returns true if the left mouse button is currently held down.
+        /// </summary>
+        public bool LeftButtonHeld { get { return leftButtonHeld && !CursorLocked; } }
+
+        /// <summary>
+        /// Returns true if the right mouse button has been pressed this frame.
+        /// </summary>
+        public bool RightButtonPressed { get { return rightButtonPressed && !CursorLocked; } }
+
+        /// <summary>
+        /// Returns true if the right mouse button is currently held down.
+        /// </summary>
+        public bool RightButtonHeld { get { return rightButtonHeld && !CursorLocked; } }
 
         /// <summary>
         /// Method for loading the content of the cursor, it is the pictures that are placed in an array
@@ -73,11 +113,11 @@ namespace BattleMages
                 if (!leftButtonHeld)
                 {
                     leftButtonHeld = true;
-                    LeftButtonPressed = true;
+                    leftButtonPressed = true;
                 }
                 else
                 {
-                    LeftButtonPressed = false;
+                    leftButtonPressed = false;
                 }
             }
             else
@@ -85,9 +125,42 @@ namespace BattleMages
                 if (leftButtonHeld)
                 {
                     leftButtonHeld = false;
-                    LeftButtonPressed = false;
+                    leftButtonPressed = false;
                 }
             }
+
+            if (state.RightButton == ButtonState.Pressed)
+            {
+                if (!rightButtonHeld)
+                {
+                    rightButtonHeld = true;
+                    rightButtonPressed = true;
+                }
+                else
+                {
+                    rightButtonPressed = false;
+                }
+            }
+            else
+            {
+                if (rightButtonHeld)
+                {
+                    rightButtonHeld = false;
+                    rightButtonPressed = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Locks the cursor (Causing its button properties to always return false) until Unlock() is called on the returned lock token.
+        /// </summary>
+        /// <returns></returns>
+        public CursorLockToken Lock()
+        {
+            CursorLockToken token = new CursorLockToken();
+            lockTokens.Add(token);
+            token.OnUnlock += (sender, e) => { lockTokens.Remove(token); };
+            return token;
         }
 
         public void SetCursor(CursorStyle style)

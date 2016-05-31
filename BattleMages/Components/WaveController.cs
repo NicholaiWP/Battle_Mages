@@ -8,32 +8,25 @@ namespace BattleMages
 {
     public class WaveController : Component
     {
-        private Dictionary<int, Wave> waves = new Dictionary<int, Wave>();
+        private int waveNumber;
+        private List<Wave> waves;
 
-        public WaveController(GameObject gameObject) : base(gameObject)
+        public WaveController(List<Wave> waves)
         {
-            waves.Add(1, new Wave(new List<Vector2> { new Vector2(25,30),
-                new Vector2(-20, -30), new Vector2(120, 90)},
-                new List<Enemy> { new Golem(null), new Orb(null), new Slime(null) }));
-
-            waves.Add(2, new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300), new Vector2(-300, 0), new Vector2(0, -300) },
-                new List<Enemy> { new Golem(null), new Golem(null), new Golem(null), new Golem(null), }));
-
-            waves.Add(3, new Wave(new List<Vector2> { new Vector2(200,0), new Vector2(200, 10), new Vector2(200, -10), new Vector2(200, 20),
-            new Vector2(200,-20), new Vector2(210,0), new Vector2(190,0), new Vector2(220,0), new Vector2(180,0)},
-            new List<Enemy> { new Orb(null), new Orb(null), new Orb(null), new Orb(null), new Orb(null),
-            new Orb(null),new Orb(null),new Orb(null),new Orb(null) }));
+            waveNumber = 0;
+            this.waves = new List<Wave>(waves);
         }
 
-        public void NewWave(int waveNumber)
+        public void UpdateWave()
         {
-            if (waves.ContainsKey(waveNumber))
+            if (waves.Count > waveNumber)
             {
-                for (int i = 0; i < waves[waveNumber].enemies.Count; i++)
+                for (int i = 0; i < waves[waveNumber].Enemies.Count; i++)
                 {
                     GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[waveNumber].positions[i],
-                        waves[waveNumber].enemies[i]));
+                        waves[waveNumber].Enemies[i]));
                 }
+                waveNumber++;
             }
             else
             {

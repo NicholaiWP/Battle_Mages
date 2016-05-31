@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -28,8 +28,10 @@ namespace BattleMages
 
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
+
             shopKeeperPosition = new Vector2(114, -30);
-            lobbyTexture = content.Load<Texture2D>("Backgrounds/Tavern");
+    
+            lobbyTexture = content.Load<Texture2D>("Backgrounds/BMtavern");
             lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
             shopKeeperTexture = content.Load<Texture2D>("Images/WZRD");
 
@@ -41,18 +43,30 @@ namespace BattleMages
 
             //Door trigger
             GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
-            doorTriggerGameObject.AddComponent(new Collider(doorTriggerGameObject, new Vector2(38, 98)));
-            doorTriggerGameObject.AddComponent(new Interactable(doorTriggerGameObject, () =>
-            {
-                GameWorld.ChangeScene(new HallwayScene()); GameWorld.SoundManager.PlaySound("openHallwayDoor1");
-                GameWorld.SoundManager.SoundVolume = 1f;
-            }));
+            doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
+            doorTriggerGameObject.AddComponent(new Interactable(() =>
+           {
+               GameWorld.ChangeScene(new ChallengeScene());
+               GameWorld.SoundManager.SoundVolume = 1f;
+           }));
             AddObject(doorTriggerGameObject);
+
+            //Door guard
+            GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
+            doorGuardObj.AddComponent(new SpriteRenderer("Images/GdMageBM"));
+            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
+            doorGuardObj.AddComponent(new Interactable(() =>
+            {
+                GameObject dialougeObj = new GameObject(Vector2.Zero);
+                dialougeObj.AddComponent(new DialougeBox("Greetings, magician. The door next to me is where the 'magick' happen *laughs*. Once you enter you can not go back until you've overcome the challenge. Good luck."));
+                AddObject(dialougeObj);
+            }));
+            AddObject(doorGuardObj);
 
 
             GameObject ShopKeeper = new GameObject(shopKeeperPosition);
-            ShopKeeper.AddComponent(new Collider(ShopKeeper, new Vector2(49,49), true));
-            ShopKeeper.AddComponent(new Interactable(ShopKeeper, () =>
+            ShopKeeper.AddComponent(new Collider(new Vector2(49,49), true));
+            ShopKeeper.AddComponent(new Interactable(() =>
             {
                 GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
             }));

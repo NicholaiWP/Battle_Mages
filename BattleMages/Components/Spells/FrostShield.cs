@@ -11,20 +11,27 @@ namespace BattleMages
     public class FrostShield : Spell
     {
         private Collider collider;
-        private Texture2D sprite;
+        private SpriteRenderer spriteRenderer;
         private float radius;
         private float angle;
         private float speed;
+        private bool spawnSubshards;
+        private SpellCreationParams p;
+        private float existenceTimer;
 
-        public FrostShield(GameObject go, SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(go, p)
+        public FrostShield(SpellCreationParams p, bool spawnSubshards, float angleDegrees) : base(p)
         {
+            this.spawnSubshards = spawnSubshards;
+            this.p = p;
             speed = 2;
             radius = 32;
             Damage = 8;
             CooldownTime = 2;
+            existenceTimer = 7;
             ManaCost = 40;
             ApplyAttributeRunes();
-
+            spriteRenderer = new SpriteRenderer("Spell Images/ice");
+            collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
             //This makes sure all FrostShields have the same starting angle so that their rotation looks amazing
             FrostShield firstOtherFrostshield = GameWorld.Scene.ActiveObjects
                 .Select(a => a.GetComponent<FrostShield>())
@@ -35,31 +42,31 @@ namespace BattleMages
                 angle = firstOtherFrostshield.angle;
             }
 
+            Listen<PreInitializeMsg>(PreInitialize);
+            Listen<UpdateMsg>(Update);
+        }
+
+        private void PreInitialize(PreInitializeMsg msg)
+        {
+            GameObject.AddComponent(spriteRenderer);
+            GameObject.AddComponent(collider);
+        }
+
+        private void Update(UpdateMsg msg)
+        {
             //Spawn 2 other frostshields if told to
             if (spawnSubshards)
             {
+                spawnSubshards = false;
                 for (int i = 0; i <= 1; i++)
                 {
                     GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
-                    newShardGameObject.AddComponent(new FrostShield(newShardGameObject,
+                    newShardGameObject.AddComponent(new FrostShield(
                            new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
                            false, 90 * (i + 1)));
                     GameWorld.Scene.AddObject(newShardGameObject);
                 }
             }
-
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/ice");
-
-            collider = new Collider(GameObject, new Vector2(sprite.Width, sprite.Height));
-
-            GameObject.AddComponent(collider);
-
-            Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
-        }
-
-        private void Update(UpdateMsg message)
-        {
             GameWorld.SoundManager.PlaySound("FrostShield");
             GameWorld.SoundManager.SoundVolume = 1f;
 
@@ -75,7 +82,7 @@ namespace BattleMages
                     enemy.TakeDamage(Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, Damage.ToString()));
+
                     GameWorld.Scene.RemoveObject(GameObject);
                     GameWorld.SoundManager.StopSound("FrostShield");
                 }
@@ -109,11 +116,15 @@ namespace BattleMages
                     GameObject.Transform.Position = Vector2.Lerp(GameObject.Transform.Position, new Vector2(x, y), GameWorld.DeltaTime * 8);
                 }
             }
-        }
 
-        private void Draw(DrawMsg msg)
-        {
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(sprite.Width,sprite.Height) / 2, Color.White);
+            if (existenceTimer <= 0)
+            {
+                GameWorld.Scene.RemoveObject(GameObject);
+            }
+            else
+            {
+                existenceTimer -= GameWorld.DeltaTime;
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -13,10 +13,6 @@ namespace BattleMages
         private List<GameObject> activeObjects = new List<GameObject>();
         private List<GameObject> objectsToAdd = new List<GameObject>();
         private List<GameObject> objectsToRemove = new List<GameObject>();
-        protected bool combatState;
-        protected SpriteFont fontBM;
-
-        public bool CombatState;
 
         /// <summary>
         /// Returns a readonly list of objects currently active in the scene.
@@ -82,10 +78,11 @@ namespace BattleMages
             objectsToAdd.Clear();
 
             //Removal
-            foreach (GameObject gameObject in objectsToRemove)
+            List<GameObject> tempRemovalList = new List<GameObject>(objectsToRemove);
+            foreach (GameObject gameObject in tempRemovalList)
                 activeObjects.Remove(gameObject);
 
-            foreach (GameObject gameObject in objectsToRemove)
+            foreach (GameObject gameObject in tempRemovalList)
                 gameObject.SendMessage(new DestroyMsg());
 
             objectsToRemove.Clear();

@@ -9,44 +9,42 @@ using System.Text;
 namespace BattleMages
 {
     public class Lightning : Spell
-
     {
-        private Texture2D sprite;
         private Collider collider;
         private float waitTimer;
         private float existenceTimer;
         private bool hadACollider;
+        private SpellCreationParams p;
 
-        public Lightning(GameObject go, SpellCreationParams p) : base(go, p)
+        public Lightning(SpellCreationParams p) : base(p)
         {
-            GameObject.Transform.Position = p.AimTarget;
-            Damage = 50;
+            this.p = p;
+            Damage = 40;
             CooldownTime = 2f;
             ManaCost = 40;
             ApplyAttributeRunes();
             GameWorld.SoundManager.PlaySound("lightningStrike");
             GameWorld.SoundManager.SoundVolume = 0.7f;
-            sprite = GameWorld.Instance.Content.Load<Texture2D>("Spell Images/Lightning_bigger");
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
+
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
-            Listen<DrawMsg>(Draw);
         }
 
-        private void Draw(DrawMsg msg)
+        private void Initialize(InitializeMsg message)
         {
-            if (waitTimer <= 0)
-            {
-                msg.Drawer[DrawLayer.Gameplay].Draw(sprite, GameObject.Transform.Position - new Vector2(0, sprite.Height), Color.White);
-            }
+            GameObject.Transform.Position = p.AimTarget;
         }
 
         private void Update(UpdateMsg msg)
         {
             if (waitTimer <= 0 && !hadACollider)
             {
-                collider = new Collider(GameObject, new Vector2(10, 10));
+                GameObject.AddComponent(new SpriteRenderer("Spell Images/lightning_bigger")
+                { PosRect = new Vector2(0, 90) });
+                collider = new Collider(new Vector2(10, 10));
                 hadACollider = true;
 
                 foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
@@ -55,8 +53,6 @@ namespace BattleMages
                     if (enemy != null)
                     {
                         enemy.TakeDamage(Damage);
-                        GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position,
-                            Damage.ToString()));
                     }
                 }
             }

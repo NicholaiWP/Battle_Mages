@@ -9,13 +9,23 @@ namespace BattleMages
 {
     public class Wave
     {
-        public List<Vector2> positions = new List<Vector2>();
-        public List<Enemy> enemies = new List<Enemy>();
+        public delegate List<Enemy> EnemyListDelegate();
 
-        public Wave(List<Vector2> positions, List<Enemy> enemies)
+        private EnemyListDelegate enemyListCreater;
+        public List<Vector2> positions = new List<Vector2>();
+
+        public List<Enemy> Enemies
+        {
+            get
+            {
+                return enemyListCreater.Invoke();
+            }
+        }
+
+        public Wave(List<Vector2> positions, EnemyListDelegate enemyListCreator)
         {
             this.positions = positions;
-            this.enemies = enemies;
+            this.enemyListCreater = enemyListCreator;
         }
     }
 }

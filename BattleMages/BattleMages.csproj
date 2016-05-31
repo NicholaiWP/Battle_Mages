@@ -59,23 +59,25 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\Behaviours\AreaAttack.cs" />
     <Compile Include="Components\Behaviours\Attack.cs" />
     <Compile Include="Components\Behaviours\Dodging.cs" />
     <Compile Include="Components\Behaviours\Hunt.cs" />
     <Compile Include="Components\Character.cs" />
+    <Compile Include="Components\DialougeBox.cs" />
     <Compile Include="Components\Enemies\Golem.cs" />
     <Compile Include="Components\Enemies\Orb.cs" />
     <Compile Include="Components\Enemies\Slime.cs" />
+    <Compile Include="Components\FadeOut.cs" />
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />
     <Compile Include="Components\Spells\EarthSpikes.cs" />
     <Compile Include="Components\Spells\FrostShield.cs" />
     <Compile Include="Components\Spells\Lightning.cs" />
-    <Compile Include="Components\Spells\Storm.cs" />
     <Compile Include="Components\WaveController.cs" />
     <Compile Include="Interfaces\IBehaviour.cs" />
-    <Compile Include="Library\Challenges.cs" />
+    <Compile Include="Library\Challenge.cs" />
     <Compile Include="Library\Component.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Enemy.cs" />
@@ -98,10 +100,13 @@
     <Compile Include="Messages\DrawMsg.cs" />
     <Compile Include="Messages\InitializeMsg.cs" />
     <Compile Include="Library\Msg.cs" />
+    <Compile Include="Messages\PreInitializeMsg.cs" />
     <Compile Include="Messages\UpdateMsg.cs" />
+    <Compile Include="Scenes\ChallengeScene.cs" />
     <Compile Include="Scenes\DeathScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\HallwayScene.cs" />
+    <Compile Include="Scenes\IntroductionScene.cs" />
     <Compile Include="Scenes\LobbyScene.cs" />
     <Compile Include="Scenes\MenuScene.cs" />
     <Compile Include="Scenes\PauseScene.cs" />
