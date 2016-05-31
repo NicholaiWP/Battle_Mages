@@ -55,7 +55,6 @@ namespace BattleMages
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
             animator.CreateAnimation("IdleRight", new Animation(priority: 4, framesCount: 1, yPos: 224, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
-            animator.AnimationName = "WalkLeft";
         }
     }
 }

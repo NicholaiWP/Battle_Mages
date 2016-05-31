@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -19,9 +19,6 @@ namespace BattleMages
 
         public LobbyScene()
         {
-            //Volume handled through SoundManager
-            MediaPlayer.Volume = 0.5f;
-
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
             lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Lobby");
@@ -55,23 +52,16 @@ namespace BattleMages
             }));
             AddObject(doorGuardObj);
 
-            //Sets the sound volume for this scene
-            GameWorld.SoundManager.AmbienceVolume = 0.02f;
+            GameWorld.SoundManager.PlayMusic("HubMusic");
 
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
-
-            //Get all objects on the list before the first run of Update()
-            ProcessObjectLists();
         }
 
         public override void Update()
         {
-            //Playing ambient sound in low volume using SoundManager
-            GameWorld.SoundManager.PlaySound("AmbienceSound");
-
             keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.Escape))

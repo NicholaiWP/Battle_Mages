@@ -64,6 +64,8 @@ namespace BattleMages
             backgroundPos = new Vector2(
                 GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
+
+            GameWorld.SoundManager.PlayMusic("HubMusic");
         }
 
         public override void Draw(Drawer drawer)

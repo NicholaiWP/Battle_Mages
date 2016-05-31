@@ -25,21 +25,13 @@ namespace BattleMages
         //Array
         private Rectangle[] frames;
 
-        public string AnimationName
-        {
-            set
-            {
-                if (animationName == null)
-                {
-                    animationName = value;
-                }
-            }
-        }
-
         public ReadOnlyDictionary<string, Animation> Animations
         {
             get { return new ReadOnlyDictionary<string, Animation>(animations); }
         }
+
+        public string PlayingAnimationName { get { return animationName; } }
+        public int CurrentIndex { get { return currentIndex; } }
 
         /// <summary>
         /// The animator´s constructor
@@ -94,7 +86,7 @@ namespace BattleMages
         /// <param name="animationName"></param>
         public void PlayAnimation(string animationName)
         {
-            if (animations[this.animationName].Priority >= animations[animationName].Priority ||
+            if (this.animationName == null || animations[this.animationName].Priority >= animations[animationName].Priority ||
                 currentIndex >= frames.Length)
             {
                 //Checks if it’s a new animation

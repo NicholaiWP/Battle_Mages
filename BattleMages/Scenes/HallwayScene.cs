@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -15,8 +16,14 @@ namespace BattleMages
         private Vector2 lobbyTexturePosition;
         private KeyboardState keyState;
 
+        private SoundEffectInstance crowdSnd;
+        private float crowdVolume;
+
+        private SpriteFont fnt;
+
         public HallwayScene(string challengeName)
         {
+            fnt = GameWorld.Load<SpriteFont>("FontBM");
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
             lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Hallway");
@@ -32,52 +39,40 @@ namespace BattleMages
             doorTriggerGameObject.AddComponent(new Collider(new Vector2(64, 64)));
             doorTriggerGameObject.AddComponent(new Interactable(() =>
            {
+               crowdSnd.Stop();
                GameWorld.ChangeScene(new GameScene(challengeName)); GameWorld.SoundManager.PlaySound("teleport");
                GameWorld.SoundManager.SoundVolume = 0.9f;
            }));
             AddObject(doorTriggerGameObject);
-
-            //Sets sound volume semi-low
-            GameWorld.SoundManager.AmbienceVolume = 0.02f;
 
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, 180 - 32), false);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
-            //Get all objects on the list before the first run of Update()
-            ProcessObjectLists();
+            crowdSnd = GameWorld.SoundManager.PlaySound("AmbienceSound", true);
+            crowdSnd.Volume = 0;
         }
 
         public override void Update()
         {
-            //Plays ambience sound looped using SoundManager & Sets volume
-            GameWorld.SoundManager.PlaySound("AmbienceSound");
-            if (MediaPlayer.Volume < 0.2f)
-            {
-                MediaPlayer.Volume = 0.2f;
-            }
-
             keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.Escape))
             {
-                GameWorld.ChangeScene(new PauseScene(this));
+                crowdSnd.Pause();
+                GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
             }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
-            //Turns volume of ambience up or down depending on the position of Camera
-            if (GameWorld.Camera.Position.Y < 0)
-            {
-                MediaPlayer.Volume -= 0.25f * GameWorld.DeltaTime;
-                GameWorld.SoundManager.AmbienceVolume += 0.1f * GameWorld.DeltaTime;
-            }
-            if (GameWorld.Camera.Position.Y > 0)
-            {
-                MediaPlayer.Volume += 0.25f * GameWorld.DeltaTime;
-                GameWorld.SoundManager.AmbienceVolume -= 0.1f * GameWorld.DeltaTime;
-            }
+            //Turns volume of crowd and music up or down depending on the position of the camera
+            float targetVolume = (-GameWorld.Camera.Position.Y * 0.002f) + 0.3f;
+            targetVolume = MathHelper.Clamp(targetVolume, 0, 0.5f);
+
+            crowdVolume = MathHelper.SmoothStep(crowdVolume, targetVolume, GameWorld.DeltaTime * 10);
+            crowdSnd.Volume = crowdVolume;
+            MediaPlayer.Volume = 0.5f - crowdVolume;
 
             base.Update();
         }
@@ -85,6 +80,8 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
+
+            drawer[DrawLayer.UI].DrawString(fnt, GameWorld.Camera.Position.Y + " - " + crowdVolume, GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2), Color.White);
 
             base.Draw(drawer);
         }
