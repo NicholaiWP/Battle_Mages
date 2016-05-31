@@ -192,6 +192,7 @@ namespace BattleMages
                             }
                         }
                     }
+                    reader.Close();
                 }
                 using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID like @ID",
                     connection))
