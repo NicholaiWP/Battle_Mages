@@ -16,7 +16,7 @@ namespace BattleMages
             cooldownTimer = 3.5f;
             attackSpeed = 0;
             targetingRange = 700;
-            attackRange = 40;
+            attackRange = 16;
         }
 
         protected override void PreInitialize(PreInitializeMsg msg)
