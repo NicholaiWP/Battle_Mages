@@ -64,7 +64,6 @@ namespace BattleMages
 
         private BaseRune selectedBaseRune;
         private AttributeRune selectedAttrRune;
-        private int selectedSpellBarSlot = -1;
         private SpellInfo selectedPlayerSpell;
 
         private SpriteFont font;
@@ -180,18 +179,17 @@ namespace BattleMages
                 }*/
                 nextSpellYPos += 16;
             }
+            var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+
             //Action bar slots
             for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
             {
                 int thisIndex = i;
                 int spellId = GameWorld.State.SpellBar[thisIndex];
 
-                var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-                var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-                var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
-
                 GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
-                //slotObj.AddComponent(new Button(btnSpr1, btnSpr2, () => { selectedSpellBarSlot = thisIndex; }));
                 slotObj.AddComponent(new SpellInfoRenderer(GameWorld.State.SpellBook[spellId]));
                 slotObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
                 {
@@ -204,6 +202,22 @@ namespace BattleMages
                 ));
                 t.AddObject(slotObj);
             }
+
+            //Delete spell button
+            GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 2 - 32, GameWorld.GameHeight - 32));
+            deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/DeleteSpell"));
+            deleteObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
+            {
+                if (selectedPlayerSpell != null)
+                {
+                    GameWorld.State.SpellBook.Remove(selectedPlayerSpell);
+                    OpenSpellsTab();
+                }
+            }
+            ));
+            t.AddObject(deleteObj);
+
+            //Edit spell button
         }
 
         private void OpenRunesTab()
@@ -381,8 +395,8 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             Color textColor = new Color(120, 100, 80);
-            drawer[DrawLayer.UI].DrawString(font, bottomRightText, mcPosition, textColor);
-            drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), textColor);
+            //drawer[DrawLayer.UI].DrawString(font, bottomRightText, mcPosition, textColor);
+            //drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), textColor);
 
             drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);
 
