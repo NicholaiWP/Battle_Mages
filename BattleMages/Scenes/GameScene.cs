@@ -26,7 +26,7 @@ namespace BattleMages
             AddObject(ellipse);
 
             //Making a player
-            GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, true);
+            GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, -300), true);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 

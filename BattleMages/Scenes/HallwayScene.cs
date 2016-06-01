@@ -19,11 +19,8 @@ namespace BattleMages
         private SoundEffectInstance crowdSnd;
         private float crowdVolume;
 
-        private SpriteFont fnt;
-
         public HallwayScene(string challengeName)
         {
-            fnt = GameWorld.Load<SpriteFont>("FontBM");
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-32, -360 / 2);
             lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Hallway");
@@ -80,8 +77,6 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
-
-            drawer[DrawLayer.UI].DrawString(fnt, GameWorld.Camera.Position.Y + " - " + crowdVolume, GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2), Color.White);
 
             base.Draw(drawer);
         }

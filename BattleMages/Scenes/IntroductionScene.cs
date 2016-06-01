@@ -29,7 +29,7 @@ namespace BattleMages
                 ));
 
             GameObject dialougeObj = new GameObject(Vector2.Zero);
-            dialougeObj.AddComponent(new DialougeBox("In the state of Irizal, the freaks, otherwise known as mages, are out casts and put in a colosseum against the scum of society. Forced into battle they seek to preserve their own lives in the name of entertainment for the masses.Common society see it solely as entertainment, and upon entering the arena they will see the banner hanging at top of the entrance 'Battle Mages' You find yourself preparing in the prestigious-looking lobby before a match is about to begin."));
+            dialougeObj.AddComponent(new DialougeBox(new[] { "In the state of Irizal, the freaks, otherwise known as mages, are out casts and put in a colosseum against the scum of society. Forced into battle they seek to preserve their own lives in the name of entertainment for the masses.Common society see it solely as entertainment, and upon entering the arena they will see the banner hanging at top of the entrance 'Battle Mages' You find yourself preparing in the prestigious-looking lobby before a match is about to begin." }, null));
             AddObject(dialougeObj);
         }
     }

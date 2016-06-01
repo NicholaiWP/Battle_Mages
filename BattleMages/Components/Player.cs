@@ -1,17 +1,25 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
     public class Player : Component
     {
+        private const float moveSpeed = 100;
+        private const float moveAccel = 1000;
+
+        private const float dashSpeed = 750;
+        private const float dashAccel = 10000;
+        private const float maxDashTime = 0.05f;
+        private const float dashSpellCooldown = 0.8f;
+
         private Animator animator;
         private Character character;
         private SpriteRenderer spriteRenderer;
@@ -21,9 +29,7 @@ namespace BattleMages
         private int selectedSpell;
         private KeyboardState oldKbState;
 
-        private float maxDashTime;
         private float currentDashTime;
-        private float dashSpeed;
         private float dashCooldown;
         private Vector2 dashVec;
 
@@ -50,10 +56,8 @@ namespace BattleMages
         public Player(bool canUseSpells)
         {
             canMove = true;
-            maxDashTime = 0.12f;
             currentDashTime = 0;
             dashCooldown = 0;
-            dashSpeed = 750;
             this.canUseSpells = canUseSpells;
             deathAnimationStarted = false;
             Listen<InitializeMsg>(Initialize);
@@ -145,6 +149,25 @@ namespace BattleMages
             //Gather input
             KeyboardState kbState = Keyboard.GetState();
 
+            //Dashing on right click
+            if (GameWorld.Cursor.RightButtonPressed && dashCooldown <= 0)
+            {
+                dashVec = Vector2.Subtract(GameWorld.Cursor.Position, GameObject.Transform.Position);
+                dashVec.Normalize();
+                currentDashTime = maxDashTime;
+                dashCooldown = 3;
+
+                for (int i = 0; i < cooldownTimers.Length; i++)
+                {
+                    if (cooldownTimers[i] < dashSpellCooldown)
+                        cooldownTimers[i] = dashSpellCooldown;
+                }
+            }
+            else if (dashCooldown >= 0)
+            {
+                dashCooldown -= GameWorld.DeltaTime;
+            }
+
             //Spellcasting
             if (canUseSpells && GameWorld.Cursor.LeftButtonHeld && cooldownTimers[selectedSpell] <= 0 && CurrentMana > 0)
             {
@@ -222,22 +245,13 @@ namespace BattleMages
 
         private void Move(KeyboardState kbState)
         {
-            if (GameWorld.Cursor.RightButtonPressed && dashCooldown <= 0)
-            {
-                dashVec = Vector2.Subtract(GameWorld.Cursor.Position, GameObject.Transform.Position);
-                dashVec.Normalize();
-                currentDashTime = maxDashTime;
-                dashCooldown = 9;
-            }
-            else if (dashCooldown >= 0)
-            {
-                dashCooldown -= GameWorld.DeltaTime;
-            }
-
             if (currentDashTime > 0)
             {
                 currentDashTime -= GameWorld.DeltaTime;
-                GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime);
+                //GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime, collider, 25, 2);
+                character.MoveDirection = dashVec;
+                character.MoveSpeed = dashSpeed;
+                character.MoveAccel = dashAccel;
             }
             else
             {
@@ -262,7 +276,6 @@ namespace BattleMages
                     movement.X += 1;
                     character.FDirection = FacingDirection.Right;
                 }
-                character.MoveDirection = movement;
 
                 if (movement != Vector2.Zero)
                 {
@@ -284,8 +297,11 @@ namespace BattleMages
                     }
                 }
 
-                character.Movement();
+                character.MoveDirection = movement;
+                character.MoveSpeed = moveSpeed;
+                character.MoveAccel = moveAccel;
             }
+            character.Movement();
         }
 
         private void AnimationDone(AnimationDoneMsg msg)
