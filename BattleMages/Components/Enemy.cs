@@ -59,6 +59,7 @@ namespace BattleMages
             if (health <= 0)
             {
                 GameWorld.Scene.RemoveObject(GameObject);
+                GameWorld.Scene.AddObject(ObjectBuilder.BuildCoin(transform.Position));
             }
         }
 

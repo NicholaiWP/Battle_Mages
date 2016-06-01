@@ -32,6 +32,17 @@ namespace BattleMages
             return gameObject;
         }
 
+        public static GameObject BuildCoin(Vector2 position)
+        {
+            GameObject gameObject = new GameObject(position);
+
+            gameObject.AddComponent(new Collider(new Vector2(16, 16), false));
+            gameObject.AddComponent(new SpriteRenderer("Textures/UI/Ingame/Coin"));
+            gameObject.AddComponent(new Animator());
+            gameObject.AddComponent(new Coin());
+            return gameObject;
+        }
+
         public static GameObject BuildFlyingLabelText(Vector2 position, string text)
         {
             GameObject gameObject = new GameObject(position);

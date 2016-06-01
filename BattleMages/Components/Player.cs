@@ -20,6 +20,7 @@ namespace BattleMages
         private bool canUseSpells;
         private int selectedSpell;
         private KeyboardState oldKbState;
+        private int currency;
 
         private float[] cooldownTimers = new float[SpellInfo.AttributeRuneSlotCount];
         private bool canMove;
@@ -38,11 +39,13 @@ namespace BattleMages
         public int CurrentHealth { get; private set; } = MaxHealth;
         public float CurrentMana { get; private set; } = MaxMana;
         public bool Invincible { get { return invincibleTimer > 0f; } }
+        public int Currency { get; set; }
 
         private int latestWalkIndex = -1;
 
         public Player(bool canUseSpells)
         {
+            currency = 10;
             canMove = true;
             this.canUseSpells = canUseSpells;
             deathAnimationStarted = false;

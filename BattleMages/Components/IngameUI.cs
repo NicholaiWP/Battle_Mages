@@ -85,6 +85,9 @@ namespace BattleMages
             {
                 msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthBarPos, scale: new Vector2(healthbarSize, 1));
                 msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize, 1));
+                //Draws currency with spritefont
+
+                msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, player.Currency.ToString(), new Vector2(topRight.X - player.Currency.ToString().Length * 7 -(coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
             }
 
             msg.Drawer[DrawLayer.AboveUI].Draw(aboveUI, position: topLeft);
