@@ -95,7 +95,7 @@ namespace BattleMages
                     AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 80), shopButton, shopButton_hover,
                      () =>
                      {
-                         if(selectedRune != SelectedRune.None)
+                         //if(selectedRune != SelectedRune.None)
                          {
 
                          }
