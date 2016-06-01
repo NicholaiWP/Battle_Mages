@@ -59,6 +59,7 @@ namespace BattleMages
 
         private void RangeAttack(GameObject potentialTarget)
         {
+            animator.PlayAnimation("Attack" + character.FDirection.ToString());
             attackTimer = enemy.CooldownTimer;
             GameObject projectile = new GameObject(transform.Position);
             projectile.AddComponent(new Projectile(enemy, potentialTarget.Transform.Position));
@@ -67,11 +68,9 @@ namespace BattleMages
 
         private void CloseAttack(GameObject potentialTarget)
         {
-            if (enemy.GameObject.GetComponent<Animator>() != null &&
-                enemy.GameObject.GetComponent<Golem>() != null)
+            if (animator != null)
             {
-                enemy.GameObject.GetComponent<Animator>().PlayAnimation(
-                    "Attack" + enemy.GameObject.GetComponent<Character>().FDirection);
+                animator.PlayAnimation("Attack" + character.FDirection.ToString());
             }
             potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
             attackTimer = enemy.CooldownTimer;

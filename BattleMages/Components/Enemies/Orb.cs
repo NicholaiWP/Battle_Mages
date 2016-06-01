@@ -22,7 +22,7 @@ namespace BattleMages
         protected override void PreInitialize(PreInitializeMsg msg)
         {
             base.PreInitialize(msg);
-            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/Orb", true)
+            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/orbSpriteSheet", true)
             { Rectangle = new Rectangle(0, 0, 32, 32) });
         }
 
@@ -44,9 +44,9 @@ namespace BattleMages
             animator.CreateAnimation("AttackLeft", new Animation(priority: 1, framesCount: 7, yPos: 96, xStartFrame: 0,
                 width: 32, height: 32, fps: 10, offset: Vector2.Zero));
             animator.CreateAnimation("DeathRight", new Animation(priority: 0, framesCount: 17, yPos: 128, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 10, offset: Vector2.Zero));
             animator.CreateAnimation("DeathLeft", new Animation(priority: 0, framesCount: 17, yPos: 160, xStartFrame: 0,
-                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 10, offset: Vector2.Zero));
         }
     }
 }

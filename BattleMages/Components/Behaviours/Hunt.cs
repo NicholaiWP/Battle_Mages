@@ -44,14 +44,14 @@ namespace BattleMages
                         if (transform.Position.X - 1 > potentialTarget.Transform.Position.X + 1)
                         {
                             movement.X -= 1;
-                            if (enemy.GameObject.GetComponent<Character>() != null)
-                                enemy.GameObject.GetComponent<Character>().FDirection = FacingDirection.Left;
+                            if (character != null)
+                                character.FDirection = FacingDirection.Left;
                         }
                         if (transform.Position.X + 1 < potentialTarget.Transform.Position.X - 1)
                         {
                             movement.X += 1;
-                            if (enemy.GameObject.GetComponent<Character>() != null)
-                                enemy.GameObject.GetComponent<Character>().FDirection = FacingDirection.Right;
+                            if (character != null)
+                                character.FDirection = FacingDirection.Right;
                         }
                         character.MoveDirection = movement;
                     }

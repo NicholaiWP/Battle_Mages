@@ -14,11 +14,11 @@ namespace BattleMages
         private SpriteRenderer spriteRenderer;
 
         private Transform transform;
-        private Character character;
         private Collider collider;
         private float burnDamageTimer = 6;
         protected Animator animator;
-
+        protected Character character;
+        protected bool canMove;
         protected float attackRange;
         protected float targetingRange;
         protected int damage;
@@ -46,6 +46,7 @@ namespace BattleMages
 
         protected Enemy()
         {
+            canMove = true;
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
@@ -58,7 +59,8 @@ namespace BattleMages
             GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
             if (health <= 0)
             {
-                GameWorld.Scene.RemoveObject(GameObject);
+                canMove = false;
+                animator.PlayAnimation("Death" + character.FDirection.ToString());
             }
         }
 
@@ -124,7 +126,8 @@ namespace BattleMages
                     burnDuration -= GameWorld.DeltaTime;
                 }
             }
-            Move();
+            if (canMove)
+                Move();
         }
 
         private void Move()
@@ -140,7 +143,14 @@ namespace BattleMages
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
-            animator.PlayAnimation("Walk" + character.FDirection);
+            if (msg.AnimationName == "DeathRight" || msg.AnimationName == "DeathLeft")
+            {
+                GameObject.RemoveComponent<Animator>();
+                GameObject.RemoveComponent<SpriteRenderer>();
+                GameWorld.Scene.RemoveObject(GameObject);
+            }
+
+            animator.PlayAnimation("Idle" + character.FDirection);
         }
     }
 }

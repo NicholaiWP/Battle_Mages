@@ -97,15 +97,14 @@ namespace BattleMages
 
             if (translation == Vector2.Zero)
             {
-                if (GameObject.GetComponent<Animator>() != null && GameObject.GetComponent<Player>() != null ||
-                    GameObject.GetComponent<Golem>() != null)
+                if (GameObject.GetComponent<Animator>() != null)
                 {
                     GameObject.GetComponent<Animator>().PlayAnimation("Idle" + fDirection.ToString());
                 }
             }
             else
             {
-                if (GameObject.GetComponent<Player>() != null || GameObject.GetComponent<Golem>() != null)
+                if (GameObject.GetComponent<Orb>() == null && GameObject.GetComponent<Animator>() != null)
                     GameObject.GetComponent<Animator>().PlayAnimation("Walk" + fDirection.ToString());
             }
 

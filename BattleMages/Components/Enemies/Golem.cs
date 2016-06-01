@@ -39,10 +39,10 @@ namespace BattleMages
                 height: 32, fps: 20, offset: Vector2.Zero));
             animator.CreateAnimation("GroundLeft", new Animation(priority: 1, framesCount: 30, yPos: 32, xStartFrame: 0, width: 32,
                 height: 32, fps: 20, offset: Vector2.Zero));
-            animator.CreateAnimation("DieLeft", new Animation(priority: 0, framesCount: 20, yPos: 64, xStartFrame: 0, width: 32,
-                height: 32, fps: 20, offset: Vector2.Zero));
-            animator.CreateAnimation("DieRight", new Animation(priority: 0, framesCount: 20, yPos: 96, xStartFrame: 0, width: 32,
-                height: 32, fps: 20, offset: Vector2.Zero));
+            animator.CreateAnimation("DeathLeft", new Animation(priority: 0, framesCount: 20, yPos: 64, xStartFrame: 0, width: 32,
+                height: 32, fps: 10, offset: Vector2.Zero));
+            animator.CreateAnimation("DeathRight", new Animation(priority: 0, framesCount: 20, yPos: 96, xStartFrame: 0, width: 32,
+                height: 32, fps: 10, offset: Vector2.Zero));
             animator.CreateAnimation("AttackLeft", new Animation(priority: 2, framesCount: 12, yPos: 128, xStartFrame: 0, width: 32,
                 height: 32, fps: 12, offset: Vector2.Zero));
             animator.CreateAnimation("AttackRight", new Animation(priority: 2, framesCount: 12, yPos: 160, xStartFrame: 0, width: 32,

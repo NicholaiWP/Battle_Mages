@@ -22,7 +22,7 @@ namespace BattleMages
         protected override void PreInitialize(PreInitializeMsg msg)
         {
             base.PreInitialize(msg);
-            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/Slime")
+            GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/slimeSpriteSheet")
             { Rectangle = new Rectangle(0, 0, 32, 32) });
         }
 
@@ -40,6 +40,10 @@ namespace BattleMages
                 width: 32, height: 32, fps: 20, offset: Vector2.Zero));
             animator.CreateAnimation("WalkLeft", new Animation(priority: 2, framesCount: 10, yPos: 96, xStartFrame: 0,
                 width: 32, height: 32, fps: 20, offset: Vector2.Zero));
+            animator.CreateAnimation("IdleRight", new Animation(priority: 3, framesCount: 1, yPos: 64, xStartFrame: 0,
+                width: 32, height: 32, fps: 1, offset: Vector2.Zero));
+            animator.CreateAnimation("IdleLeft", new Animation(priority: 3, framesCount: 1, yPos: 96, xStartFrame: 0,
+                width: 32, height: 32, fps: 1, offset: Vector2.Zero));
             animator.CreateAnimation("DieLeft", new Animation(priority: 0, framesCount: 12, yPos: 128, xStartFrame: 0,
                 width: 32, height: 32, fps: 12, offset: Vector2.Zero));
             animator.CreateAnimation("DieRight", new Animation(priority: 0, framesCount: 12, yPos: 160, xStartFrame: 0,
