@@ -17,7 +17,7 @@ namespace BattleMages
         public string Name { get; }
         public string Description { get; }
         public string TextureName { get; }
-        public int RuneCost { get; }
+        public int RuneCost { get; set; }
         public Texture2D Texture { get; private set; }
 
         /// <summary>

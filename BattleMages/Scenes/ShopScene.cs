@@ -18,23 +18,35 @@ namespace BattleMages
         private Texture2D rune1;
         private Texture2D rune2;
         private Texture2D rune3;
-        private AttributeRune attDmg;
         private string bottomLeftText = string.Empty;
         private string upperRightText = string.Empty;
         private Dictionary<string, Vector2> descriptionPlacement = new Dictionary<string, Vector2>();
-        private int cost;
+        private int runeCost;
+        private int StartingMoney;
+        private int currentMoney;
 
         //bool for returning to the lobby after entering the shop
         private bool cPressed;
 
-        public int Cost { get { return cost; } set { cost = value; } }
+        public int Cost { get { return runeCost; } set { runeCost = value; } }
 
+        public int StartingMoney1 {get {return StartingMoney;} set {StartingMoney = value;}}
+
+        public int CurrentMoney { get {return currentMoney;} set {currentMoney = value;}}
+
+        //TO DO:
+        //-check whether the rune/button is selected
+        //-then subtracts currentMoney from the rune's cost and adds the rune to the spellbook's rune slots.
+        //-set the rune's Cost and write currentMoney into the game using perhaps a drawstring, convert the int's number to a string in this AboveUI draw sentence.
+        //-On coin/money pick-up, add money to currentMoney counter.
 
         public ShopScene(Scene oldScene)
         {
+            
             var content = GameWorld.Instance.Content;
-
             this.oldScene = oldScene;
+            StartingMoney1 = 50;
+            CurrentMoney -= Cost;
 
             background = content.Load<Texture2D>("Backgrounds/Shop");
             font = content.Load<SpriteFont>("FontBM");
@@ -69,18 +81,34 @@ namespace BattleMages
                   
                     }
 
-                //Buy Button
-                var shopButton = content.Load<Texture2D>("Images/Button_Rune");
-                var shopButton_hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
-                AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 80), shopButton, shopButton_hover,
-                 () =>
-                 {
-                     //StaticData.AttributeRunes.IndexOf
-                 },
-                 null, false));
-            }
+                if (Cost > currentMoney)
+                {
+                    GameObject dialougeObj = new GameObject(Vector2.Zero);
+                    dialougeObj.AddComponent(new DialougeBox("You do not have sufficient money to buy this item, please try again once you've earned some more"));
+                    AddObject(dialougeObj);
+                }
+                if (Cost <= currentMoney)
+                {
+                    //Buy Button
+                    var shopButton = content.Load<Texture2D>("Images/Button_Rune");
+                    var shopButton_hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
+                    AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 80), shopButton, shopButton_hover,
+                     () =>
+                     {
+                         if(selectedRune != SelectedRune.None)
+                         {
+
+                         }
+                     },
+                     null, false));
+                }
                   
         }   
+
+      
+          
+     }
+        
 
         public override void Draw(Drawer drawer)
         {
