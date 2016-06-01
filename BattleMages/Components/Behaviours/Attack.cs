@@ -15,10 +15,12 @@ namespace BattleMages
         private int closeRange;
         private float attackTimer;
         private float attackRange;
+        private float attackDelay;
         private Animator animator;
 
         public Attack(Enemy enemy, float attackRange, float targetingRange)
         {
+            attackDelay = 0.2f;
             closeRange = 45;
             attackTimer = 0;
             this.enemy = enemy;
@@ -72,8 +74,16 @@ namespace BattleMages
             {
                 animator.PlayAnimation("Attack" + character.FDirection.ToString());
             }
-            potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
-            attackTimer = enemy.CooldownTimer;
+            if (attackDelay <= 0)
+            {
+                attackDelay = 0.2f;
+                potentialTarget.GetComponent<Player>().TakeDamage(enemy.Damage);
+                attackTimer = enemy.CooldownTimer;
+            }
+            else
+            {
+                attackDelay -= GameWorld.DeltaTime;
+            }
         }
 
         private bool InAttackRange(float lengthToTarget)
