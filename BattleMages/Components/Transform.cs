@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -31,35 +31,6 @@ namespace BattleMages
         public void Translate(Vector2 translation)
         {
             position += translation;
-        }
-
-        /// <summary>
-        /// Method for moving the gameobject and checking collision with offset, used
-        /// for fast movement such as dash.
-        /// </summary>
-        /// <param name="translation"></param>
-        /// <param name="minusOffset"></param>
-        /// <param name="plusOffset"></param>
-        /// <param name="collider"></param>
-        public void Translate(Vector2 translation, Collider collider, float minusOffset, float plusOffset)
-        {
-            bool collisionLeft = collider.CheckCollisionAtPosition(position + new Vector2(-translation.X - minusOffset, 0), true);
-            bool collisionRight = collider.CheckCollisionAtPosition(position + new Vector2(translation.X + plusOffset, 0), true);
-            bool collisionUp = collider.CheckCollisionAtPosition(position + new Vector2(0, -translation.Y - minusOffset), true);
-            bool collisionDown = collider.CheckCollisionAtPosition(position + new Vector2(0, translation.Y + plusOffset), true);
-
-            if ((translation.X > 0 && collisionRight) || (translation.X < 0 && collisionLeft))
-            {
-                translation.X = 0;
-            }
-            if ((translation.Y > 0 && collisionDown) || (translation.Y < 0 && collisionUp))
-            {
-                translation.Y = 0;
-            }
-
-            position += translation;
-
-            position = Utils.LimitToCircle(position, Vector2.Zero, 320);
         }
     }
 }
