@@ -21,6 +21,12 @@ namespace BattleMages
         private int selectedSpell;
         private KeyboardState oldKbState;
 
+        private float maxDashTime;
+        private float currentDashTime;
+        private float dashSpeed;
+        private float dashCooldown;
+        private Vector2 dashVec;
+
         private float[] cooldownTimers = new float[SpellInfo.AttributeRuneSlotCount];
         private bool canMove;
         public const int MaxHealth = 100;
@@ -44,6 +50,10 @@ namespace BattleMages
         public Player(bool canUseSpells)
         {
             canMove = true;
+            maxDashTime = 0.12f;
+            currentDashTime = 0;
+            dashCooldown = 0;
+            dashSpeed = 750;
             this.canUseSpells = canUseSpells;
             deathAnimationStarted = false;
             Listen<InitializeMsg>(Initialize);
@@ -212,56 +222,76 @@ namespace BattleMages
 
         private void Move(KeyboardState kbState)
         {
-            Vector2 movement = new Vector2();
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
+            if (GameWorld.Cursor.RightButtonPressed && dashCooldown <= 0)
             {
-                movement.Y -= 1;
-                character.FDirection = FacingDirection.Up;
+                dashVec = Vector2.Subtract(GameWorld.Cursor.Position, GameObject.Transform.Position);
+                dashVec.Normalize();
+                currentDashTime = maxDashTime;
+                dashCooldown = 9;
             }
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
+            else if (dashCooldown >= 0)
             {
-                movement.Y += 1;
-                character.FDirection = FacingDirection.Down;
-            }
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
-            {
-                movement.X -= 1;
-                character.FDirection = FacingDirection.Left;
-            }
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
-            {
-                movement.X += 1;
-                character.FDirection = FacingDirection.Right;
-            }
-            character.MoveDirection = movement;
-
-            if (movement != Vector2.Zero)
-            {
-                if (animator.PlayingAnimationName == "WalkLeft" || animator.PlayingAnimationName == "WalkRight")
-                {
-                    if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 12 && latestWalkIndex != 12))
-                    {
-                        GameWorld.SoundManager.PlaySound("WalkSound");
-                        latestWalkIndex = animator.CurrentIndex;
-                    }
-                }
-                if (animator.PlayingAnimationName == "WalkUp" || animator.PlayingAnimationName == "WalkDown")
-                {
-                    if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 4 && latestWalkIndex != 4) || (animator.CurrentIndex == 8 && latestWalkIndex != 8))
-                    {
-                        GameWorld.SoundManager.PlaySound("WalkSound");
-                        latestWalkIndex = animator.CurrentIndex;
-                    }
-                }
+                dashCooldown -= GameWorld.DeltaTime;
             }
 
-            character.Movement();
+            if (currentDashTime > 0)
+            {
+                currentDashTime -= GameWorld.DeltaTime;
+                GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime);
+            }
+            else
+            {
+                Vector2 movement = new Vector2();
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
+                {
+                    movement.Y -= 1;
+                    character.FDirection = FacingDirection.Up;
+                }
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
+                {
+                    movement.Y += 1;
+                    character.FDirection = FacingDirection.Down;
+                }
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
+                {
+                    movement.X -= 1;
+                    character.FDirection = FacingDirection.Left;
+                }
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
+                {
+                    movement.X += 1;
+                    character.FDirection = FacingDirection.Right;
+                }
+                character.MoveDirection = movement;
+
+                if (movement != Vector2.Zero)
+                {
+                    if (animator.PlayingAnimationName == "WalkLeft" || animator.PlayingAnimationName == "WalkRight")
+                    {
+                        if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 12 && latestWalkIndex != 12))
+                        {
+                            GameWorld.SoundManager.PlaySound("WalkSound");
+                            latestWalkIndex = animator.CurrentIndex;
+                        }
+                    }
+                    if (animator.PlayingAnimationName == "WalkUp" || animator.PlayingAnimationName == "WalkDown")
+                    {
+                        if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 4 && latestWalkIndex != 4) || (animator.CurrentIndex == 8 && latestWalkIndex != 8))
+                        {
+                            GameWorld.SoundManager.PlaySound("WalkSound");
+                            latestWalkIndex = animator.CurrentIndex;
+                        }
+                    }
+                }
+
+                character.Movement();
+            }
         }
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
             canMove = true;
-            animator.PlayAnimation("Idle" + character.FDirection);
+            animator.PlayAnimation("Idle" + character.FDirection.ToString());
 
             if (msg.AnimationName == "Death")
             {
