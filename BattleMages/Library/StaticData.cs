@@ -40,17 +40,17 @@ namespace BattleMages
             {
                 new AttributeRune("Rune of Might",
                 "Increases the damage of\n a spell.",
-                "rune1",
+                "rune1", 300,
                 DamageUpRune),
 
                 new AttributeRune("Rune of Persistence",
                 "Makes a spell use\nless mana.",
-                "rune2",
+                "rune2", 150,
                 DecreaseManaCostRune),
 
                 new AttributeRune("Rune of Haste",
                 "Lets you cast a spell faster.",
-                "rune3",
+                "rune3", 250,
                 DescreaseCooldown),
 
                 //new AttributeRune("Projectile block",

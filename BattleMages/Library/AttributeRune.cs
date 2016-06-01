@@ -17,6 +17,7 @@ namespace BattleMages
         public string Name { get; }
         public string Description { get; }
         public string TextureName { get; }
+        public int RuneCost { get; }
         public Texture2D Texture { get; private set; }
 
         /// <summary>
@@ -25,11 +26,12 @@ namespace BattleMages
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="action"></param>
-        public AttributeRune(string name, string description, string textureName, RuneAction action)
+        public AttributeRune(string name, string description, string textureName, int runeCost, RuneAction action)
         {
             Name = name;
             Description = description;
             TextureName = textureName;
+            RuneCost = runeCost;
             this.action = action;
         }
 
