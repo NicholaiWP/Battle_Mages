@@ -227,7 +227,7 @@ namespace BattleMages
                 dashVec = Vector2.Subtract(GameWorld.Cursor.Position, GameObject.Transform.Position);
                 dashVec.Normalize();
                 currentDashTime = maxDashTime;
-                dashCooldown = 9;
+                dashCooldown = 3;
             }
             else if (dashCooldown >= 0)
             {
@@ -237,7 +237,7 @@ namespace BattleMages
             if (currentDashTime > 0)
             {
                 currentDashTime -= GameWorld.DeltaTime;
-                GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime);
+                GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime, collider, 25, 2);
             }
             else
             {
