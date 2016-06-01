@@ -156,10 +156,6 @@ namespace BattleMages
                     if (cooldownTimers[i] < dashSpellCooldown)
                         cooldownTimers[i] = dashSpellCooldown;
                 }
-                Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
-                float angleRadians = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
-
-                animator.PlayAnimation("Dash", angleRadians);
             }
             else if (dashCooldown >= 0)
             {
@@ -245,6 +241,9 @@ namespace BattleMages
         {
             if (currentDashTime > 0)
             {
+                Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
+                float angleRadians = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
+                animator.PlayAnimation("Dash", angleRadians);
                 currentDashTime -= GameWorld.DeltaTime;
                 //GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime, collider, 25, 2);
                 character.MoveDirection = dashVec;
