@@ -55,11 +55,14 @@ namespace BattleMages
 
         public void TakeDamage(int points)
         {
+            if (health > 0)
+                GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
             health -= points;
-            GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
+
             if (health <= 0)
             {
                 canMove = false;
+                GameObject.RemoveComponent<Collider>();
                 animator.PlayAnimation("Death" + character.FDirection.ToString());
             }
         }

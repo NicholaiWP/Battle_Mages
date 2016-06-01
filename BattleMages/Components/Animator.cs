@@ -84,11 +84,13 @@ namespace BattleMages
         /// This method is for playing an animation by its name
         /// </summary>
         /// <param name="animationName"></param>
-        public void PlayAnimation(string animationName)
+        public void PlayAnimation(string animationName, float rotationRadians = 0)
         {
             if (this.animationName == null || animations[this.animationName].Priority >= animations[animationName].Priority ||
                 currentIndex >= frames.Length)
             {
+                spriteRenderer.Rotation = rotationRadians;
+
                 //Checks if it’s a new animation
                 if (this.animationName != animationName)
                 {
