@@ -48,5 +48,26 @@ namespace BattleMages
             animator.CreateAnimation("DeathLeft", new Animation(priority: 0, framesCount: 17, yPos: 160, xStartFrame: 0,
                 width: 32, height: 32, fps: 10, offset: Vector2.Zero));
         }
+
+        protected override void Update(UpdateMsg msg)
+        {
+            foreach (GameObject go in GameWorld.Scene.ActiveObjects)
+            {
+                if (go.GetComponent<Player>() != null)
+                {
+                    if (go.Transform.Position.X > GameObject.Transform.Position.X)
+                    {
+                        character.FDirection = FacingDirection.Right;
+                        animator.PlayAnimation("IdleRight");
+                    }
+                    else if (go.Transform.Position.X < GameObject.Transform.Position.X)
+                    {
+                        character.FDirection = FacingDirection.Left;
+                        animator.PlayAnimation("IdleLeft");
+                    }
+                }
+            }
+            base.Update(msg);
+        }
     }
 }

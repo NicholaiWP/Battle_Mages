@@ -107,7 +107,7 @@ namespace BattleMages
         /// the enemy will attempt to attack the player,
         /// if the player isnt in the enemy's range the enemy will be put into its idle state.
         /// </summary>
-        private void Update(UpdateMsg msg)
+        protected virtual void Update(UpdateMsg msg)
         {
             if (burned)
             {
