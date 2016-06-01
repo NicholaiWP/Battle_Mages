@@ -14,7 +14,9 @@ namespace BattleMages
         private Texture2D boxTexture;
         private Texture2D boxTexture_larger;
         private SpriteFont textFont;
-        private string text;
+        private string[] texts;
+        private Action onDone;
+        private int currentText = 0;
         private int charactersToDraw = 0;
 
         private float timer = 0;
@@ -24,9 +26,10 @@ namespace BattleMages
         private CursorLockToken cursorLock;
         private MouseState prevState;
 
-        public DialougeBox(string text)
+        public DialougeBox(string[] texts, Action onDone)
         {
-            this.text = text;
+            this.texts = texts;
+            this.onDone = onDone;
             prevState = Mouse.GetState();
 
             Listen<InitializeMsg>(Initialize);
@@ -49,14 +52,14 @@ namespace BattleMages
         {
             GameWorld.Cursor.SetCursor(CursorStyle.Dialouge);
 
-            if (charactersToDraw < text.Length)
+            if (charactersToDraw < texts[currentText].Length)
             {
                 timer -= GameWorld.DeltaTime;
-                while (timer <= 0 && charactersToDraw < text.Length - 1)
+                while (timer <= 0 && charactersToDraw < texts[currentText].Length - 1)
                 {
                     charactersToDraw++;
                     timer += charShowInterval;
-                    char latest = text[charactersToDraw - 1];
+                    char latest = texts[currentText][charactersToDraw - 1];
 
                     if (char.IsPunctuation(latest))
                         timer += punctationShowInterval;
@@ -69,27 +72,28 @@ namespace BattleMages
             MouseState curState = Mouse.GetState();
             if (prevState.LeftButton == ButtonState.Released && curState.LeftButton == ButtonState.Pressed)
             {
-                GameWorld.Scene.RemoveObject(GameObject);
+                currentText++;
+                if (currentText >= texts.Length)
+                {
+                    onDone?.Invoke();
+                    GameWorld.Scene.RemoveObject(GameObject);
+                }
             }
             prevState = curState;
         }
 
         private void Draw(DrawMsg msg)
         {
+            if (currentText >= texts.Length) return;
+
+            Texture2D textureToUse = boxTexture;
             if (GameWorld.Scene is IntroductionScene)
-            {
-                string warpedText = Utils.WarpText(text.Substring(0, charactersToDraw), boxTexture_larger.Width - 8, textFont);
-                Vector2 pos = GameWorld.Camera.Position + new Vector2(-boxTexture_larger.Width / 2, GameWorld.GameHeight / 2 - boxTexture_larger.Height);
-                msg.Drawer[DrawLayer.UI].Draw(boxTexture_larger, pos, Color.White);
-                msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
-            }
-            else if (GameWorld.Scene is LobbyScene)
-            {
-                string warpedText = Utils.WarpText(text.Substring(0, charactersToDraw), boxTexture.Width - 8, textFont);
-                Vector2 pos = GameWorld.Camera.Position + new Vector2(-boxTexture.Width / 2, GameWorld.GameHeight / 2 - boxTexture.Height);
-                msg.Drawer[DrawLayer.UI].Draw(boxTexture, pos, Color.White);
-                msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
-            }
+                textureToUse = boxTexture_larger;
+
+            string warpedText = Utils.WarpText(texts[currentText].Substring(0, charactersToDraw), textureToUse.Width - 8, textFont);
+            Vector2 pos = GameWorld.Camera.Position + new Vector2(-textureToUse.Width / 2, GameWorld.GameHeight / 2 - textureToUse.Height);
+            msg.Drawer[DrawLayer.UI].Draw(textureToUse, pos, Color.White);
+            msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
         }
 
         private void Destroy(DestroyMsg msg)
