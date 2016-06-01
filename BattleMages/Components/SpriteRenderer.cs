@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -22,6 +17,8 @@ namespace BattleMages
 
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
+
+        public float Rotation { get; set; }
 
         public Texture2D Sprite { get { return sprite; } }
 
@@ -58,11 +55,10 @@ namespace BattleMages
         {
             Color color = new Color(Opacity, Opacity, Opacity, Opacity);
             msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
-                position: GameObject.Transform.Position -
-                posRect + offset,
+                position: GameObject.Transform.Position + offset,
                 sourceRectangle: rectangle,
-                origin: Vector2.Zero,
-                rotation: 0f,
+                origin: posRect,
+                rotation: Rotation,
                 color: color,
                 effects: SpriteEffects.None);
         }

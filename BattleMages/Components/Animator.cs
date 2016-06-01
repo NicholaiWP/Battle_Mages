@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -23,6 +24,11 @@ namespace BattleMages
 
         //Array
         private Rectangle[] frames;
+
+        public ReadOnlyDictionary<string, Animation> Animations
+        {
+            get { return new ReadOnlyDictionary<string, Animation>(animations); }
+        }
 
         public string PlayingAnimationName { get { return animationName; } }
         public int CurrentIndex { get { return currentIndex; } }
@@ -78,14 +84,13 @@ namespace BattleMages
         /// This method is for playing an animation by its name
         /// </summary>
         /// <param name="animationName"></param>
-        public void PlayAnimation(string animationName)
+        public void PlayAnimation(string animationName, float rotationRadians = 0)
         {
-            if (this.animationName == "Death" || Utils.ContainsSubstring(this.animationName, "Cast")
-                && Utils.ContainsSubstring(animationName, "Idle"))
+            if (this.animationName == null || animations[this.animationName].Priority >= animations[animationName].Priority ||
+                currentIndex >= frames.Length)
             {
-            }
-            else
-            {
+                spriteRenderer.Rotation = rotationRadians;
+
                 //Checks if it’s a new animation
                 if (this.animationName != animationName)
                 {

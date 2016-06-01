@@ -42,8 +42,8 @@ namespace BattleMages
         {
             if (waitTimer <= 0 && !hadACollider)
             {
-                GameObject.AddComponent(new SpriteRenderer("Textures/Spells/Lighting")
-                { PosRect = new Vector2(0, 90) });
+                GameObject.AddComponent(new SpriteRenderer("Textures/Spells/lightningStrike")
+                { PosRect = new Vector2(0, 320) });
                 collider = new Collider(new Vector2(10, 10));
                 hadACollider = true;
 

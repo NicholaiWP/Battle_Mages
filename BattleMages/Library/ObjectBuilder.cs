@@ -12,7 +12,7 @@ namespace BattleMages
         public static GameObject BuildPlayer(Vector2 position, bool canUseSpells)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer("Textures/Player/PlayerSheet", true)
+            gameObject.AddComponent(new SpriteRenderer("Textures/Player/playerSpriteSheet", true)
             { Rectangle = new Rectangle(0, 0, 32, 32) });
             gameObject.AddComponent(new Animator());
             gameObject.AddComponent(new Player(canUseSpells));

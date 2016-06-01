@@ -47,7 +47,7 @@ namespace BattleMages
             doorGuardObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
-                dialougeObj.AddComponent(new DialougeBox("Greetings, magician. Go through the the door and then the portal, where the real magic happens! You will not return here before you impress the audience! *laughs**"));
+                dialougeObj.AddComponent(new DialougeBox(new[] { "Greetings, magician. Go through the the door and then the portal, where the real magic happens! You will not return here before you impress the audience! *laughs**" }, null));
                 AddObject(dialougeObj);
             }));
             AddObject(doorGuardObj);

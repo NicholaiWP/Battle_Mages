@@ -1,17 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
     public class Player : Component
     {
+        private const float moveSpeed = 100;
+        private const float moveAccel = 1000;
+
+        private const float dashSpeed = 750;
+        private const float dashAccel = 10000;
+        private const float maxDashTime = 0.05f;
+        private const float dashSpellCooldown = 0.8f;
+
         private Animator animator;
         private Character character;
         private SpriteRenderer spriteRenderer;
@@ -21,6 +29,10 @@ namespace BattleMages
         private int selectedSpell;
         private KeyboardState oldKbState;
         private int currency;
+
+        private float currentDashTime;
+        private float dashCooldown;
+        private Vector2 dashVec;
 
         private float[] cooldownTimers = new float[SpellInfo.AttributeRuneSlotCount];
         private bool canMove;
@@ -47,6 +59,8 @@ namespace BattleMages
         {
             currency = 10;
             canMove = true;
+            currentDashTime = 0;
+            dashCooldown = 0;
             this.canUseSpells = canUseSpells;
             deathAnimationStarted = false;
             Listen<InitializeMsg>(Initialize);
@@ -61,45 +75,36 @@ namespace BattleMages
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
+
             //TODO: Create animations here
-            animator.CreateAnimation("WalkRight", new Animation(framesCount: 25, yPos: 0, xStartFrame: 0,
+            animator.CreateAnimation("WalkRight", new Animation(priority: 2, framesCount: 25, yPos: 0, xStartFrame: 0,
                 width: 32, height: 32, fps: 25, offset: Vector2.Zero));
-
-            animator.CreateAnimation("WalkLeft", new Animation(framesCount: 25, yPos: 32, xStartFrame: 0,
+            animator.CreateAnimation("WalkLeft", new Animation(priority: 2, framesCount: 25, yPos: 32, xStartFrame: 0,
                 width: 32, height: 32, fps: 25, offset: Vector2.Zero));
-
-            animator.CreateAnimation("WalkDown", new Animation(framesCount: 14, yPos: 64, xStartFrame: 0,
+            animator.CreateAnimation("WalkDown", new Animation(priority: 2, framesCount: 14, yPos: 64, xStartFrame: 0,
                 width: 32, height: 32, fps: 14, offset: Vector2.Zero));
-
-            animator.CreateAnimation("WalkUp", new Animation(framesCount: 14, yPos: 96, xStartFrame: 0,
+            animator.CreateAnimation("WalkUp", new Animation(priority: 2, framesCount: 14, yPos: 96, xStartFrame: 0,
                 width: 32, height: 32, fps: 14, offset: Vector2.Zero));
-
-            animator.CreateAnimation("CastRight", new Animation(framesCount: 17, yPos: 128, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
-
-            animator.CreateAnimation("CastLeft", new Animation(framesCount: 17, yPos: 160, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
-
-            animator.CreateAnimation("CastDown", new Animation(framesCount: 17, yPos: 192, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
-
-            animator.CreateAnimation("CastUp", new Animation(framesCount: 16, yPos: 224, xStartFrame: 0,
-                width: 32, height: 32, fps: 40, offset: Vector2.Zero));
-
-            animator.CreateAnimation("IdleDown", new Animation(framesCount: 1, yPos: 64, xStartFrame: 0,
+            animator.CreateAnimation("CastRight", new Animation(priority: 1, framesCount: 17, yPos: 128, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
+            animator.CreateAnimation("CastLeft", new Animation(priority: 1, framesCount: 17, yPos: 160, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
+            animator.CreateAnimation("CastDown", new Animation(priority: 1, framesCount: 17, yPos: 192, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
+            animator.CreateAnimation("CastUp", new Animation(priority: 1, framesCount: 16, yPos: 224, xStartFrame: 0,
+                width: 32, height: 32, fps: 50, offset: Vector2.Zero));
+            animator.CreateAnimation("IdleDown", new Animation(priority: 2, framesCount: 1, yPos: 64, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
-
-            animator.CreateAnimation("IdleLeft", new Animation(framesCount: 1, yPos: 32, xStartFrame: 0,
+            animator.CreateAnimation("IdleLeft", new Animation(priority: 2, framesCount: 1, yPos: 32, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
-
-            animator.CreateAnimation("IdleRight", new Animation(framesCount: 1, yPos: 0, xStartFrame: 0,
+            animator.CreateAnimation("IdleRight", new Animation(priority: 2, framesCount: 1, yPos: 0, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
-
-            animator.CreateAnimation("IdleUp", new Animation(framesCount: 1, yPos: 96, xStartFrame: 0,
+            animator.CreateAnimation("IdleUp", new Animation(priority: 2, framesCount: 1, yPos: 96, xStartFrame: 0,
                 width: 32, height: 32, fps: 1, offset: Vector2.Zero));
-
-            animator.CreateAnimation("Death", new Animation(framesCount: 23, yPos: 384, xStartFrame: 0,
+            animator.CreateAnimation("Death", new Animation(priority: 0, framesCount: 23, yPos: 384, xStartFrame: 0,
                 width: 32, height: 32, fps: 12, offset: Vector2.Zero));
+            animator.CreateAnimation("Dash", new Animation(priority: 0, framesCount: 9, yPos: 416, xStartFrame: 0,
+                width: 32, height: 32, fps: 20, offset: Vector2.Zero));
         }
 
         private void Update(UpdateMsg msg)
@@ -137,6 +142,29 @@ namespace BattleMages
 
             //Gather input
             KeyboardState kbState = Keyboard.GetState();
+
+            //Dashing on right click
+            if (GameWorld.Cursor.RightButtonPressed && dashCooldown <= 0)
+            {
+                dashVec = Vector2.Subtract(GameWorld.Cursor.Position, GameObject.Transform.Position);
+                dashVec.Normalize();
+                currentDashTime = maxDashTime;
+                dashCooldown = 3;
+
+                for (int i = 0; i < cooldownTimers.Length; i++)
+                {
+                    if (cooldownTimers[i] < dashSpellCooldown)
+                        cooldownTimers[i] = dashSpellCooldown;
+                }
+                Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
+                float angleRadians = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
+
+                animator.PlayAnimation("Dash", angleRadians);
+            }
+            else if (dashCooldown >= 0)
+            {
+                dashCooldown -= GameWorld.DeltaTime;
+            }
 
             //Spellcasting
             if (canUseSpells && GameWorld.Cursor.LeftButtonHeld && cooldownTimers[selectedSpell] <= 0 && CurrentMana > 0)
@@ -185,6 +213,7 @@ namespace BattleMages
                     animator.PlayAnimation("CastDown");
                     character.FDirection = FacingDirection.Down;
                 }
+                canMove = false;
             }
 
             //Spellbook opening
@@ -214,58 +243,70 @@ namespace BattleMages
 
         private void Move(KeyboardState kbState)
         {
-            Vector2 movement = new Vector2();
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
+            if (currentDashTime > 0)
             {
-                movement.Y -= 1;
-                character.FDirection = FacingDirection.Up;
+                currentDashTime -= GameWorld.DeltaTime;
+                //GameObject.Transform.Translate(dashVec * dashSpeed * GameWorld.DeltaTime, collider, 25, 2);
+                character.MoveDirection = dashVec;
+                character.MoveSpeed = dashSpeed;
+                character.MoveAccel = dashAccel;
             }
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
+            else
             {
-                movement.Y += 1;
-                character.FDirection = FacingDirection.Down;
-            }
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
-            {
-                movement.X -= 1;
-                character.FDirection = FacingDirection.Left;
-            }
-            if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
-            {
-                movement.X += 1;
-                character.FDirection = FacingDirection.Right;
-            }
-            character.MoveDirection = movement;
-
-            if (movement != Vector2.Zero)
-            {
-                if (animator.PlayingAnimationName == "WalkLeft" || animator.PlayingAnimationName == "WalkRight")
+                Vector2 movement = new Vector2();
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)))
                 {
-                    if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 12 && latestWalkIndex != 12))
+                    movement.Y -= 1;
+                    character.FDirection = FacingDirection.Up;
+                }
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Down)))
+                {
+                    movement.Y += 1;
+                    character.FDirection = FacingDirection.Down;
+                }
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Left)))
+                {
+                    movement.X -= 1;
+                    character.FDirection = FacingDirection.Left;
+                }
+                if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Right)))
+                {
+                    movement.X += 1;
+                    character.FDirection = FacingDirection.Right;
+                }
+
+                if (movement != Vector2.Zero)
+                {
+                    if (animator.PlayingAnimationName == "WalkLeft" || animator.PlayingAnimationName == "WalkRight")
                     {
-                        GameWorld.SoundManager.PlaySound("WalkSound");
-                        latestWalkIndex = animator.CurrentIndex;
+                        if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 12 && latestWalkIndex != 12))
+                        {
+                            GameWorld.SoundManager.PlaySound("WalkSound");
+                            latestWalkIndex = animator.CurrentIndex;
+                        }
+                    }
+                    if (animator.PlayingAnimationName == "WalkUp" || animator.PlayingAnimationName == "WalkDown")
+                    {
+                        if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 4 && latestWalkIndex != 4) || (animator.CurrentIndex == 8 && latestWalkIndex != 8))
+                        {
+                            GameWorld.SoundManager.PlaySound("WalkSound");
+                            latestWalkIndex = animator.CurrentIndex;
+                        }
                     }
                 }
-                if (animator.PlayingAnimationName == "WalkUp" || animator.PlayingAnimationName == "WalkDown")
-                {
-                    if ((animator.CurrentIndex == 0 && latestWalkIndex != 0) || (animator.CurrentIndex == 4 && latestWalkIndex != 4) || (animator.CurrentIndex == 8 && latestWalkIndex != 8))
-                    {
-                        GameWorld.SoundManager.PlaySound("WalkSound");
-                        latestWalkIndex = animator.CurrentIndex;
-                    }
-                }
-            }
 
+                character.MoveDirection = movement;
+                character.MoveSpeed = moveSpeed;
+                character.MoveAccel = moveAccel;
+            }
             character.Movement();
         }
 
         private void AnimationDone(AnimationDoneMsg msg)
         {
-            if (Utils.ContainsSubstring(msg.AnimationName, "Cast"))
-            {
-                animator.PlayAnimation("WalkRight");
-            }
+            canMove = true;
+            animator.PlayAnimation("Idle" + character.FDirection.ToString());
+
             if (msg.AnimationName == "Death")
             {
                 GameWorld.ChangeScene(new DeathScene());
