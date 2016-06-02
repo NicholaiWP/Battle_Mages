@@ -16,6 +16,7 @@ namespace BattleMages
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
         private KeyboardState keyState;
+        private bool canPause = true;
 
         public LobbyScene()
         {
@@ -44,12 +45,12 @@ namespace BattleMages
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
             doorGuardObj.AddComponent(new NPC("Textures/Npc's/ChallengeGuy-Sheet", new Vector2(32, 32), 8, 4));
             doorGuardObj.AddComponent(new Animator());
-            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
+            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32), true));
             doorGuardObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[] { "Greetings, magician. Go through the the door and then the portal, where the real magic happens! You will not return here before you impress the audience! *laughs**" },
-                    () => GameWorld.ChangeScene(new ChallengeScene(this))));
+                    () => { GameWorld.ChangeScene(new ChallengeScene(this)); canPause = false; }));
                 AddObject(dialougeObj);
             }));
             AddObject(doorGuardObj);
@@ -64,6 +65,7 @@ namespace BattleMages
             GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
             shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
             shopkeeperObj.AddComponent(new Animator());
+            shopkeeperObj.AddComponent(new Collider(new Vector2(48, 48), true));
             AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
@@ -76,6 +78,21 @@ namespace BattleMages
         public override void Update()
         {
             keyState = Keyboard.GetState();
+
+            int dialougeCount = 0;
+            foreach (var go in ActiveObjects)
+            {
+                if (go.GetComponent<DialougeBox>() != null)
+                {
+                    dialougeCount++;
+                    break;
+                }
+            }
+
+            if (keyState.IsKeyDown(Keys.Escape) && dialougeCount == 0 && canPause)
+            {
+                GameWorld.ChangeScene(new PauseScene(this));
+            }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 

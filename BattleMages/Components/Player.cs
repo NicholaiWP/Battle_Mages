@@ -212,8 +212,17 @@ namespace BattleMages
                 canMove = false;
             }
 
+            int dialougeCount = 0;
+            foreach (var go in GameWorld.Scene.ActiveObjects)
+            {
+                if (go.GetComponent<DialougeBox>() != null)
+                {
+                    dialougeCount++;
+                    break;
+                }
+            }
             //Spellbook opening
-            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab))
+            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab) && dialougeCount == 0)
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
             }
