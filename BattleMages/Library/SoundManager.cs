@@ -53,10 +53,7 @@ namespace BattleMages
             sounds.Add("iceshardsbreaking", content.Load<SoundEffect>("sounds/iceshardsbreaking"));
             sounds.Add("lightningStrike", content.Load<SoundEffect>("sounds/lightningStrike"));
             sounds.Add("openHallwayDoor1", content.Load<SoundEffect>("sounds/openHallwayDoor1"));
-            sounds.Add("teleport", content.Load<SoundEffect>("sounds/teleport"));
             sounds.Add("AmbienceSound", content.Load<SoundEffect>("Sounds/AmbienceSound"));
-            sounds.Add("ElectricitySound", content.Load<SoundEffect>("Sounds/ElectricitySound"));
-            sounds.Add("Fireball", content.Load<SoundEffect>("Sounds/Fireball"));
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound"));
             sounds.Add("BurnSound", content.Load<SoundEffect>("Sounds/BurnSound"));
             sounds.Add("DialougeSound", content.Load<SoundEffect>("Sounds/DialougeSound"));
