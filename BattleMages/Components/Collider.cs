@@ -17,6 +17,7 @@ namespace BattleMages
 
         public Vector2 Size { get; }
         public bool Solid { get; }
+        public Vector2 Offset { get; set; }
 
         public Collider(Vector2 size, bool solid = false)
         {
@@ -30,13 +31,13 @@ namespace BattleMages
 
         public Rectangle CalcColliderRect()
         {
-            return new Rectangle((int)(transform.Position.X - Size.X / 2), (int)(transform.Position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
+            return new Rectangle((int)(transform.Position.X + Offset.X - Size.X / 2), (int)(transform.Position.Y + Offset.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
         }
 
         public bool CheckCollisionAtPosition(Vector2 position, bool solidOnly = false)
         {
             IEnumerable<Collider> collidersInScene = GetCollidersInScene();
-            var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
+            var rect = new Rectangle((int)(position.X + Offset.X - Size.X / 2), (int)(position.Y + Offset.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
             foreach (var coll in collidersInScene)
             {
                 if (coll != this && (!solidOnly || coll.Solid))
@@ -52,7 +53,7 @@ namespace BattleMages
             List<Collider> result = new List<Collider>();
 
             IEnumerable<Collider> collidersInScene = GetCollidersInScene();
-            var rect = new Rectangle((int)(position.X - Size.X / 2), (int)(position.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
+            var rect = new Rectangle((int)(position.X + Offset.X - Size.X / 2), (int)(position.Y + Offset.Y - Size.Y / 2), (int)Size.X, (int)Size.Y);
             foreach (var coll in collidersInScene)
             {
                 if (coll != this && (!solidOnly || coll.Solid) && coll.CalcColliderRect().Intersects(rect))
@@ -81,7 +82,7 @@ namespace BattleMages
 
         private void Draw(DrawMsg msg)
         {
-            //drawer[DrawLayer.Gameplay].Draw(debugTexture, CalcColliderRect(), new Color(Color.Red, 0.5f));
+            //msg.Drawer[DrawLayer.Gameplay].Draw(debugTexture, CalcColliderRect(), new Color(Color.Red, 0.5f));
         }
     }
 }

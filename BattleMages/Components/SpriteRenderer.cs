@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
@@ -6,27 +11,21 @@ namespace BattleMages
     public class SpriteRenderer : Component
     {
         //Fields
-        private string spriteName;
 
         private Rectangle rectangle;
+        private Texture2D sprite;
         private Vector2 offset;
         private Vector2 posRect;
         private Animator animator;
-        private Texture2D sprite;
         private bool usingSpritesheet;
 
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
-
         public float Rotation { get; set; }
-
         public Texture2D Sprite { get { return sprite; } }
-
         public Vector2 Offset { set { offset = value; } }
-
-        public float Opacity { get; set; } = 1;
-
         public Vector2 PosRect { set { posRect = value; } }
+        public float Opacity { get; set; } = 1;
 
         /// <summary>
         /// A constructor for the sprite renderer
@@ -35,7 +34,6 @@ namespace BattleMages
         /// <param name="spriteName"></param>
         public SpriteRenderer(string spriteName, bool usingSpritesheet = false)
         {
-            this.spriteName = spriteName;
             this.usingSpritesheet = usingSpritesheet;
             Listen<InitializeMsg>(Initialize);
             Listen<DrawMsg>(Draw);

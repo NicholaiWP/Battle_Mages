@@ -12,11 +12,11 @@ namespace BattleMages
         public static GameObject BuildPlayer(Vector2 position, bool canUseSpells)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new SpriteRenderer("Textures/Player/playerSpriteSheet", true)
+            gameObject.AddComponent(new SpriteRenderer("Textures/Player/PlayerSheet", true)
             { Rectangle = new Rectangle(0, 0, 32, 32) });
             gameObject.AddComponent(new Animator());
             gameObject.AddComponent(new Player(canUseSpells));
-            gameObject.AddComponent(new Collider(new Vector2(32, 32)));
+            gameObject.AddComponent(new Collider(new Vector2(16, 16)) { Offset = new Vector2(0, 8) });
             gameObject.AddComponent(new Character());
             return gameObject;
         }
@@ -62,6 +62,13 @@ namespace BattleMages
         {
             GameObject gameObject = new GameObject(position);
             gameObject.AddComponent(new Button(normalTex, hoverTex, onClick, onRightClick, wiggle));
+            return gameObject;
+        }
+
+        public static GameObject BuildDraggable(string tag, Vector2 position, Texture2D normalTex, Texture2D hoverTex, Action onDragStart)
+        {
+            GameObject gameObject = new GameObject(position);
+            gameObject.AddComponent(new DragDropItem(tag, normalTex, hoverTex, onDragStart));
             return gameObject;
         }
     }
