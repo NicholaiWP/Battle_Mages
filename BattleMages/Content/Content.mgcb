@@ -1060,30 +1060,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/coin.png
 
-#begin Sounds/CoinDropSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/CoinDropSound.wav
-
-#begin Sounds/GetCoinSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/GetCoinSound.wav
-
-#begin Sounds/FrostShieldSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/FrostShieldSound.wav
-
-#begin Sounds/IceShardSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/IceShardSound.wav
-
 #begin Textures/Npc's/doorOpen-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1094,4 +1070,15 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Textures/Npc's/doorOpen-Sheet.png
+
+#begin Textures/Backgrounds/ShopKeeperbg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Textures/Backgrounds/ShopKeeperbg.png
 
