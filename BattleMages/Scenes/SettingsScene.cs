@@ -98,7 +98,7 @@ namespace BattleMages
                 AddObject(ObjectBuilder.BuildButton(new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), button, buttonHover,
                     () => ElementAtNumber = resolutionStrings.IndexOf(res)));
-                y += 20;
+                y += 25;
 
                 if (y >= 200)
                 {
