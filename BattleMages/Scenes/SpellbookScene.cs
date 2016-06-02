@@ -189,8 +189,11 @@ namespace BattleMages
                 int thisIndex = i;
                 int spellId = GameWorld.State.SpellBar[thisIndex];
 
+                SpellInfo spell = null;
+                if (GameWorld.State.SpellBook.Count > spellId) spell = GameWorld.State.SpellBook[spellId];
+
                 GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
-                slotObj.AddComponent(new SpellInfoRenderer(GameWorld.State.SpellBook[spellId]));
+                slotObj.AddComponent(new SpellInfoRenderer(spell));
                 slotObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
                 {
                     if (selectedPlayerSpell != null)

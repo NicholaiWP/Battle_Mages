@@ -26,6 +26,8 @@ namespace BattleMages
             Vector2 pos = GameObject.Transform.Position;
             msg.Drawer[DrawLayer.UI].Draw(background, position: pos - Utils.HalfTexSize(background));
 
+            if (spellInfo == null) return;
+
             BaseRune baseRune = spellInfo.GetBaseRune();
             if (baseRune != null)
             {
