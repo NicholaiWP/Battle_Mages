@@ -13,10 +13,13 @@ namespace BattleMages
     {
         private int value = 1;
         private SpriteRenderer spriteRenderer;
-        private Transform transform;
         private Collider collider;
-        private Character character;
         private Animator animator;
+
+        private Vector2 pos;
+        private Vector2 velocity;
+        private float height = 1;
+        private float fallSpeed;
 
         public Coin()
         {
@@ -24,36 +27,48 @@ namespace BattleMages
             Listen<UpdateMsg>(Update);
         }
 
-        protected virtual void PreInitialize(PreInitializeMsg msg)
-        {
-        }
-
-        protected virtual void Initialize(InitializeMsg msg)
+        private void Initialize(InitializeMsg msg)
         {
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
-            transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
-            character = GameObject.GetComponent<Character>();
+
+            pos = GameObject.Transform.Position;
+
+            fallSpeed = (float)GameWorld.Random.NextDouble() * 40 - 100;
+            velocity = new Vector2((float)GameWorld.Random.NextDouble() - 0.5f, (float)GameWorld.Random.NextDouble() - 0.5f) * 120f;
         }
 
-        public void Spread()
+        private void Update(UpdateMsg msg)
         {
-            character.Movement();
-        }
+            if (height > 0f)
+            {
+                fallSpeed += GameWorld.DeltaTime * 400f;
 
-        private void Update(UpdateMsg Update)
-        {
+                height -= fallSpeed * GameWorld.DeltaTime;
+
+                if (height <= 0)
+                {
+                    height = 0;
+                    fallSpeed = 0;
+                    velocity = Vector2.Zero;
+                    GameWorld.SoundManager.PlaySound("CoinDropSound", false);
+                }
+            }
+
+            pos += velocity * GameWorld.DeltaTime;
+
+            GameObject.Transform.Position = pos + new Vector2(0, -height);
+
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 Player player = other.GameObject.GetComponent<Player>();
-                if(player != null)
+                if (player != null)
                 {
                     GameWorld.SoundManager.PlaySound("GetCoinSound", false);
                     player.Currency += value;
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
-
             }
         }
     }

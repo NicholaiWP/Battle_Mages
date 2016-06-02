@@ -35,6 +35,7 @@ namespace BattleMages
         private GraphicsDeviceManager graphics;
         public int ResScreenWidth { get; set; }
         public int ResScreenHeight { get; set; }
+        private Random random = new Random();
         public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -43,6 +44,7 @@ namespace BattleMages
         public static SavedState State { get { return Instance.state; } }
         public static float DeltaTime { get { return Instance.deltaTime; } }
         public static GraphicsDeviceManager Graphics { get { return Instance.graphics; } }
+        public static Random Random { get { return Instance.random; } }
 
         //Misc properties
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }

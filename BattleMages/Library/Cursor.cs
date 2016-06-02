@@ -55,16 +55,6 @@ namespace BattleMages
         {
             get
             {
-                position = Vector2.Transform(Mouse.GetState().Position.ToVector2(),
-                    GameWorld.Camera.WorldMatrix);
-                if (position.X > 674 + GameWorld.Camera.Position.X)
-                {
-                    position.X = 674 + GameWorld.Camera.Position.X;
-                }
-                if (position.Y > 375 + GameWorld.Camera.Position.Y)
-                {
-                    position.Y = 375 + GameWorld.Camera.Position.Y;
-                }
                 return position;
             }
         }
@@ -111,7 +101,22 @@ namespace BattleMages
         public void Update()
         {
             MouseState state = Mouse.GetState();
-            if (state.LeftButton == ButtonState.Pressed)
+
+            if (GameWorld.Instance.IsActive)
+            {
+                position = Vector2.Transform(state.Position.ToVector2(),
+                                    GameWorld.Camera.WorldMatrix);
+                if (position.X > 674 + GameWorld.Camera.Position.X)
+                {
+                    position.X = 674 + GameWorld.Camera.Position.X;
+                }
+                if (position.Y > 375 + GameWorld.Camera.Position.Y)
+                {
+                    position.Y = 375 + GameWorld.Camera.Position.Y;
+                }
+            }
+
+            if (state.LeftButton == ButtonState.Pressed && GameWorld.Instance.IsActive)
             {
                 if (!leftButtonHeld)
                 {
@@ -132,7 +137,7 @@ namespace BattleMages
                 }
             }
 
-            if (state.RightButton == ButtonState.Pressed)
+            if (state.RightButton == ButtonState.Pressed && GameWorld.Instance.IsActive)
             {
                 if (!rightButtonHeld)
                 {
