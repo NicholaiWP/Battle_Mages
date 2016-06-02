@@ -49,7 +49,6 @@ namespace BattleMages
         public void LoadContent(ContentManager content)
         {
             sounds.Add("fireball", content.Load<SoundEffect>("sounds/fireball"));
-            //sounds.Add("FrostShield", content.Load<SoundEffect>("sounds/FrostShield").CreateInstance());
             //sounds.Add("Earthspikes", content.Load<SoundEffect>("sounds/Earthspikes").CreateInstance());
             sounds.Add("iceshardsbreaking", content.Load<SoundEffect>("sounds/iceshardsbreaking"));
             sounds.Add("lightningStrike", content.Load<SoundEffect>("sounds/lightningStrike"));
@@ -61,6 +60,10 @@ namespace BattleMages
             sounds.Add("WalkSound", content.Load<SoundEffect>("Sounds/WalkSound"));
             sounds.Add("BurnSound", content.Load<SoundEffect>("Sounds/BurnSound"));
             sounds.Add("DialougeSound", content.Load<SoundEffect>("Sounds/DialougeSound"));
+            sounds.Add("CoinDropSound", content.Load<SoundEffect>("Sounds/CoinDropSound"));
+            sounds.Add("GetCoinSound", content.Load<SoundEffect>("Sounds/GetCoinSound"));
+            sounds.Add("FrostShieldSound", content.Load<SoundEffect>("Sounds/FrostShieldSound"));
+            sounds.Add("IceShardSound", content.Load<SoundEffect>("Sounds/IceShardSound"));
 
             music.Add("HubMusic", content.Load<Song>("Music/Hub"));
             music.Add("CombatMusic", content.Load<Song>("Music/Combat"));

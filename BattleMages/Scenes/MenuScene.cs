@@ -65,6 +65,7 @@ namespace BattleMages
                 GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2);
 
+            GameWorld.SoundManager.StopSound("AmbienceSound");
             GameWorld.SoundManager.PlayMusic("HubMusic");
         }
 

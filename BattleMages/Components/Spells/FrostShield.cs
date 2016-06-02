@@ -30,6 +30,7 @@ namespace BattleMages
             existenceTimer = 7;
             ManaCost = 40;
             ApplyAttributeRunes();
+            GameWorld.SoundManager.PlaySound("FrostShieldSound");
             spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
             //This makes sure all FrostShields have the same starting angle so that their rotation looks amazing

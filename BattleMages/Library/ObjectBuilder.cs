@@ -36,8 +36,9 @@ namespace BattleMages
         {
             GameObject gameObject = new GameObject(position);
 
-            gameObject.AddComponent(new Collider(new Vector2(16, 16), false));
-            gameObject.AddComponent(new SpriteRenderer("Textures/UI/Ingame/Coin"));
+            GameWorld.SoundManager.PlaySound("CoinDropSound", false);
+            gameObject.AddComponent(new Collider(new Vector2(6, 6), false));
+            gameObject.AddComponent(new SpriteRenderer("Textures/Misc/coin"));
             gameObject.AddComponent(new Animator());
             gameObject.AddComponent(new Coin());
             return gameObject;

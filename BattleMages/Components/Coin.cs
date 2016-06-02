@@ -26,7 +26,6 @@ namespace BattleMages
 
         protected virtual void PreInitialize(PreInitializeMsg msg)
         {
-           
         }
 
         protected virtual void Initialize(InitializeMsg msg)
@@ -38,6 +37,11 @@ namespace BattleMages
             character = GameObject.GetComponent<Character>();
         }
 
+        public void Spread()
+        {
+            character.Movement();
+        }
+
         private void Update(UpdateMsg Update)
         {
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
@@ -45,6 +49,7 @@ namespace BattleMages
                 Player player = other.GameObject.GetComponent<Player>();
                 if(player != null)
                 {
+                    GameWorld.SoundManager.PlaySound("GetCoinSound", false);
                     player.Currency += value;
                     GameWorld.Scene.RemoveObject(GameObject);
                 }

@@ -1060,3 +1060,27 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/coin.png
 
+#begin Sounds/CoinDropSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/CoinDropSound.wav
+
+#begin Sounds/GetCoinSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/GetCoinSound.wav
+
+#begin Sounds/FrostShieldSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/FrostShieldSound.wav
+
+#begin Sounds/IceShardSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/IceShardSound.wav
+
