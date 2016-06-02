@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace BattleMages
 {
@@ -33,6 +33,8 @@ namespace BattleMages
         private SavedState state;
         private float deltaTime;
         private GraphicsDeviceManager graphics;
+        public int ResScreenWidth { get; set; }
+        public int ResScreenHeight { get; set; }
         private Random random = new Random();
         public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
@@ -117,6 +119,8 @@ namespace BattleMages
             soundManager.LoadContent(Content);
 
             scene = new MenuScene();
+            ResScreenWidth = GraphicsDevice.Viewport.Width;
+            ResScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
         /// <summary>

@@ -170,6 +170,7 @@ namespace BattleMages
             {
                 SpellInfo spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
 
+
                 //Fetch base spell and runes
                 var baseRune = spellToCast.GetBaseRune();
                 AttributeRune[] attrRunes = new AttributeRune[SpellInfo.AttributeRuneSlotCount];
