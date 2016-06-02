@@ -39,7 +39,7 @@ namespace BattleMages
             velocity = new Vector2((float)GameWorld.Random.NextDouble() - 0.5f, (float)GameWorld.Random.NextDouble() - 0.5f) * 120f;
         }
 
-        private void Update(UpdateMsg Update)
+        private void Update(UpdateMsg msg)
         {
             if (height > 0f)
             {
