@@ -21,6 +21,7 @@ namespace BattleMages
 
         public Vector2 Offset { get { return offset; } }
         public Rectangle[] Frames { get { return frames; } }
+        public int Priority { get; set; }
 
         /// <summary>
         /// The Constructer for the animation
@@ -32,8 +33,9 @@ namespace BattleMages
         /// <param name="height"></param>
         /// <param name="fps"></param>
         /// <param name="offset"></param>
-        public Animation(int framesCount, int yPos, int xStartFrame, int width, int height, float fps, Vector2 offset)
+        public Animation(int priority, int framesCount, int yPos, int xStartFrame, int width, int height, float fps, Vector2 offset)
         {
+            Priority = priority;
             frames = new Rectangle[framesCount];
             this.offset = offset;
             this.fps = fps;

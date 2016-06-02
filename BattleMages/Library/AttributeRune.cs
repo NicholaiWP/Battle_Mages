@@ -47,7 +47,7 @@ namespace BattleMages
 
         public void LoadContent()
         {
-            Texture = GameWorld.Load<Texture2D>("Rune Images/" + TextureName);
+            Texture = GameWorld.Load<Texture2D>(StaticData.RuneImagePath + TextureName);
         }
     }
 }

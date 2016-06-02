@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
@@ -41,8 +41,9 @@ namespace BattleMages
     public class BaseRune
     {
         public delegate Spell SpellSpawnDelegate(SpellCreationParams creationParams);
+
         private SpellSpawnDelegate spawnFunc;
-        
+
         public string Name { get; }
         public string Description { get; }
         public string TextureName { get; }
@@ -75,7 +76,7 @@ namespace BattleMages
 
         public void LoadContent()
         {
-            Texture = GameWorld.Load<Texture2D>("Rune Images/" + TextureName);
+            Texture = GameWorld.Load<Texture2D>(StaticData.RuneImagePath + TextureName);
         }
     }
 }

@@ -1,45 +1,42 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
     public class SpriteRenderer : Component
     {
         //Fields
-        private string spriteName;
 
         private Rectangle rectangle;
+        private Texture2D sprite;
         private Vector2 offset;
         private Vector2 posRect;
         private Animator animator;
-        private Texture2D sprite;
         private bool usingSpritesheet;
+        private DrawLayer layerToUse;
 
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
-
+        public float Rotation { get; set; }
         public Texture2D Sprite { get { return sprite; } }
-
         public Vector2 Offset { set { offset = value; } }
-
-        public float Opacity { get; set; } = 1;
-
         public Vector2 PosRect { set { posRect = value; } }
+        public float Opacity { get; set; } = 1;
 
         /// <summary>
         /// A constructor for the sprite renderer
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="spriteName"></param>
-        public SpriteRenderer(string spriteName, bool usingSpritesheet = false)
+        public SpriteRenderer(string spriteName, bool usingSpritesheet = false, DrawLayer layerToUse = DrawLayer.Gameplay)
         {
-            this.spriteName = spriteName;
             this.usingSpritesheet = usingSpritesheet;
+            this.layerToUse = layerToUse;
             Listen<InitializeMsg>(Initialize);
             Listen<DrawMsg>(Draw);
             sprite = GameWorld.Load<Texture2D>(spriteName);
@@ -57,12 +54,11 @@ namespace BattleMages
         private void Draw(DrawMsg msg)
         {
             Color color = new Color(Opacity, Opacity, Opacity, Opacity);
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
-                position: GameObject.Transform.Position -
-                posRect + offset,
+            msg.Drawer[layerToUse].Draw(sprite,
+                position: GameObject.Transform.Position + offset,
                 sourceRectangle: rectangle,
-                origin: Vector2.Zero,
-                rotation: 0f,
+                origin: posRect,
+                rotation: Rotation,
                 color: color,
                 effects: SpriteEffects.None);
         }

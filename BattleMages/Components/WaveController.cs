@@ -30,7 +30,8 @@ namespace BattleMages
             }
             else
             {
-                GameWorld.ChangeScene(new LobbyScene(GameWorld.Scene));
+                GameWorld.State.Save();
+                GameWorld.ChangeScene(new LobbyScene());
             }
         }
     }

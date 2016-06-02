@@ -15,9 +15,6 @@ namespace BattleMages
         private Texture2D background;
         private SpriteFont font;
         private SpriteFont titleFont;
-        private Texture2D rune1;
-        private Texture2D rune2;
-        private Texture2D rune3;
 
         private AttributeRune selectedRune;
 
@@ -36,20 +33,17 @@ namespace BattleMages
             background = content.Load<Texture2D>("Backgrounds/ShopKeeperbg");
             font = content.Load<SpriteFont>("FontBM");
             titleFont = content.Load<SpriteFont>("TitleFont");
-            //runes
-            rune1 = content.Load<Texture2D>("Rune Images/rune1");
-            rune2 = content.Load<Texture2D>("Rune Images/rune2");
-            rune3 = content.Load<Texture2D>("Rune Images/rune3");
 
             int nextRuneX = 0;
             int nextRuneY = 0;
             int nextRunePos = 0;
 
+            var btnTex = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var btnTexHover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+
             foreach (AttributeRune attrRune in StaticData.AttributeRunes)
             {
                 AttributeRune thisRune = attrRune;
-                var btnTex = content.Load<Texture2D>("Images/Button_Rune");
-                var btnTexHover = content.Load<Texture2D>("Images/Button_Rune_Hover");
 
                 Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15 + nextRuneY);
                 AddObject(ObjectBuilder.BuildButton(
@@ -63,7 +57,8 @@ namespace BattleMages
                     },
                     null, false));
                 GameObject runeObj = new GameObject(pos + Vector2.One * 8);
-                runeObj.AddComponent(new SpriteRenderer(thisRune.TextureName));
+                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisRune.TextureName));
+                AddObject(runeObj);
 
                 nextRuneX += 16;
                 nextRunePos++;
@@ -74,9 +69,11 @@ namespace BattleMages
                 }
             }
             //Buy Button
-            var shopButton = content.Load<Texture2D>("Images/Button_Rune");
-            var shopButton_hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 170, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 50), shopButton, shopButton_hover,
+            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 170, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 50),
+                shopButton,
+                shopButton_hover,
              () =>
              {
                  if (GameWorld.State.PlayerGold >= selectedRune.CostInShop)
@@ -110,10 +107,6 @@ namespace BattleMages
             var currentMoneyPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 70, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 70);
             drawer[DrawLayer.UI].DrawString(font, GameWorld.State.PlayerGold.ToString(), currentMoneyPos, textColor);
 
-            //Runes
-            drawer[DrawLayer.UI].Draw(rune1, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 22, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 20), Color.White);
-            drawer[DrawLayer.UI].Draw(rune3, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 22, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 36), Color.White);
-            drawer[DrawLayer.UI].Draw(rune2, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 37, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 20), Color.White);
             //background
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
 

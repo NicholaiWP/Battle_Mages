@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace BattleMages
 {
@@ -32,7 +33,9 @@ namespace BattleMages
         private SavedState state;
         private float deltaTime;
         private GraphicsDeviceManager graphics;
-
+        public int ResScreenWidth { get; set; }
+        public int ResScreenHeight { get; set; }
+        private Random random = new Random();
         public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -41,6 +44,7 @@ namespace BattleMages
         public static SavedState State { get { return Instance.state; } }
         public static float DeltaTime { get { return Instance.deltaTime; } }
         public static GraphicsDeviceManager Graphics { get { return Instance.graphics; } }
+        public static Random Random { get { return Instance.random; } }
 
         //Misc properties
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
@@ -98,22 +102,7 @@ namespace BattleMages
             cursor = new Cursor();
             camera = new Camera2D();
             state = new SavedState();
-            scene = new MenuScene();
             drawer = new Drawer(GraphicsDevice);
-
-            //Create 4 test spell for both the bar and the book
-            for (int i = 0; i < 5; i++)
-            {
-                if (i == 3) continue;
-                SpellInfo ps = new SpellInfo();
-                ps.SetBaseRune(i);
-                //for (int j = 0; j < i; j++)
-                //{
-                //    ps.SetAttributeRune(j, 0);
-                //}
-                state.SpellBook.Add(ps);
-                state.SpellBar.Add(state.SpellBook.IndexOf(ps));
-            }
 
             base.Initialize();
         }
@@ -128,6 +117,10 @@ namespace BattleMages
             StaticData.LoadContent();
             cursor.LoadContent(Content);
             soundManager.LoadContent(Content);
+
+            scene = new MenuScene();
+            ResScreenWidth = GraphicsDevice.Viewport.Width;
+            ResScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
         /// <summary>
@@ -152,22 +145,7 @@ namespace BattleMages
         protected override void Update(GameTime gameTime)
         {
             cursor.Update();
-
-            if (scene is MenuScene || scene is PauseScene || scene is SettingsScene || scene is SpellbookScene)
-            {
-                SoundManager.PlayMusic("HubMusic");
-                SoundManager.StopSound("AmbienceSound");
-            }
-            if (scene is LobbyScene || scene is HallwayScene)
-            {
-                SoundManager.PlayMusic("HubMusic");
-                SoundManager.PlaySound("AmbienceSound");
-            }
-            if (scene is GameScene)
-            {
-                SoundManager.PlayMusic("CombatMusic");
-                SoundManager.PlaySound("AmbienceSound");
-            }
+            soundManager.Update();
 
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -186,6 +164,8 @@ namespace BattleMages
 
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
+
+            state.Draw(drawer);
 
             scene.Draw(drawer);
             cursor.Draw(drawer[DrawLayer.Cursor]);

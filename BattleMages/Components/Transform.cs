@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -27,10 +27,10 @@ namespace BattleMages
         /// <summary>
         /// Method for moving the gameobject, by changing its position
         /// </summary>
-        /// <param name="tranlation"></param>
-        public void Translate(Vector2 tranlation)
+        /// <param name="translation"></param>
+        public void Translate(Vector2 translation)
         {
-            position += tranlation;
+            position += translation;
         }
     }
 }

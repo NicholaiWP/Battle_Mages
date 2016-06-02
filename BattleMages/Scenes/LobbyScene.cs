@@ -16,19 +16,14 @@ namespace BattleMages
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
         private KeyboardState keyState;
-        private Scene oldScene;
+        private bool canPause = true;
 
-        public LobbyScene(Scene oldScene)
+        public LobbyScene()
         {
-            this.oldScene = oldScene;
-            //Volume handled through SoundManager
-            MediaPlayer.Volume = 0.5f;
-
             var content = GameWorld.Instance.Content;
             lobbyTexturePosition = new Vector2(-160, -270);
-
-            lobbyTexture = content.Load<Texture2D>("Backgrounds/BMtavern");
-            lobbyTextureForeground = content.Load<Texture2D>("Backgrounds/TavernLighting");
+            lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Lobby");
+            lobbyTextureForeground = content.Load<Texture2D>("Textures/Backgrounds/LobbyLighting");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 90 + 8), new Vector2(320, 16)));
@@ -37,56 +32,68 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
 
             //Door trigger
-            GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
-            doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
-            doorTriggerGameObject.AddComponent(new Interactable(() =>
-           {
-               GameWorld.ChangeScene(new ChallengeScene());
-               GameWorld.SoundManager.SoundVolume = 1f;
-           }));
-            AddObject(doorTriggerGameObject);
+            /* GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
+             doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
+             doorTriggerGameObject.AddComponent(new Interactable(() =>
+            {
+                GameWorld.ChangeScene(new ChallengeScene(this));
+                GameWorld.SoundManager.SoundVolume = 1f;
+            }));
+             AddObject(doorTriggerGameObject);*/
 
             //Door guard
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
-            doorGuardObj.AddComponent(new SpriteRenderer("Images/GdMageBM"));
-            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
+            doorGuardObj.AddComponent(new NPC("Textures/Npc's/ChallengeGuy-Sheet", new Vector2(32, 32), 8, 4));
+            doorGuardObj.AddComponent(new Animator());
+            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32), true));
             doorGuardObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
-                dialougeObj.AddComponent(new DialougeBox("Greetings, magician. The door next to me is where the 'magick' happen *laughs*. Once you enter you can not go back until you've overcome the challenge. Good luck."));
+                dialougeObj.AddComponent(new DialougeBox(new[] { "HALT-- I mean, hi!\nWho me? I don't know anything, I'm just a guard.         \n...Just pick a challenge already! " },
+                    () => { GameWorld.ChangeScene(new ChallengeScene(this)); canPause = false; }));
                 AddObject(dialougeObj);
             }));
             AddObject(doorGuardObj);
 
-            GameObject shopKeeper = new GameObject(new Vector2(114 + 24, -30 + 24));
-            shopKeeper.AddComponent(new SpriteRenderer("Images/WZRD"));
-            shopKeeper.AddComponent(new Collider(new Vector2(49, 49), true));
-            shopKeeper.AddComponent(new Interactable(() =>
+            //Door
+            GameObject door = new GameObject(new Vector2(0, -90 - 98 / 2));
+            door.AddComponent(new NPC("Textures/Npc's/doorOpen-Sheet", new Vector2(64, 128), 1, 10, true));
+            door.AddComponent(new Animator());
+            AddObject(door);
+
+            //ShopKeeper
+            GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
+            shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
+            shopkeeperObj.AddComponent(new Animator());
+            shopkeeperObj.AddComponent(new Collider(new Vector2(48, 48), true));
+            shopkeeperObj.AddComponent(new Interactable(() =>
             {
                 GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
             }));
-            AddObject(shopKeeper);
-
-            //Sets the sound volume for this scene
-            GameWorld.SoundManager.AmbienceVolume = 0.02f;
+            AddObject(shopkeeperObj);
+            GameWorld.SoundManager.PlayMusic("HubMusic");
 
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
-
-            //Get all objects on the list before the first run of Update()
-            ProcessObjectLists();
         }
 
         public override void Update()
         {
-            //Playing ambient sound in low volume using SoundManager
-            GameWorld.SoundManager.PlaySound("AmbienceSound");
-
             keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.Escape))
+            int dialougeCount = 0;
+            foreach (var go in ActiveObjects)
+            {
+                if (go.GetComponent<DialougeBox>() != null)
+                {
+                    dialougeCount++;
+                    break;
+                }
+            }
+
+            if (keyState.IsKeyDown(Keys.Escape) && dialougeCount == 0 && canPause)
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }

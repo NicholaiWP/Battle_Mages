@@ -1,12 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -15,23 +16,24 @@ namespace BattleMages
         private KeyboardState keyState;
         private GameObject goWaveController;
 
+        private SoundEffectInstance crowdSnd;
+
         public GameScene(string challengeName)
         {
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
-            ellipse.AddComponent(new SpriteRenderer("Images/BMarena"));
+            ellipse.AddComponent(new SpriteRenderer("Textures/Backgrounds/Arena", layerToUse: DrawLayer.Background));
             AddObject(ellipse);
 
             //Making a player
-            GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, true);
+            GameObject playerGameObject = ObjectBuilder.BuildPlayer(new Vector2(0, -300), true);
             AddObject(playerGameObject);
             GameWorld.Camera.Target = playerGameObject.Transform;
 
-            //Changes the sound volume
-            GameWorld.SoundManager.AmbienceVolume = 0.10f;
-
             //Music and soundhandling through SoundManager
             GameWorld.SoundManager.PlayMusic("CombatMusic");
+            crowdSnd = GameWorld.SoundManager.PlaySound("AmbienceSound", true);
+            crowdSnd.Volume = 0;
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI());
@@ -44,25 +46,25 @@ namespace BattleMages
                 goWaveController.AddComponent(waveController);
                 goWaveController.SendMessage(new UpdateMsg());
             }
-
-            //Get all objects on the list before the first run of Update()
-            base.Update();
         }
 
         public override void Update()
         {
-            //MediaPlayer.Volume = 0.01f;
             int enemyCount = 0;
 
             //Playing ambient sounds using SoundManager
-            GameWorld.SoundManager.PlaySound("AmbienceSound");
+            //GameWorld.SoundManager.PlaySound("AmbienceSound");
+
+            if (crowdSnd.Volume < 1)
+                crowdSnd.Volume = MathHelper.Min(crowdSnd.Volume + GameWorld.DeltaTime, 0.5f);
 
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene
             if (keyState.IsKeyDown(Keys.Escape))
             {
-                GameWorld.ChangeScene(new PauseScene(this));
+                crowdSnd.Pause();
+                GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
             }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);

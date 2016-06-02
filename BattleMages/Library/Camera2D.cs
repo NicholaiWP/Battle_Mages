@@ -29,6 +29,8 @@ namespace BattleMages
         /// </summary>
         public Transform Target { get; set; }
 
+        public bool AllowMovement { get; set; } = true;
+
         /// <summary>
         /// This is the matrix which the spriteBatch draws through, so it is our camera so to say
         /// </summary>
@@ -65,10 +67,13 @@ namespace BattleMages
             if (Target != null)
                 latestTargetPosition = Target.Position;
 
-            var camMovespeed = 250 * dt;
+            if (AllowMovement)
+            {
+                var camMovespeed = 250 * dt;
 
-            Vector2 pos = (GameWorld.Cursor.Position + latestTargetPosition) / 2;
-            position = pos;
+                Vector2 pos = (GameWorld.Cursor.Position + latestTargetPosition) / 2;
+                position = pos;
+            }
         }
     }
 }

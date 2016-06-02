@@ -18,7 +18,7 @@ namespace BattleMages
         public Transform Transform { get; private set; }
 
         /// <summary>
-        /// Constructer of the gameobject
+        /// Constructor of the gameobject
         /// </summary>
         /// <param name="position"></param>
         public GameObject(Vector2 position)

@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -42,8 +42,8 @@ namespace BattleMages
         {
             if (waitTimer <= 0 && !hadACollider)
             {
-                GameObject.AddComponent(new SpriteRenderer("Spell Images/lightning_bigger")
-                { PosRect = new Vector2(0, 90) });
+                GameObject.AddComponent(new SpriteRenderer("Textures/Spells/lightningStrike")
+                { PosRect = new Vector2(0, 320) });
                 collider = new Collider(new Vector2(10, 10));
                 hadACollider = true;
 

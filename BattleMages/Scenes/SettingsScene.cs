@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -17,10 +17,11 @@ namespace BattleMages
         private DisplayMode resolutionHolder;
         private List<DisplayMode> resolutions = new List<DisplayMode>();
         private string currentResolutionString;
+        private List<string> resolutionStrings = new List<string>();
         private GraphicsDeviceManager graphics;
         private CursorLockToken keybindSwappingLock;
         private SpriteFont fontBM;
-
+        private List<DisplayMode> allResolutions = new List<DisplayMode>(GraphicsAdapter.DefaultAdapter.SupportedDisplayModes);
         public int ElementAtNumber { get; set; }
         public PlayerBind ChosenKeyToRebind { get; set; }
 
@@ -29,55 +30,55 @@ namespace BattleMages
             graphics = GameWorld.Graphics;
             var content = GameWorld.Instance.Content;
             //Back button
-            var backSpr = content.Load<Texture2D>("Images/Back");
+            var backSpr = content.Load<Texture2D>("Textures/UI/Menu/Back");
             AddObject(ObjectBuilder.BuildButton(
                     new Vector2(GameWorld.Camera.Position.X - backSpr.Width / 2, GameWorld.Camera.Position.Y + backSpr.Height * 2f),
                     backSpr,
                     backSpr,
                     () => { GameWorld.ChangeScene(new MenuScene()); }
                 ));
-            /* settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindDown));
-             settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindLeft));
-             settingsButtons.Add(ObjectBuilder.BuildButton(MenuButtons.KeyBindRight));*/
+
             //Keybind up
-            var keyBindUpSpr = content.Load<Texture2D>("Images/Rebind");
-            AddObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
-                keyBindUpSpr,
-                keyBindUpSpr,
-                () =>
-                {
-                    keybindSwappingLock = GameWorld.Cursor.Lock();
-                    ChosenKeyToRebind = PlayerBind.Up;
-                }));
-            //Res down
-            var resDown = content.Load<Texture2D>("Images/ResDown");
-            AddObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - 64 - resDown.Width / 2, GameWorld.Camera.Position.Y - 50),
-                resDown,
-                resDown,
-                () => { ElementAtNumber--; }
-                ));
-            //Res up
-            var resUp = content.Load<Texture2D>("Images/ResUp");
-            AddObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X + 64 - resUp.Width / 2, GameWorld.Camera.Position.Y - 50),
-                resUp,
-                resUp,
-                () => { ElementAtNumber++; }
-                ));
+            /* var keyBindUpSpr = content.Load<Texture2D>("Textures/UI/Menu/Rebind");
+             AddObject(ObjectBuilder.BuildButton(
+                 new Vector2(GameWorld.Camera.Position.X - keyBindUpSpr.Width / 2, GameWorld.Camera.Position.Y - 78),
+                 keyBindUpSpr,
+                 keyBindUpSpr,
+                 () =>
+                 {
+                     keybindSwappingLock = GameWorld.Cursor.Lock();
+                     ChosenKeyToRebind = PlayerBind.Up;
+                 }));
+             //Res down
+              var resDown = content.Load<Texture2D>("Textures/UI/Menu/ResDown");
+              AddObject(ObjectBuilder.BuildButton(
+                  new Vector2(GameWorld.Camera.Position.X - 64 - resDown.Width / 2, GameWorld.Camera.Position.Y - 50),
+                  resDown,
+                  resDown,
+                  () => { ElementAtNumber--; }
+                  ));
+              //Res up
+              var resUp = content.Load<Texture2D>("Textures/UI/Menu/ResUp");
+              AddObject(ObjectBuilder.BuildButton(
+                  new Vector2(GameWorld.Camera.Position.X + 64 - resUp.Width / 2, GameWorld.Camera.Position.Y - 50),
+                  resUp,
+                  resUp,
+                  () => { ElementAtNumber++; }
+                  ));*/
 
             fontBM = content.Load<SpriteFont>("FontBM");
-            background = content.Load<Texture2D>("Images/BMmenu");
+            background = content.Load<Texture2D>("Textures/Backgrounds/Menu");
             DisplayMode lastResolution = null;
             int i = 0;
-            foreach (DisplayMode dmode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+            foreach (DisplayMode dmode in allResolutions)
             {
-                if (dmode.Height == GameWorld.Instance.HalfViewPortHeight * 2 &&
-                    dmode.Width == GameWorld.Instance.HalfViewPortWidth * 2)
+                resolutionStrings.Add(dmode.Width + "x" + dmode.Height);
+                if (dmode.Width == GameWorld.Instance.ResScreenWidth &&
+                    dmode.Height == GameWorld.Instance.ResScreenHeight)
                 {
                     currentResolution = dmode;
                     currentResolutionString = (dmode.Width + "x" + dmode.Height);
+                    ElementAtNumber = allResolutions.IndexOf(dmode);
                 }
 
                 if (lastResolution != dmode)
@@ -87,9 +88,27 @@ namespace BattleMages
                 }
                 lastResolution = dmode;
             }
-            ElementAtNumber = i - 1;
-            GameWorld.Instance.ScalingVector = new Vector2(Utils.CalculateWidthScale(currentResolution.Width),
-                Utils.CalculateHeightScale(currentResolution.Height));
+
+            int x = 10;
+            int y = 60;
+            foreach (string res in resolutionStrings)
+            {
+                var button = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/LongButton");
+                var buttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/LongButton_Hover");
+                AddObject(ObjectBuilder.BuildButton(new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
+                y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), button, buttonHover,
+                    () => ElementAtNumber = resolutionStrings.IndexOf(res)));
+                y += 25;
+
+                if (y >= 200)
+                {
+                    x += 50;
+                    y = 60;
+                }
+            }
+            if (currentResolution != null)
+                GameWorld.Instance.ScalingVector = new Vector2(Utils.CalculateWidthScale(currentResolution.Width),
+                    Utils.CalculateHeightScale(currentResolution.Height));
         }
 
         public override void Update()
@@ -108,6 +127,8 @@ namespace BattleMages
                 graphics.PreferredBackBufferWidth = currentResolution.Width;
                 graphics.PreferredBackBufferHeight = currentResolution.Height;
                 graphics.ApplyChanges();
+                GameWorld.Instance.ResScreenWidth = currentResolution.Width;
+                GameWorld.Instance.ResScreenHeight = currentResolution.Height;
                 GameWorld.Instance.ScalingVector = new Vector2(Utils.CalculateWidthScale(currentResolution.Width),
                     Utils.CalculateHeightScale(currentResolution.Height));
             }
@@ -139,11 +160,30 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
+            int x = 30;
+            int y = 65;
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
 
-            drawer[DrawLayer.UI].DrawString(fontBM, currentResolutionString, new Vector2(GameWorld.Camera.Position.X,
-                GameWorld.Camera.Position.Y), Color.Black);
+            for (int i = 0; i < resolutionStrings.Count; i++)
+            {
+                Color color = Color.Black;
+                if (resolutionStrings[i] == currentResolutionString)
+                {
+                    color = Color.LightYellow;
+                }
+                drawer[DrawLayer.AboveUI].DrawString(fontBM, resolutionStrings[i], new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
+                y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
+
+                y += 25;
+
+                if (y >= 200)
+                {
+                    x += 50;
+                    y = 65;
+                }
+            }
+
             drawer[DrawLayer.UI].DrawString(fontBM,
                 GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),
                 new Vector2(GameWorld.Camera.Position.X + 64, GameWorld.Camera.Position.Y - 72), Color.Black);

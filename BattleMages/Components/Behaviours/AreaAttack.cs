@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
     public class AreaAttack : IBehaviour
     {
-        enum AtkState
+        private enum AtkState
         {
             Ready,
             Beginning,
@@ -17,29 +17,30 @@ namespace BattleMages
             Recharging,
         }
 
-        Enemy enemy;
+        private Enemy enemy;
 
         //Timing
-        readonly float attackDelay;
-        readonly float attackTime;
-        readonly float rechargeTime;
+        private readonly float attackDelay;
+
+        private readonly float attackTime;
+        private readonly float rechargeTime;
 
         //Range to be inside for attack to start
-        readonly float maxRange;
+        private readonly float maxRange;
 
         //Size of area to damage in
-        float damageRange;
+        private float damageRange;
 
         //Damage to give
-        int damage;
+        private int damage;
 
         //Current state of attack
-        AtkState state;
+        private AtkState state;
 
-        float timer;
+        private float timer;
 
-        Character character;
-        float oldMoveSpeed;
+        private Character character;
+        private float oldMoveSpeed;
 
         public AreaAttack(Enemy enemy, float maxRange, float attackDelay, float attackTime, float rechargeTime, float damageRange, int damage)
         {
@@ -60,6 +61,8 @@ namespace BattleMages
                 Player player;
                 if (PlayerInRange(maxRange, out player))
                 {
+                    enemy.GameObject.GetComponent<Animator>().PlayAnimation("Ground" +
+                        enemy.GameObject.GetComponent<Character>().FDirection.ToString());
                     state = AtkState.Beginning;
                     timer = attackDelay;
                     oldMoveSpeed = character.MoveSpeed;
@@ -72,7 +75,7 @@ namespace BattleMages
                 timer -= GameWorld.DeltaTime;
                 if (timer <= 0)
                 {
-                    switch(state)
+                    switch (state)
                     {
                         case AtkState.Beginning:
                             //ATTACK!
@@ -82,21 +85,23 @@ namespace BattleMages
                                 player.TakeDamage(damage);
                             }
                             Random randy = new Random();
-                            for (int i=0;i<16;i++)
+                            for (int i = 0; i < 16; i++)
                             {
                                 GameObject dustGo = new GameObject(enemy.GameObject.Transform.Position + new Vector2((float)randy.NextDouble() - 0.5f, (float)randy.NextDouble() - 0.5f) * damageRange);
-                                dustGo.AddComponent(new SpriteRenderer("Images/Dust"));
+                                dustGo.AddComponent(new SpriteRenderer("Textures/Misc/Dust"));
                                 dustGo.AddComponent(new FadeOut(1));
                                 GameWorld.Scene.AddObject(dustGo);
                             }
                             state = AtkState.Attacking;
                             timer = attackTime;
                             break;
+
                         case AtkState.Attacking:
                             state = AtkState.Recharging;
                             timer = rechargeTime;
                             character.MoveSpeed = oldMoveSpeed;
                             break;
+
                         case AtkState.Recharging:
                             state = AtkState.Ready;
                             break;

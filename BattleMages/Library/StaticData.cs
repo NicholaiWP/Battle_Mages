@@ -13,6 +13,7 @@ namespace BattleMages
     /// </summary>
     public static class StaticData
     {
+        public const string RuneImagePath = "Textures/Runes/";
         private static AttributeRune[] attributeRunes;
         private static BaseRune[] baseRunes;
         public static Dictionary<string, Challenge> challenges = new Dictionary<string, Challenge>();
@@ -66,28 +67,28 @@ namespace BattleMages
             baseRunes = new BaseRune[]
             {
                 new BaseRune("Fireball",
-                "A ball of fire\nwith a chance of igniting\nthe enemy with fire",
-                "fireballRune",
+                "A ball of fire with a chance of igniting the enemy with fire",
+                "FireballRune",
                 (p) => { return new Fireball(p); }),
 
                 new BaseRune("Icicle",
-                "Three sharp chunks of ice\nwill spread outwards",
-                "iceshardsRune",
+                "Three sharp chunks of ice will spread outwards",
+                "IceShardsRune",
                 (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
-                "Powerful arcane lightning that\nstrikes from the sky",
-                "lightningRune",
+                "Powerful arcane lightning that strikes from the sky",
+                "LightningRune",
                 (p) => {return new Lightning(p); }),
 
-                new BaseRune("EarthSpikes",
-                "Sharp spikes will rise from the\nground and damage over time",
-                "earthspikesRune",
+                new BaseRune("Earth Spikes",
+                "Sharp spikes will rise from the ground and damage over time",
+                "EarthSpikesRune",
                 (p) => {return new EarthSpikes(p); }),
 
-                new BaseRune("FrostShield",
-                "Three orbs of frost that rotate\naround you and protect\nagainst projectiles",
-                "frostShieldRune",
+                new BaseRune("Frost Shield",
+                "Three orbs of frost that rotate around you and protect against projectiles",
+                "FrostShieldRune",
                 (p) => {return new FrostShield(p, true, 0); })
             };
 
