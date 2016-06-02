@@ -8,14 +8,43 @@ using System.Text;
 
 namespace BattleMages
 {
-    internal class SpellbookScene : Scene
+    public class SpellbookTab
+    {
+        private Scene scene;
+        private List<GameObject> objects = new List<GameObject>();
+        private Vector2 topLeft;
+
+        public Vector2 TopLeft { get; }
+
+        public SpellbookTab(Scene scene, Vector2 topLeft)
+        {
+            this.scene = scene;
+            TopLeft = topLeft;
+        }
+
+        public void AddObject(GameObject obj)
+        {
+            objects.Add(obj);
+            scene.AddObject(obj);
+        }
+
+        public void Clear()
+        {
+            foreach (GameObject obj in objects)
+            {
+                scene.RemoveObject(obj);
+            }
+            objects.Clear();
+        }
+    }
+
+    public class SpellbookScene : Scene
     {
         private Texture2D background;
-        private Texture2D spellCircle;
-        private Vector2 bgPosition = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
-        private Vector2 scPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
-        private Vector2 mcPosition = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 16, (GameWorld.GameHeight / 2) - 120);
+        private Vector2 bgPos = GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2);
+        private Vector2 spellCirclePos = GameWorld.Camera.Position - new Vector2(-GameWorld.GameWidth / 18, (GameWorld.GameHeight / 2) - 5);
 
+        //Positions on rune grid
         private Vector2 baseRunePosition;
         private Vector2[] attrRunePositions;
 
@@ -23,22 +52,16 @@ namespace BattleMages
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
         //Holds objects in a tab to delete them on tab change
-        private List<GameObject> objectsInTab = new List<GameObject>();
+        private SpellbookTab leftTab;
+        private SpellbookTab rightTab;
 
-        //Same for the rune grid
-        private List<GameObject> objectsInRuneGrid = new List<GameObject>();
-
-        //Seperate ints to keep track of each tab's current page so that they are kept when switching tabs.
-        private int spellListPage = 0;
-
-        private int runeListPage = 0;
-
-        //NULL if no spell is being edited. Determines if runes or player spells should be shown.
+        //NULL if no spell is being edited.
         private SpellInfo currentlyEditing;
 
+        //Selected runes/spells (These are used when runes/spells are being dragged around)
         private BaseRune selectedBaseRune;
         private AttributeRune selectedAttrRune;
-        private int selectedSpellBarSlot = -1;
+        private SpellInfo selectedPlayerSpell;
 
         private SpriteFont font;
         private string bottomLeftText = string.Empty;
@@ -54,63 +77,24 @@ namespace BattleMages
 
         public SpellbookScene(Scene oldScene)
         {
-            baseRunePosition = scPosition + new Vector2(60, 60);
+            this.oldScene = oldScene;
+
+            baseRunePosition = spellCirclePos + new Vector2(60, 60);
             attrRunePositions = new Vector2[]
             {
-                scPosition + new Vector2(60, 25), //Top slot
-                scPosition + new Vector2(120 - 25, 60), //Right slot
-                scPosition + new Vector2(60, 120 - 25), //Bottom slot
-                scPosition + new Vector2(25, 60), //Left slot
+                spellCirclePos + new Vector2(60, 25), //Top slot
+                spellCirclePos + new Vector2(120 - 25, 60), //Right slot
+                spellCirclePos + new Vector2(60, 120 - 25), //Bottom slot
+                spellCirclePos + new Vector2(25, 60), //Left slot
             };
 
-            var content = GameWorld.Instance.Content;
-
-            spellCircle = content.Load<Texture2D>("Textures/UI/Spellbook/RuneGrid");
-            background = content.Load<Texture2D>("Textures/Backgrounds/Spellbook");
-
-            this.oldScene = oldScene;
+            background = GameWorld.Load<Texture2D>("Textures/Backgrounds/Spellbook");
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
 
-            //Rune grid buttons
-
-            //Base runes
-            var runeSpr1 = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var runeSpr2 = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            AddObject(ObjectBuilder.BuildButton(
-                baseRunePosition - new Vector2(runeSpr1.Width / 2, runeSpr2.Height / 2),
-                runeSpr1,
-                runeSpr2,
-                () =>
-                {
-                    if (currentlyEditing != null && selectedBaseRune != null)
-                    {
-                        currentlyEditing.SetBaseRune(StaticData.BaseRunes.IndexOf(selectedBaseRune));
-                    }
-                    UpdateRuneGrid();
-                },
-                () => { if (currentlyEditing != null) { currentlyEditing.SetBaseRune(-1); UpdateRuneGrid(); } }
-                ));
-            //Attribute runes
-            for (int i = 0; i < attrRunePositions.Length; i++)
-            {
-                int thisPos = i;
-                AddObject(ObjectBuilder.BuildButton(
-                    attrRunePositions[thisPos] - new Vector2(runeSpr1.Width / 2, runeSpr1.Height / 2),
-                    runeSpr1,
-                    runeSpr2,
-                    () =>
-                    {
-                        if (currentlyEditing != null && selectedAttrRune != null)
-                        {
-                            currentlyEditing.SetAttributeRune(thisPos, StaticData.AttributeRunes.IndexOf(selectedAttrRune));
-                        }
-                        UpdateRuneGrid();
-                    },
-                    () => { if (currentlyEditing != null) { currentlyEditing.SetAttributeRune(thisPos, -1); UpdateRuneGrid(); } }
-                    ));
-            }
-
+            leftTab = new SpellbookTab(this, GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2));
+            rightTab = new SpellbookTab(this, GameWorld.Camera.Position - new Vector2(0, GameWorld.GameHeight / 2));
             OpenSpellsTab();
+            OpenRunesTab();
         }
 
         #region General purpose methods
@@ -124,116 +108,186 @@ namespace BattleMages
 
         #endregion General purpose methods
 
-        #region Tabs (Left pane)
-
-        private void AddTabObject(GameObject go)
-        {
-            objectsInTab.Add(go);
-            AddObject(go);
-        }
-
-        private void ClearTab()
-        {
-            foreach (GameObject go in objectsInTab)
-            {
-                RemoveObject(go);
-            }
-            objectsInTab.Clear();
-        }
-
         private void OpenSpellsTab()
         {
-            bottomRightText = "Select a spell to start\nediting it. Select a spell bar\nslot then select a spell to\nassign the spell to the slot.";
-            bottomLeftText = "Action bar";
-            ClearTab();
-            var content = GameWorld.Instance.Content;
+            SpellbookTab t = rightTab;
+            t.Clear();
+
+            bottomRightText = "Your active spells:";
             //New spell button
-            var newSpellSpr1 = content.Load<Texture2D>("Textures/UI/Spellbook/NewSpell");
-            var newSpellSpr2 = content.Load<Texture2D>("Textures/UI/Spellbook/NewSpell_Hover");
-            AddTabObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
+            var newSpellSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/NewSpell");
+            var newSpellSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/NewSpell_Hover");
+            t.AddObject(ObjectBuilder.BuildButton(
+                t.TopLeft + new Vector2(16, 16),
                 newSpellSpr1,
                 newSpellSpr2,
                 () =>
                 {
-                    //Limits amount of times you can make spells
-                    if (objectsInTab.Count < 28)
-                    {
-                        SpellInfo newSpell = new SpellInfo();
-                        GameWorld.State.SpellBook.Add(newSpell);
-                        OpenRunesTab(newSpell);
-                    }
+                    SpellInfo newSpell = new SpellInfo();
+                    GameWorld.State.SpellBook.Add(newSpell);
+                    currentlyEditing = newSpell;
+                    OpenRuneGrid();
                 }
                 ));
-            var playerSpellSpr1 = content.Load<Texture2D>("Textures/UI/Spellbook/LongButton");
-            var playerSpellSpr2 = content.Load<Texture2D>("Textures/UI/Spellbook/LongButton_Hover");
+
+            //Player spell list
+            var playerSpellSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/LongButton");
+            var playerSpellSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/LongButton_Hover");
             int nextSpellYPos = 0;
             foreach (SpellInfo spell in GameWorld.State.SpellBook)
             {
                 SpellInfo thisSpell = spell;
-                AddTabObject(ObjectBuilder.BuildButton(
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextSpellYPos),
-                    playerSpellSpr1,
-                    playerSpellSpr2,
-                    () =>
-                    {
-                        if (selectedSpellBarSlot >= 0)
-                        {
-                            if (thisSpell.GetBaseRune() != null)
-                            {
-                                GameWorld.State.SpellBar[selectedSpellBarSlot] = GameWorld.State.SpellBook.IndexOf(thisSpell);
-                                selectedSpellBarSlot = -1;
-                                OpenSpellsTab();
-                            }
-                        }
-                        else
-                        {
-                            OpenRunesTab(thisSpell);
-                        }
-                    }
-                    ));
-                //Draw sprite for the base spell of the spell
-                BaseRune spellInfo = spell.GetBaseRune();
-                if (spellInfo != null)
-                    AddTabObject(RuneIcon(TopLeft + new Vector2(18 + 8 + 4, 32 + 8 + nextSpellYPos), spell.GetBaseRune().TextureName));
-                for (int i = 0; i < SpellInfo.AttributeRuneSlotCount; i++)
-                {
-                    AttributeRune rune = spell.GetAttributeRune(i);
-                    if (rune != null)
-                        AddTabObject(RuneIcon(TopLeft + new Vector2(18 + 8 + 4 + 16 + 16 * i, 32 + 8 + nextSpellYPos), rune.TextureName));
-                }
+
+                GameObject spellObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 2, 40 + nextSpellYPos));
+                spellObj.AddComponent(new DragDropItem("playerspell", playerSpellSpr1, playerSpellSpr2, () => { selectedPlayerSpell = thisSpell; }));
+                spellObj.AddComponent(new SpellInfoRenderer(thisSpell));
+                t.AddObject(spellObj);
+
                 nextSpellYPos += 16;
             }
+            var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+
             //Action bar slots
             for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
             {
                 int thisIndex = i;
                 int spellId = GameWorld.State.SpellBar[thisIndex];
 
-                var btnSpr1 = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-                var btnSpr2 = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-                AddTabObject(ObjectBuilder.BuildButton(
-                        TopLeft + new Vector2(20 + thisIndex * 24, GameWorld.GameHeight - 40),
-                        btnSpr1,
-                        btnSpr2,
-                        () => { selectedSpellBarSlot = thisIndex; }
-                    ));
-                AddTabObject(RuneIcon(TopLeft + new Vector2(20 + thisIndex * 24 + 8, GameWorld.GameHeight - 40 + 8), GameWorld.State.SpellBook[spellId].GetBaseRune().TextureName));
+                SpellInfo spell = null;
+                if (spellId < GameWorld.State.SpellBook.Count && spellId >= 0) spell = GameWorld.State.SpellBook[spellId];
+
+                GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
+                slotObj.AddComponent(new SpellInfoRenderer(spell));
+                slotObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
+                {
+                    if (selectedPlayerSpell != null)
+                    {
+                        GameWorld.State.SpellBar[thisIndex] = GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell);
+                        OpenSpellsTab();
+                    }
+                }
+                ));
+                t.AddObject(slotObj);
             }
-            UpdateRuneGrid();
+
+            //Delete spell button
+            GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 2 - 48, GameWorld.GameHeight - 75));
+            deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/DeleteSpell"));
+            deleteObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
+            {
+                if (selectedPlayerSpell != null)
+                {
+                    for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
+                    {
+                        if (GameWorld.State.SpellBar[i] == GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell))
+                        {
+                            GameWorld.State.SpellBar[i] = -1;
+                        }
+                    }
+                    GameWorld.State.SpellBook.Remove(selectedPlayerSpell);
+                    OpenSpellsTab();
+                }
+            }
+            ));
+            t.AddObject(deleteObj);
+
+            //Edit spell button
+            GameObject editObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 2 - 32, GameWorld.GameHeight - 75));
+            editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/EditSpell"));
+            editObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
+            {
+                if (selectedPlayerSpell != null)
+                {
+                    currentlyEditing = selectedPlayerSpell;
+                    OpenRuneGrid();
+                }
+            }
+            ));
+            t.AddObject(editObj);
         }
 
-        private void OpenRunesTab(SpellInfo spellToEdit)
+        private void OpenRunesTab()
         {
-            bottomRightText = "Left click a rune to select\nthen left click a slot\nto add the selected rune.\nRight click to clear slots.";
-            currentlyEditing = spellToEdit;
-            ClearTab();
-            var content = GameWorld.Instance.Content;
+            SpellbookTab t = leftTab;
+            t.Clear();
+
+            bottomLeftText = "Hover over any rune to view its description.";
+
+            var runeBtnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var runeBtnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var runeBtnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+            int nextRuneX = 0;
+            int nextRuneY = 0;
+            int nextRunePos = 0;
+
+            Vector2 runeStartPos = TopLeft + new Vector2(28, 28);
+
+            foreach (var baseRune in StaticData.BaseRunes)
+            {
+                BaseRune thisBaseRune = baseRune;
+                Vector2 pos = runeStartPos + new Vector2(nextRuneX, nextRuneY);
+
+                GameObject runeObj = new GameObject(pos);
+                runeObj.AddComponent(new DragDropItem("baserune", runeBtnSpr1, runeBtnSpr2,
+                    () => { selectedAttrRune = null; selectedBaseRune = thisBaseRune; },
+                    () => { bottomLeftText = thisBaseRune.Name + " (Base rune)" + Environment.NewLine + thisBaseRune.Description; }));
+                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisBaseRune.TextureName));
+                t.AddObject(runeObj);
+
+                nextRunePos++;
+                nextRuneX += 16;
+                if (nextRunePos % 8 == 0)
+                {
+                    nextRuneY += 16;
+                    nextRuneX = 0;
+                }
+            }
+
+            nextRuneY += 24;
+            nextRuneX = 0;
+
+            foreach (var rune in StaticData.AttributeRunes)
+            {
+                AttributeRune thisAttrRune = rune;
+                Vector2 pos = runeStartPos + new Vector2(nextRuneX, nextRuneY);
+
+                GameObject runeObj = new GameObject(pos);
+                runeObj.AddComponent(new DragDropItem("attrrune", runeBtnSpr1, runeBtnSpr2,
+                    () => { selectedAttrRune = thisAttrRune; selectedBaseRune = null; },
+                    () => { bottomLeftText = thisAttrRune.Name + " (Attribute rune)" + Environment.NewLine + thisAttrRune.Description; }));
+                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisAttrRune.TextureName));
+                t.AddObject(runeObj);
+
+                nextRunePos++;
+                nextRuneX += 16;
+                if (nextRunePos % 8 == 0)
+                {
+                    nextRuneY += 16;
+                    nextRuneX = 0;
+                }
+            }
+        }
+
+        private void OpenRuneGrid()
+        {
+            if (currentlyEditing == null) return;
+            SpellbookTab t = rightTab;
+            t.Clear();
+
+            bottomRightText = "Drag a rune to an appropriate slot to place it there.";
+
+            //Spell circle
+            GameObject spellCircleObj = new GameObject(spellCirclePos + new Vector2(60, 60));
+            spellCircleObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/RuneGrid"));
+            t.AddObject(spellCircleObj);
+
             //Done button
-            var doneSpr1 = content.Load<Texture2D>("Textures/UI/Spellbook/Done");
-            var doneSpr2 = content.Load<Texture2D>("Textures/UI/Spellbook/Done_Hover");
-            AddTabObject(ObjectBuilder.BuildButton(
-            new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
+            var doneSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/Done");
+            var doneSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/Done_Hover");
+            t.AddObject(ObjectBuilder.BuildButton(
+            new Vector2(GameWorld.Camera.Position.X + 16, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 16),
             doneSpr1,
             doneSpr2,
             () =>
@@ -242,102 +296,66 @@ namespace BattleMages
                 OpenSpellsTab();
             }
             ));
-            var runeBtnSpr1 = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var runeBtnSpr2 = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            int nextRuneX = 0;
-            int nextRuneY = 0;
-            int nextRunePos = 0;
+            //Rune grid buttons
 
-            foreach (var spell in StaticData.BaseRunes)
+            //Base runes
+            var runeSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var runeSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var runeSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+
+            GameObject baseRuneObj = new GameObject(baseRunePosition);
+            baseRuneObj.AddComponent(new DragDropPoint("baserune", runeSpr1, runeSpr3, runeSpr2, () =>
             {
-                BaseRune thisSpell = spell;
-                Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY);
-                AddTabObject(ObjectBuilder.BuildButton(
-                    pos,
-                    runeBtnSpr1,
-                    runeBtnSpr2,
+                if (currentlyEditing != null && selectedBaseRune != null)
+                {
+                    currentlyEditing.SetBaseRune(StaticData.BaseRunes.IndexOf(selectedBaseRune));
+                }
+                OpenRuneGrid();
+            }));
+            t.AddObject(baseRuneObj);
+
+            /*t.AddObject(ObjectBuilder.BuildButton(
+                baseRunePosition - new Vector2(runeSpr1.Width / 2, runeSpr2.Height / 2),
+                runeSpr1,
+                runeSpr2,
+                () =>
+                {
+                },
+                () => { if (currentlyEditing != null) { currentlyEditing.SetBaseRune(-1); OpenRuneGrid(); } }
+                ));*/
+            //Attribute runes
+            for (int i = 0; i < attrRunePositions.Length; i++)
+            {
+                int thisPos = i;
+
+                GameObject attrRuneObj = new GameObject(attrRunePositions[i]);
+                attrRuneObj.AddComponent(new DragDropPoint("attrrune", runeSpr1, runeSpr3, runeSpr2, () =>
+                    {
+                        if (currentlyEditing != null && selectedAttrRune != null)
+                        {
+                            currentlyEditing.SetAttributeRune(thisPos, StaticData.AttributeRunes.IndexOf(selectedAttrRune));
+                        }
+                        OpenRuneGrid();
+                    }));
+                t.AddObject(attrRuneObj);
+
+                /*t.AddObject(ObjectBuilder.BuildButton(
+                    attrRunePositions[thisPos] - new Vector2(runeSpr1.Width / 2, runeSpr1.Height / 2),
+                    runeSpr1,
+                    runeSpr2,
                     () =>
                     {
-                        bottomLeftText = thisSpell.Name + Environment.NewLine + thisSpell.Description;
-                        selectedAttrRune = null;
-                        selectedBaseRune = thisSpell;
-                    }
-                    ));
-                GameObject runeImageObj = new GameObject(pos + Vector2.One * 8);
-                runeImageObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisSpell.TextureName));
-                AddTabObject(runeImageObj);
-
-                nextRunePos++;
-                nextRuneX += 16;
-                if (nextRunePos % 8 == 0)
-                {
-                    nextRuneY += 16;
-                    nextRuneX = 0;
-                }
+                    },
+                    () => { if (currentlyEditing != null) { currentlyEditing.SetAttributeRune(thisPos, -1); OpenRuneGrid(); } }
+                    ));*/
             }
 
-            nextRuneY += 16;
-            nextRuneX = 0;
-
-            foreach (var rune in StaticData.AttributeRunes)
-            {
-                AttributeRune thisRune = rune;
-                Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY);
-                AddTabObject(ObjectBuilder.BuildButton(
-                    new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 18 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 32 + nextRuneY),
-                    runeBtnSpr1,
-                    runeBtnSpr2,
-                    () =>
-                    {
-                        bottomLeftText = thisRune.Name + Environment.NewLine + thisRune.Description;
-                        selectedAttrRune = thisRune;
-                        selectedBaseRune = null;
-                    }
-                    ));
-                GameObject runeImageObj = new GameObject(pos + Vector2.One * 8);
-                runeImageObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisRune.TextureName));
-                AddTabObject(runeImageObj);
-
-                nextRunePos++;
-                nextRuneX += 16;
-                if (nextRunePos % 8 == 0)
-                {
-                    nextRuneY += 16;
-                    nextRuneX = 0;
-                }
-            }
-            UpdateRuneGrid();
-        }
-
-        #endregion Tabs (Left pane)
-
-        #region Rune grid (Right pane)
-
-        private void ClearRuneGrid()
-        {
-            foreach (GameObject go in objectsInRuneGrid)
-            {
-                RemoveObject(go);
-            }
-            objectsInRuneGrid.Clear();
-        }
-
-        private void AddRuneGridObject(GameObject go)
-        {
-            objectsInRuneGrid.Add(go);
-            AddObject(go);
-        }
-
-        private void UpdateRuneGrid()
-        {
-            ClearRuneGrid();
-            if (currentlyEditing == null) return;
-
+            //Images on top of buttons
             BaseRune spell = currentlyEditing.GetBaseRune();
             if (spell != null)
             {
                 var go = RuneIcon(baseRunePosition, spell.TextureName);
-                AddRuneGridObject(go);
+                t.AddObject(go);
             }
 
             for (int i = 0; i < SpellInfo.AttributeRuneSlotCount; i++)
@@ -346,12 +364,10 @@ namespace BattleMages
                 if (runeInfo != null)
                 {
                     var go = RuneIcon(attrRunePositions[i], runeInfo.TextureName);
-                    AddRuneGridObject(go);
+                    t.AddObject(go);
                 }
             }
         }
-
-        #endregion Rune grid (Right pane)
 
         public override void Update()
         {
@@ -376,11 +392,10 @@ namespace BattleMages
         public override void Draw(Drawer drawer)
         {
             Color textColor = new Color(120, 100, 80);
-            drawer[DrawLayer.UI].DrawString(font, bottomRightText, mcPosition, textColor);
-            drawer[DrawLayer.UI].DrawString(font, bottomLeftText, GameWorld.Camera.Position + new Vector2(-GameWorld.GameWidth / 2 + 20, GameWorld.GameHeight / 2 - 60), textColor);
+            drawer[DrawLayer.UI].DrawString(font, Utils.WarpText(bottomLeftText, 120, font), leftTab.TopLeft + new Vector2(24, GameWorld.GameHeight - 58), textColor);
+            drawer[DrawLayer.UI].DrawString(font, Utils.WarpText(bottomRightText, 120, font), rightTab.TopLeft + new Vector2(20, GameWorld.GameHeight - 58), textColor);
 
-            drawer[DrawLayer.Gameplay].Draw(spellCircle, scPosition, Color.White);
-            drawer[DrawLayer.Background].Draw(background, bgPosition, Color.White);
+            drawer[DrawLayer.Background].Draw(background, bgPos, Color.White);
 
             base.Draw(drawer);
         }
