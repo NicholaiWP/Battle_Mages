@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -39,18 +39,21 @@ namespace BattleMages
             attributeRunes = new AttributeRune[]
             {
                 new AttributeRune("Rune of Might",
-                "Rune of Might: Increases the damage of\n a spell.",
+                "Increases the damage of a spell.",
                 "rune1",
+                300,
                 DamageUpRune),
 
                 new AttributeRune("Rune of Persistence",
-                "Rune of Persistence: Makes a spell use\nless mana.",
-                "rune2", 
+                "Makes a spell use less mana.",
+                "rune2",
+                200,
                 DecreaseManaCostRune),
 
                 new AttributeRune("Rune of Haste",
-                "Rune of Haste: Lets you cast a spell\n faster.",
-                "rune3", 
+                "Lets you cast a spell faster.",
+                "rune3",
+                150,
                 DescreaseCooldown),
 
                 //new AttributeRune("Projectile block",

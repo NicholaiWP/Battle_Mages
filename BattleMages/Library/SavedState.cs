@@ -19,6 +19,8 @@ namespace BattleMages
         public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
 
+        public int PlayerGold { get; set; } = 1000;
+
         public void Save()
         {
             SQLiteConnection.CreateFile("BMdatabase.db");

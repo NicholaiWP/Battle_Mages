@@ -12,13 +12,13 @@ namespace BattleMages
     public class AttributeRune
     {
         public delegate void RuneAction(Spell targetSpell);
+
         private RuneAction action;
 
         public string Name { get; }
         public string Description { get; }
         public string TextureName { get; }
-        public int RuneCost { get; set; }
-        public int CurrentMoney { get; set; } 
+        public int CostInShop { get; set; }
         public Texture2D Texture { get; private set; }
 
         /// <summary>
@@ -27,11 +27,12 @@ namespace BattleMages
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="action"></param>
-        public AttributeRune(string name, string description, string textureName, RuneAction action)
+        public AttributeRune(string name, string description, string textureName, int costInShop, RuneAction action)
         {
             Name = name;
             Description = description;
             TextureName = textureName;
+            CostInShop = costInShop;
             this.action = action;
         }
 
