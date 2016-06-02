@@ -103,5 +103,10 @@ namespace BattleMages
 
             return output.ToString();
         }
+
+        public static Vector2 HalfTexSize(Texture2D tex)
+        {
+            return new Vector2(tex.Width, tex.Height) / 2f;
+        }
     }
 }
