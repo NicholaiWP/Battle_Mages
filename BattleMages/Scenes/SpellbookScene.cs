@@ -190,7 +190,7 @@ namespace BattleMages
                 int spellId = GameWorld.State.SpellBar[thisIndex];
 
                 SpellInfo spell = null;
-                if (GameWorld.State.SpellBook.Count > spellId) spell = GameWorld.State.SpellBook[spellId];
+                if (spellId < GameWorld.State.SpellBook.Count && spellId >= 0) spell = GameWorld.State.SpellBook[spellId];
 
                 GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
                 slotObj.AddComponent(new SpellInfoRenderer(spell));
@@ -213,6 +213,13 @@ namespace BattleMages
             {
                 if (selectedPlayerSpell != null)
                 {
+                    for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
+                    {
+                        if (GameWorld.State.SpellBar[i] == GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell))
+                        {
+                            GameWorld.State.SpellBar[i] = -1;
+                        }
+                    }
                     GameWorld.State.SpellBook.Remove(selectedPlayerSpell);
                     OpenSpellsTab();
                 }
@@ -221,6 +228,18 @@ namespace BattleMages
             t.AddObject(deleteObj);
 
             //Edit spell button
+            GameObject editObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 2 - 32, GameWorld.GameHeight - 48));
+            editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/EditSpell"));
+            editObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
+            {
+                if (selectedPlayerSpell != null)
+                {
+                    currentlyEditing = selectedPlayerSpell;
+                    OpenRuneGrid();
+                }
+            }
+            ));
+            t.AddObject(editObj);
         }
 
         private void OpenRunesTab()
