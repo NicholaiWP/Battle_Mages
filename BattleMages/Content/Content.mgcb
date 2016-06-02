@@ -1180,6 +1180,30 @@
 /processorParam:TextureFormat=Color
 /build:Textures/UI/Spellbook/EditSpell.png
 
+#begin Sounds/CoinDropSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/CoinDropSound.wav
+
+#begin Sounds/GetCoinSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/GetCoinSound.wav
+
+#begin Sounds/FrostShieldSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/FrostShieldSound.wav
+
+#begin Sounds/IceShardSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/IceShardSound.wav
+
 #begin Textures/Npc's/doorOpen-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
