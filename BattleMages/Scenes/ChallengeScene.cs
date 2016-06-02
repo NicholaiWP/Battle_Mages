@@ -1,19 +1,16 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
     public class ChallengeScene : Scene
     {
-        private Vector2 backgroundPos;
-        private Texture2D background;
-
-        public ChallengeScene()
+        public ChallengeScene(Scene oldScene)
         {
             var content = GameWorld.Instance.Content;
 
@@ -25,8 +22,18 @@ namespace BattleMages
                 noviceHover,
                 () =>
                 {
-                    GameWorld.ChangeScene(new HallwayScene("Novice"));
-                    GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+                    GameWorld.ChangeScene(oldScene);
+                    if (oldScene is LobbyScene)
+                    {
+                        foreach (GameObject go in oldScene.ActiveObjects)
+                        {
+                            if (go.GetComponent<NPC>() != null)
+                            {
+                                go.GetComponent<NPC>().ChangeAnimation("Novice");
+                                GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+                            }
+                        }
+                    }
                 }
                 ));
 

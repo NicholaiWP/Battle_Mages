@@ -31,14 +31,14 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
 
             //Door trigger
-            GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
-            doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
-            doorTriggerGameObject.AddComponent(new Interactable(() =>
-           {
-               GameWorld.ChangeScene(new ChallengeScene());
-               GameWorld.SoundManager.SoundVolume = 1f;
-           }));
-            AddObject(doorTriggerGameObject);
+            /* GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
+             doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
+             doorTriggerGameObject.AddComponent(new Interactable(() =>
+            {
+                GameWorld.ChangeScene(new ChallengeScene(this));
+                GameWorld.SoundManager.SoundVolume = 1f;
+            }));
+             AddObject(doorTriggerGameObject);*/
 
             //Door guard
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
@@ -48,10 +48,17 @@ namespace BattleMages
             doorGuardObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
-                dialougeObj.AddComponent(new DialougeBox(new[] { "Greetings, magician. Go through the the door and then the portal, where the real magic happens! You will not return here before you impress the audience! *laughs**" }, null));
+                dialougeObj.AddComponent(new DialougeBox(new[] { "Greetings, magician. Go through the the door and then the portal, where the real magic happens! You will not return here before you impress the audience! *laughs**" },
+                    () => GameWorld.ChangeScene(new ChallengeScene(this))));
                 AddObject(dialougeObj);
             }));
             AddObject(doorGuardObj);
+
+            //Door
+            GameObject door = new GameObject(new Vector2(0, -90 - 98 / 2));
+            door.AddComponent(new NPC("Textures/Npc's/doorOpen-Sheet", new Vector2(64, 128), 1, 10, true));
+            door.AddComponent(new Animator());
+            AddObject(door);
 
             //ShopKeeper
             GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
@@ -69,15 +76,6 @@ namespace BattleMages
         public override void Update()
         {
             keyState = Keyboard.GetState();
-
-            if (keyState.IsKeyDown(Keys.Escape))
-            {
-                GameWorld.ChangeScene(new PauseScene(this));
-            }
-            if (keyState.IsKeyDown(Keys.Enter))
-            {
-                GameWorld.State.Save();
-            }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
