@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -359,7 +359,10 @@ namespace BattleMages
             if (state.IsKeyDown(Keys.Tab))
             {
                 if (!tabPressed)
+                {
+                    GameWorld.State.Save();
                     GameWorld.ChangeScene(oldScene);
+                }
             }
             else
             {

@@ -308,6 +308,7 @@ namespace BattleMages
 
             if (msg.AnimationName == "Death")
             {
+                GameWorld.State.Save();
                 GameWorld.ChangeScene(new DeathScene());
             }
         }
