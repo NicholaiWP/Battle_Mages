@@ -36,7 +36,7 @@ namespace BattleMages
             var content = GameWorld.Instance.Content;
             this.oldScene = oldScene;
             buttonSelected = -1;
-            background = content.Load<Texture2D>("Backgrounds/Shop");
+            background = content.Load<Texture2D>("Backgrounds/ShopKeeperbg");
             font = content.Load<SpriteFont>("FontBM");
             titleFont = content.Load<SpriteFont>("TitleFont");
             //runes
@@ -85,7 +85,7 @@ namespace BattleMages
                     //Buy Button
                     var shopButton = content.Load<Texture2D>("Images/Button_Rune");
                     var shopButton_hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
-                    AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 80), shopButton, shopButton_hover,
+                    AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 170, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 50), shopButton, shopButton_hover,
                      () =>
                      {
                          if(currentMoney >= cost)
@@ -107,19 +107,20 @@ namespace BattleMages
             Color textColor = new Color(120, 100, 80);
 
             //Text
-            drawer[DrawLayer.UI].DrawString(titleFont, "Description", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 70, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 120), Color.Black);
-            drawer[DrawLayer.UI].DrawString(titleFont, "Purchase", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 130, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 60), Color.Black);
-            drawer[DrawLayer.UI].DrawString(titleFont, "Your Money", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 30, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 60), Color.Black);
-            drawer[DrawLayer.UI].DrawString(titleFont, "Cost", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 140, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15), Color.Black);
+            drawer[DrawLayer.UI].DrawString(titleFont, "Description", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 50, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 128), Color.Black);
+            drawer[DrawLayer.UI].DrawString(titleFont, "Your Money", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 40, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 50), Color.Black);
+            drawer[DrawLayer.UI].DrawString(font, "Cost", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 168, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 20), Color.Black);
 
             //Draws the descriptions
-            var bottomLeftTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 140);
+            var bottomLeftTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 145);
             drawer[DrawLayer.UI].DrawString(font, bottomLeftText, bottomLeftTextPos, Color.Black);
 
-            var uppperTopTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 35);
+            //Draws costs of runes
+            var uppperTopTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 170, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 35);
             drawer[DrawLayer.UI].DrawString(font,  cost.ToString(), uppperTopTextPos, Color.Black);
-        
-            var currentMoneyPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 60, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 90);
+
+            //Draws player's current money
+            var currentMoneyPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 70, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 70);
             drawer[DrawLayer.UI].DrawString(font, currentMoney.ToString(), currentMoneyPos, Color.Black);
 
                 
