@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -34,7 +34,8 @@ namespace BattleMages
         private float dashCooldown;
         private Vector2 dashVec;
 
-        private float[] cooldownTimers = new float[SpellInfo.AttributeRuneSlotCount];
+        private float[] cooldownTimers = new float[GameWorld.State.SpellBar.Count];
+        private float[] cooldownTimersMax = new float[GameWorld.State.SpellBar.Count];
         private bool canMove;
         public const int MaxHealth = 100;
         public const float MaxMana = 100;
@@ -154,7 +155,9 @@ namespace BattleMages
                 for (int i = 0; i < cooldownTimers.Length; i++)
                 {
                     if (cooldownTimers[i] < dashSpellCooldown)
-                        cooldownTimers[i] = dashSpellCooldown;
+                    {
+                        cooldownTimers[i] = cooldownTimersMax[i] = dashSpellCooldown;
+                    }
                 }
             }
             else if (dashCooldown >= 0)
@@ -182,7 +185,7 @@ namespace BattleMages
                 GameWorld.Scene.AddObject(spellObject);
 
                 CurrentMana -= spellComponent.ManaCost;
-                cooldownTimers[selectedSpell] = spellComponent.CooldownTime;
+                cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = spellComponent.CooldownTime;
                 rechargeDelayTimer = ManaRechargeDelay;
 
                 Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
@@ -212,8 +215,17 @@ namespace BattleMages
                 canMove = false;
             }
 
+            int dialougeCount = 0;
+            foreach (var go in GameWorld.Scene.ActiveObjects)
+            {
+                if (go.GetComponent<DialougeBox>() != null)
+                {
+                    dialougeCount++;
+                    break;
+                }
+            }
             //Spellbook opening
-            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab))
+            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab) && dialougeCount == 0)
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
             }
@@ -330,6 +342,12 @@ namespace BattleMages
                 invincibleTimer = invincibleTime;
                 spriteRenderer.Opacity = 0.5f;
             }
+        }
+
+        public float GetCooldownTimer(int slot)
+        {
+            if (cooldownTimersMax[slot] == 0) return 0;
+            return cooldownTimers[slot] / cooldownTimersMax[slot];
         }
     }
 }

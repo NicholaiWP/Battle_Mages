@@ -15,6 +15,7 @@ namespace BattleMages
         private Texture2D coinsSprite;
         private Texture2D aboveUI;
         private Texture2D behindUI;
+        private Texture2D spellbarCooldownOverlay;
 
         private float healthbarSize = 1f;
         private float manabarSize = 1f;
@@ -40,6 +41,7 @@ namespace BattleMages
             healthBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/HealthBar");
             manaBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/ManaBar");
             coinsSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/Coin");
+            spellbarCooldownOverlay = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarCooldownOverlay");
 
             //Spell bar icons
 
@@ -101,7 +103,19 @@ namespace BattleMages
                 msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize, 1));
                 //Draws currency with spritefont
 
-                msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, player.Currency.ToString(), new Vector2(topRight.X - player.Currency.ToString().Length * 7 -(coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
+                msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, player.Currency.ToString(), new Vector2(topRight.X - player.Currency.ToString().Length * 7 - (coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
+
+                //Cooldown timers
+                for (int i = 0; i < spellBarPositions.Length; i++)
+                {
+                    float cooldown = player.GetCooldownTimer(i);
+                    if (cooldown <= 0) continue;
+                    int frameToUse = (int)(cooldown * 8);
+                    msg.Drawer[DrawLayer.AboveUI].Draw(
+                        spellbarCooldownOverlay,
+                        position: GameWorld.Camera.Position + spellBarPositions[i] - new Vector2(19 / 2f, 19 / 2f),
+                        sourceRectangle: new Rectangle(19 * frameToUse, 0, 19, 19));
+                }
             }
 
             msg.Drawer[DrawLayer.AboveUI].Draw(aboveUI, position: topLeft);

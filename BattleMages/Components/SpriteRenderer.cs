@@ -18,6 +18,7 @@ namespace BattleMages
         private Vector2 posRect;
         private Animator animator;
         private bool usingSpritesheet;
+        private DrawLayer layerToUse;
 
         //Properties
         public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
@@ -32,9 +33,10 @@ namespace BattleMages
         /// </summary>
         /// <param name="gameObject"></param>
         /// <param name="spriteName"></param>
-        public SpriteRenderer(string spriteName, bool usingSpritesheet = false)
+        public SpriteRenderer(string spriteName, bool usingSpritesheet = false, DrawLayer layerToUse = DrawLayer.Gameplay)
         {
             this.usingSpritesheet = usingSpritesheet;
+            this.layerToUse = layerToUse;
             Listen<InitializeMsg>(Initialize);
             Listen<DrawMsg>(Draw);
             sprite = GameWorld.Load<Texture2D>(spriteName);
@@ -52,7 +54,7 @@ namespace BattleMages
         private void Draw(DrawMsg msg)
         {
             Color color = new Color(Opacity, Opacity, Opacity, Opacity);
-            msg.Drawer[DrawLayer.Gameplay].Draw(sprite,
+            msg.Drawer[layerToUse].Draw(sprite,
                 position: GameObject.Transform.Position + offset,
                 sourceRectangle: rectangle,
                 origin: posRect,
