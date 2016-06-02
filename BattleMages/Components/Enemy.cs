@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -62,7 +62,10 @@ namespace BattleMages
             if (health <= 0)
             {
                 GameWorld.Scene.RemoveObject(GameObject);
-                GameWorld.Scene.AddObject(ObjectBuilder.BuildCoin(transform.Position));
+                for (int i = 0; i < 10; i++)
+                {
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildCoin(transform.Position));
+                }
                 canMove = false;
                 GameObject.RemoveComponent<Collider>();
                 animator.PlayAnimation("Death" + character.FDirection.ToString());

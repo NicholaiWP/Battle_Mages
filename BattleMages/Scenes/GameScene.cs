@@ -22,7 +22,7 @@ namespace BattleMages
         {
             //Creating the brackground for the arena and adding it to the list
             var ellipse = new GameObject(Vector2.Zero);
-            ellipse.AddComponent(new SpriteRenderer("Textures/Backgrounds/Arena"));
+            ellipse.AddComponent(new SpriteRenderer("Textures/Backgrounds/Arena", layerToUse: DrawLayer.Background));
             AddObject(ellipse);
 
             //Making a player
