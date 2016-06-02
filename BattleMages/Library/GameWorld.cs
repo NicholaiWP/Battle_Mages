@@ -33,6 +33,8 @@ namespace BattleMages
         private SavedState state;
         private float deltaTime;
         private GraphicsDeviceManager graphics;
+        public int ResScreenWidth { get; set; }
+        public int ResScreenHeight { get; set; }
         public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -115,6 +117,8 @@ namespace BattleMages
             soundManager.LoadContent(Content);
 
             scene = new MenuScene();
+            ResScreenWidth = GraphicsDevice.Viewport.Width;
+            ResScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
         /// <summary>
