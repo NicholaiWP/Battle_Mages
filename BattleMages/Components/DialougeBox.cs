@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -35,7 +35,6 @@ namespace BattleMages
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
-            Listen<DestroyMsg>(Destroy);
         }
 
         private void Initialize(InitializeMsg msg)
@@ -75,8 +74,10 @@ namespace BattleMages
                 currentText++;
                 if (currentText >= texts.Length)
                 {
-                    onDone?.Invoke();
+                    GameWorld.Camera.AllowMovement = true;
+                    cursorLock.Unlock();
                     GameWorld.Scene.RemoveObject(GameObject);
+                    onDone?.Invoke();
                 }
             }
             prevState = curState;
@@ -94,12 +95,6 @@ namespace BattleMages
             Vector2 pos = GameWorld.Camera.Position + new Vector2(-textureToUse.Width / 2, GameWorld.GameHeight / 2 - textureToUse.Height);
             msg.Drawer[DrawLayer.UI].Draw(textureToUse, pos, Color.White);
             msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
-        }
-
-        private void Destroy(DestroyMsg msg)
-        {
-            GameWorld.Camera.AllowMovement = true;
-            cursorLock.Unlock();
         }
     }
 }
