@@ -42,7 +42,8 @@ namespace BattleMages
 
             //Door guard
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
-            doorGuardObj.AddComponent(new SpriteRenderer("Textures/Misc/apple"));
+            doorGuardObj.AddComponent(new NPC("Textures/Npc's/ChallengeGuy-Sheet", new Vector2(32, 32), 8, 4));
+            doorGuardObj.AddComponent(new Animator());
             doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
             doorGuardObj.AddComponent(new Interactable(() =>
             {
@@ -52,6 +53,11 @@ namespace BattleMages
             }));
             AddObject(doorGuardObj);
 
+            //ShopKeeper
+            GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
+            shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
+            shopkeeperObj.AddComponent(new Animator());
+            AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
             //Player
