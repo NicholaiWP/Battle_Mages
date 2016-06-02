@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -47,7 +47,7 @@ namespace BattleMages
         {
             Color c = Color.Purple;
             c.A = (byte)(alpha * 255);
-            msg.Drawer[DrawLayer.Foreground].DrawString(font, text, GameObject.Transform.Position, c);
+            msg.Drawer[DrawLayer.Foreground].DrawString(font, text, GameObject.Transform.Position, Color.FromNonPremultiplied(c.ToVector4()));
         }
     }
 }
