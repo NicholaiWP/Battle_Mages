@@ -56,7 +56,7 @@ namespace BattleMages
         public static GameObject BuildDraggable(string tag, Vector2 position, Texture2D normalTex, Texture2D hoverTex, Action onDragStart)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new Draggable(tag, normalTex, hoverTex, onDragStart));
+            gameObject.AddComponent(new DragDropItem(tag, normalTex, hoverTex, onDragStart));
             return gameObject;
         }
     }

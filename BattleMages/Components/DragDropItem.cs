@@ -8,12 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
-    internal class Draggable : Component
+    internal class DragDropItem : Component
     {
         private Vector2 startPosition;
         private Texture2D normalTex;
         private Texture2D hoverTex;
         private Action onDragStart;
+        private Action onHover;
         private SpriteRenderer spriteRenderer;
         private bool hovering;
         private bool dragging;
@@ -21,12 +22,13 @@ namespace BattleMages
 
         private Texture2D ActiveTex { get { return hovering ? hoverTex : normalTex; } }
 
-        public Draggable(string tag, Texture2D normalTex, Texture2D hoverTex, Action onDragStart)
+        public DragDropItem(string tag, Texture2D normalTex, Texture2D hoverTex, Action onDragStart, Action onHover = null)
         {
             this.tag = tag;
             this.normalTex = normalTex;
             this.hoverTex = hoverTex;
             this.onDragStart = onDragStart;
+            this.onHover = onHover;
 
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
@@ -44,7 +46,11 @@ namespace BattleMages
             Rectangle rectangle = new Rectangle((GameObject.Transform.Position - Utils.HalfTexSize(ActiveTex)).ToPoint(), ActiveTex.Bounds.Size);
             if (rectangle.Contains(GameWorld.Cursor.Position))
             {
-                hovering = true;
+                if (!hovering)
+                {
+                    hovering = true;
+                    onHover?.Invoke();
+                }
 
                 GameWorld.Cursor.SetCursor(CursorStyle.Interactable);
 
@@ -59,7 +65,7 @@ namespace BattleMages
                     }
                 }
             }
-            else
+            else if (hovering)
             {
                 hovering = false;
             }

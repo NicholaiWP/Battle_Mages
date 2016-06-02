@@ -66,7 +66,7 @@
     <Compile Include="Components\Character.cs" />
     <Compile Include="Components\DialougeBox.cs" />
     <Compile Include="Components\DragDropPoint.cs" />
-    <Compile Include="Components\Draggable.cs" />
+    <Compile Include="Components\DragDropItem.cs" />
     <Compile Include="Components\Enemies\Golem.cs" />
     <Compile Include="Components\Enemies\Orb.cs" />
     <Compile Include="Components\Enemies\Slime.cs" />
