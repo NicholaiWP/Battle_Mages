@@ -18,21 +18,13 @@ namespace BattleMages
         private Texture2D rune1;
         private Texture2D rune2;
         private Texture2D rune3;
-        private string bottomLeftText = string.Empty;
-        private string upperRightText = string.Empty;
-        private int runeCost;
-        private int StartingMoney;
+        private int cost;
         private int currentMoney;
+        private string bottomLeftText = string.Empty;
         private int buttonSelected;
 
         //bool for returning to the lobby after entering the shop
         private bool cPressed;
-
-        public int Cost { get { return runeCost; } set { runeCost = value; } }
-
-        public int StartingMoney1 { get { return StartingMoney; } set { StartingMoney = value; } }
-
-        public int CurrentMoney { get { return currentMoney; } set { currentMoney = value; } }
 
         //TO DO:
         //-then subtracts currentMoney from the rune's cost and adds the rune to the spellbook's rune slots.
@@ -43,13 +35,10 @@ namespace BattleMages
         {
             var content = GameWorld.Instance.Content;
             this.oldScene = oldScene;
-            StartingMoney1 = 50;
-            CurrentMoney -= Cost;
             buttonSelected = -1;
             background = content.Load<Texture2D>("Backgrounds/Shop");
             font = content.Load<SpriteFont>("FontBM");
             titleFont = content.Load<SpriteFont>("TitleFont");
-
             //runes
             rune1 = content.Load<Texture2D>("Rune Images/rune1");
             rune2 = content.Load<Texture2D>("Rune Images/rune2");
@@ -57,6 +46,7 @@ namespace BattleMages
 
             int xPos = 0;
             int yPos = 0;
+           
             foreach (AttributeRune attrRune in StaticData.AttributeRunes)
             {
                 var Button_Rune = content.Load<Texture2D>("Images/Button_Rune");
@@ -65,8 +55,23 @@ namespace BattleMages
                     () =>
                     {
                         buttonSelected = StaticData.AttributeRunes.IndexOf(attrRune);
+                        cost = attrRune.RuneCost;
+                        currentMoney = attrRune.CurrentMoney;
                         bottomLeftText = attrRune.Description;
-                        upperRightText = attrRune.RuneCost.ToString();
+
+                        if (buttonSelected == 0)
+                        {
+                            cost = 300;
+                        }
+                        else if (buttonSelected == 1)
+                        {
+                            cost = 200;
+                        }
+                        else if (buttonSelected == 2)
+                        {
+                            cost = 150;
+                        }
+
                     },
                     null, false));
 
@@ -76,31 +81,27 @@ namespace BattleMages
                     yPos++;
                     xPos = 0;
                 }
-
-                if (Cost > currentMoney)
-                {
-                    GameObject dialougeObj = new GameObject(Vector2.Zero);
-                    dialougeObj.AddComponent(new DialougeBox("You do not have sufficient money to buy this item, please try again once you've earned some more"));
-                    AddObject(dialougeObj);
-                }
-                if (Cost <= currentMoney)
-                {
+             
                     //Buy Button
                     var shopButton = content.Load<Texture2D>("Images/Button_Rune");
                     var shopButton_hover = content.Load<Texture2D>("Images/Button_Rune_Hover");
                     AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 80), shopButton, shopButton_hover,
                      () =>
                      {
-                         if (buttonSelected == 0)
-
+                         if(currentMoney >= cost)
                          {
+                             attrRune.CurrentMoney -= cost;
+                         }
+                       
+                       else if (currentMoney < 0)
+                         {
+                             currentMoney = 0;
                          }
                      },
-                     null, false));
-                }
+                     null, false));               
             }
         }
-
+     
         public override void Draw(Drawer drawer)
         {
             Color textColor = new Color(120, 100, 80);
@@ -108,7 +109,7 @@ namespace BattleMages
             //Text
             drawer[DrawLayer.UI].DrawString(titleFont, "Description", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 70, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 120), Color.Black);
             drawer[DrawLayer.UI].DrawString(titleFont, "Purchase", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 130, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 60), Color.Black);
-
+            drawer[DrawLayer.UI].DrawString(titleFont, "Your Money", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 30, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 60), Color.Black);
             drawer[DrawLayer.UI].DrawString(titleFont, "Cost", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 140, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15), Color.Black);
 
             //Draws the descriptions
@@ -116,7 +117,12 @@ namespace BattleMages
             drawer[DrawLayer.UI].DrawString(font, bottomLeftText, bottomLeftTextPos, Color.Black);
 
             var uppperTopTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 150, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 35);
-            drawer[DrawLayer.UI].DrawString(font, upperRightText, uppperTopTextPos, Color.Black);
+            drawer[DrawLayer.UI].DrawString(font,  cost.ToString(), uppperTopTextPos, Color.Black);
+        
+            var currentMoneyPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 60, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 90);
+            drawer[DrawLayer.UI].DrawString(font, currentMoney.ToString(), currentMoneyPos, Color.Black);
+
+                
 
             //Runes
             drawer[DrawLayer.UI].Draw(rune1, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 22, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 20), Color.White);
