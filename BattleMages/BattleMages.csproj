@@ -72,6 +72,7 @@
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />
+    <Compile Include="Components\NPC.cs" />
     <Compile Include="Components\Spells\EarthSpikes.cs" />
     <Compile Include="Components\Spells\FrostShield.cs" />
     <Compile Include="Components\Spells\Lightning.cs" />

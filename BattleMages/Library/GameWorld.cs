@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace BattleMages
 {
@@ -141,12 +141,6 @@ namespace BattleMages
             cursor.Update();
             soundManager.Update();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && !state.Saving)
-            {
-                Thread t = new Thread(() => state.Save());
-                t.Start();
-            }
-
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scene.Update();
@@ -164,6 +158,8 @@ namespace BattleMages
 
             drawer.Matrix = camera.ViewMatrix;
             drawer.BeginBatches();
+
+            state.Draw(drawer);
 
             scene.Draw(drawer);
             cursor.Draw(drawer[DrawLayer.Cursor]);

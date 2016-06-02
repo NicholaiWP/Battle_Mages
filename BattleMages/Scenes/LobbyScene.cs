@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -42,7 +42,8 @@ namespace BattleMages
 
             //Door guard
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
-            doorGuardObj.AddComponent(new SpriteRenderer("Textures/Misc/apple"));
+            doorGuardObj.AddComponent(new NPC("Textures/Npc's/ChallengeGuy-Sheet", new Vector2(32, 32), 8, 4));
+            doorGuardObj.AddComponent(new Animator());
             doorGuardObj.AddComponent(new Collider(new Vector2(32, 32)));
             doorGuardObj.AddComponent(new Interactable(() =>
             {
@@ -52,6 +53,11 @@ namespace BattleMages
             }));
             AddObject(doorGuardObj);
 
+            //ShopKeeper
+            GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
+            shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
+            shopkeeperObj.AddComponent(new Animator());
+            AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
             //Player
@@ -67,6 +73,10 @@ namespace BattleMages
             if (keyState.IsKeyDown(Keys.Escape))
             {
                 GameWorld.ChangeScene(new PauseScene(this));
+            }
+            if (keyState.IsKeyDown(Keys.Enter))
+            {
+                GameWorld.State.Save();
             }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);

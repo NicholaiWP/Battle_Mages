@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace BattleMages
 {
@@ -17,9 +20,18 @@ namespace BattleMages
         private List<int> spellBar = new List<int>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
         private string databaseFileName = "BMdatabase.db";
+        private Texture2D savingSprite;
+        private List<AttributeRune> availableRunes = new List<AttributeRune>();
+        public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
+        public int PlayerGold { get; set; }
         public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
         public bool Saving { get; private set; } = false;
+
+        public SavedState()
+        {
+            savingSprite = GameWorld.Instance.Content.Load<Texture2D>("Textures/Misc/basket");
+        }
 
         public void NewGame()
         {
@@ -74,9 +86,18 @@ namespace BattleMages
         /// </summary>
         public void Save()
         {
-            Saving = true;
             CreateDatabaseFile();
 
+            if (!Saving)
+            {
+                Thread t = new Thread(() => DatabaseInform());
+                t.Start();
+            }
+        }
+
+        private void DatabaseInform()
+        {
+            Saving = true;
             //This int is used for updating the RuneIDs in the table AttributeRunes,
             //it is the indicator of the id in the table.
             int attrRuneID = 1;
@@ -267,6 +288,13 @@ namespace BattleMages
                 connection.Close();
                 GameWorld.ChangeScene(new LobbyScene());
             }
+        }
+
+        public void Draw(Drawer drawer)
+        {
+            if (Saving)
+                drawer[DrawLayer.AboveUI].Draw(savingSprite, new Vector2(GameWorld.Camera.Position.X + GameWorld.GameWidth / 2 - savingSprite.Width,
+                    GameWorld.Camera.Position.Y + GameWorld.GameHeight / 2 - savingSprite.Height));
         }
     }
 }
