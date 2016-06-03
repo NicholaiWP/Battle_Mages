@@ -92,7 +92,7 @@ namespace BattleMages
             Vector2 topLeft = GameWorld.Camera.Position - new Vector2((GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
             Vector2 topRight = GameWorld.Camera.Position - new Vector2((-GameWorld.GameWidth / 2), (GameWorld.GameHeight / 2));
 
-            Vector2 healthBarPos = new Vector2(topLeft.X + 13, topLeft.Y + 2);
+            Vector2 healthBarPos = new Vector2(topLeft.X + 15, topLeft.Y + 2);
             Vector2 manaBarPos = new Vector2(topLeft.X + 2, topLeft.Y + 15);
 
             msg.Drawer[DrawLayer.Gameplay].Draw(behindUI, position: topLeft);

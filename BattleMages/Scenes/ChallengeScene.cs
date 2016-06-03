@@ -17,8 +17,8 @@ namespace BattleMages
             var content = GameWorld.Instance.Content;
             backGround = content.Load<Texture2D>("Textures/Backgrounds/ChallengeGuybg");
 
-            var novice = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton");
-            var noviceHover = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton_Hover");
+            var novice = content.Load<Texture2D>("Textures/UI/SpellBook/challengeButton");
+            var noviceHover = content.Load<Texture2D>("Textures/UI/SpellBook/challengeButtonHL");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - 123, GameWorld.Camera.Position.Y - 64),
                 novice,
@@ -40,8 +40,8 @@ namespace BattleMages
                 }
                 ));
 
-            var skilled = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton");
-            var skilledHover = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton_Hover");
+            var skilled = content.Load<Texture2D>("Textures/UI/SpellBook/challengeButton");
+            var skilledHover = content.Load<Texture2D>("Textures/UI/SpellBook/challengeButtonHL");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - 123, GameWorld.Camera.Position.Y - 17),
                 skilled,

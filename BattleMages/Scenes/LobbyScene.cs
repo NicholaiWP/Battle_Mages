@@ -45,7 +45,7 @@ namespace BattleMages
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
             doorGuardObj.AddComponent(new NPC("Textures/Npc's/ChallengeGuy-Sheet", new Vector2(32, 32), 8, 4));
             doorGuardObj.AddComponent(new Animator());
-            doorGuardObj.AddComponent(new Collider(new Vector2(32, 32), true));
+            doorGuardObj.AddComponent(new Collider(new Vector2(16, 32), true));
             doorGuardObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
@@ -65,7 +65,7 @@ namespace BattleMages
             GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
             shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
             shopkeeperObj.AddComponent(new Animator());
-            shopkeeperObj.AddComponent(new Collider(new Vector2(48, 48), true));
+            shopkeeperObj.AddComponent(new Collider(new Vector2(40, 48), true));
             shopkeeperObj.AddComponent(new Interactable(() =>
             {
                 GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
