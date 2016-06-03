@@ -23,14 +23,21 @@ namespace BattleMages
         protected float targetingRange;
         protected int damage;
         protected int health;
+        protected int moneyAmount;
         protected float attackSpeed;
         protected float cooldownTimer;
         protected List<IBehaviour> behaviours = new List<IBehaviour>();
+
         public int Damage { get { return damage; } }
         public float CooldownTimer { get { return cooldownTimer; } }
         private bool burned;
         private int burnDmg;
         private float burnDuration;
+        protected int MoneyAmount
+        {
+            get { return moneyAmount; }
+            set { moneyAmount = value; }
+        }
 
         protected float MoveSpeed
         {
@@ -61,8 +68,10 @@ namespace BattleMages
 
             if (health <= 0)
             {
+                //Removes enemy object
                 GameWorld.Scene.RemoveObject(GameObject);
-                for (int i = 0; i < 10; i++)
+                //Spawns a number of coins when enemy dies
+                for (int i = 0; i < moneyAmount; i++)
                 {
                     GameWorld.Scene.AddObject(ObjectBuilder.BuildCoin(transform.Position));
                 }

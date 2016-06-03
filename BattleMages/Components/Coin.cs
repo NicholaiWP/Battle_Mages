@@ -11,7 +11,7 @@ namespace BattleMages
 {
     public class Coin : Component
     {
-        private int value = 1;
+        private int value;
         private SpriteRenderer spriteRenderer;
         private Collider collider;
         private Animator animator;
