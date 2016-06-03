@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -16,11 +16,11 @@ namespace BattleMages
     /// </summary>
     public class SavedState
     {
+        private GameObject savingGo;
         private List<SpellInfo> spellBook = new List<SpellInfo>();
         private List<int> spellBar = new List<int>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
         private string databaseFileName = "BMdatabase.db";
-        private Texture2D savingSprite;
         private List<AttributeRune> availableRunes = new List<AttributeRune>();
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
         public int PlayerGold { get; set; }
@@ -30,7 +30,9 @@ namespace BattleMages
 
         public SavedState()
         {
-            savingSprite = GameWorld.Instance.Content.Load<Texture2D>("Textures/Misc/basket");
+            savingGo = new GameObject(Vector2.Zero);
+            savingGo.AddComponent(new Animator());
+            savingGo.AddComponent(new ShowSaving());
         }
 
         public void NewGame()
@@ -292,9 +294,8 @@ namespace BattleMages
 
         public void Draw(Drawer drawer)
         {
-            if (Saving)
-                drawer[DrawLayer.AboveUI].Draw(savingSprite, new Vector2(GameWorld.Camera.Position.X + GameWorld.GameWidth / 2 - savingSprite.Width,
-                    GameWorld.Camera.Position.Y + GameWorld.GameHeight / 2 - savingSprite.Height));
+            if (Saving && !GameWorld.Scene.ActiveObjects.Contains(savingGo))
+                GameWorld.Scene.AddObject(savingGo);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace BattleMages
         private Texture2D deathTexture;
         private Vector2 deathPos;
         private KeyboardState keyState;
-        private MenuScene mScene;
 
         public DeathScene()
         {

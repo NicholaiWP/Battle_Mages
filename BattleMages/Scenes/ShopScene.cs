@@ -135,7 +135,7 @@ namespace BattleMages
             base.Update();
 
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.C))
+            if (state.IsKeyDown(Keys.Tab))
             {
                 if (!cPressed)
                     GameWorld.ChangeScene(oldScene);
