@@ -16,6 +16,8 @@ namespace BattleMages
     /// </summary>
     public class SavedState
     {
+        private GameObject go;
+        private Animator animator;
         private List<SpellInfo> spellBook = new List<SpellInfo>();
         private List<int> spellBar = new List<int>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
@@ -30,6 +32,15 @@ namespace BattleMages
 
         public SavedState()
         {
+            go = new GameObject(new Vector2(GameWorld.Camera.Position.X + GameWorld.GameWidth / 2 - 32,
+                    GameWorld.Camera.Position.Y + GameWorld.GameHeight / 2 - 32));
+            go.AddComponent(new SpriteRenderer("Textures/Player/PlayerSheet", true)
+            { Rectangle = new Rectangle(0, 0, 32, 32) });
+            animator = new Animator();
+            go.AddComponent(animator);
+            animator.CreateAnimation("WalkRight", new Animation(priority: 2, framesCount: 25, yPos: 0, xStartFrame: 0,
+                width: 32, height: 32, fps: 10, offset: Vector2.Zero));
+
             savingSprite = GameWorld.Instance.Content.Load<Texture2D>("Textures/Misc/basket");
         }
 
@@ -292,9 +303,28 @@ namespace BattleMages
 
         public void Draw(Drawer drawer)
         {
+            foreach (GameObject gameObject in GameWorld.Scene.ActiveObjects)
+            {
+                if (gameObject == go)
+                {
+                    animator.PlayAnimation("WalkRight");
+                }
+            }
+
             if (Saving)
-                drawer[DrawLayer.AboveUI].Draw(savingSprite, new Vector2(GameWorld.Camera.Position.X + GameWorld.GameWidth / 2 - savingSprite.Width,
-                    GameWorld.Camera.Position.Y + GameWorld.GameHeight / 2 - savingSprite.Height));
+            {
+                GameWorld.Scene.AddObject(go);
+            }
+            else
+            {
+                foreach (GameObject gameObject in GameWorld.Scene.ActiveObjects)
+                {
+                    if (gameObject == go)
+                    {
+                        GameWorld.Scene.RemoveObject(gameObject);
+                    }
+                }
+            }
         }
     }
 }

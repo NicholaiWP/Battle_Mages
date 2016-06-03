@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
     internal class HallwayScene : Scene
     {
-        private Texture2D lobbyTexture;
-        private Vector2 lobbyTexturePosition;
+        private Texture2D hallwayTex;
+        private Vector2 hallwayTexPosition;
         private KeyboardState keyState;
 
         private SoundEffectInstance crowdSnd;
@@ -22,8 +22,8 @@ namespace BattleMages
         public HallwayScene(string challengeName)
         {
             var content = GameWorld.Instance.Content;
-            lobbyTexturePosition = new Vector2(-32, -360 / 2);
-            lobbyTexture = content.Load<Texture2D>("Textures/Backgrounds/Hallway");
+            hallwayTexPosition = new Vector2(-32, -360 / 2);
+            hallwayTex = content.Load<Texture2D>("Textures/Backgrounds/Hallway");
 
             //Side walls
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, 180 + 8), new Vector2(64, 16)));
@@ -76,7 +76,7 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
-            drawer[DrawLayer.Background].Draw(lobbyTexture, lobbyTexturePosition, Color.White);
+            drawer[DrawLayer.Background].Draw(hallwayTex, hallwayTexPosition, Color.White);
 
             base.Draw(drawer);
         }

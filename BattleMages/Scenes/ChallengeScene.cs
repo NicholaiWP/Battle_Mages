@@ -10,14 +10,17 @@ namespace BattleMages
 {
     public class ChallengeScene : Scene
     {
+        private Texture2D backGround;
+
         public ChallengeScene(Scene oldScene)
         {
             var content = GameWorld.Instance.Content;
+            backGround = content.Load<Texture2D>("Textures/Backgrounds/ChallengeGuybg");
 
-            var novice = content.Load<Texture2D>("Textures/UI/TestButtons/Novice");
-            var noviceHover = content.Load<Texture2D>("Textures/UI/TestButtons/Novice_Hover");
+            var novice = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton");
+            var noviceHover = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton_Hover");
             AddObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - novice.Width / 2, GameWorld.Camera.Position.Y - 80),
+                new Vector2(GameWorld.Camera.Position.X - 123, GameWorld.Camera.Position.Y - 64),
                 novice,
                 noviceHover,
                 () =>
@@ -37,10 +40,10 @@ namespace BattleMages
                 }
                 ));
 
-            var skilled = content.Load<Texture2D>("Textures/UI/TestButtons/Skilled");
-            var skilledHover = content.Load<Texture2D>("Textures/UI/TestButtons/Skilled_Hover");
+            var skilled = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton");
+            var skilledHover = content.Load<Texture2D>("Textures/UI/SpellBook/LongButton_Hover");
             AddObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - skilled.Width / 2, GameWorld.Camera.Position.Y - 30),
+                new Vector2(GameWorld.Camera.Position.X - 123, GameWorld.Camera.Position.Y - 17),
                 skilled,
                 skilledHover,
                  () =>
@@ -62,6 +65,13 @@ namespace BattleMages
                      GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                  }
                  ));
+        }
+
+        public override void Draw(Drawer drawer)
+        {
+            drawer[DrawLayer.Background].Draw(backGround, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
+                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), Color.White);
+            base.Draw(drawer);
         }
     }
 }
