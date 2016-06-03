@@ -36,7 +36,7 @@ namespace BattleMages
                         {
                             if (go.GetComponent<NPC>() != null)
                             {
-                                go.GetComponent<NPC>().ChangeAnimation("Novice");
+                                go.GetComponent<NPC>().ChangeAnimation("EarthBattle");
                                 GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                             }
                         }
@@ -52,7 +52,7 @@ namespace BattleMages
                 frostBattleHL,
                  () =>
                  {
-                     GameWorld.ChangeScene(new HallwayScene("Skilled"));
+                     GameWorld.ChangeScene(new HallwayScene("FrostBattle"));
                      GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                  }
                  ));
@@ -65,7 +65,7 @@ namespace BattleMages
                 arcaneBattleHL,
                  () =>
                  {
-                     GameWorld.ChangeScene(new HallwayScene("Intermediate"));
+                     GameWorld.ChangeScene(new HallwayScene("ArcaneBattle"));
                      GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                  }
                  ));
@@ -90,7 +90,7 @@ namespace BattleMages
                 textColor);
             drawer[DrawLayer.Background].DrawString(font, "Frost Battle", new Vector2(GameWorld.Camera.Position.X - 83, GameWorld.Camera.Position.Y - 13),
                 textColor);
-            drawer[DrawLayer.Background].DrawString(font, "Arcane Battle", new Vector2(GameWorld.Camera.Position.X - 83, GameWorld.Camera.Position.Y + 33),
+            drawer[DrawLayer.Background].DrawString(font, "Arcane Battle", new Vector2(GameWorld.Camera.Position.X - 83, GameWorld.Camera.Position.Y + 35),
                 textColor);
         }
     }
