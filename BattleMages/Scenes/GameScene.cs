@@ -61,7 +61,7 @@ namespace BattleMages
             keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene
-            if (keyState.IsKeyDown(Keys.Escape))
+            if (GameWorld.KeyPressed(Keys.Escape))
             {
                 crowdSnd.Pause();
                 GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));

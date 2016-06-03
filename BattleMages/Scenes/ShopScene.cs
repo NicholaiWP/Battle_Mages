@@ -27,6 +27,8 @@ namespace BattleMages
 
         private string descriptionText;
 
+        private KeyboardState prevState = Keyboard.GetState();
+
         //TO DO:
         //connect "currentMoney" to master's "playerGold".
         //-add the rune to the spellbook's rune slots when bought.
@@ -143,16 +145,9 @@ namespace BattleMages
         {
             base.Update();
 
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Tab))
+            if (GameWorld.KeyPressed(Keys.Escape) || GameWorld.KeyPressed(Keys.Tab))
             {
-                if (!cPressed)
-                    GameWorld.ChangeScene(oldScene);
-            }
-            else
-            {
-                if (cPressed)
-                    cPressed = false;
+                GameWorld.ChangeScene(oldScene);
             }
         }
     }

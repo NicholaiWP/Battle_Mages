@@ -1,19 +1,22 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
     public class ChallengeScene : Scene
     {
         private Texture2D backGround;
+        private Scene oldScene;
 
         public ChallengeScene(Scene oldScene)
         {
+            this.oldScene = oldScene;
+
             var content = GameWorld.Instance.Content;
             backGround = content.Load<Texture2D>("Textures/Backgrounds/ChallengeGuybg");
 
@@ -65,6 +68,15 @@ namespace BattleMages
                      GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                  }
                  ));
+        }
+
+        public override void Update()
+        {
+            if (GameWorld.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape))
+            {
+                GameWorld.ChangeScene(oldScene);
+            }
+            base.Update();
         }
 
         public override void Draw(Drawer drawer)

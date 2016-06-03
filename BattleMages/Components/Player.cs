@@ -27,8 +27,6 @@ namespace BattleMages
         private Collider collider;
         private bool canUseSpells;
         private int selectedSpell;
-        private KeyboardState oldKbState;
-        private int currency;
 
         private float currentDashTime;
         private float dashCooldown;
@@ -57,7 +55,6 @@ namespace BattleMages
 
         public Player(bool canUseSpells)
         {
-            currency = 10;
             canMove = true;
             currentDashTime = 0;
             dashCooldown = 0;
@@ -224,18 +221,9 @@ namespace BattleMages
                 }
             }
             //Spellbook opening
-            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab) && dialougeCount == 0)
+            if (GameWorld.KeyPressed(Keys.Tab) && dialougeCount == 0)
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
-            }
-
-            //Close shop
-            if (GameWorld.Scene is ShopScene)
-            {
-                if (oldKbState.IsKeyUp(Keys.Escape) && kbState.IsKeyDown(Keys.Escape))
-                {
-                    GameWorld.ChangeScene(new LobbyScene());
-                }
             }
 
             //Spell selection
@@ -253,8 +241,6 @@ namespace BattleMages
                 //Movement
                 Move(kbState);
             }
-
-            oldKbState = kbState;
         }
 
         private void Move(KeyboardState kbState)

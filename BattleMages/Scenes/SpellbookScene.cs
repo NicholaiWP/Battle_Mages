@@ -19,7 +19,6 @@ namespace BattleMages
         private Vector2[] attrRunePositions;
 
         private Scene oldScene;
-        private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
         //Holds objects in a tab to delete them on tab change
         private UITab leftTab;
@@ -339,19 +338,10 @@ namespace BattleMages
 
         public override void Update()
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Tab))
+            if (GameWorld.KeyPressed(Keys.Tab))
             {
-                if (!tabPressed)
-                {
-                    GameWorld.State.Save();
-                    GameWorld.ChangeScene(oldScene);
-                }
-            }
-            else
-            {
-                if (tabPressed)
-                    tabPressed = false;
+                GameWorld.State.Save();
+                GameWorld.ChangeScene(oldScene);
             }
 
             base.Update();

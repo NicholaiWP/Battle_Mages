@@ -15,7 +15,6 @@ namespace BattleMages
         private Texture2D lobbyTexture;
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
-        private KeyboardState keyState;
         private bool canPause = true;
 
         public LobbyScene()
@@ -81,7 +80,7 @@ namespace BattleMages
 
         public override void Update()
         {
-            keyState = Keyboard.GetState();
+            KeyboardState keyState = Keyboard.GetState();
 
             int dialougeCount = 0;
             foreach (var go in ActiveObjects)
@@ -93,7 +92,7 @@ namespace BattleMages
                 }
             }
 
-            if (keyState.IsKeyDown(Keys.Escape) && dialougeCount == 0 && canPause)
+            if (GameWorld.KeyPressed(Keys.Escape) && dialougeCount == 0 && canPause)
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }
