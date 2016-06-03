@@ -11,7 +11,6 @@ namespace BattleMages
 {
     public class Coin : Component
     {
-        private int value = 1;
         private SpriteRenderer spriteRenderer;
         private Collider collider;
         private Animator animator;
@@ -65,7 +64,7 @@ namespace BattleMages
                 if (player != null)
                 {
                     GameWorld.SoundManager.PlaySound("GetCoinSound", false);
-                    player.Currency += value;
+                    GameWorld.State.PlayerGold += 1;
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
             }

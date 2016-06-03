@@ -57,10 +57,10 @@ namespace BattleMages
             return gameObject;
         }
 
-        public static GameObject BuildButton(Vector2 position, Texture2D normalTex, Texture2D hoverTex, Button.ClickDelegate onClick, Button.ClickDelegate onRightClick = null, bool wiggle = false)
+        public static GameObject BuildButton(Vector2 position, Texture2D normalTex, Texture2D hoverTex, Button.ClickDelegate onClick, Button.ClickDelegate onRightClick = null, bool wiggle = false, bool centered = false)
         {
             GameObject gameObject = new GameObject(position);
-            gameObject.AddComponent(new Button(normalTex, hoverTex, onClick, onRightClick, wiggle));
+            gameObject.AddComponent(new Button(normalTex, hoverTex, onClick, onRightClick, wiggle, centered));
             return gameObject;
         }
 

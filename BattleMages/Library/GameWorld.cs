@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -16,16 +16,13 @@ namespace BattleMages
     {
         //Constants
         public const int GameWidth = 320;
-
         public const int GameHeight = 180;
 
         //Fields
-
         private Drawer drawer;
 
         //Subsystems
         private Scene scene;
-
         private PlayerControls playerControls;
         private SoundManager soundManager;
         private Cursor cursor;
@@ -48,13 +45,12 @@ namespace BattleMages
 
         //Misc properties
         public float HalfViewPortWidth { get { return GraphicsDevice.Viewport.Width * 0.5f; } }
-
         public float HalfViewPortHeight { get { return GraphicsDevice.Viewport.Height * 0.5f; } }
         public Vector2 ScalingVector { get; set; }
+        public static Vector2 GameSize { get { return new Vector2(GameWidth, GameHeight); } }
 
         //Singleton pattern
         private static GameWorld instance;
-
         public static GameWorld Instance
         {
             get

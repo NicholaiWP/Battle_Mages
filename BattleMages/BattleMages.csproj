@@ -100,6 +100,7 @@
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\SpellInfo.cs" />
+    <Compile Include="Library\UITab.cs" />
     <Compile Include="Library\Wave.cs" />
     <Compile Include="Messages\AnimationDoneMsg.cs" />
     <Compile Include="Messages\DestroyMsg.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
+    <Compile Include="Scenes\ShopScene.cs" />
     <Compile Include="Scenes\SpellbookScene.cs" />
     <Compile Include="Library\BaseRune.cs" />
     <Compile Include="Library\StaticData.cs" />
