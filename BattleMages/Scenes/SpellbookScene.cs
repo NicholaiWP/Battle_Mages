@@ -8,35 +8,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
-    public class SpellbookTab
-    {
-        private Scene scene;
-        private List<GameObject> objects = new List<GameObject>();
-
-        public Vector2 TopLeft { get; }
-
-        public SpellbookTab(Scene scene, Vector2 topLeft)
-        {
-            this.scene = scene;
-            TopLeft = topLeft;
-        }
-
-        public void AddObject(GameObject obj)
-        {
-            objects.Add(obj);
-            scene.AddObject(obj);
-        }
-
-        public void Clear()
-        {
-            foreach (GameObject obj in objects)
-            {
-                scene.RemoveObject(obj);
-            }
-            objects.Clear();
-        }
-    }
-
     public class SpellbookScene : Scene
     {
         private Texture2D background;
@@ -51,8 +22,8 @@ namespace BattleMages
         private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
         //Holds objects in a tab to delete them on tab change
-        private SpellbookTab leftTab;
-        private SpellbookTab rightTab;
+        private UITab leftTab;
+        private UITab rightTab;
 
         //NULL if no spell is being edited.
         private SpellInfo currentlyEditing;
@@ -90,8 +61,8 @@ namespace BattleMages
             background = GameWorld.Load<Texture2D>("Textures/Backgrounds/Spellbook");
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
 
-            leftTab = new SpellbookTab(this, GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2));
-            rightTab = new SpellbookTab(this, GameWorld.Camera.Position - new Vector2(0, GameWorld.GameHeight / 2));
+            leftTab = new UITab(this, GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2), new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight));
+            rightTab = new UITab(this, GameWorld.Camera.Position - new Vector2(0, GameWorld.GameHeight / 2), new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight));
             OpenSpellsTab();
             OpenRunesTab();
         }
@@ -109,7 +80,7 @@ namespace BattleMages
 
         private void OpenSpellsTab()
         {
-            SpellbookTab t = rightTab;
+            UITab t = rightTab;
             t.Clear();
 
             bottomRightText = "Your active spells:";
@@ -130,23 +101,52 @@ namespace BattleMages
                 ));
 
             //Player spell list
-            var playerSpellSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/LongButton");
-            var playerSpellSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/LongButton_Hover");
+            var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
             int nextSpellYPos = 0;
+
             foreach (SpellInfo spell in GameWorld.State.SpellBook)
             {
                 SpellInfo thisSpell = spell;
 
-                GameObject spellObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 2, 40 + nextSpellYPos));
-                spellObj.AddComponent(new DragDropItem("playerspell", playerSpellSpr1, playerSpellSpr2, () => { selectedPlayerSpell = thisSpell; }));
+                //Draggable thing
+                GameObject spellObj = new GameObject(t.TopLeft + new Vector2(30, 40 + nextSpellYPos));
+                spellObj.AddComponent(new DragDropItem("playerspell", btnSpr1, btnSpr2, () => { selectedPlayerSpell = thisSpell; }));
                 spellObj.AddComponent(new SpellInfoRenderer(thisSpell));
                 t.AddObject(spellObj);
 
+                //Edit spell button
+                GameObject editObj = new GameObject(t.TopLeft + new Vector2(64, 40 + nextSpellYPos));
+                editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/EditSpell"));
+                editObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
+                {
+                    currentlyEditing = thisSpell;
+                    OpenRuneGrid();
+                }, centered: true
+                ));
+                t.AddObject(editObj);
+
+                //Delete spell button
+                GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(64 + 16, 40 + nextSpellYPos));
+                deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/DeleteSpell"));
+                deleteObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
+                {
+                    for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
+                    {
+                        if (GameWorld.State.SpellBar[i] == GameWorld.State.SpellBook.IndexOf(thisSpell))
+                        {
+                            GameWorld.State.SpellBar[i] = -1;
+                        }
+                    }
+                    GameWorld.State.SpellBook.Remove(thisSpell);
+                    OpenSpellsTab();
+                }, centered: true
+                ));
+                t.AddObject(deleteObj);
+
                 nextSpellYPos += 16;
             }
-            var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
 
             //Action bar slots
             for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
@@ -163,6 +163,10 @@ namespace BattleMages
                 {
                     if (selectedPlayerSpell != null)
                     {
+                        for (int j = 0; j < GameWorld.State.SpellBar.Count; j++)
+                        {
+                            if (GameWorld.State.SpellBar[j] == GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell)) GameWorld.State.SpellBar[j] = -1;
+                        }
                         GameWorld.State.SpellBar[thisIndex] = GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell);
                         OpenSpellsTab();
                     }
@@ -170,46 +174,11 @@ namespace BattleMages
                 ));
                 t.AddObject(slotObj);
             }
-
-            //Delete spell button
-            GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 2 - 48, GameWorld.GameHeight - 75));
-            deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/DeleteSpell"));
-            deleteObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
-            {
-                if (selectedPlayerSpell != null)
-                {
-                    for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
-                    {
-                        if (GameWorld.State.SpellBar[i] == GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell))
-                        {
-                            GameWorld.State.SpellBar[i] = -1;
-                        }
-                    }
-                    GameWorld.State.SpellBook.Remove(selectedPlayerSpell);
-                    OpenSpellsTab();
-                }
-            }
-            ));
-            t.AddObject(deleteObj);
-
-            //Edit spell button
-            GameObject editObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 2 - 32, GameWorld.GameHeight - 75));
-            editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/EditSpell"));
-            editObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
-            {
-                if (selectedPlayerSpell != null)
-                {
-                    currentlyEditing = selectedPlayerSpell;
-                    OpenRuneGrid();
-                }
-            }
-            ));
-            t.AddObject(editObj);
         }
 
         private void OpenRunesTab()
         {
-            SpellbookTab t = leftTab;
+            UITab t = leftTab;
             t.Clear();
 
             bottomLeftText = "Hover over any rune to view its description.";
@@ -247,7 +216,7 @@ namespace BattleMages
             nextRuneY += 24;
             nextRuneX = 0;
 
-            foreach (var rune in StaticData.AttributeRunes)
+            foreach (var rune in GameWorld.State.AvailableRunes)
             {
                 AttributeRune thisAttrRune = rune;
                 Vector2 pos = runeStartPos + new Vector2(nextRuneX, nextRuneY);
@@ -272,7 +241,7 @@ namespace BattleMages
         private void OpenRuneGrid()
         {
             if (currentlyEditing == null) return;
-            SpellbookTab t = rightTab;
+            UITab t = rightTab;
             t.Clear();
 
             bottomRightText = "Drag a rune to an appropriate slot to place it there.";

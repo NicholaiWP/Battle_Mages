@@ -52,7 +52,6 @@ namespace BattleMages
         public int CurrentHealth { get; private set; } = MaxHealth;
         public float CurrentMana { get; private set; } = MaxMana;
         public bool Invincible { get { return invincibleTimer > 0f; } }
-        public int Currency { get; set; }
 
         private int latestWalkIndex = -1;
 
@@ -170,7 +169,6 @@ namespace BattleMages
             {
                 SpellInfo spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
 
-
                 //Fetch base spell and runes
                 var baseRune = spellToCast.GetBaseRune();
                 AttributeRune[] attrRunes = new AttributeRune[SpellInfo.AttributeRuneSlotCount];
@@ -229,6 +227,15 @@ namespace BattleMages
             if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab) && dialougeCount == 0)
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
+            }
+
+            //Close shop
+            if (GameWorld.Scene is ShopScene)
+            {
+                if (oldKbState.IsKeyUp(Keys.Escape) && kbState.IsKeyDown(Keys.Escape))
+                {
+                    GameWorld.ChangeScene(new LobbyScene());
+                }
             }
 
             //Spell selection
