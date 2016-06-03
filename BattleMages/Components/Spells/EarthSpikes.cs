@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -11,7 +11,6 @@ namespace BattleMages
     {
         private Collider collider;
         private SpriteRenderer spriteRenderer;
-        private Texture2D sprite;
         private float timer;
         private float damageTimer;
         private SpellCreationParams p;

@@ -76,6 +76,7 @@
     <Compile Include="Components\IngameUI.cs" />
     <Compile Include="Components\Interactable.cs" />
     <Compile Include="Components\NPC.cs" />
+    <Compile Include="Components\ShowSaving.cs" />
     <Compile Include="Components\SpellInfoRenderer.cs" />
     <Compile Include="Components\Spells\EarthSpikes.cs" />
     <Compile Include="Components\Spells\FrostShield.cs" />
