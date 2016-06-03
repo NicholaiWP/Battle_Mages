@@ -192,7 +192,7 @@ namespace BattleMages
 
             Vector2 runeStartPos = TopLeft + new Vector2(28, 28);
 
-            foreach (var baseRune in StaticData.BaseRunes)
+            foreach (var baseRune in GameWorld.State.AvailableBaseRunes)
             {
                 BaseRune thisBaseRune = baseRune;
                 Vector2 pos = runeStartPos + new Vector2(nextRuneX, nextRuneY);

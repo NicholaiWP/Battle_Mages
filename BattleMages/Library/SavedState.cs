@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -23,7 +23,9 @@ namespace BattleMages
         private string databaseFileName = "BMdatabase.db";
         private List<AttributeRune> availableRunes = new List<AttributeRune>();
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
-        public int PlayerGold { get; set; }
+        private List<BaseRune> availableBaseRunes = new List<BaseRune>();
+        public List<BaseRune> AvailableBaseRunes { get { return availableBaseRunes; } }
+        public int PlayerGold { get; set; } = 1000;
         public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
         public bool Saving { get; private set; } = false;
@@ -40,6 +42,7 @@ namespace BattleMages
             //Making the starting spells for the player
             for (int i = 0; i < 5; i++)
             {
+                availableBaseRunes.Add(StaticData.BaseRunes[i]);
                 if (i == 3) continue;
                 SpellInfo ps = new SpellInfo();
                 ps.SetBaseRune(i);
