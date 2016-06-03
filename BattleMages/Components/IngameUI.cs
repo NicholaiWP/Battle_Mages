@@ -16,6 +16,7 @@ namespace BattleMages
         private Texture2D aboveUI;
         private Texture2D behindUI;
         private Texture2D spellbarCooldownOverlay;
+        private Texture2D spellbarSelectedOutline;
 
         private float healthbarSize = 1f;
         private float manabarSize = 1f;
@@ -42,8 +43,7 @@ namespace BattleMages
             manaBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/ManaBar");
             coinsSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/Coin");
             spellbarCooldownOverlay = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarCooldownOverlay");
-
-            //Spell bar icons
+            spellbarSelectedOutline = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarSpellOutline");
 
             //Calc positions
             spellBarPositions = new Vector2[GameWorld.State.SpellBar.Count];
@@ -105,9 +105,14 @@ namespace BattleMages
 
                 msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, GameWorld.State.PlayerGold.ToString(), new Vector2(topRight.X - GameWorld.State.PlayerGold.ToString().Length * 7 - (coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
 
-                //Cooldown timers
+                //Cooldown timers and outline on selected spell
                 for (int i = 0; i < spellBarPositions.Length; i++)
                 {
+                    if (player.SelectedSpell == i)
+                    {
+                        msg.Drawer[DrawLayer.UI].Draw(spellbarSelectedOutline, position: GameWorld.Camera.Position + spellBarPositions[i] - Utils.HalfTexSize(spellbarSelectedOutline));
+                    }
+
                     float cooldown = player.GetCooldownTimer(i);
                     if (cooldown <= 0) continue;
                     int frameToUse = (int)(cooldown * 8);
