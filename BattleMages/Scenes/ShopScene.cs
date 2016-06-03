@@ -49,8 +49,8 @@ namespace BattleMages
             titleFont = content.Load<SpriteFont>("TitleFont");
 
             //Buy Button
-            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
             lowerRightTab.AddObject(ObjectBuilder.BuildButton(lowerRightTab.BotLeft + new Vector2(lowerRightTab.Size.X / 2, -8),
                 shopButton,
                 shopButton_hover,
@@ -84,8 +84,8 @@ namespace BattleMages
             int nextRuneY = 0;
             int nextRunePos = 0;
 
-            var btnTex = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var btnTexHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var btnTex = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var btnTexHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButtonHL");
 
             foreach (AttributeRune attrRune in StaticData.AttributeRunes)
             {

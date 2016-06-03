@@ -13,20 +13,33 @@ namespace BattleMages
 
         public WaveController(List<Wave> waves)
         {
-            waveNumber = 0;
+            WaveNumber = 0;
             this.waves = new List<Wave>(waves);
+        }
+
+        public int WaveNumber
+        {
+            get
+            {
+                return waveNumber;
+            }
+
+            set
+            {
+                waveNumber = value;
+            }
         }
 
         public void UpdateWave()
         {
-            if (waves.Count > waveNumber)
+            if (waves.Count > WaveNumber)
             {
-                for (int i = 0; i < waves[waveNumber].Enemies.Count; i++)
+                for (int i = 0; i < waves[WaveNumber].Enemies.Count; i++)
                 {
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[waveNumber].positions[i],
-                        waves[waveNumber].Enemies[i]));
+                    GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[WaveNumber].positions[i],
+                        waves[WaveNumber].Enemies[i]));
                 }
-                waveNumber++;
+                WaveNumber++;
             }
             else
             {
