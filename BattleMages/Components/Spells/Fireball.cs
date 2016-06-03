@@ -54,8 +54,7 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage(Damage);
-                    enemy.Onfire(6);
-
+                    Onfire(5, enemy);
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
@@ -63,6 +62,22 @@ namespace BattleMages
             if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
             {
                 GameWorld.Scene.RemoveObject(GameObject);
+            }
+        }
+        private void Onfire(int burnPoints, Enemy enemy)
+        {
+            //timer dmg timer, når nul..if the timer in update is <= 0, enemy.takedamge. add gameObject to show
+
+            Random rand = new Random();
+            int chance = rand.Next(1, 101);
+
+            if (chance <= 25 && !enemy.IsAlreadyBurned) // probability of 25%
+            {
+                enemy.IsAlreadyBurned = true;
+                GameWorld.SoundManager.PlaySound("BurnSound");
+                GameObject go = new GameObject(enemy.GameObject.Transform.Position);
+                go.AddComponent(new Burn(enemy, burnPoints));
+                GameWorld.Scene.AddObject(go);
             }
         }
     }
