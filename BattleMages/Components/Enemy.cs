@@ -29,9 +29,9 @@ namespace BattleMages
 
         public int Damage { get { return damage; } }
         public int Health { get { return health; } }
-        public bool IsAlreadyBurned { get; set; } 
+        public bool IsAlreadyBurned { get; set; }
         public float CooldownTimer { get { return cooldownTimer; } }
-		
+
         protected int MoneyAmount
         {
             get { return moneyAmount; }
@@ -50,7 +50,6 @@ namespace BattleMages
             set { character.MoveAccel = value; }
         }
 
-
         protected Enemy()
         {
             canMove = true;
@@ -66,20 +65,20 @@ namespace BattleMages
             {
                 GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
                 health -= points;
-            }
 
-            if (health <= 0)
-            {
-                //Removes enemy object
-                GameWorld.Scene.RemoveObject(GameObject);
-                //Spawns a number of coins when enemy dies
-                for (int i = 0; i < moneyAmount; i++)
+                if (health <= 0)
                 {
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildCoin(transform.Position));
+                    //Removes enemy object
+                    GameWorld.Scene.RemoveObject(GameObject);
+                    //Spawns a number of coins when enemy dies
+                    for (int i = 0; i < moneyAmount; i++)
+                    {
+                        GameWorld.Scene.AddObject(ObjectBuilder.BuildCoin(transform.Position));
+                    }
+                    canMove = false;
+                    GameObject.RemoveComponent<Collider>();
+                    animator.PlayAnimation("Death" + character.FDirection.ToString());
                 }
-                canMove = false;
-                GameObject.RemoveComponent<Collider>();
-                animator.PlayAnimation("Death" + character.FDirection.ToString());
             }
         }
 
@@ -112,7 +111,6 @@ namespace BattleMages
             {
                 Move();
             }
-               
         }
 
         private void Move()
