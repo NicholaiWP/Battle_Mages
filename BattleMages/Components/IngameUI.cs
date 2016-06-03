@@ -103,7 +103,7 @@ namespace BattleMages
                 msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize, 1));
                 //Draws currency with spritefont
 
-                msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, player.Currency.ToString(), new Vector2(topRight.X - player.Currency.ToString().Length * 7 - (coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
+                msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, GameWorld.State.PlayerGold.ToString(), new Vector2(topRight.X - GameWorld.State.PlayerGold.ToString().Length * 7 - (coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
 
                 //Cooldown timers
                 for (int i = 0; i < spellBarPositions.Length; i++)

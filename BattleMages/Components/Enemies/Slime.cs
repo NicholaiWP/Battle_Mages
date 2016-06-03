@@ -11,6 +11,7 @@ namespace BattleMages
     {
         public Slime()
         {
+            moneyAmount = 5;
             health = 100;
             damage = 15;
             cooldownTimer = 1;

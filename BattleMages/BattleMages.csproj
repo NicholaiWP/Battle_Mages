@@ -63,6 +63,7 @@
     <Compile Include="Components\Behaviours\Attack.cs" />
     <Compile Include="Components\Behaviours\Dodging.cs" />
     <Compile Include="Components\Behaviours\Hunt.cs" />
+    <Compile Include="Components\Burn.cs" />
     <Compile Include="Components\Character.cs" />
     <Compile Include="Components\DialougeBox.cs" />
     <Compile Include="Components\DragDropPoint.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\SpellInfo.cs" />
+    <Compile Include="Library\UITab.cs" />
     <Compile Include="Library\Wave.cs" />
     <Compile Include="Messages\AnimationDoneMsg.cs" />
     <Compile Include="Messages\DestroyMsg.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Library\PlayerControls.cs" />
     <Compile Include="Library\SavedState.cs" />
     <Compile Include="Library\Scene.cs" />
+    <Compile Include="Scenes\ShopScene.cs" />
     <Compile Include="Scenes\SpellbookScene.cs" />
     <Compile Include="Library\BaseRune.cs" />
     <Compile Include="Library\StaticData.cs" />

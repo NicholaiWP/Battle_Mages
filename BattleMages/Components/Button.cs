@@ -21,6 +21,7 @@ namespace BattleMages
         private Vector2 startPos;
         private float offset;
         private bool wiggle;
+        private bool centered;
 
         public delegate void ClickDelegate();
 
@@ -32,13 +33,14 @@ namespace BattleMages
             }
         }
 
-        public Button(Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false)
+        public Button(Texture2D normalTex, Texture2D hoverTex, ClickDelegate onClick, ClickDelegate onRightClick = null, bool wiggle = false, bool centered = false)
         {
             this.normalTex = normalTex;
             this.hoverTex = hoverTex;
             this.onClick = onClick;
             this.onRightClick = onRightClick;
             this.wiggle = wiggle;
+            this.centered = centered;
 
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
@@ -59,9 +61,18 @@ namespace BattleMages
                 GameObject.Transform.Position = startPos + new Vector2((float)Math.Sin(offset) * 8, 0);
             }
 
-            rectangle = new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y,
-                (ActiveTex.Width),
-                (ActiveTex.Height));
+            if (centered)
+            {
+                rectangle = new Rectangle((int)GameObject.Transform.Position.X - ActiveTex.Width / 2, (int)GameObject.Transform.Position.Y - ActiveTex.Height / 2,
+                    (ActiveTex.Width),
+                    (ActiveTex.Height));
+            }
+            else
+            {
+                rectangle = new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y,
+                    (ActiveTex.Width),
+                    (ActiveTex.Height));
+            }
 
             if (rectangle.Contains(GameWorld.Cursor.Position))
             {
