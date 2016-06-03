@@ -19,7 +19,6 @@ namespace BattleMages
         private Vector2[] attrRunePositions;
 
         private Scene oldScene;
-        private bool tabPressed = true; //Assume that the TAB key is being pressed as soon as the scene is created.
 
         //Holds objects in a tab to delete them on tab change
         private UITab leftTab;
@@ -101,9 +100,9 @@ namespace BattleMages
                 ));
 
             //Player spell list
-            var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+            var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+            var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
             int nextSpellYPos = 0;
 
             foreach (SpellInfo spell in GameWorld.State.SpellBook)
@@ -183,9 +182,9 @@ namespace BattleMages
 
             bottomLeftText = "Hover over any rune to view its description.";
 
-            var runeBtnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var runeBtnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            var runeBtnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+            var runeBtnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var runeBtnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+            var runeBtnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
             int nextRuneX = 0;
             int nextRuneY = 0;
             int nextRunePos = 0;
@@ -267,9 +266,9 @@ namespace BattleMages
             //Rune grid buttons
 
             //Base runes
-            var runeSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var runeSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            var runeSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
+            var runeSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var runeSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+            var runeSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
 
             GameObject baseRuneObj = new GameObject(baseRunePosition);
             baseRuneObj.AddComponent(new DragDropPoint("baserune", runeSpr1, runeSpr3, runeSpr2, () =>
@@ -339,19 +338,10 @@ namespace BattleMages
 
         public override void Update()
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Tab))
+            if (GameWorld.KeyPressed(Keys.Tab))
             {
-                if (!tabPressed)
-                {
-                    GameWorld.State.Save();
-                    GameWorld.ChangeScene(oldScene);
-                }
-            }
-            else
-            {
-                if (tabPressed)
-                    tabPressed = false;
+                GameWorld.State.Save();
+                GameWorld.ChangeScene(oldScene);
             }
 
             base.Update();

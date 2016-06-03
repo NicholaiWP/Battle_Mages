@@ -27,6 +27,8 @@ namespace BattleMages
 
         private string descriptionText;
 
+        private KeyboardState prevState = Keyboard.GetState();
+
         //TO DO:
         //connect "currentMoney" to master's "playerGold".
         //-add the rune to the spellbook's rune slots when bought.
@@ -47,8 +49,8 @@ namespace BattleMages
             titleFont = content.Load<SpriteFont>("TitleFont");
 
             //Buy Button
-            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
             lowerRightTab.AddObject(ObjectBuilder.BuildButton(lowerRightTab.BotLeft + new Vector2(lowerRightTab.Size.X / 2, -8),
                 shopButton,
                 shopButton_hover,
@@ -82,8 +84,8 @@ namespace BattleMages
             int nextRuneY = 0;
             int nextRunePos = 0;
 
-            var btnTex = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var btnTexHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var btnTex = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
+            var btnTexHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButtonHL");
 
             foreach (AttributeRune attrRune in StaticData.AttributeRunes)
             {
@@ -143,16 +145,9 @@ namespace BattleMages
         {
             base.Update();
 
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Tab))
+            if (GameWorld.KeyPressed(Keys.Escape) || GameWorld.KeyPressed(Keys.Tab))
             {
-                if (!cPressed)
-                    GameWorld.ChangeScene(oldScene);
-            }
-            else
-            {
-                if (cPressed)
-                    cPressed = false;
+                GameWorld.ChangeScene(oldScene);
             }
         }
     }
