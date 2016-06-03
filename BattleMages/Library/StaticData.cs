@@ -92,37 +92,122 @@ namespace BattleMages
                 (p) => {return new FrostShield(p, true, 0); })
             };
 
-            challenges.Add("Novice", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(25,30),
+            challenges.Add("EarthBattle", new Challenge(new List<Wave> {
+                //wave with 1 golem, 1 orb, 1 slime
+                new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
                 () =>  new List<Enemy> { new Golem(), new Orb(), new Slime() }),
+               
+                //wave with 4 golems
                 new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300),
                 new Vector2(-300, 0), new Vector2(0, -300) },
                 () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem() }),
-                new Wave(new List<Vector2> { new Vector2(200,0), new Vector2(200, 10), new Vector2(200, -10),
-                new Vector2(200, 20), new Vector2(200,-20), new Vector2(210,0),
-                new Vector2(190,0), new Vector2(220,0), new Vector2(180,0)},
-                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Orb(),
-                new Orb(),new Orb(),new Orb(),new Orb() })}));
+              
+                //4 orbs, 2 golems, 3 slimes
+                new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -30),
+                new Vector2(200, 0), new Vector2(200,-45), new Vector2(170,-60),
+                new Vector2(190,0), new Vector2(90,0), new Vector2(180,0)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Golem(),
+                new Slime(),new Slime(),new Slime(),new Golem()}),
 
-            challenges.Add("Skilled", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+                  //2 orbs, 2 golems, 5 slimes
+                new Wave(new List<Vector2> { new Vector2(170,0), new Vector2(200, 35), new Vector2(180, -30),
+                new Vector2(200, 0), new Vector2(200,-45), new Vector2(170,-60),
+                new Vector2(190,0), new Vector2(115,10), new Vector2(180,0)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Slime(), new Slime(), new Golem(),
+                new Slime(),new Slime(),new Slime(),new Golem()}),
+
+                //wave with 4 orbs, 1 golem, 4 slimes
+                new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -10),
+                new Vector2(200, 20), new Vector2(200,-60), new Vector2(170,0),
+                new Vector2(190,0), new Vector2(130,0), new Vector2(180,0)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Slime(), new Slime(),
+                new Orb(),new Slime(),new Slime(),new Golem() })}));
+
+            challenges.Add("FrostBattle", new Challenge(new List<Wave> {
+                // wave with 2 golems, 2 orbs
+                new Wave(new List<Vector2> { new Vector2(47,88),
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
                 () => new List<Enemy> {new Golem(), new Golem(), new Orb(), new Orb()}),
-                new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
+
+                
+                 //wave with 4 orbs, 2 golem, 3 slimes
+                new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -10),
+                new Vector2(200, 20), new Vector2(200,-60), new Vector2(170,0),
+                new Vector2(190,0), new Vector2(130,0), new Vector2(180,0)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Slime(),
+                new Slime(),new Slime(),new Golem(),new Golem() }),
+
+                 //wave with 3 orbs, 3 golem, 3 slimes
+                new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -10),
+                new Vector2(200, 20), new Vector2(200,-60), new Vector2(170,0),
+                new Vector2(190,0), new Vector2(130,0), new Vector2(180,0)},
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Slime(), new Slime(),
+                new Slime(),new Golem(),new Golem(),new Golem() }),
+
+
+            //wave with 4 orbs, 4 golems, 4 slimes
+            new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
                 new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
                 new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Slime(), new Slime(), new Slime(), new Slime()})}));
 
             //Goltastic
-            challenges.Add("Intermediate", new Challenge(new List<Wave> { new Wave(new List<Vector2> { new Vector2(47,88),
+            challenges.Add("ArcaneBattle", new Challenge(new List<Wave> {
+                // wave with 4 golems
+                new Wave(new List<Vector2> { new Vector2(47,88),
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
                 () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem()}),
+
+                   //wave with 8 slimes, 4 orbs
+                 new Wave(new List<Vector2> {new Vector2(-250, 0), new Vector2(300, 0), new Vector2(0,170),
+                 new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+
+                () => new List<Enemy> {new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(),
+                new Orb(), new Orb(), new Orb(), new Orb()}),
+
+                        //wave with 5 slimes, 7 orbs
+                 new Wave(new List<Vector2> {new Vector2(-250, 0), new Vector2(300, 0), new Vector2(0,170),
+                 new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+
+                () => new List<Enemy> {new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Orb(), new Orb(), new Orb(),
+                new Orb(), new Orb(), new Orb(), new Orb()}),
+
+                  //8 Golems, 4 orbs
+                new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
+                new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
+                new Vector2(0, -250), new Vector2(-120, 0), new Vector2(150,0), new Vector2(0,190), new Vector2(0,-200)},
+
+                () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
+                new Golem(), new Golem(), new Orb(), new Orb(), new Orb(), new Orb()}),
+
+                 //12 slime wave
+                new Wave(new List<Vector2> { new Vector2(-280, 0), new Vector2(270, 0), new Vector2(0, 220),
+                new Vector2(0, -300), new Vector2(-250, 0), new Vector2(230, 0), new Vector2(0, 210),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+
+                () => new List<Enemy> { new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(),
+                new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime()}),
+
+                   //12 orb wave
+                new Wave(new List<Vector2> { new Vector2(-280, 0), new Vector2(270, 0), new Vector2(0, 220),
+                new Vector2(0, -300), new Vector2(-250, 0), new Vector2(230, 0), new Vector2(0, 210),
+                new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+
+                () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Orb(), new Orb(),
+                new Orb(), new Orb(), new Orb(), new Orb(), new Orb(), new Orb()}),
+
+                //12 golem wave
                 new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
                 new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
                 new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
+
                 () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
-          
+
         }
 
         public static void LoadContent()
