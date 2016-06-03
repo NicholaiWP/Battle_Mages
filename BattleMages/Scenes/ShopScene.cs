@@ -18,8 +18,14 @@ namespace BattleMages
 
         private AttributeRune selectedRune;
 
+        private UITab upperTab;
+        private UITab lowerLeftTab;
+        private UITab lowerRightTab;
+
         //bool for returning to the lobby after entering the shop
         private bool cPressed;
+
+        private string descriptionText;
 
         //TO DO:
         //connect "currentMoney" to master's "playerGold".
@@ -28,25 +34,53 @@ namespace BattleMages
 
         public ShopScene(Scene oldScene)
         {
+            upperTab = new UITab(this, GameWorld.Camera.Position - GameWorld.GameSize / 2 + new Vector2(12, 12), new Vector2(181, 100));
+            lowerLeftTab = new UITab(this, GameWorld.Camera.Position - GameWorld.GameSize / 2 + new Vector2(12, 129), new Vector2(103, 39));
+            lowerRightTab = new UITab(this, GameWorld.Camera.Position - GameWorld.GameSize / 2 + new Vector2(124, 129), new Vector2(69, 39));
+
+            descriptionText = "Click a rune to select it.";
+
             var content = GameWorld.Instance.Content;
             this.oldScene = oldScene;
             background = content.Load<Texture2D>("Backgrounds/ShopKeeperbg");
             font = content.Load<SpriteFont>("FontBM");
             titleFont = content.Load<SpriteFont>("TitleFont");
 
+            //Buy Button
+            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            lowerRightTab.AddObject(ObjectBuilder.BuildButton(lowerRightTab.BotLeft + new Vector2(lowerRightTab.Size.X / 2, -8),
+                shopButton,
+                shopButton_hover,
+                 () =>
+                 {
+                     if (GameWorld.State.PlayerGold >= selectedRune.CostInShop)
+                     {
+                         GameWorld.State.PlayerGold -= selectedRune.CostInShop;
+                         //TODO: Add rune to the list of available runes
+                     }
+                 }, centered: true));
+
+            RefreshRuneList();
+        }
+
+        private void RefreshRuneList()
+        {
+            upperTab.Clear();
+
             int nextRuneX = 0;
             int nextRuneY = 0;
             int nextRunePos = 0;
 
-            var btnTex = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var btnTexHover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
+            var btnTex = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
+            var btnTexHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
 
             foreach (AttributeRune attrRune in StaticData.AttributeRunes)
             {
+                if (GameWorld.State.AvailableRunes.Contains(attrRune)) continue;
                 AttributeRune thisRune = attrRune;
 
-                Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15 + nextRuneY);
-
+                Vector2 pos = upperTab.TopLeft + new Vector2(4 + nextRuneX, 4 + nextRuneY);
                 GameObject runeObj = new GameObject(pos + Vector2.One * 8);
                 runeObj.AddComponent(new Button(
                     btnTex,
@@ -54,10 +88,11 @@ namespace BattleMages
                     () =>
                     {
                         selectedRune = thisRune;
+                        descriptionText = selectedRune.Name + Environment.NewLine + selectedRune.Description;
                     },
                     centered: true));
                 runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisRune.TextureName));
-                AddObject(runeObj);
+                upperTab.AddObject(runeObj);
 
                 nextRuneX += 16;
                 nextRunePos++;
@@ -67,47 +102,29 @@ namespace BattleMages
                     nextRuneY += 16;
                 }
             }
-            //Buy Button
-            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton");
-            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Hover");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 170, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 50),
-                shopButton,
-                shopButton_hover,
-             () =>
-             {
-                 if (GameWorld.State.PlayerGold >= selectedRune.CostInShop)
-                 {
-                     GameWorld.State.PlayerGold -= selectedRune.CostInShop;
-                     //TODO: Add rune to the list of available runes
-                 }
-             }));
         }
 
         public override void Draw(Drawer drawer)
         {
-            //Text
             Color textColor = new Color(120, 100, 80);
-            drawer[DrawLayer.UI].DrawString(titleFont, "Description", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 50, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 128), textColor);
-            drawer[DrawLayer.UI].DrawString(titleFont, "Your Money", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 40, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 50), textColor);
-            drawer[DrawLayer.UI].DrawString(font, "Cost", new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 168, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 20), textColor);
+
+            //Draws the description
+            var descriptionPos = lowerLeftTab.TopLeft + Vector2.One * 4;
+            drawer[DrawLayer.UI].DrawString(font, Utils.WarpText(descriptionText, (int)lowerLeftTab.Size.X - 8, font), descriptionPos, textColor);
 
             if (selectedRune != null)
             {
-                //Draws the descriptions
-                var bottomLeftTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 20, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 145);
-                drawer[DrawLayer.UI].DrawString(font, Utils.WarpText(selectedRune.Name + Environment.NewLine + selectedRune.Description, 150, font), bottomLeftTextPos, textColor);
-
                 //Draws costs of runes
-                var uppperTopTextPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 170, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 35);
-                drawer[DrawLayer.UI].DrawString(font, selectedRune.CostInShop.ToString(), uppperTopTextPos, textColor);
+                var costPos = lowerRightTab.TopLeft + new Vector2(4, 14);
+                drawer[DrawLayer.UI].DrawString(font, "Cost: " + selectedRune.CostInShop, costPos, textColor);
             }
 
             //Draws player's current money
-            var currentMoneyPos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 70, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 70);
-            drawer[DrawLayer.UI].DrawString(font, GameWorld.State.PlayerGold.ToString(), currentMoneyPos, textColor);
+            var currentMoneyPos = lowerRightTab.TopLeft + new Vector2(4, 4);
+            drawer[DrawLayer.UI].DrawString(font, "Your gold: " + GameWorld.State.PlayerGold, currentMoneyPos, textColor);
 
             //background
-            drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
+            drawer[DrawLayer.Background].Draw(background, GameWorld.Camera.Position - GameWorld.GameSize / 2);
 
             base.Draw(drawer);
         }

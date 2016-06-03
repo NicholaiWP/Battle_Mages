@@ -99,6 +99,7 @@
     <Compile Include="Library\Drawer.cs" />
     <Compile Include="Library\GameWorld.cs" />
     <Compile Include="Library\SpellInfo.cs" />
+    <Compile Include="Library\UITab.cs" />
     <Compile Include="Library\Wave.cs" />
     <Compile Include="Messages\AnimationDoneMsg.cs" />
     <Compile Include="Messages\DestroyMsg.cs" />
