@@ -16,21 +16,34 @@ namespace BattleMages
     /// </summary>
     public class SavedState
     {
-        private List<SpellInfo> spellBook = new List<SpellInfo>();
-        private List<int> spellBar = new List<int>();
+        private Dictionary<Guid, SpellInfo> spellBook = new Dictionary<Guid, SpellInfo>();
+        private List<Guid?> spellBar = new List<Guid?>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
         private string databaseFileName = "BMdatabase.db";
         private Texture2D savingSprite;
         private List<AttributeRune> availableRunes = new List<AttributeRune>();
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
         public int PlayerGold { get; set; }
-        public List<SpellInfo> SpellBook { get { return spellBook; } }
-        public List<int> SpellBar { get { return spellBar; } }
+        public Dictionary<Guid, SpellInfo> SpellBook { get { return spellBook; } }
+        public List<Guid?> SpellBar { get { return spellBar; } }
         public bool Saving { get; private set; } = false;
 
         public SavedState()
         {
             savingSprite = GameWorld.Instance.Content.Load<Texture2D>("Textures/Misc/basket");
+        }
+
+        public SpellInfo GetSpellbookSpell(Guid guid)
+        {
+            SpellInfo result;
+            spellBook.TryGetValue(guid, out result);
+            return result;
+        }
+
+        public SpellInfo GetSpellbarSpell(int position)
+        {
+            if (spellBar[position] == null) return null;
+            return SpellBook[(Guid)spellBar[position]];
         }
 
         public void NewGame()
