@@ -58,8 +58,9 @@ namespace BattleMages
                 //{
                 //    ps.SetAttributeRune(j, 0);
                 //}
-                spellBook.Add(ps);
-                spellBar.Add(spellBook.IndexOf(ps));
+                Guid guid = Guid.NewGuid();
+                spellBook.Add(guid, ps);
+                spellBar.Add(guid);
             }
         }
 

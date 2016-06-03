@@ -31,7 +31,7 @@ namespace BattleMages
         //Selected runes/spells (These are used when runes/spells are being dragged around)
         private BaseRune selectedBaseRune;
         private AttributeRune selectedAttrRune;
-        private SpellInfo selectedPlayerSpell;
+        private Guid? selectedPlayerSpell;
 
         private SpriteFont font;
         private string bottomLeftText = string.Empty;
@@ -94,7 +94,7 @@ namespace BattleMages
                 () =>
                 {
                     SpellInfo newSpell = new SpellInfo();
-                    GameWorld.State.SpellBook.Add(newSpell);
+                    GameWorld.State.SpellBook.Add(Guid.NewGuid(), newSpell);
                     currentlyEditing = newSpell;
                     OpenRuneGrid();
                 }
@@ -106,13 +106,13 @@ namespace BattleMages
             var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/SmallButton_Highlighted");
             int nextSpellYPos = 0;
 
-            foreach (SpellInfo spell in GameWorld.State.SpellBook)
+            foreach (KeyValuePair<Guid, SpellInfo> pair in GameWorld.State.SpellBook)
             {
-                SpellInfo thisSpell = spell;
+                SpellInfo thisSpell = pair.Value;
 
                 //Draggable thing
                 GameObject spellObj = new GameObject(t.TopLeft + new Vector2(30, 40 + nextSpellYPos));
-                spellObj.AddComponent(new DragDropItem("playerspell", btnSpr1, btnSpr2, () => { selectedPlayerSpell = thisSpell; }));
+                spellObj.AddComponent(new DragDropItem("playerspell", btnSpr1, btnSpr2, () => { selectedPlayerSpell = pair.Key; }));
                 spellObj.AddComponent(new SpellInfoRenderer(thisSpell));
                 t.AddObject(spellObj);
 
@@ -134,12 +134,12 @@ namespace BattleMages
                 {
                     for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
                     {
-                        if (GameWorld.State.SpellBar[i] == GameWorld.State.SpellBook.IndexOf(thisSpell))
+                        if (GameWorld.State.SpellBar[i] == pair.Key)
                         {
-                            GameWorld.State.SpellBar[i] = -1;
+                            GameWorld.State.SpellBar[i] = null;
                         }
                     }
-                    GameWorld.State.SpellBook.Remove(thisSpell);
+                    GameWorld.State.SpellBook.Remove(pair.Key);
                     OpenSpellsTab();
                 }, centered: true
                 ));
@@ -152,10 +152,8 @@ namespace BattleMages
             for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
             {
                 int thisIndex = i;
-                int spellId = GameWorld.State.SpellBar[thisIndex];
 
-                SpellInfo spell = null;
-                if (spellId < GameWorld.State.SpellBook.Count && spellId >= 0) spell = GameWorld.State.SpellBook[spellId];
+                SpellInfo spell = GameWorld.State.GetSpellbarSpell(thisIndex);
 
                 GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
                 slotObj.AddComponent(new SpellInfoRenderer(spell));
@@ -165,9 +163,10 @@ namespace BattleMages
                     {
                         for (int j = 0; j < GameWorld.State.SpellBar.Count; j++)
                         {
-                            if (GameWorld.State.SpellBar[j] == GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell)) GameWorld.State.SpellBar[j] = -1;
+                            if (GameWorld.State.SpellBar[j] == selectedPlayerSpell)
+                                GameWorld.State.SpellBar[j] = null;
                         }
-                        GameWorld.State.SpellBar[thisIndex] = GameWorld.State.SpellBook.IndexOf(selectedPlayerSpell);
+                        GameWorld.State.SpellBar[thisIndex] = selectedPlayerSpell;
                         OpenSpellsTab();
                     }
                 }
