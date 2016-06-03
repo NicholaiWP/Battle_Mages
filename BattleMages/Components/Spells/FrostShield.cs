@@ -27,7 +27,7 @@ namespace BattleMages
             radius = 32;
             Damage = 8;
             CooldownTime = 2;
-            existenceTimer = 7;
+            existenceTimer = 12;
             ManaCost = 40;
             ApplyAttributeRunes();
             GameWorld.SoundManager.PlaySound("FrostShieldSound");
