@@ -54,11 +54,20 @@ namespace BattleMages
                 shopButton_hover,
                  () =>
                  {
-                     if (GameWorld.State.PlayerGold >= selectedRune.CostInShop)
+                     if (selectedRune != null)
                      {
-                         GameWorld.State.PlayerGold -= selectedRune.CostInShop;
-                         GameWorld.State.AvailableRunes.Add(selectedRune);
-                         RefreshRuneList();
+                         if (GameWorld.State.PlayerGold >= selectedRune.CostInShop)
+                         {
+                             GameWorld.State.PlayerGold -= selectedRune.CostInShop;
+                             GameWorld.State.AvailableRunes.Add(selectedRune);
+                             selectedRune = null;
+                             descriptionText = "The Grand Wizard thanks you for your purchase.";
+                             RefreshRuneList();
+                         }
+                     }
+                     else
+                     {
+                         descriptionText = "No rune selected.";
                      }
                  }, centered: true));
 
