@@ -93,8 +93,8 @@ namespace BattleMages
             int y = 60;
             foreach (string res in resolutionStrings)
             {
-                var button = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/MediumButton");
-                var buttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/MediumButton_Hover");
+                var button = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButton");
+                var buttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButtonHL");
                 AddObject(ObjectBuilder.BuildButton(new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), button, buttonHover,
                     () => ElementAtNumber = resolutionStrings.IndexOf(res)));
@@ -107,8 +107,8 @@ namespace BattleMages
                 }
             }
 
-            var fullScreenButton = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/MediumButton");
-            var fullScreenbuttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/MediumButton_Hover");
+            var fullScreenButton = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButton");
+            var fullScreenbuttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButtonHL");
             AddObject(ObjectBuilder.BuildButton(new Vector2(250 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                 60 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), fullScreenButton, fullScreenbuttonHover,
                 () =>
