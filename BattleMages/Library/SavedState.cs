@@ -74,7 +74,7 @@ namespace BattleMages
                 SQLiteConnection.CreateFile(databaseFileName);
                 connection.Open();
 
-                using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(ID string primary key, BaseRuneID int)",
+                using (SQLiteCommand command = new SQLiteCommand("create table IF NOT EXISTS SpellBook(ID string, BaseRuneID int)",
                     connection))
                 {
                     command.ExecuteNonQuery();
@@ -167,7 +167,7 @@ namespace BattleMages
                 using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@ID", pair.Key);
+                    command.Parameters.AddWithValue("@ID", pair.Key.ToString());
 
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
@@ -178,7 +178,7 @@ namespace BattleMages
                                 using (SQLiteCommand cmd = new SQLiteCommand(@"Update SpellBook Set BaseRuneID = @BaseRuneID where ID = @ID ",
                                     connection))
                                 {
-                                    cmd.Parameters.AddWithValue("@ID", pair.Key);
+                                    cmd.Parameters.AddWithValue("@ID", pair.Key.ToString());
                                     cmd.Parameters.AddWithValue("@BaseRuneID", pair.Value.BaseRuneID);
                                     cmd.ExecuteNonQuery();
                                 }
@@ -189,7 +189,7 @@ namespace BattleMages
                 using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AttributeRunes where SpellBookID = @SBID",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@SBID", pair.Key);
+                    command.Parameters.AddWithValue("@SBID", pair.Key.ToString());
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         //This int is the runePos in Attribute rune ids from the spellbook
@@ -235,7 +235,7 @@ namespace BattleMages
                                         connection))
                                     {
                                         cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[t]);
-                                        cmd.Parameters.AddWithValue("@SBID", pair.Key);
+                                        cmd.Parameters.AddWithValue("@SBID", pair.Key.ToString());
                                         cmd.ExecuteNonQuery();
                                     }
                                 }
@@ -295,7 +295,7 @@ namespace BattleMages
                             SpellInfo si = new SpellInfo();
                             si.SetBaseRune(reader.GetInt32(1));
                             string SBID = reader.GetString(0);
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Select RuneID from AttributeRunes Where SpellBookID like @SBID",
+                            using (SQLiteCommand cmd = new SQLiteCommand(@"Select RuneID from AttributeRunes Where SpellBookID = @SBID",
                                 connection))
                             {
                                 cmd.Parameters.AddWithValue("@SBID", SBID);
