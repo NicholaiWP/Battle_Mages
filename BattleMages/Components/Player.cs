@@ -14,11 +14,17 @@ namespace BattleMages
     {
         private const float moveSpeed = 100;
         private const float moveAccel = 1000;
-
         private const float dashSpeed = 750;
         private const float dashAccel = 10000;
         private const float maxDashTime = 0.05f;
         private const float dashSpellCooldown = 0.8f;
+        private const float invincibleTime = 1;
+        private const float blinkTime = 0.1f;
+        private const float ManaRechargeSpeed = 30;
+        private const float ManaRechargeDelay = 1;
+
+        public const int MaxHealth = 100;
+        public const float MaxMana = 100;
 
         private Animator animator;
         private Character character;
@@ -27,37 +33,25 @@ namespace BattleMages
         private Collider collider;
         private bool canUseSpells;
         private int selectedSpell;
-        private KeyboardState oldKbState;
-        private int currency;
-
+        private int latestWalkIndex = -1;
         private float currentDashTime;
         private float dashCooldown;
         private Vector2 dashVec;
-
         private float[] cooldownTimers = new float[GameWorld.State.SpellBar.Count];
         private float[] cooldownTimersMax = new float[GameWorld.State.SpellBar.Count];
         private bool canMove;
-        public const int MaxHealth = 100;
-        public const float MaxMana = 100;
         private float rechargeDelayTimer = 0;
         private bool deathAnimationStarted;
-        public const float ManaRechargeSpeed = 30;
-        public const float ManaRechargeDelay = 1;
-
-        private const float invincibleTime = 1;
         private float invincibleTimer;
-        private const float blinkTime = 0.1f;
         private float blinkTimer;
 
+        public int SelectedSpell { get { return selectedSpell; } }
         public int CurrentHealth { get; private set; } = MaxHealth;
         public float CurrentMana { get; private set; } = MaxMana;
         public bool Invincible { get { return invincibleTimer > 0f; } }
 
-        private int latestWalkIndex = -1;
-
         public Player(bool canUseSpells)
         {
-            currency = 10;
             canMove = true;
             currentDashTime = 0;
             dashCooldown = 0;
@@ -224,18 +218,9 @@ namespace BattleMages
                 }
             }
             //Spellbook opening
-            if (oldKbState.IsKeyUp(Keys.Tab) && kbState.IsKeyDown(Keys.Tab) && dialougeCount == 0)
+            if (GameWorld.KeyPressed(Keys.Tab) && dialougeCount == 0)
             {
                 GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
-            }
-
-            //Close shop
-            if (GameWorld.Scene is ShopScene)
-            {
-                if (oldKbState.IsKeyUp(Keys.Escape) && kbState.IsKeyDown(Keys.Escape))
-                {
-                    GameWorld.ChangeScene(new LobbyScene());
-                }
             }
 
             //Spell selection
@@ -253,8 +238,6 @@ namespace BattleMages
                 //Movement
                 Move(kbState);
             }
-
-            oldKbState = kbState;
         }
 
         private void Move(KeyboardState kbState)

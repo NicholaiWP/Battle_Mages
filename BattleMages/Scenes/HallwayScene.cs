@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -55,7 +55,7 @@ namespace BattleMages
         {
             keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.Escape))
+            if (GameWorld.KeyPressed(Keys.Escape))
             {
                 crowdSnd.Pause();
                 GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
