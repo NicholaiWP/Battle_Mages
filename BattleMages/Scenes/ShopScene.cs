@@ -46,17 +46,16 @@ namespace BattleMages
                 AttributeRune thisRune = attrRune;
 
                 Vector2 pos = new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2 + 16 + nextRuneX, GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2 + 15 + nextRuneY);
-                AddObject(ObjectBuilder.BuildButton(
-                    pos
-                    ,
+
+                GameObject runeObj = new GameObject(pos + Vector2.One * 8);
+                runeObj.AddComponent(new Button(
                     btnTex,
                     btnTexHover,
                     () =>
                     {
                         selectedRune = thisRune;
                     },
-                    null, false));
-                GameObject runeObj = new GameObject(pos + Vector2.One * 8);
+                    centered: true));
                 runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisRune.TextureName));
                 AddObject(runeObj);
 
