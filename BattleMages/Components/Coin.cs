@@ -15,7 +15,6 @@ namespace BattleMages
         private SpriteRenderer spriteRenderer;
         private Collider collider;
         private Animator animator;
-
         private Vector2 pos;
         private Vector2 velocity;
         private float height = 1;

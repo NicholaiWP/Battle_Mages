@@ -63,6 +63,7 @@
     <Compile Include="Components\Behaviours\Attack.cs" />
     <Compile Include="Components\Behaviours\Dodging.cs" />
     <Compile Include="Components\Behaviours\Hunt.cs" />
+    <Compile Include="Components\Burn.cs" />
     <Compile Include="Components\Character.cs" />
     <Compile Include="Components\DialougeBox.cs" />
     <Compile Include="Components\DragDropPoint.cs" />
