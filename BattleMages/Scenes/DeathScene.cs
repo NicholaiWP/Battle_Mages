@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -27,7 +27,7 @@ namespace BattleMages
         {
             keyState = Keyboard.GetState();
             //if "R" is pressed, return to the menu
-            if (keyState.IsKeyDown(Keys.R))
+            if (GameWorld.KeyPressed(Keys.R))
             {
                 GameWorld.ChangeScene(new LobbyScene());
             }

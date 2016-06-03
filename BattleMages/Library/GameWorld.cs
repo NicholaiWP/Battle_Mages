@@ -30,9 +30,10 @@ namespace BattleMages
         private SavedState state;
         private float deltaTime;
         private GraphicsDeviceManager graphics;
+        private Random random = new Random();
+        private KeyboardState lastState = Keyboard.GetState();
         public int ResScreenWidth { get; set; }
         public int ResScreenHeight { get; set; }
-        private Random random = new Random();
         public static Scene Scene { get { return Instance.scene; } }
         public static PlayerControls PlayerControls { get { return Instance.playerControls; } }
         public static SoundManager SoundManager { get { return Instance.soundManager; } }
@@ -73,6 +74,23 @@ namespace BattleMages
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         }
+
+        public static void ChangeScene(Scene targetScene)
+        {
+            Instance.scene = targetScene;
+        }
+
+        public static bool KeyPressed(Keys key)
+        {
+            return Instance.lastState.IsKeyUp(key) && Keyboard.GetState().IsKeyDown(key);
+        }
+
+        public static bool KeyReleased(Keys key)
+        {
+            return Instance.lastState.IsKeyDown(key) && Keyboard.GetState().IsKeyUp(key);
+        }
+
+        #region Monogame methods
 
         /// <summary>
         /// Shorthand method for loading content from the GameWorld instance's content manager
@@ -128,11 +146,6 @@ namespace BattleMages
             // TODO: Unload any non ContentManager content here
         }
 
-        public static void ChangeScene(Scene targetScene)
-        {
-            Instance.scene = targetScene;
-        }
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -146,6 +159,8 @@ namespace BattleMages
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scene.Update();
+
+            lastState = Keyboard.GetState();
 
             base.Update(gameTime);
         }
@@ -170,5 +185,7 @@ namespace BattleMages
 
             base.Draw(gameTime);
         }
+
+        #endregion Monogame methods
     }
 }

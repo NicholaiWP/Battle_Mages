@@ -12,9 +12,12 @@ namespace BattleMages
     {
         private Texture2D backGround;
         private SpriteFont font;
+        private Scene oldScene;
 
         public ChallengeScene(Scene oldScene)
         {
+            this.oldScene = oldScene;
+
             var content = GameWorld.Instance.Content;
             backGround = content.Load<Texture2D>("Textures/Backgrounds/ChallengeGuybg");
             font = content.Load<SpriteFont>("FontBM");
@@ -66,6 +69,15 @@ namespace BattleMages
                      GameWorld.SoundManager.PlaySound("openHallwayDoor1");
                  }
                  ));
+        }
+
+        public override void Update()
+        {
+            if (GameWorld.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape))
+            {
+                GameWorld.ChangeScene(oldScene);
+            }
+            base.Update();
         }
 
         public override void Draw(Drawer drawer)
