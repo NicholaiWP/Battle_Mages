@@ -25,7 +25,7 @@ namespace BattleMages
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
         private List<BaseRune> availableBaseRunes = new List<BaseRune>();
         public List<BaseRune> AvailableBaseRunes { get { return availableBaseRunes; } }
-        public int PlayerGold { get; set; } = 1000;
+        public int PlayerGold { get; set; }
         public List<SpellInfo> SpellBook { get { return spellBook; } }
         public List<int> SpellBar { get { return spellBar; } }
         public bool Saving { get; private set; } = false;

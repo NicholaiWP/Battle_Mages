@@ -49,8 +49,8 @@ namespace BattleMages
             titleFont = content.Load<SpriteFont>("TitleFont");
 
             //Buy Button
-            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
-            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+            var shopButton = content.Load<Texture2D>("Textures/UI/Spellbook/buyButton");
+            var shopButton_hover = content.Load<Texture2D>("Textures/UI/Spellbook/buyButtonHL");
             lowerRightTab.AddObject(ObjectBuilder.BuildButton(lowerRightTab.BotLeft + new Vector2(lowerRightTab.Size.X / 2, -8),
                 shopButton,
                 shopButton_hover,
@@ -64,6 +64,7 @@ namespace BattleMages
                              GameWorld.State.AvailableRunes.Add(selectedRune);
                              selectedRune = null;
                              descriptionText = "The Grand Wizard thanks you for your purchase.";
+                             GameWorld.SoundManager.PlaySound("GetCoinSound");
                              RefreshRuneList();
                          }
                      }
@@ -134,6 +135,9 @@ namespace BattleMages
             //Draws player's current money
             var currentMoneyPos = lowerRightTab.TopLeft + new Vector2(4, 4);
             drawer[DrawLayer.UI].DrawString(font, "Gold: " + GameWorld.State.PlayerGold, currentMoneyPos, textColor);
+
+            var buyTextPos = lowerRightTab.BotLeft + new Vector2(lowerRightTab.Size.X / 2 - 8, -14);
+            drawer[DrawLayer.UI].DrawString(font, "Buy", buyTextPos, textColor);
 
             //background
             drawer[DrawLayer.Background].Draw(background, GameWorld.Camera.Position - GameWorld.GameSize / 2);
