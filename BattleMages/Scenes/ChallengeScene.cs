@@ -90,7 +90,7 @@ namespace BattleMages
                 textColor);
             drawer[DrawLayer.Background].DrawString(font, "Frost Battle", new Vector2(GameWorld.Camera.Position.X - 83, GameWorld.Camera.Position.Y - 13),
                 textColor);
-            drawer[DrawLayer.Background].DrawString(font, "Arcane Battle", new Vector2(GameWorld.Camera.Position.X - 83, GameWorld.Camera.Position.Y + 33),
+            drawer[DrawLayer.Background].DrawString(font, "Arcane Battle", new Vector2(GameWorld.Camera.Position.X - 83, GameWorld.Camera.Position.Y + 35),
                 textColor);
         }
     }
