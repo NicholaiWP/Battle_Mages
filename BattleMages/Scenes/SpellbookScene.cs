@@ -92,10 +92,13 @@ namespace BattleMages
                 newSpellSpr2,
                 () =>
                 {
-                    SpellInfo newSpell = new SpellInfo();
-                    GameWorld.State.SpellBook.Add(newSpell);
-                    currentlyEditing = newSpell;
-                    OpenRuneGrid();
+                    if (GameWorld.State.SpellBook.Count < 8)
+                    {
+                        SpellInfo newSpell = new SpellInfo();
+                        GameWorld.State.SpellBook.Add(newSpell);
+                        currentlyEditing = newSpell;
+                        OpenRuneGrid();
+                    }
                 }
                 ));
 
@@ -103,20 +106,24 @@ namespace BattleMages
             var btnSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
             var btnSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
             var btnSpr3 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+
+            var shit = GameWorld.Load<Texture2D>("Textures/UI/Ingame/SpellbarSpellOutline");
+            int nextSpellXPos = 0;
             int nextSpellYPos = 0;
+            int nextSpellIndex = 0;
 
             foreach (SpellInfo spell in GameWorld.State.SpellBook)
             {
                 SpellInfo thisSpell = spell;
 
                 //Draggable thing
-                GameObject spellObj = new GameObject(t.TopLeft + new Vector2(30, 40 + nextSpellYPos));
-                spellObj.AddComponent(new DragDropItem("playerspell", btnSpr1, btnSpr2, () => { selectedPlayerSpell = thisSpell; }));
+                GameObject spellObj = new GameObject(t.TopLeft + new Vector2(30 + nextSpellXPos, 42 + nextSpellYPos));
+                spellObj.AddComponent(new DragDropItem("playerspell", btnSpr1, shit, () => { selectedPlayerSpell = thisSpell; }));
                 spellObj.AddComponent(new SpellInfoRenderer(thisSpell));
                 t.AddObject(spellObj);
 
                 //Edit spell button
-                GameObject editObj = new GameObject(t.TopLeft + new Vector2(64, 40 + nextSpellYPos));
+                GameObject editObj = new GameObject(t.TopLeft + new Vector2(55 + nextSpellXPos, 42 + nextSpellYPos));
                 editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/EditSpell"));
                 editObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
                 {
@@ -127,7 +134,7 @@ namespace BattleMages
                 t.AddObject(editObj);
 
                 //Delete spell button
-                GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(64 + 16, 40 + nextSpellYPos));
+                GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(55 + 16 + nextSpellXPos, 42 + nextSpellYPos));
                 deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/DeleteSpell"));
                 deleteObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
                 {
@@ -144,7 +151,13 @@ namespace BattleMages
                 ));
                 t.AddObject(deleteObj);
 
-                nextSpellYPos += 16;
+                nextSpellIndex++;
+                nextSpellYPos += 22;
+                if (nextSpellIndex % 4 == 0)
+                {
+                    nextSpellXPos += 64;
+                    nextSpellYPos = 0;
+                }
             }
 
             //Action bar slots
@@ -157,8 +170,7 @@ namespace BattleMages
                 if (spellId < GameWorld.State.SpellBook.Count && spellId >= 0) spell = GameWorld.State.SpellBook[spellId];
 
                 GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
-                slotObj.AddComponent(new SpellInfoRenderer(spell));
-                slotObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, btnSpr3, btnSpr2, () =>
+                slotObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, shit, btnSpr2, () =>
                 {
                     if (selectedPlayerSpell != null)
                     {
@@ -171,6 +183,7 @@ namespace BattleMages
                     }
                 }
                 ));
+                slotObj.AddComponent(new SpellInfoRenderer(spell));
                 t.AddObject(slotObj);
             }
         }
