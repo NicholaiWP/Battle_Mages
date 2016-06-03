@@ -285,7 +285,7 @@ namespace BattleMages
             if (File.Exists(databaseFileName))
             {
                 connection.Open();
-                using (SQLiteCommand command = new SQLiteCommand("Select (ID ,BaseRuneID) from SpellBook",
+                using (SQLiteCommand command = new SQLiteCommand("Select ID, BaseRuneID from SpellBook",
                     connection))
                 {
                     using (SQLiteDataReader reader = command.ExecuteReader())
