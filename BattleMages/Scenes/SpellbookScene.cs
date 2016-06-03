@@ -218,7 +218,7 @@ namespace BattleMages
             nextRuneY += 24;
             nextRuneX = 0;
 
-            foreach (var rune in StaticData.AttributeRunes)
+            foreach (var rune in GameWorld.State.AvailableRunes)
             {
                 AttributeRune thisAttrRune = rune;
                 Vector2 pos = runeStartPos + new Vector2(nextRuneX, nextRuneY);

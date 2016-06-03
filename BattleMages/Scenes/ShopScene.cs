@@ -57,7 +57,8 @@ namespace BattleMages
                      if (GameWorld.State.PlayerGold >= selectedRune.CostInShop)
                      {
                          GameWorld.State.PlayerGold -= selectedRune.CostInShop;
-                         //TODO: Add rune to the list of available runes
+                         GameWorld.State.AvailableRunes.Add(selectedRune);
+                         RefreshRuneList();
                      }
                  }, centered: true));
 
@@ -121,7 +122,7 @@ namespace BattleMages
 
             //Draws player's current money
             var currentMoneyPos = lowerRightTab.TopLeft + new Vector2(4, 4);
-            drawer[DrawLayer.UI].DrawString(font, "Your gold: " + GameWorld.State.PlayerGold, currentMoneyPos, textColor);
+            drawer[DrawLayer.UI].DrawString(font, "Gold: " + GameWorld.State.PlayerGold, currentMoneyPos, textColor);
 
             //background
             drawer[DrawLayer.Background].Draw(background, GameWorld.Camera.Position - GameWorld.GameSize / 2);
