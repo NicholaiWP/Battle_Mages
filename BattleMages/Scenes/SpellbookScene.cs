@@ -124,7 +124,7 @@ namespace BattleMages
 
                 //Edit spell button
                 GameObject editObj = new GameObject(t.TopLeft + new Vector2(55 + nextSpellXPos, 42 + nextSpellYPos));
-                editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/EditSpell"));
+                editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/edit"));
                 editObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
                 {
                     currentlyEditing = thisSpell;
@@ -135,7 +135,7 @@ namespace BattleMages
 
                 //Delete spell button
                 GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(55 + 16 + nextSpellXPos, 42 + nextSpellYPos));
-                deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/DeleteSpell"));
+                deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/remove"));
                 deleteObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
                 {
                     for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
