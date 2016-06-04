@@ -1319,7 +1319,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/DoorSheet.png
 
-#begin Textures/Player/playerSpriteSheet.png
+#begin Textures/Player/PlayerSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1328,5 +1328,5 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Player/playerSpriteSheet.png
+/build:Textures/Player/PlayerSheet.png
 
