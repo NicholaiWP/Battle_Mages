@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -15,7 +15,7 @@ namespace BattleMages
         private Texture2D lobbyTexture;
         private Texture2D lobbyTextureForeground;
         private Vector2 lobbyTexturePosition;
-        private bool canPause = true;
+        public bool CanPause { get; set; } = true;
 
         public LobbyScene()
         {
@@ -49,14 +49,14 @@ namespace BattleMages
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[] { "HALT-- I mean, hi!\nWho me? I don't know anything, I'm just a guard.         \n...Just pick a challenge already! " },
-                    () => { GameWorld.ChangeScene(new ChallengeScene(this)); canPause = false; }));
+                    () => { GameWorld.ChangeScene(new ChallengeScene(this)); CanPause = false; }));
                 AddObject(dialougeObj);
             }));
             AddObject(doorGuardObj);
 
             //Door
             GameObject door = new GameObject(new Vector2(0, -90 - 98 / 2));
-            door.AddComponent(new NPC("Textures/Npc's/doorOpen-Sheet", new Vector2(64, 128), 1, 10, true));
+            door.AddComponent(new NPC("Textures/Npc's/doorOpen-Sheet", new Vector2(64, 128), 1, 20, true));
             door.AddComponent(new Animator());
             AddObject(door);
 
@@ -91,7 +91,7 @@ namespace BattleMages
                 }
             }
 
-            if (GameWorld.KeyPressed(Keys.Escape) && dialougeCount == 0 && canPause)
+            if (GameWorld.KeyPressed(Keys.Escape) && dialougeCount == 0 && CanPause)
             {
                 GameWorld.ChangeScene(new PauseScene(this));
             }

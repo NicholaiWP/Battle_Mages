@@ -29,11 +29,22 @@ namespace BattleMages
                 earthBattleHL,
                 () =>
                 {
-                    GameWorld.ChangeScene(oldScene);
                     if (oldScene is LobbyScene)
                     {
                         foreach (GameObject go in oldScene.ActiveObjects)
                         {
+                            if (go.GetComponent<Player>() != null)
+                            {
+                                GameWorld.Camera.Position = new Vector2(0, -90.83358f);
+                                GameWorld.Camera.AllowMovement = false;
+                                oldScene.RemoveObject(go);
+                                GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
+                                nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
+                                nrPlayer.AddComponent(new Animator());
+                                oldScene.AddObject(nrPlayer);
+                                GameWorld.ChangeScene(oldScene);
+                            }
+
                             if (go.GetComponent<NPC>() != null)
                             {
                                 go.GetComponent<NPC>().ChangeAnimation("EarthBattle");
@@ -76,6 +87,8 @@ namespace BattleMages
             if (GameWorld.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
                 GameWorld.ChangeScene(oldScene);
+                if (oldScene is LobbyScene)
+                    (oldScene as LobbyScene).CanPause = true;
             }
             base.Update();
         }
