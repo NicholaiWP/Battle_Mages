@@ -26,7 +26,7 @@ namespace BattleMages
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
         private List<BaseRune> availableBaseRunes = new List<BaseRune>();
         public List<BaseRune> AvailableBaseRunes { get { return availableBaseRunes; } }
-        public int PlayerGold { get; set; }
+        public int PlayerGold { get; set; } = 1000;
 
         public Dictionary<Guid, SpellInfo> SpellBook { get { return spellBook; } }
         public List<Guid?> SpellBar { get { return spellBar; } }
@@ -167,9 +167,27 @@ namespace BattleMages
                 }
             }
 
-            /*foreach (AttributeRune aR in )
+            foreach (AttributeRune aR in availableRunes)
             {
-            }*/
+                using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AvailableRunes where RuneID = @ID",
+                    connection))
+                {
+                    command.Parameters.AddWithValue("@ID", StaticData.AttributeRunes.IndexOf(aR));
+
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AvailableRunes Values(@ID)",
+                                connection))
+                            {
+                                cmd.Parameters.AddWithValue("@ID", StaticData.AttributeRunes.IndexOf(aR));
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
 
             foreach (var guid in spellBar)
             {
@@ -312,6 +330,18 @@ namespace BattleMages
                         while (reader.Read())
                         {
                             availableBaseRunes.Add(StaticData.BaseRunes[reader.GetInt32(0)]);
+                        }
+                    }
+                }
+
+                using (SQLiteCommand command = new SQLiteCommand("Select RuneID from AvailableRunes",
+                    connection))
+                {
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            availableRunes.Add(StaticData.AttributeRunes[reader.GetInt32(0)]);
                         }
                     }
                 }
