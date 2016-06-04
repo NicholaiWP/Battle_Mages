@@ -51,7 +51,7 @@ namespace BattleMages
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
                     //"HALT-- I mean, hi!\nWho me? I don't know anything, I'm just a guard.         \n...Just pick a challenge already! "
-                    "Greetings, fellow mage. The arena awaits you.\nWhich challenge should be your goal?"
+                    "Greetings, fellow mage. The arena awaits you.\nPick a challenge to compete against"
                 },
                  () => { GameWorld.ChangeScene(new ChallengeScene(this)); CanPause = false; }));
 

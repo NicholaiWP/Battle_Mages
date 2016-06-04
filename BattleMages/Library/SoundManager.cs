@@ -61,7 +61,7 @@ namespace BattleMages
             sounds.Add("GetCoinSound", content.Load<SoundEffect>("Sounds/GetCoinSound"));
             sounds.Add("FrostShieldSound", content.Load<SoundEffect>("Sounds/FrostShieldSound"));
             sounds.Add("IceShardSound", content.Load<SoundEffect>("Sounds/IceShardSound"));
-            sounds.Add("DeathSound", content.Load<SoundEffect>("Sounds/DeathSound"));
+           // sounds.Add("DeathSound", content.Load<SoundEffect>("Sounds/DeathSound"));
 
             music.Add("HubMusic", content.Load<Song>("Music/Hub"));
             music.Add("CombatMusic", content.Load<Song>("Music/Combat"));
