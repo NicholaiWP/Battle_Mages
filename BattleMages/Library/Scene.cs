@@ -43,7 +43,8 @@ namespace BattleMages
         /// <param name="drawer"></param>
         public virtual void Draw(Drawer drawer)
         {
-            foreach (GameObject go in activeObjects)
+            IEnumerable<GameObject> orderedObjects = activeObjects.OrderBy(a => a.Transform.Position.Y);
+            foreach (GameObject go in orderedObjects)
                 go.SendMessage(new DrawMsg(drawer));
         }
 
@@ -63,6 +64,20 @@ namespace BattleMages
         public void RemoveObject(GameObject go)
         {
             objectsToRemove.Add(go);
+        }
+
+        /// <summary>
+        /// Called every time this scene becomes the active scene.
+        /// </summary>
+        public virtual void Open()
+        {
+        }
+
+        /// <summary>
+        /// Called every time this scene is no longer the active scene.
+        /// </summary>
+        public virtual void Close()
+        {
         }
 
         /// <summary>

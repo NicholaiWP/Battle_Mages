@@ -32,8 +32,6 @@ namespace BattleMages
 
             //Music and soundhandling through SoundManager
             GameWorld.SoundManager.PlayMusic("CombatMusic");
-            crowdSnd = GameWorld.SoundManager.PlaySound("AmbienceSound", true);
-            crowdSnd.Volume = 0;
 
             var ingameUI = new GameObject(new Vector2(100, 100));
             ingameUI.AddComponent(new IngameUI());
@@ -46,6 +44,21 @@ namespace BattleMages
                 goWaveController.AddComponent(waveController);
                 goWaveController.SendMessage(new UpdateMsg());
             }
+        }
+
+        public override void Open()
+        {
+            crowdSnd = GameWorld.SoundManager.PlaySound("AmbienceSound", true);
+            crowdSnd.Volume = 0;
+
+            base.Open();
+        }
+
+        public override void Close()
+        {
+            crowdSnd.Stop();
+
+            base.Close();
         }
 
         public override void Update()
@@ -63,8 +76,7 @@ namespace BattleMages
             //If the key P is down then we change to the pause scene
             if (GameWorld.KeyPressed(Keys.Escape))
             {
-                crowdSnd.Pause();
-                GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
+                GameWorld.ChangeScene(new PauseScene(this));
             }
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
