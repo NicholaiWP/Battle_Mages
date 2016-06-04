@@ -57,6 +57,13 @@ namespace BattleMages
                 30,
                 DescreaseCooldown),
 
+                new AttributeRune("Rune of Reach",
+                "Increases the range of a spell. Projectiles go further and other attacks can be used further away.",
+                "rune4",
+                70,
+                IncreaseRangeRune
+                )
+
                 //new AttributeRune("Projectile block",
                 //"your spells can block enemy projectiles",
                 //"rune4",
@@ -239,6 +246,12 @@ namespace BattleMages
         private static SpellStats DescreaseCooldown(SpellStats stats)
         {
             stats.CooldownTime -= stats.CooldownTime * 0.30f;
+            return stats;
+        }
+
+        private static SpellStats IncreaseRangeRune(SpellStats stats)
+        {
+            stats.Range *= 1.15f;
             return stats;
         }
     }
