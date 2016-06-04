@@ -1393,18 +1393,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Enemies/enemySummon-sheet.png
 
-#begin Textures/Misc/loadingSymbol-Sheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Misc/loadingSymbol-Sheet.png
-
 #begin Textures/Misc/DoorSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1470,4 +1458,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/DeathSound.wav
+
+#begin Textures/Misc/LoadingSymbolSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Misc/LoadingSymbolSheet.png
 
