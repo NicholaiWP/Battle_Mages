@@ -213,7 +213,6 @@ namespace BattleMages
                 if (go.GetComponent<DialougeBox>() != null)
                 {
                     dialougeCount++;
-                    break;
                 }
             }
             //Spellbook opening

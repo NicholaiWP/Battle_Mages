@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
-    internal class HallwayScene : Scene
+    public class HallwayScene : Scene
     {
         private Texture2D hallwayTex;
         private Vector2 hallwayTexPosition;
@@ -21,6 +21,7 @@ namespace BattleMages
 
         public HallwayScene(string challengeName)
         {
+            GameWorld.Camera.AllowMovement = true;
             var content = GameWorld.Instance.Content;
             hallwayTexPosition = new Vector2(-32, -360 / 2);
             hallwayTex = content.Load<Texture2D>("Textures/Backgrounds/Hallway");

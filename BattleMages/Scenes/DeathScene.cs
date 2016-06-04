@@ -30,7 +30,7 @@ namespace BattleMages
             playerObj.AddComponent(new SpriteRenderer("Textures/Player/PlayerSheet", true) { Rectangle = new Rectangle(0, 0, 32, 32) });
             playerAnimator = new Animator();
             playerObj.AddComponent(playerAnimator);
-            playerAnimator.CreateAnimation("Death", new Animation(priority: 0, framesCount: 23, yPos: 384, xStartFrame: 0,
+            playerAnimator.CreateAnimation("Death", new Animation(priority: 0, framesCount: 24, yPos: 384, xStartFrame: 0,
                  width: 32, height: 32, fps: 12, offset: Vector2.Zero));
             AddObject(playerObj);
         }

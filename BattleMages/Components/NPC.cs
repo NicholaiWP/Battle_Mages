@@ -18,9 +18,11 @@ namespace BattleMages
         private int fps;
         private bool isDoor;
         private CursorLockToken token;
+        private int ypos;
 
-        public NPC(string imagePath, Vector2 size, int frames, int fps, bool isDoor = false)
+        public NPC(string imagePath, Vector2 size, int frames, int fps, bool isDoor = false, int ypos = 0)
         {
+            this.ypos = ypos;
             this.imagePath = imagePath;
             width = (int)size.X;
             height = (int)size.Y;
@@ -41,7 +43,6 @@ namespace BattleMages
 
         private void Initialize(InitializeMsg message)
         {
-            int ypos = 0;
             animationName = "Idle";
 
             animator = GameObject.GetComponent<Animator>();
