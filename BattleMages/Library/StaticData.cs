@@ -69,26 +69,31 @@ namespace BattleMages
                 new BaseRune("Fireball",
                 "A ball of fire with a chance of igniting the enemy with fire",
                 "FireballRune",
+                new SpellStats { Damage = 12, CooldownTime = 0.7f, ManaCost = 12, Range = 1 },
                 (p) => { return new Fireball(p); }),
 
-                new BaseRune("Icicle",
+                new BaseRune("Ice Shards",
                 "Three sharp chunks of ice will spread outwards",
                 "IceShardsRune",
+                new SpellStats { Damage = 5, CooldownTime = 0.7f, ManaCost = 20, Range = 64 },
                 (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
                 "Powerful arcane lightning that strikes from the sky",
                 "LightningRune",
+                new SpellStats { Damage = 40, CooldownTime = 2f, ManaCost = 40, Range = 1 },
                 (p) => {return new Lightning(p); }),
 
                 new BaseRune("Earth Spikes",
                 "Sharp spikes will rise from the ground and damage over time",
                 "EarthSpikesRune",
+                new SpellStats { Damage = 10, CooldownTime = 3f, ManaCost = 70, Range = 1 },
                 (p) => {return new EarthSpikes(p); }),
 
                 new BaseRune("Frost Shield",
                 "Three orbs of frost that rotate around you and protect against projectiles",
                 "FrostShieldRune",
+                new SpellStats { Damage = 8, CooldownTime = 2f, ManaCost = 40, Range = 1 },
                 (p) => {return new FrostShield(p, true, 0); })
             };
 
@@ -219,23 +224,22 @@ namespace BattleMages
             }
         }
 
-        private static void DamageUpRune(Spell spell)
+        private static SpellStats DamageUpRune(SpellStats stats)
         {
-            spell.Damage = (int)(spell.Damage * 1.25f);
+            stats.Damage = (int)(stats.Damage * 1.25f);
+            return stats;
         }
 
-        private static void DecreaseManaCostRune(Spell spell)
+        private static SpellStats DecreaseManaCostRune(SpellStats stats)
         {
-            spell.ManaCost = (int)(spell.ManaCost * 0.75f);
+            stats.ManaCost = (int)(stats.ManaCost * 0.75f);
+            return stats;
         }
 
-        private static void DescreaseCooldown(Spell spell)
+        private static SpellStats DescreaseCooldown(SpellStats stats)
         {
-            spell.CooldownTime -= spell.CooldownTime * 0.30f;
-        }
-
-        private static void CollideAbilityRune(Spell spell)
-        {
+            stats.CooldownTime -= stats.CooldownTime * 0.30f;
+            return stats;
         }
     }
 }

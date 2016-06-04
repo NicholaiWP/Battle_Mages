@@ -8,34 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 namespace BattleMages
 {
     /// <summary>
-    /// Parameters used by created spells to alter behavour.
-    /// </summary>
-    public class SpellCreationParams
-    {
-        /// <summary>
-        /// A list of runes to be applied to the spell on creation.
-        /// </summary>
-        public AttributeRune[] AttributeRunes { get; }
-
-        /// <summary>
-        /// The target in world coordinates the spell should aim for.
-        /// </summary>
-        public Vector2 AimTarget { get; }
-
-        /// <summary>
-        /// Offset used by moving spells. Usually set to the speed of the player.
-        /// </summary>
-        public Vector2 VelocityOffset { get; }
-
-        public SpellCreationParams(AttributeRune[] attributeRunes, Vector2 aimTarget, Vector2 velocityOffset)
-        {
-            AttributeRunes = attributeRunes;
-            AimTarget = aimTarget;
-            VelocityOffset = velocityOffset;
-        }
-    }
-
-    /// <summary>
     /// A class that stores info for a specific base rune. Can be used to instantiate a spell.
     /// </summary>
     public class BaseRune
@@ -47,6 +19,7 @@ namespace BattleMages
         public string Name { get; }
         public string Description { get; }
         public string TextureName { get; }
+        public SpellStats BaseStats { get; }
         public Texture2D Texture { get; private set; }
 
         /// <summary>
@@ -55,11 +28,12 @@ namespace BattleMages
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="spawnFunc"></param>
-        public BaseRune(string name, string description, string textureName, SpellSpawnDelegate spawnFunc)
+        public BaseRune(string name, string description, string textureName, SpellStats baseStats, SpellSpawnDelegate spawnFunc)
         {
             Name = name;
             Description = description;
             TextureName = textureName;
+            BaseStats = baseStats;
             this.spawnFunc = spawnFunc;
         }
 

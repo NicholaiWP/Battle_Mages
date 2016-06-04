@@ -8,32 +8,13 @@ namespace BattleMages
 {
     public abstract class Spell : Component
     {
-        private AttributeRune[] runes;
+        private SpellStats stats;
 
-        //BASE STATS
-        //These stats are used by spells to modify behaviour in different ways.
-        //Spells should also define base stats in their constructor.
-        //These stats will then be modified by runes.
-        public int Damage { get; set; }
-        public int BurnDamage { get; set; }
-        public int ManaCost { get; set; }
-        public float CooldownTime { get; set; }
+        protected SpellStats Stats { get { return stats; } }
 
         public Spell(SpellCreationParams p)
         {
-            runes = p.AttributeRunes;
-        }
-
-        /// <summary>
-        /// Call after setting spell stats
-        /// </summary>
-        protected void ApplyAttributeRunes()
-        {
-            foreach (var r in runes)
-            {
-                if (r != null)
-                    r.ApplyChanges(this);
-            }
+            stats = p.SpellInfo.CalcStats();
         }
     }
 }

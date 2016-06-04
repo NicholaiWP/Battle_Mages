@@ -19,10 +19,6 @@ namespace BattleMages
         public Lightning(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            Damage = 40;
-            CooldownTime = 2f;
-            ManaCost = 40;
-            ApplyAttributeRunes();
             GameWorld.SoundManager.PlaySound("lightningStrike");
             GameWorld.SoundManager.SoundVolume = 0.7f;
             waitTimer = 0.3f;
@@ -52,7 +48,7 @@ namespace BattleMages
                     var enemy = other.GameObject.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(Damage);
+                        enemy.TakeDamage(Stats.Damage);
                     }
                 }
             }

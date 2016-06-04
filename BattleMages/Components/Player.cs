@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -169,20 +169,15 @@ namespace BattleMages
                     var baseRune = spellToCast.GetBaseRune();
                     if (baseRune != null)
                     {
-                        AttributeRune[] attrRunes = new AttributeRune[SpellInfo.AttributeRuneSlotCount];
-                        for (int i = 0; i < SpellInfo.AttributeRuneSlotCount; i++)
-                        {
-                            attrRunes[i] = spellToCast.GetAttributeRune(i);
-                        }
-
                         //Create spell object and add it to the world
                         GameObject spellObject = new GameObject(transform.Position);
-                        Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
+                        Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(spellToCast, GameWorld.Cursor.Position, character.Velocity));
                         spellObject.AddComponent(spellComponent);
                         GameWorld.Scene.AddObject(spellObject);
 
-                        CurrentMana -= spellComponent.ManaCost;
-                        cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = spellComponent.CooldownTime;
+                        SpellStats stats = spellToCast.CalcStats();
+                        CurrentMana -= stats.ManaCost;
+                        cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = stats.CooldownTime;
                         rechargeDelayTimer = ManaRechargeDelay;
 
                         Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;

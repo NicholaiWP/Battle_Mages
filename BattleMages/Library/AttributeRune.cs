@@ -11,7 +11,7 @@ namespace BattleMages
     /// </summary>
     public class AttributeRune
     {
-        public delegate void RuneAction(Spell targetSpell);
+        public delegate SpellStats RuneAction(SpellStats targetStats);
 
         private RuneAction action;
 
@@ -37,12 +37,12 @@ namespace BattleMages
         }
 
         /// <summary>
-        /// Apples the stat changes associated with this rune to the target spell.
+        /// Returns a copy of the supplied stats with changes made by this attribute rune.
         /// </summary>
         /// <param name="targetSpell"></param>
-        public void ApplyChanges(Spell targetSpell)
+        public SpellStats ApplyChanges(SpellStats stats)
         {
-            action(targetSpell);
+            return action(stats);
         }
 
         public void LoadContent()
