@@ -463,6 +463,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Runes/Rune9.png
 
+#begin Textures/Spells/EarthSpikes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Spells/EarthSpikes.png
+
 #begin Textures/Spells/Fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1345,12 +1357,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Backgrounds/Arena.png
 
-#begin Sounds/DeathSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/DeathSound.wav
-
 #begin Textures/UI/Spellbook/edit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1423,7 +1429,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Player/PlayerSheet.png
 
-#begin Textures\Spells\EarthSpikes.png
+#begin Textures/Spells/fireball-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1433,5 +1439,35 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures\Spells\EarthSpikes.png
+/build:Textures/Spells/fireball-Sheet.png
+
+#begin Textures/Spells/iceSHard-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Spells/iceSHard-Sheet.png
+
+#begin Textures/Npc's/TutorialGuy-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Npc's/TutorialGuy-Sheet.png
+
+#begin Sounds/DeathSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/DeathSound.wav
 
