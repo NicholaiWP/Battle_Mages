@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -15,6 +15,8 @@ namespace BattleMages
         private int currentIndex;
         private string animationName;
         private float fps;
+        private bool playing;
+        private bool looping;
 
         //Components
         private SpriteRenderer spriteRenderer;
@@ -64,19 +66,30 @@ namespace BattleMages
         /// </summary>
         private void Update(UpdateMsg msg)
         {
-            timeElapsed += GameWorld.DeltaTime;
-            if (animationName != null)
-                currentIndex = (int)(timeElapsed * animations[animationName].Fps);
-            if (frames != null)
+            if (playing)
             {
-                if (currentIndex >= frames.Length)
+                timeElapsed += GameWorld.DeltaTime;
+                if (animationName != null)
+                    currentIndex = (int)(timeElapsed * animations[animationName].Fps);
+                if (frames != null)
                 {
-                    GameObject.SendMessage(new AnimationDoneMsg(animationName));
-                    timeElapsed = 0;
-                    currentIndex = 0;
-                }
+                    if (currentIndex >= frames.Length)
+                    {
+                        GameObject.SendMessage(new AnimationDoneMsg(animationName));
+                        if (looping)
+                        {
+                            timeElapsed = 0;
+                            currentIndex = 0;
+                        }
+                        else
+                        {
+                            playing = false;
+                        }
+                    }
 
-                spriteRenderer.Rectangle = frames[currentIndex];
+                    if (currentIndex < frames.Length)
+                        spriteRenderer.Rectangle = frames[currentIndex];
+                }
             }
         }
 
@@ -84,8 +97,11 @@ namespace BattleMages
         /// This method is for playing an animation by its name
         /// </summary>
         /// <param name="animationName"></param>
-        public void PlayAnimation(string animationName, float rotationRadians = 0)
+        public void PlayAnimation(string animationName, float rotationRadians = 0, bool looping = true)
         {
+            this.looping = looping;
+            this.playing = true;
+
             if (this.animationName == null || animations[this.animationName].Priority >= animations[animationName].Priority ||
                 currentIndex >= frames.Length)
             {

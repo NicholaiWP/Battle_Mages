@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -41,7 +41,6 @@ namespace BattleMages
         private float[] cooldownTimersMax = new float[GameWorld.State.SpellBar.Count];
         private bool canMove;
         private float rechargeDelayTimer = 0;
-        private bool deathAnimationStarted;
         private float invincibleTimer;
         private float blinkTimer;
 
@@ -56,7 +55,6 @@ namespace BattleMages
             currentDashTime = 0;
             dashCooldown = 0;
             this.canUseSpells = canUseSpells;
-            deathAnimationStarted = false;
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
@@ -308,25 +306,21 @@ namespace BattleMages
         {
             canMove = true;
             animator.PlayAnimation("Idle" + character.FDirection.ToString());
-
-            if (msg.AnimationName == "Death")
-            {
-                GameWorld.ChangeScene(new DeathScene());
-                GameWorld.State.Save();
-            }
         }
 
         public void TakeDamage(int points)
         {
-            if (Invincible || deathAnimationStarted) return;
+            if (Invincible) return;
 
             CurrentHealth -= points;
-            if (CurrentHealth <= 0 && !deathAnimationStarted)
+            if (CurrentHealth <= 0)
             {
                 canMove = false;
                 canUseSpells = false;
-                deathAnimationStarted = true;
-                animator.PlayAnimation("Death");
+
+                MediaPlayer.Stop();
+                GameWorld.ChangeScene(new DeathScene(GameObject.Transform.Position));
+                GameWorld.State.Save();
             }
             else
             {
