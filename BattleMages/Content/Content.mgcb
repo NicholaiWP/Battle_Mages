@@ -266,17 +266,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Player/Player.png
 
-#begin Textures/Player/PlayerSheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Textures/Player/PlayerSheet.png
-
 #begin Textures/Runes/EarthspikesRune.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1329,4 +1318,15 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/DoorSheet.png
+
+#begin Textures/Player/playerSpriteSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Textures/Player/playerSpriteSheet.png
 
