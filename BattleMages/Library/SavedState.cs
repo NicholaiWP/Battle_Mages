@@ -20,7 +20,7 @@ namespace BattleMages
 
         private Dictionary<Guid, SpellInfo> spellBook = new Dictionary<Guid, SpellInfo>();
         private List<Guid?> spellBar = new List<Guid?>();
-        private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
+        private SQLiteConnection connection = new SQLiteConnection("Data Source = SavedGame.db; Version = 3;");
         private string databaseFileName = "SavedGame.db";
         private List<AttributeRune> availableRunes = new List<AttributeRune>();
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
