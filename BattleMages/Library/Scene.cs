@@ -43,7 +43,8 @@ namespace BattleMages
         /// <param name="drawer"></param>
         public virtual void Draw(Drawer drawer)
         {
-            foreach (GameObject go in activeObjects)
+            IEnumerable<GameObject> orderedObjects = activeObjects.OrderBy(a => a.Transform.Position.Y);
+            foreach (GameObject go in orderedObjects)
                 go.SendMessage(new DrawMsg(drawer));
         }
 

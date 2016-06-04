@@ -64,7 +64,7 @@ namespace BattleMages
             GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
             shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
             shopkeeperObj.AddComponent(new Animator());
-            shopkeeperObj.AddComponent(new Collider(new Vector2(40, 48), true));
+            shopkeeperObj.AddComponent(new Collider(new Vector2(40, 24), true) { Offset = new Vector2(0, 12) });
             shopkeeperObj.AddComponent(new Interactable(() =>
             {
                 GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
