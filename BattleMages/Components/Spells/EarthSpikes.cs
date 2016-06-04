@@ -11,9 +11,12 @@ namespace BattleMages
     {
         private Collider collider;
         private SpriteRenderer spriteRenderer;
+        private Animator animator;
         private float timer;
         private float damageTimer;
         private SpellCreationParams p;
+
+        private bool upPlayed;
 
         public EarthSpikes(SpellCreationParams p) : base(p)
         {
@@ -23,17 +26,25 @@ namespace BattleMages
             GameWorld.SoundManager.PlaySound("Earthspikes");
             GameWorld.SoundManager.SoundVolume = 1f;
 
-            spriteRenderer = new SpriteRenderer("Textures/Spells/EarthSpikes");
-
             timer = 4;
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
+            Listen<AnimationDoneMsg>(AnimationDone);
         }
 
         private void PreInitialize(PreInitializeMsg msg)
         {
+            spriteRenderer = new SpriteRenderer("Textures/Spells/EarthSpikes", true) { Rectangle = new Rectangle(0, 0, 32, 32) };
             GameObject.AddComponent(spriteRenderer);
+
+            animator = new Animator();
+            animator.CreateAnimation("Up", new Animation(0, 8, 0, 0, 32, 32, 20, Vector2.Zero));
+            animator.CreateAnimation("Down", new Animation(0, 8, 0, 8, 32, 32, 20, Vector2.Zero));
+            GameObject.AddComponent(animator);
+
+            collider = new Collider(new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height));
+            GameObject.AddComponent(collider);
         }
 
         private void Initialize(InitializeMsg msg)
@@ -43,11 +54,10 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            if (GameObject.GetComponent<Collider>() == null)
+            if (!upPlayed)
             {
-                collider = new Collider(new Vector2(GameObject.GetComponent<SpriteRenderer>().Sprite.Width,
-                    GameObject.GetComponent<SpriteRenderer>().Sprite.Height));
-                GameObject.AddComponent(collider);
+                upPlayed = true;
+                animator.PlayAnimation("Up", looping: false);
             }
 
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
@@ -59,14 +69,24 @@ namespace BattleMages
                     enemy.TakeDamage(Stats.Damage);
                 }
             }
+
             timer -= GameWorld.DeltaTime;
             if (timer <= 0)
             {
-                GameWorld.Scene.RemoveObject(GameObject);
+                animator.PlayAnimation("Down", looping: false);
             }
+
             if (damageTimer > 0)
             {
                 damageTimer -= GameWorld.DeltaTime;
+            }
+        }
+
+        private void AnimationDone(AnimationDoneMsg msg)
+        {
+            if (animator.PlayingAnimationName == "Down")
+            {
+                GameWorld.Scene.RemoveObject(GameObject);
             }
         }
     }

@@ -26,7 +26,6 @@ namespace BattleMages
             speed = 2;
             radius = 32;
             existenceTimer = 12;
-            GameWorld.SoundManager.PlaySound("FrostShieldSound");
             spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
             //This makes sure all FrostShields have the same starting angle so that their rotation looks amazing
@@ -40,6 +39,7 @@ namespace BattleMages
             }
 
             Listen<PreInitializeMsg>(PreInitialize);
+            Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
         }
 
@@ -49,12 +49,12 @@ namespace BattleMages
             GameObject.AddComponent(collider);
         }
 
-        private void Update(UpdateMsg msg)
+        private void Initialize(InitializeMsg msg)
         {
             //Spawn 2 other frostshields if told to
             if (spawnSubshards)
             {
-                spawnSubshards = false;
+                GameWorld.SoundManager.PlaySound("FrostShieldSound");
                 for (int i = 0; i <= 1; i++)
                 {
                     GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
@@ -64,9 +64,10 @@ namespace BattleMages
                     GameWorld.Scene.AddObject(newShardGameObject);
                 }
             }
-            GameWorld.SoundManager.PlaySound("FrostShield");
-            GameWorld.SoundManager.SoundVolume = 1f;
+        }
 
+        private void Update(UpdateMsg msg)
+        {
             #region Collision detection
 
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
