@@ -21,12 +21,12 @@ namespace BattleMages
         private Dictionary<Guid, SpellInfo> spellBook = new Dictionary<Guid, SpellInfo>();
         private List<Guid?> spellBar = new List<Guid?>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = BMdatabase.db; Version = 3;");
-        private string databaseFileName = "BMdatabase.db";
+        private string databaseFileName = "SavedGame.db";
         private List<AttributeRune> availableRunes = new List<AttributeRune>();
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
         private List<BaseRune> availableBaseRunes = new List<BaseRune>();
         public List<BaseRune> AvailableBaseRunes { get { return availableBaseRunes; } }
-        public int PlayerGold { get; set; } = 1000;
+        public int PlayerGold { get; set; }
 
         public Dictionary<Guid, SpellInfo> SpellBook { get { return spellBook; } }
         public List<Guid?> SpellBar { get { return spellBar; } }
@@ -105,6 +105,19 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
 
+                using (SQLiteCommand command = new SQLiteCommand("create table PlayerGold (Gold int)",
+                    connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                using (SQLiteCommand command = new SQLiteCommand(@"Insert into PlayerGold Values(@gold)",
+                    connection))
+                {
+                    command.Parameters.AddWithValue("@gold", 0);
+                    command.ExecuteNonQuery();
+                }
+
                 using (SQLiteCommand command = new SQLiteCommand("create table SpellBar(ID integer primary key, SpellBookID string REFERENCES SpellBook(ID))",
                     connection))
                 {
@@ -145,6 +158,13 @@ namespace BattleMages
             int attrRuneID = 1;
 
             connection.Open();
+
+            using (SQLiteCommand command = new SQLiteCommand(@"Update PlayerGold set Gold = @gold",
+                connection))
+            {
+                command.Parameters.AddWithValue("@gold", PlayerGold);
+                command.ExecuteNonQuery();
+            }
 
             foreach (BaseRune bR in availableBaseRunes)
             {
@@ -322,6 +342,19 @@ namespace BattleMages
             if (File.Exists(databaseFileName))
             {
                 connection.Open();
+
+                using (SQLiteCommand command = new SQLiteCommand("Select Gold from PlayerGold",
+                    connection))
+                {
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            PlayerGold = reader.GetInt32(0);
+                        }
+                    }
+                }
+
                 using (SQLiteCommand command = new SQLiteCommand("Select BaseRuneID from AvailableBaseRunes",
                     connection))
                 {
