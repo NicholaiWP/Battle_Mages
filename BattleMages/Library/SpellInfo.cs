@@ -50,5 +50,21 @@ namespace BattleMages
         {
             attrRuneIDs[pos] = attrRuneID;
         }
+
+        /// <summary>
+        /// Calculates the stats to use for this spell by applying all attribute runes to the base rune stats.
+        /// </summary>
+        /// <returns></returns>
+        public SpellStats CalcStats()
+        {
+            SpellStats stats = GetBaseRune().BaseStats;
+            for (int i = 0; i < AttributeRuneSlotCount; i++)
+            {
+                AttributeRune attrRune = GetAttributeRune(i);
+                if (attrRune != null)
+                    stats = attrRune.ApplyChanges(stats);
+            }
+            return stats;
+        }
     }
 }

@@ -61,9 +61,7 @@ namespace BattleMages
 
                 //Create gameobject for this spell
                 GameObject spellObj = new GameObject(spellBarPositions[i]);
-                SpellInfo spell = null; //Default to null if this slot has an invalid spell ID
-                if (GameWorld.State.SpellBar[i] < GameWorld.State.SpellBook.Count) spell = GameWorld.State.SpellBook[GameWorld.State.SpellBar[i]];
-                spellObj.AddComponent(new SpellInfoRenderer(spell));
+                spellObj.AddComponent(new SpellInfoRenderer(GameWorld.State.GetSpellbarSpell(i)));
 
                 GameWorld.Scene.AddObject(spellObj);
                 spellInfoRenderers[i] = spellObj;

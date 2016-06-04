@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -12,7 +12,7 @@ namespace BattleMages
         public Orb()
         {
             moneyAmount = 10;
-            health = 85;
+            health = 40;
             damage = 10;
             cooldownTimer = 2;
             attackSpeed = 0;

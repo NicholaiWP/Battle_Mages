@@ -9,6 +9,8 @@ namespace BattleMages
 {
     public static class Utils
     {
+        public const float AreaSize = 320;
+
         public static float CalculateWidthScale(float resolutionWidth)
         {
             float widthScale = resolutionWidth / GameWorld.GameWidth;

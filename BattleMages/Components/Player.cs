@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -161,51 +161,52 @@ namespace BattleMages
             //Spellcasting
             if (canUseSpells && GameWorld.Cursor.LeftButtonHeld && cooldownTimers[selectedSpell] <= 0 && CurrentMana > 0)
             {
-                SpellInfo spellToCast = GameWorld.State.SpellBook[GameWorld.State.SpellBar[selectedSpell]];
+                SpellInfo spellToCast = GameWorld.State.GetSpellbarSpell(selectedSpell);
 
-                //Fetch base spell and runes
-                var baseRune = spellToCast.GetBaseRune();
-                AttributeRune[] attrRunes = new AttributeRune[SpellInfo.AttributeRuneSlotCount];
-                for (int i = 0; i < SpellInfo.AttributeRuneSlotCount; i++)
+                if (spellToCast != null)
                 {
-                    attrRunes[i] = spellToCast.GetAttributeRune(i);
-                }
+                    //Fetch base spell and runes
+                    var baseRune = spellToCast.GetBaseRune();
+                    if (baseRune != null)
+                    {
+                        //Create spell object and add it to the world
+                        GameObject spellObject = new GameObject(transform.Position);
+                        Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(spellToCast, GameWorld.Cursor.Position, character.Velocity));
+                        spellObject.AddComponent(spellComponent);
+                        GameWorld.Scene.AddObject(spellObject);
 
-                //Create spell object and add it to the world
-                GameObject spellObject = new GameObject(transform.Position);
-                Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(attrRunes, GameWorld.Cursor.Position, character.Velocity));
-                spellObject.AddComponent(spellComponent);
-                GameWorld.Scene.AddObject(spellObject);
+                        SpellStats stats = spellToCast.CalcStats();
+                        CurrentMana -= stats.ManaCost;
+                        cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = stats.CooldownTime;
+                        rechargeDelayTimer = ManaRechargeDelay;
 
-                CurrentMana -= spellComponent.ManaCost;
-                cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = spellComponent.CooldownTime;
-                rechargeDelayTimer = ManaRechargeDelay;
+                        Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
+                        float angle = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
+                        float degrees = MathHelper.ToDegrees(angle);
 
-                Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
-                float angle = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
-                float degrees = MathHelper.ToDegrees(angle);
-
-                if (degrees >= -45 && degrees <= 45)
-                {
-                    animator.PlayAnimation("CastRight");
-                    character.FDirection = FacingDirection.Right;
+                        if (degrees >= -45 && degrees <= 45)
+                        {
+                            animator.PlayAnimation("CastRight");
+                            character.FDirection = FacingDirection.Right;
+                        }
+                        else if (degrees >= -135 && degrees <= -45)
+                        {
+                            animator.PlayAnimation("CastUp");
+                            character.FDirection = FacingDirection.Up;
+                        }
+                        else if (degrees >= 135 || degrees <= -135)
+                        {
+                            animator.PlayAnimation("CastLeft");
+                            character.FDirection = FacingDirection.Left;
+                        }
+                        else if (degrees >= 45 && degrees <= 135)
+                        {
+                            animator.PlayAnimation("CastDown");
+                            character.FDirection = FacingDirection.Down;
+                        }
+                        canMove = false;
+                    }
                 }
-                else if (degrees >= -135 && degrees <= -45)
-                {
-                    animator.PlayAnimation("CastUp");
-                    character.FDirection = FacingDirection.Up;
-                }
-                else if (degrees >= 135 || degrees <= -135)
-                {
-                    animator.PlayAnimation("CastLeft");
-                    character.FDirection = FacingDirection.Left;
-                }
-                else if (degrees >= 45 && degrees <= 135)
-                {
-                    animator.PlayAnimation("CastDown");
-                    character.FDirection = FacingDirection.Down;
-                }
-                canMove = false;
             }
 
             int dialougeCount = 0;
@@ -214,7 +215,6 @@ namespace BattleMages
                 if (go.GetComponent<DialougeBox>() != null)
                 {
                     dialougeCount++;
-                    break;
                 }
             }
             //Spellbook opening

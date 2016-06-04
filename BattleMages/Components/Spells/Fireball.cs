@@ -18,10 +18,6 @@ namespace BattleMages
         public Fireball(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            Damage = 12;
-            CooldownTime = 0.7f;
-            ManaCost = 12;
-            ApplyAttributeRunes();
             spriteRenderer = new SpriteRenderer("Textures/Spells/Fireball");
             collider = new Collider(new Vector2(8, 8));
             GameWorld.SoundManager.PlaySound("fireball");
@@ -53,7 +49,7 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(Damage);
+                    enemy.TakeDamage(Stats.Damage);
                     //damage of the burn effect
                     Onfire(3, enemy);
                     GameWorld.Scene.RemoveObject(GameObject);
@@ -65,6 +61,7 @@ namespace BattleMages
                 GameWorld.Scene.RemoveObject(GameObject);
             }
         }
+
         private void Onfire(int burnPoints, Enemy enemy)
         {
             //timer dmg timer, når nul..if the timer in update is <= 0, enemy.takedamge. add gameObject to show

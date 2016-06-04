@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -54,7 +54,7 @@ namespace BattleMages
             if (charactersToDraw < texts[currentText].Length)
             {
                 timer -= GameWorld.DeltaTime;
-                while (timer <= 0 && charactersToDraw < texts[currentText].Length - 1)
+                while (timer <= 0 && charactersToDraw < texts[currentText].Length)
                 {
                     charactersToDraw++;
                     timer += charShowInterval;
@@ -71,13 +71,20 @@ namespace BattleMages
             MouseState curState = Mouse.GetState();
             if (prevState.LeftButton == ButtonState.Released && curState.LeftButton == ButtonState.Pressed)
             {
-                currentText++;
-                if (currentText >= texts.Length)
+                if (charactersToDraw < texts[currentText].Length)
                 {
-                    GameWorld.Camera.AllowMovement = true;
-                    cursorLock.Unlock();
-                    GameWorld.Scene.RemoveObject(GameObject);
-                    onDone?.Invoke();
+                    charactersToDraw = texts[currentText].Length;
+                }
+                else
+                {
+                    currentText++;
+                    if (currentText >= texts.Length)
+                    {
+                        GameWorld.Camera.AllowMovement = true;
+                        cursorLock.Unlock();
+                        GameWorld.Scene.RemoveObject(GameObject);
+                        onDone?.Invoke();
+                    }
                 }
             }
             prevState = curState;

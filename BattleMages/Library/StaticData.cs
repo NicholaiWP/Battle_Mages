@@ -42,20 +42,27 @@ namespace BattleMages
                 new AttributeRune("Rune of Might",
                 "Increases the damage of a spell.",
                 "rune1",
-                300,
+                100,
                 DamageUpRune),
 
                 new AttributeRune("Rune of Persistence",
                 "Makes a spell use less mana.",
                 "rune2",
-                200,
+                60,
                 DecreaseManaCostRune),
 
                 new AttributeRune("Rune of Haste",
                 "Lets you cast a spell faster.",
                 "rune3",
-                150,
+                30,
                 DescreaseCooldown),
+
+                new AttributeRune("Rune of Reach",
+                "Increases the range of a spell. Projectiles go further and other attacks can be used further away.",
+                "rune4",
+                70,
+                IncreaseRangeRune
+                )
 
                 //new AttributeRune("Projectile block",
                 //"your spells can block enemy projectiles",
@@ -69,26 +76,31 @@ namespace BattleMages
                 new BaseRune("Fireball",
                 "A ball of fire with a chance of igniting the enemy with fire",
                 "FireballRune",
+                new SpellStats { Damage = 12, CooldownTime = 0.7f, ManaCost = 12, Range = 1 },
                 (p) => { return new Fireball(p); }),
 
-                new BaseRune("Icicle",
+                new BaseRune("Ice Shards",
                 "Three sharp chunks of ice will spread outwards",
                 "IceShardsRune",
+                new SpellStats { Damage = 5, CooldownTime = 0.7f, ManaCost = 20, Range = 64 },
                 (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
                 "Powerful arcane lightning that strikes from the sky",
                 "LightningRune",
+                new SpellStats { Damage = 40, CooldownTime = 2f, ManaCost = 40, Range = 1 },
                 (p) => {return new Lightning(p); }),
 
                 new BaseRune("Earth Spikes",
                 "Sharp spikes will rise from the ground and damage over time",
                 "EarthSpikesRune",
+                new SpellStats { Damage = 10, CooldownTime = 3f, ManaCost = 70, Range = 1 },
                 (p) => {return new EarthSpikes(p); }),
 
                 new BaseRune("Frost Shield",
                 "Three orbs of frost that rotate around you and protect against projectiles",
                 "FrostShieldRune",
+                new SpellStats { Damage = 8, CooldownTime = 2f, ManaCost = 40, Range = 1 },
                 (p) => {return new FrostShield(p, true, 0); })
             };
 
@@ -97,12 +109,12 @@ namespace BattleMages
                 new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
                 () =>  new List<Enemy> { new Golem(), new Orb(), new Slime() }),
-               
+
                 //wave with 4 golems
                 new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300),
                 new Vector2(-300, 0), new Vector2(0, -300) },
                 () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem() }),
-              
+
                 //4 orbs, 2 golems, 3 slimes
                 new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -30),
                 new Vector2(200, 0), new Vector2(200,-45), new Vector2(170,-60),
@@ -130,7 +142,6 @@ namespace BattleMages
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
                 () => new List<Enemy> {new Golem(), new Golem(), new Orb(), new Orb()}),
 
-                
                  //wave with 4 orbs, 2 golem, 3 slimes
                 new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -10),
                 new Vector2(200, 20), new Vector2(200,-60), new Vector2(170,0),
@@ -144,7 +155,6 @@ namespace BattleMages
                 new Vector2(190,0), new Vector2(130,0), new Vector2(180,0)},
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Slime(), new Slime(),
                 new Slime(),new Golem(),new Golem(),new Golem() }),
-
 
             //wave with 4 orbs, 4 golems, 4 slimes
             new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
@@ -207,7 +217,6 @@ namespace BattleMages
 
                 () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
-
         }
 
         public static void LoadContent()
@@ -222,23 +231,28 @@ namespace BattleMages
             }
         }
 
-        private static void DamageUpRune(Spell spell)
+        private static SpellStats DamageUpRune(SpellStats stats)
         {
-            spell.Damage = (int)(spell.Damage * 1.25f);
+            stats.Damage = (int)(stats.Damage * 1.25f);
+            return stats;
         }
 
-        private static void DecreaseManaCostRune(Spell spell)
+        private static SpellStats DecreaseManaCostRune(SpellStats stats)
         {
-            spell.ManaCost = (int)(spell.ManaCost * 0.75f);
+            stats.ManaCost = (int)(stats.ManaCost * 0.75f);
+            return stats;
         }
 
-        private static void DescreaseCooldown(Spell spell)
+        private static SpellStats DescreaseCooldown(SpellStats stats)
         {
-            spell.CooldownTime -= spell.CooldownTime * 0.30f;
+            stats.CooldownTime -= stats.CooldownTime * 0.30f;
+            return stats;
         }
 
-        private static void CollideAbilityRune(Spell spell)
+        private static SpellStats IncreaseRangeRune(SpellStats stats)
         {
+            stats.Range *= 1.15f;
+            return stats;
         }
     }
 }

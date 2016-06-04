@@ -25,11 +25,7 @@ namespace BattleMages
             this.p = p;
             speed = 2;
             radius = 32;
-            Damage = 8;
-            CooldownTime = 2;
             existenceTimer = 12;
-            ManaCost = 40;
-            ApplyAttributeRunes();
             GameWorld.SoundManager.PlaySound("FrostShieldSound");
             spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
@@ -63,7 +59,7 @@ namespace BattleMages
                 {
                     GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
                     newShardGameObject.AddComponent(new FrostShield(
-                           new SpellCreationParams(p.AttributeRunes, GameObject.Transform.Position, p.VelocityOffset),
+                           new SpellCreationParams(p.SpellInfo, GameObject.Transform.Position, p.VelocityOffset),
                            false, 90 * (i + 1)));
                     GameWorld.Scene.AddObject(newShardGameObject);
                 }
@@ -80,7 +76,7 @@ namespace BattleMages
 
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(Damage);
+                    enemy.TakeDamage(Stats.Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking");
                     GameWorld.SoundManager.SoundVolume = 0.9f;
 

@@ -56,7 +56,7 @@ namespace BattleMages
 
             pos += velocity * GameWorld.DeltaTime;
 
-            GameObject.Transform.Position = pos + new Vector2(0, -height);
+            GameObject.Transform.Position = Utils.LimitToCircle(pos + new Vector2(0, -height), Vector2.Zero, Utils.AreaSize);
 
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
