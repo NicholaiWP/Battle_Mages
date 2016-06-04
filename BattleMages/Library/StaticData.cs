@@ -42,19 +42,19 @@ namespace BattleMages
                 new AttributeRune("Rune of Might",
                 "Increases the damage of a spell.",
                 "rune1",
-                300,
+                100,
                 DamageUpRune),
 
                 new AttributeRune("Rune of Persistence",
                 "Makes a spell use less mana.",
                 "rune2",
-                200,
+                60,
                 DecreaseManaCostRune),
 
                 new AttributeRune("Rune of Haste",
                 "Lets you cast a spell faster.",
                 "rune3",
-                150,
+                30,
                 DescreaseCooldown),
 
                 //new AttributeRune("Projectile block",
@@ -97,12 +97,12 @@ namespace BattleMages
                 new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
                 () =>  new List<Enemy> { new Golem(), new Orb(), new Slime() }),
-               
+
                 //wave with 4 golems
                 new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300),
                 new Vector2(-300, 0), new Vector2(0, -300) },
                 () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem() }),
-              
+
                 //4 orbs, 2 golems, 3 slimes
                 new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -30),
                 new Vector2(200, 0), new Vector2(200,-45), new Vector2(170,-60),
@@ -130,7 +130,6 @@ namespace BattleMages
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
                 () => new List<Enemy> {new Golem(), new Golem(), new Orb(), new Orb()}),
 
-                
                  //wave with 4 orbs, 2 golem, 3 slimes
                 new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -10),
                 new Vector2(200, 20), new Vector2(200,-60), new Vector2(170,0),
@@ -144,7 +143,6 @@ namespace BattleMages
                 new Vector2(190,0), new Vector2(130,0), new Vector2(180,0)},
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Slime(), new Slime(),
                 new Slime(),new Golem(),new Golem(),new Golem() }),
-
 
             //wave with 4 orbs, 4 golems, 4 slimes
             new Wave(new List<Vector2> { new Vector2(-300, 0), new Vector2(300, 0), new Vector2(0, 300),
@@ -207,7 +205,6 @@ namespace BattleMages
 
                 () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
-
         }
 
         public static void LoadContent()

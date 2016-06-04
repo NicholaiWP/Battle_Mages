@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -12,7 +12,7 @@ namespace BattleMages
         public Golem()
         {
             moneyAmount = 20;
-            health = 160;
+            health = 100;
             damage = 25;
             cooldownTimer = 3.5f;
             attackSpeed = 0;

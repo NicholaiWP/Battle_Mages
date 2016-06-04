@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -12,7 +12,7 @@ namespace BattleMages
         public Slime()
         {
             moneyAmount = 5;
-            health = 100;
+            health = 70;
             damage = 15;
             cooldownTimer = 1;
             attackSpeed = 0;
