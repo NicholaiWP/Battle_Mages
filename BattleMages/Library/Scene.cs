@@ -67,6 +67,20 @@ namespace BattleMages
         }
 
         /// <summary>
+        /// Called every time this scene becomes the active scene.
+        /// </summary>
+        public virtual void Open()
+        {
+        }
+
+        /// <summary>
+        /// Called every time this scene is no longer the active scene.
+        /// </summary>
+        public virtual void Close()
+        {
+        }
+
+        /// <summary>
         /// Processes objects marked with AddObject or RemoveObject.
         /// The objects will be added/removed from ActiveObjects.
         /// </summary>

@@ -77,7 +77,9 @@ namespace BattleMages
 
         public static void ChangeScene(Scene targetScene)
         {
+            Instance.scene.Close();
             Instance.scene = targetScene;
+            targetScene.Open();
         }
 
         public static bool KeyPressed(Keys key)
