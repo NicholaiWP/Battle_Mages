@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -18,11 +18,7 @@ namespace BattleMages
         public EarthSpikes(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            Damage = 10;
             damageTimer = 0;
-            CooldownTime = 3;
-            ManaCost = 70;
-            ApplyAttributeRunes();
 
             GameWorld.SoundManager.PlaySound("Earthspikes");
             GameWorld.SoundManager.SoundVolume = 1f;
@@ -60,7 +56,7 @@ namespace BattleMages
                 if (enemy != null && damageTimer <= 0)
                 {
                     damageTimer = 0.6f;
-                    enemy.TakeDamage(Damage);
+                    enemy.TakeDamage(Stats.Damage);
                 }
             }
             timer -= GameWorld.DeltaTime;
