@@ -18,8 +18,8 @@ namespace BattleMages
         private bool spawnSubshards;
         private SpellCreationParams p;
         private float speed;
-
-        private float speedMult = 1;
+        private float range; //Ice shards randomize their range a bit so it has to be saved in a field
+        private float distanceTravelled;
 
         public IceShard(SpellCreationParams p, bool spawnSubshards, float speed = baseSpeed) : base(p)
         {
@@ -27,9 +27,9 @@ namespace BattleMages
             this.speed = speed;
             this.p = p;
 
-            speedMult = MathHelper.Lerp(0.6f, 1.0f, (float)GameWorld.Random.NextDouble());
+            range = Stats.Range + ((float)GameWorld.Random.NextDouble() - 0.5f) * 16f;
+            //speedMult = MathHelper.Lerp(0.6f, 1.0f, (float)GameWorld.Random.NextDouble());
 
-            GameWorld.SoundManager.PlaySound("IceShardSound");
             spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(8, 8));
 
@@ -51,7 +51,7 @@ namespace BattleMages
             velocity = diff * speed;
             if (spawnSubshards)
             {
-                spawnSubshards = false;
+                GameWorld.SoundManager.PlaySound("IceShardSound");
                 for (int i = 0; i <= 3; i++)
                 {
                     GameObject newShardGameObject = new GameObject(GameObject.Transform.Position);
@@ -71,13 +71,18 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            speedMult -= GameWorld.DeltaTime / (Stats.Range);
-            if (speedMult <= 0)
+            float speedMult = 1.1f - distanceTravelled / range;
+
+            Vector2 move = velocity * speedMult * GameWorld.DeltaTime;
+            GameObject.Transform.Position += move;
+            distanceTravelled += move.Length();
+
+            if (distanceTravelled >= range)
             {
                 GameWorld.Scene.RemoveObject(GameObject);
             }
 
-            GameObject.Transform.Position += velocity * speedMult * GameWorld.DeltaTime;
+            //Collision checking
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 var enemy = other.GameObject.GetComponent<Enemy>();
@@ -90,7 +95,9 @@ namespace BattleMages
                     GameWorld.Scene.RemoveObject(GameObject);
                 }
             }
-            if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
+
+            //Remove if outside arena
+            if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, Utils.AreaSize))
             {
                 GameWorld.Scene.RemoveObject(GameObject);
             }
