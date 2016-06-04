@@ -48,7 +48,11 @@ namespace BattleMages
             doorGuardObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
-                dialougeObj.AddComponent(new DialougeBox(new[] { "HALT-- I mean, hi!\nWho me? I don't know anything, I'm just a guard.         \n...Just pick a challenge already! " },
+                dialougeObj.AddComponent(new DialougeBox(new[]
+                {
+                    //"HALT-- I mean, hi!\nWho me? I don't know anything, I'm just a guard.         \n...Just pick a challenge already! "
+                    "Greetings, fellow mage. The arena awaits you.\nWhich challenge should be your goal?"
+                },
                     () => { GameWorld.ChangeScene(new ChallengeScene(this)); canPause = false; }));
                 AddObject(dialougeObj);
             }));

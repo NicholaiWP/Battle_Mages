@@ -54,7 +54,7 @@ namespace BattleMages
             if (charactersToDraw < texts[currentText].Length)
             {
                 timer -= GameWorld.DeltaTime;
-                while (timer <= 0 && charactersToDraw < texts[currentText].Length - 1)
+                while (timer <= 0 && charactersToDraw < texts[currentText].Length)
                 {
                     charactersToDraw++;
                     timer += charShowInterval;
