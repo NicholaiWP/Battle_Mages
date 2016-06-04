@@ -58,7 +58,7 @@ namespace BattleMages
                 DescreaseCooldown),
 
                 new AttributeRune("Rune of Reach",
-                "Increases the range of a spell. Projectiles go further and other attacks can be used further away.",
+                "Increases the range of a spell.",
                 "rune4",
                 70,
                 IncreaseRangeRune
