@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -84,10 +84,9 @@ namespace BattleMages
                             {
                                 player.TakeDamage(damage);
                             }
-                            Random randy = new Random();
                             for (int i = 0; i < 16; i++)
                             {
-                                GameObject dustGo = new GameObject(enemy.GameObject.Transform.Position + new Vector2((float)randy.NextDouble() - 0.5f, (float)randy.NextDouble() - 0.5f) * damageRange);
+                                GameObject dustGo = new GameObject(enemy.GameObject.Transform.Position + new Vector2((float)GameWorld.Random.NextDouble() - 0.5f, (float)GameWorld.Random.NextDouble() - 0.5f) * damageRange);
                                 dustGo.AddComponent(new SpriteRenderer("Textures/Misc/Dust"));
                                 dustGo.AddComponent(new FadeOut(1));
                                 GameWorld.Scene.AddObject(dustGo);

@@ -14,9 +14,9 @@ namespace BattleMages
         private Character character;
         private float dodgeRange;
 
-        Collider tracking;
-        Vector2 latestTrackedPos;
-        Vector2 dodgeDir;
+        private Collider tracking;
+        private Vector2 latestTrackedPos;
+        private Vector2 dodgeDir;
 
         public Dodging(Enemy enemy, float dodgeRange)
         {
@@ -51,8 +51,7 @@ namespace BattleMages
                 else
                 {
                     tracking = closestCollider;
-                    Random r = new Random();
-                    dodgeDir = new Vector2((float)(r.NextDouble() - 0.5), (float)(r.NextDouble() - 0.5));
+                    dodgeDir = new Vector2((float)(GameWorld.Random.NextDouble() - 0.5), (float)(GameWorld.Random.NextDouble() - 0.5));
                     dodgeDir.Normalize();
                 }
                 latestTrackedPos = closestCollider.GameObject.Transform.Position;

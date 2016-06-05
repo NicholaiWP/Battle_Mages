@@ -11,7 +11,7 @@ namespace BattleMages
     {
         public Orb()
         {
-            moneyAmount = 10;
+            moneyAmount = 7;
             MaxHealth = 40;
             damage = 10;
             cooldownTimer = 2;
