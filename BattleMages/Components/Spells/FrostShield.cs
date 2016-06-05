@@ -12,7 +12,6 @@ namespace BattleMages
     {
         private Collider collider;
         private SpriteRenderer spriteRenderer;
-        private float radius;
         private float angle;
         private float speed;
         private bool spawnSubshards;
@@ -24,7 +23,6 @@ namespace BattleMages
             this.spawnSubshards = spawnSubshards;
             this.p = p;
             speed = 2;
-            radius = 32;
             existenceTimer = 12;
             spriteRenderer = new SpriteRenderer("Textures/Spells/IceShard");
             collider = new Collider(new Vector2(spriteRenderer.Rectangle.Width, spriteRenderer.Rectangle.Height));
@@ -110,8 +108,8 @@ namespace BattleMages
 
                     angle += speed * GameWorld.DeltaTime;
                     float finalAngle = angle + rotationOffset;
-                    float x = (float)Math.Cos(finalAngle) * radius + center.X;
-                    float y = (float)Math.Sin(finalAngle) * radius + center.Y;
+                    float x = (float)Math.Cos(finalAngle) * Stats.Range + center.X;
+                    float y = (float)Math.Sin(finalAngle) * Stats.Range + center.Y;
                     GameObject.Transform.Position = Vector2.Lerp(GameObject.Transform.Position, new Vector2(x, y), GameWorld.DeltaTime * 8);
 
                     //Rotating the sprite

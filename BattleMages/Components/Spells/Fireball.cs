@@ -76,8 +76,7 @@ namespace BattleMages
         {
             //timer dmg timer, når nul..if the timer in update is <= 0, enemy.takedamge. add gameObject to show
 
-            Random rand = new Random();
-            int chance = rand.Next(1, 101);
+            int chance = GameWorld.Random.Next(1, 101);
 
             if (chance <= 25 && !enemy.IsAlreadyBurned) // probability of 25%
             {
