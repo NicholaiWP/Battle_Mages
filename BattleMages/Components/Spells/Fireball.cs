@@ -11,6 +11,7 @@ namespace BattleMages
     {
         private Vector2 velocity;
         private Collider collider;
+        private Animator animator;
         private SpriteRenderer spriteRenderer;
         private Vector2 diff;
         private SpellCreationParams p;
@@ -18,10 +19,11 @@ namespace BattleMages
         public Fireball(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            spriteRenderer = new SpriteRenderer("Textures/Spells/Fireball");
+            spriteRenderer = new SpriteRenderer("Textures/Spells/fireball-Sheet", true) { Rectangle = new Rectangle(0, 0, 8, 8) };
+            animator = new Animator();
+            animator.CreateAnimation("", new Animation(0, 6, 0, 0, 8, 8, 15, Vector2.Zero));
             collider = new Collider(new Vector2(8, 8));
-            GameWorld.SoundManager.PlaySound("fireball");
-            GameWorld.SoundManager.SoundVolume = 0.9f;
+            GameWorld.SoundManager.PlaySound("fireball", volume: 0.9f);
 
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
@@ -32,17 +34,20 @@ namespace BattleMages
         {
             GameObject.AddComponent(spriteRenderer);
             GameObject.AddComponent(collider);
+            GameObject.AddComponent(animator);
         }
 
         private void Initialize(InitializeMsg msg)
         {
             diff = p.AimTarget - GameObject.Transform.Position;
             diff.Normalize();
-            velocity = diff * 150;
+            velocity = diff * 125;
         }
 
         private void Update(UpdateMsg msg)
         {
+            animator.PlayAnimation("", (float)Math.Atan2(velocity.Y, velocity.X));
+
             GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {

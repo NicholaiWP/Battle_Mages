@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -69,17 +69,6 @@ namespace BattleMages
             OpenRunesTab();
         }
 
-        #region General purpose methods
-
-        private GameObject RuneIcon(Vector2 position, string textureName)
-        {
-            GameObject go = new GameObject(position);
-            go.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + textureName));
-            return go;
-        }
-
-        #endregion General purpose methods
-
         private void OpenSpellsTab()
         {
             UITab t = rightTab;
@@ -127,31 +116,34 @@ namespace BattleMages
 
                 //Edit spell button
                 GameObject editObj = new GameObject(t.TopLeft + new Vector2(55 + nextSpellXPos, 42 + nextSpellYPos));
-                editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/edit"));
                 editObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
                 {
                     currentlyEditing = thisSpell;
                     OpenRuneGrid();
                 }, centered: true
                 ));
+                editObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/edit", layerToUse: DrawLayer.UI));
                 t.AddObject(editObj);
 
                 //Delete spell button
                 GameObject deleteObj = new GameObject(t.TopLeft + new Vector2(55 + 16 + nextSpellXPos, 42 + nextSpellYPos));
-                deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/remove"));
                 deleteObj.AddComponent(new Button(btnSpr1, btnSpr2, () =>
                 {
-                    for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
+                    if (GameWorld.State.SpellBook.Count > 1)
                     {
-                        if (GameWorld.State.SpellBar[i] == pair.Key)
+                        for (int i = 0; i < GameWorld.State.SpellBar.Count; i++)
                         {
-                            GameWorld.State.SpellBar[i] = null;
+                            if (GameWorld.State.SpellBar[i] == pair.Key)
+                            {
+                                GameWorld.State.SpellBar[i] = null;
+                            }
                         }
+                        GameWorld.State.SpellBook.Remove(pair.Key);
+                        OpenSpellsTab();
                     }
-                    GameWorld.State.SpellBook.Remove(pair.Key);
-                    OpenSpellsTab();
                 }, centered: true
                 ));
+                deleteObj.AddComponent(new SpriteRenderer("Textures/UI/Spellbook/remove", layerToUse: DrawLayer.UI));
                 t.AddObject(deleteObj);
 
                 nextSpellIndex++;
@@ -170,7 +162,7 @@ namespace BattleMages
 
                 SpellInfo spell = GameWorld.State.GetSpellbarSpell(thisIndex);
 
-                GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 24, GameWorld.GameHeight - 32));
+                GameObject slotObj = new GameObject(t.TopLeft + new Vector2(GameWorld.GameWidth / 4 - 24 * 2 + thisIndex * 30, GameWorld.GameHeight - 32));
                 slotObj.AddComponent(new DragDropPoint("playerspell", btnSpr1, shit, btnSpr2, () =>
                 {
                     if (selectedPlayerSpell != null)
@@ -204,7 +196,7 @@ namespace BattleMages
             int nextRuneY = 0;
             int nextRunePos = 0;
 
-            Vector2 runeStartPos = TopLeft + new Vector2(28, 28);
+            Vector2 runeStartPos = TopLeft + new Vector2(28, 40);
 
             foreach (var baseRune in GameWorld.State.AvailableBaseRunes)
             {
@@ -215,7 +207,7 @@ namespace BattleMages
                 runeObj.AddComponent(new DragDropItem("baserune", runeBtnSpr1, runeBtnSpr2,
                     () => { selectedAttrRune = null; selectedBaseRune = thisBaseRune; },
                     () => { bottomLeftText = thisBaseRune.Name + " (Base rune)" + Environment.NewLine + thisBaseRune.Description; }));
-                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisBaseRune.TextureName));
+                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisBaseRune.TextureName, layerToUse: DrawLayer.UI));
                 t.AddObject(runeObj);
 
                 nextRunePos++;
@@ -239,7 +231,7 @@ namespace BattleMages
                 runeObj.AddComponent(new DragDropItem("attrrune", runeBtnSpr1, runeBtnSpr2,
                     () => { selectedAttrRune = thisAttrRune; selectedBaseRune = null; },
                     () => { bottomLeftText = thisAttrRune.Name + " (Attribute rune)" + Environment.NewLine + thisAttrRune.Description; }));
-                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisAttrRune.TextureName));
+                runeObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + thisAttrRune.TextureName, layerToUse: DrawLayer.UI));
                 t.AddObject(runeObj);
 
                 nextRunePos++;
@@ -258,7 +250,7 @@ namespace BattleMages
             UITab t = rightTab;
             t.Clear();
 
-            bottomRightText = "Drag a rune to an appropriate slot to place it there.";
+            bottomRightText = "Drag a base rune to the center slot or attribute runes to the outer slots to use them.";
 
             //Spell circle
             GameObject spellCircleObj = new GameObject(spellCirclePos + new Vector2(60, 60));
@@ -274,8 +266,15 @@ namespace BattleMages
             doneSpr2,
             () =>
             {
-                currentlyEditing = null;
-                OpenSpellsTab();
+                if (currentlyEditing.GetBaseRune() != null)
+                {
+                    currentlyEditing = null;
+                    OpenSpellsTab();
+                }
+                else
+                {
+                    bottomRightText = "You cannot save a spell with no base rune. Drag a base rune to the center slot.";
+                }
             }
             ));
             //Rune grid buttons
@@ -294,17 +293,9 @@ namespace BattleMages
                 }
                 OpenRuneGrid();
             }));
+            baseRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + currentlyEditing.GetBaseRune().TextureName, layerToUse: DrawLayer.UI));
             t.AddObject(baseRuneObj);
 
-            /*t.AddObject(ObjectBuilder.BuildButton(
-                baseRunePosition - new Vector2(runeSpr1.Width / 2, runeSpr2.Height / 2),
-                runeSpr1,
-                runeSpr2,
-                () =>
-                {
-                },
-                () => { if (currentlyEditing != null) { currentlyEditing.SetBaseRune(-1); OpenRuneGrid(); } }
-                ));*/
             //Attribute runes
             for (int i = 0; i < attrRunePositions.Length; i++)
             {
@@ -319,35 +310,12 @@ namespace BattleMages
                         }
                         OpenRuneGrid();
                     }));
-                t.AddObject(attrRuneObj);
-
-                /*t.AddObject(ObjectBuilder.BuildButton(
-                    attrRunePositions[thisPos] - new Vector2(runeSpr1.Width / 2, runeSpr1.Height / 2),
-                    runeSpr1,
-                    runeSpr2,
-                    () =>
-                    {
-                    },
-                    () => { if (currentlyEditing != null) { currentlyEditing.SetAttributeRune(thisPos, -1); OpenRuneGrid(); } }
-                    ));*/
-            }
-
-            //Images on top of buttons
-            BaseRune spell = currentlyEditing.GetBaseRune();
-            if (spell != null)
-            {
-                var go = RuneIcon(baseRunePosition, spell.TextureName);
-                t.AddObject(go);
-            }
-
-            for (int i = 0; i < SpellInfo.AttributeRuneSlotCount; i++)
-            {
-                AttributeRune runeInfo = currentlyEditing.GetAttributeRune(i);
-                if (runeInfo != null)
+                AttributeRune rune = currentlyEditing.GetAttributeRune(i);
+                if (rune != null)
                 {
-                    var go = RuneIcon(attrRunePositions[i], runeInfo.TextureName);
-                    t.AddObject(go);
+                    attrRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + rune.TextureName, layerToUse: DrawLayer.UI));
                 }
+                t.AddObject(attrRuneObj);
             }
         }
 
@@ -367,6 +335,9 @@ namespace BattleMages
             Color textColor = new Color(120, 100, 80);
             drawer[DrawLayer.UI].DrawString(font, Utils.WarpText(bottomLeftText, 120, font), leftTab.TopLeft + new Vector2(24, GameWorld.GameHeight - 58), textColor);
             drawer[DrawLayer.UI].DrawString(font, Utils.WarpText(bottomRightText, 120, font), rightTab.TopLeft + new Vector2(20, GameWorld.GameHeight - 58), textColor);
+
+            //Rune tab title
+            drawer[DrawLayer.UI].DrawString(font, "Your runes", TopLeft + new Vector2(24, 20), textColor);
 
             drawer[DrawLayer.Background].Draw(background, bgPos, Color.White);
 
