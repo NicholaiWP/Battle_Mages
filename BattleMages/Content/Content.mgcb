@@ -1358,20 +1358,3 @@
 /processorParam:Quality=Best
 /build:Sounds/DeathSound.wav
 
-#begin EnemyHealthFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:EnemyHealthFont.spritefont
-
-#begin Textures/UI/Ingame/enemy_healthBarUI.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/Ingame/enemy_healthBarUI.png
-
