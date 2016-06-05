@@ -42,27 +42,44 @@ namespace BattleMages
                 new AttributeRune("Rune of Might",
                 "Increases the damage of a spell.",
                 "rune1",
-                100,
-                DamageUpRune),
+                50,
+                (s) => { s.Damage = (int)(s.Damage * 1.25f); return s;}),
 
-                new AttributeRune("Rune of Persistence",
+                new AttributeRune("Rune of Efficiency",
                 "Makes a spell use less mana.",
                 "rune2",
-                60,
-                DecreaseManaCostRune),
+                50,
+                (s) => { s.ManaCost = (int)(s.ManaCost * 0.85f); return s;}),
 
                 new AttributeRune("Rune of Haste",
                 "Lets you cast a spell faster.",
                 "rune3",
-                30,
-                DescreaseCooldown),
+                50,
+                (s) => {s.CooldownTime = s.CooldownTime * 0.80f; return s; }),
 
                 new AttributeRune("Rune of Reach",
                 "Increases the range of a spell.",
                 "rune4",
-                70,
-                IncreaseRangeRune
-                )
+                50,
+                (s) => { s.Range *= 1.15f; return s; }),
+
+                /*new AttributeRune("Rune of Speed",
+                "Makes your spells move or act faster.",
+                "rune5",
+                50,
+                (s) => { return s; }),*/
+
+                new AttributeRune("Rune of Charisma",
+                "Makes your spell a little better in every way.",
+                "rune6",
+                100,
+                (s) => {
+                    s.Damage = (int)(s.Damage * 1.1);
+                    s.ManaCost = (int)(s.ManaCost * 0.9);
+                    s.CooldownTime = s.CooldownTime * 0.95f;
+                    s.Range = s.Range * 1.05f;
+                    return s;
+                }),
 
                 //new AttributeRune("Projectile block",
                 //"your spells can block enemy projectiles",
@@ -72,11 +89,12 @@ namespace BattleMages
 
             //Add new base runes to this array
             baseRunes = new BaseRune[]
-            {
+                    {
                 new BaseRune("Fireball",
                 "A ball of fire with a chance of igniting the enemy with fire",
                 "FireballRune",
                 new SpellStats { Damage = 12, CooldownTime = 0.7f, ManaCost = 20, Range = 150 },
+
                 true,
                 (p) => { return new Fireball(p); }),
 
@@ -107,7 +125,7 @@ namespace BattleMages
                 new SpellStats { Damage = 8, CooldownTime = 2f, ManaCost = 40, Range = 28 },
                 true,
                 (p) => {return new FrostShield(p, true, 0); })
-            };
+                    };
 
             challenges.Add("EarthBattle", new Challenge(new List<Wave> {
                 //wave with 1 golem, 1 orb, 1 slime
@@ -234,30 +252,6 @@ namespace BattleMages
             {
                 baseRune.LoadContent();
             }
-        }
-
-        private static SpellStats DamageUpRune(SpellStats stats)
-        {
-            stats.Damage = (int)(stats.Damage * 1.25f);
-            return stats;
-        }
-
-        private static SpellStats DecreaseManaCostRune(SpellStats stats)
-        {
-            stats.ManaCost = (int)(stats.ManaCost * 0.85f);
-            return stats;
-        }
-
-        private static SpellStats DescreaseCooldown(SpellStats stats)
-        {
-            stats.CooldownTime = stats.CooldownTime * 0.80f;
-            return stats;
-        }
-
-        private static SpellStats IncreaseRangeRune(SpellStats stats)
-        {
-            stats.Range *= 1.15f;
-            return stats;
         }
     }
 }
