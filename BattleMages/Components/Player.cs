@@ -43,6 +43,7 @@ namespace BattleMages
         private float rechargeDelayTimer = 0;
         private float invincibleTimer;
         private float blinkTimer;
+        private Texture2D rangeTex;
 
         public int SelectedSpell { get { return selectedSpell; } }
         public int CurrentHealth { get; private set; } = MaxHealth;
@@ -58,6 +59,7 @@ namespace BattleMages
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
+            Listen<DrawMsg>(Draw);
         }
 
         private void Initialize(InitializeMsg msg)
@@ -67,6 +69,7 @@ namespace BattleMages
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
+            rangeTex = GameWorld.Load<Texture2D>("Textures/UI/Ingame/RangeCircle");
 
             //TODO: Create animations here
             animator.CreateAnimation("WalkRight", new Animation(priority: 2, framesCount: 25, yPos: 0, xStartFrame: 0,
@@ -333,6 +336,17 @@ namespace BattleMages
         {
             if (cooldownTimersMax[slot] == 0) return 0;
             return cooldownTimers[slot] / cooldownTimersMax[slot];
+        }
+
+        private void Draw(DrawMsg msg)
+        {
+            SpellStats stats = GameWorld.State.GetSpellbarSpell(selectedSpell).CalcStats();
+            float width = (stats.Range * 2);
+            float height = (stats.Range * 2);
+
+            float width2 = width / rangeTex.Width;
+            float height2 = height / rangeTex.Height;
+            msg.Drawer[DrawLayer.Foreground].Draw(rangeTex, position: GameObject.Transform.Position - new Vector2(width, height) / 2, scale: new Vector2(width2, height2));
         }
     }
 }

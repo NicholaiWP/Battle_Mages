@@ -88,7 +88,7 @@ namespace BattleMages
                 new BaseRune("Lightning",
                 "Powerful arcane lightning that strikes from the sky",
                 "LightningRune",
-                new SpellStats { Damage = 40, CooldownTime = 2f, ManaCost = 40, Range = 1 },
+                new SpellStats { Damage = 30, CooldownTime = 2f, ManaCost = 40, Range = 1 },
                 (p) => {return new Lightning(p); }),
 
                 new BaseRune("Earth Spikes",

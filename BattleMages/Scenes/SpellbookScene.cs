@@ -313,7 +313,7 @@ namespace BattleMages
                 AttributeRune rune = currentlyEditing.GetAttributeRune(i);
                 if (rune != null)
                 {
-                    baseRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + rune.TextureName, layerToUse: DrawLayer.UI));
+                    attrRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + rune.TextureName, layerToUse: DrawLayer.UI));
                 }
                 t.AddObject(attrRuneObj);
             }

@@ -42,12 +42,13 @@ namespace BattleMages
                 collider = new Collider(new Vector2(10, 10));
                 hadACollider = true;
 
-                foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
+                List<Collider> others = collider.GetCollisionsAtPosition(GameObject.Transform.Position);
+                foreach (var other in others)
                 {
                     var enemy = other.GameObject.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(Stats.Damage);
+                        enemy.TakeDamage(Stats.Damage / others.Count);
                     }
                 }
             }
