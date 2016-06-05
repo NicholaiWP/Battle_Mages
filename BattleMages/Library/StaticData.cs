@@ -76,7 +76,7 @@ namespace BattleMages
                 new BaseRune("Fireball",
                 "A ball of fire with a chance of igniting the enemy with fire",
                 "FireballRune",
-                new SpellStats { Damage = 12, CooldownTime = 0.7f, ManaCost = 12, Range = 1 },
+                new SpellStats { Damage = 12, CooldownTime = 0.5f, ManaCost = 12, Range = 1 },
                 (p) => { return new Fireball(p); }),
 
                 new BaseRune("Ice Shards",
