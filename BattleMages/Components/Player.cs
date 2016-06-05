@@ -51,6 +51,11 @@ namespace BattleMages
 
         public Player(bool canUseSpells)
         {
+            for (int i = 0; i < cooldownTimers.Length; i++)
+            {
+                cooldownTimers[i] = 1;
+            }
+
             canMove = true;
             currentDashTime = 0;
             dashCooldown = 0;
@@ -213,20 +218,6 @@ namespace BattleMages
                     }
                     canMove = false;
                 }
-            }
-
-            int dialougeCount = 0;
-            foreach (var go in GameWorld.Scene.ActiveObjects)
-            {
-                if (go.GetComponent<DialougeBox>() != null)
-                {
-                    dialougeCount++;
-                }
-            }
-            //Spellbook opening
-            if (GameWorld.KeyPressed(Keys.Tab) && dialougeCount == 0)
-            {
-                GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
             }
 
             //Spell selection
