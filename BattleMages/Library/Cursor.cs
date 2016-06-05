@@ -97,7 +97,7 @@ namespace BattleMages
 
             variations.Add(CursorStyle.Interactable, content.Load<Texture2D>("Textures/Cursors/Interactable"));
             variations.Add(CursorStyle.Dialouge, content.Load<Texture2D>("Textures/Cursors/Dialouge"));
-            variations.Add(CursorStyle.OutOfRange, content.Load<Texture2D>("Textures/Cursors/Interactable"));
+            variations.Add(CursorStyle.OutOfRange, content.Load<Texture2D>("Textures/Cursors/OutOfRange"));
         }
 
         public void Update()
