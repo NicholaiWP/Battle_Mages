@@ -47,7 +47,7 @@ namespace BattleMages
             enemyHealthFont = GameWorld.Load<SpriteFont>("EnemyHealthFont");
             behindUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIBackground");
             aboveUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIForeground");
-            aboveUIEnemy = GameWorld.Load<Texture2D>("Textures/UI/Ingame/healthBarUI");
+            aboveUIEnemy = GameWorld.Load<Texture2D>("Textures/UI/Ingame/enemyHealthbarAboveUI1");
             healthBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/HealthBar");
             manaBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/ManaBar");
             coinsSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/Coin");
@@ -146,7 +146,7 @@ namespace BattleMages
                     enemyHealthbarPos = GameObject.Transform.Position = enemy.GameObject.Transform.Position + new Vector2(-10, -20);
                     msg.Drawer[DrawLayer.AboveUI].DrawString(enemyHealthFont, enemy.Health.ToString(), enemyHealthbarPos, Color.Black);
                     msg.Drawer[DrawLayer.AboveUI].Draw(aboveUIEnemy, position: enemyHealthbarPos, scale: new Vector2(healthbarUISize, 0.6f));
-                    msg.Drawer[DrawLayer.UI].Draw(healthBar, position: enemyHealthbarPos, scale: new Vector2(healthbarEnemySize, 0.6f));
+                    msg.Drawer[DrawLayer.UI].Draw(healthBar, position: enemyHealthbarPos, scale: new Vector2(healthbarEnemySize, 0.7f));
                 }
             }
 

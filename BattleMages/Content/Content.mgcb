@@ -1375,7 +1375,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/UI/Ingame/RangeCircle.png
 
-#begin Textures/UI/Ingame/healthbarUI.png
+#begin Textures/UI/Ingame/enemyHealthbarAboveUI1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1384,5 +1384,5 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/UI/Ingame/healthbarUI.png
+/build:Textures/UI/Ingame/enemyHealthbarAboveUI1.png
 
