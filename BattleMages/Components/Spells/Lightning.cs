@@ -19,8 +19,7 @@ namespace BattleMages
         public Lightning(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            GameWorld.SoundManager.PlaySound("lightningStrike");
-            GameWorld.SoundManager.SoundVolume = 0.7f;
+            GameWorld.SoundManager.PlaySound("lightningStrike", volume: 0.7f);
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;
@@ -43,12 +42,13 @@ namespace BattleMages
                 collider = new Collider(new Vector2(10, 10));
                 hadACollider = true;
 
-                foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
+                List<Collider> others = collider.GetCollisionsAtPosition(GameObject.Transform.Position);
+                foreach (var other in others)
                 {
                     var enemy = other.GameObject.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(Stats.Damage);
+                        enemy.TakeDamage(Stats.Damage / others.Count);
                     }
                 }
             }

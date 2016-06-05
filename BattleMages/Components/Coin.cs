@@ -50,7 +50,7 @@ namespace BattleMages
                     height = 0;
                     fallSpeed = 0;
                     velocity = Vector2.Zero;
-                    GameWorld.SoundManager.PlaySound("CoinDropSound", false);
+                    GameWorld.SoundManager.PlaySound("CoinDropSound", false, 0.7f);
                 }
             }
 
@@ -63,7 +63,7 @@ namespace BattleMages
                 Player player = other.GameObject.GetComponent<Player>();
                 if (player != null)
                 {
-                    GameWorld.SoundManager.PlaySound("GetCoinSound", false);
+                    GameWorld.SoundManager.PlaySound("GetCoinSound", false, 0.5f);
                     GameWorld.State.PlayerGold += 1;
                     GameWorld.Scene.RemoveObject(GameObject);
                 }

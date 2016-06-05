@@ -38,7 +38,7 @@ namespace BattleMages
         /// </summary>
         public SoundManager()
         {
-            SoundVolume = 0.20f;
+            SoundVolume = 1f;
             MusicVolume = 1f;
         }
 
@@ -61,7 +61,7 @@ namespace BattleMages
             sounds.Add("GetCoinSound", content.Load<SoundEffect>("Sounds/GetCoinSound"));
             sounds.Add("FrostShieldSound", content.Load<SoundEffect>("Sounds/FrostShieldSound"));
             sounds.Add("IceShardSound", content.Load<SoundEffect>("Sounds/IceShardSound"));
-           // sounds.Add("DeathSound", content.Load<SoundEffect>("Sounds/DeathSound"));
+            sounds.Add("DeathSound", content.Load<SoundEffect>("Sounds/DeathSound"));
 
             music.Add("HubMusic", content.Load<Song>("Music/Hub"));
             music.Add("CombatMusic", content.Load<Song>("Music/Combat"));
@@ -92,12 +92,12 @@ namespace BattleMages
         /// Method for playing a sound by the soundName
         /// </summary>
         /// <param name="soundName"></param>
-        public SoundEffectInstance PlaySound(string soundName, bool loop = false)
+        public SoundEffectInstance PlaySound(string soundName, bool loop = false, float volume = 1f)
         {
             if (sounds.ContainsKey(soundName))
             {
                 SoundEffectInstance effect = sounds[soundName].CreateInstance();
-                effect.Volume = SoundVolume;
+                effect.Volume = volume * SoundVolume;
                 effect.IsLooped = loop;
                 effect.Play();
                 playingSounds.Add(new PlayingSound(soundName, effect));

@@ -14,7 +14,6 @@ namespace BattleMages
         private bool hovering;
         private Texture2D normalTex;
         private Texture2D hoverTex;
-        private Rectangle rectangle;
 
         private ClickDelegate onClick;
         private ClickDelegate onRightClick;
@@ -61,17 +60,18 @@ namespace BattleMages
                 GameObject.Transform.Position = startPos + new Vector2((float)Math.Sin(offset) * 8, 0);
             }
 
+            Rectangle rectangle;
             if (centered)
             {
-                rectangle = new Rectangle((int)GameObject.Transform.Position.X - ActiveTex.Width / 2, (int)GameObject.Transform.Position.Y - ActiveTex.Height / 2,
-                    (ActiveTex.Width),
-                    (ActiveTex.Height));
+                rectangle = new Rectangle((int)GameObject.Transform.Position.X - normalTex.Width / 2, (int)GameObject.Transform.Position.Y - normalTex.Height / 2,
+                    (normalTex.Width),
+                    (normalTex.Height));
             }
             else
             {
                 rectangle = new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y,
-                    (ActiveTex.Width),
-                    (ActiveTex.Height));
+                    (normalTex.Width),
+                    (normalTex.Height));
             }
 
             if (rectangle.Contains(GameWorld.Cursor.Position))
@@ -97,11 +97,22 @@ namespace BattleMages
         private void Draw(DrawMsg msg)
         {
             SpriteBatch spriteBatch = msg.Drawer[DrawLayer.UI];
-            spriteBatch.Draw(ActiveTex,
-                destinationRectangle: rectangle,
-                origin: Vector2.Zero,
-                effects: SpriteEffects.None,
-                color: Color.White);
+            if (centered)
+            {
+                spriteBatch.Draw(ActiveTex,
+                    position: GameObject.Transform.Position - Utils.HalfTexSize(ActiveTex),
+                    origin: Vector2.Zero,
+                    effects: SpriteEffects.None,
+                    color: Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(ActiveTex,
+                    position: GameObject.Transform.Position,
+                    origin: Vector2.Zero,
+                    effects: SpriteEffects.None,
+                    color: Color.White);
+            }
         }
     }
 }
