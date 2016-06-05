@@ -61,7 +61,7 @@ namespace BattleMages
 
             //Door
             GameObject door = new GameObject(new Vector2(0, -90 - 98 / 2));
-            door.AddComponent(new NPC("Textures/Npc's/doorOpen-Sheet", new Vector2(64, 128), 1, 20, true));
+            door.AddComponent(new NPC("Textures/Npc's/doorOpen-Sheet", new Vector2(64, 128), 1, 15, true));
             door.AddComponent(new Animator());
             AddObject(door);
 
