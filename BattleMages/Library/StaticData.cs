@@ -76,31 +76,36 @@ namespace BattleMages
                 new BaseRune("Fireball",
                 "A ball of fire with a chance of igniting the enemy with fire",
                 "FireballRune",
-                new SpellStats { Damage = 12, CooldownTime = 0.5f, ManaCost = 12, Range = 1 },
+                new SpellStats { Damage = 12, CooldownTime = 0.5f, ManaCost = 12, Range = 150 },
+                true,
                 (p) => { return new Fireball(p); }),
 
                 new BaseRune("Ice Shards",
                 "Three sharp chunks of ice will spread outwards",
                 "IceShardsRune",
-                new SpellStats { Damage = 5, CooldownTime = 0.7f, ManaCost = 20, Range = 64 },
+                new SpellStats { Damage = 5, CooldownTime = 0.7f, ManaCost = 20, Range = 65 },
+                true,
                 (p) => { return new IceShard(p, true); }),
 
                 new BaseRune("Lightning",
                 "Powerful arcane lightning that strikes from the sky",
                 "LightningRune",
-                new SpellStats { Damage = 30, CooldownTime = 2f, ManaCost = 40, Range = 1 },
+                new SpellStats { Damage = 30, CooldownTime = 2f, ManaCost = 40, Range = 100 },
+                false,
                 (p) => {return new Lightning(p); }),
 
                 new BaseRune("Earth Spikes",
                 "Sharp spikes will rise from the ground and damage over time",
                 "EarthSpikesRune",
-                new SpellStats { Damage = 10, CooldownTime = 3f, ManaCost = 70, Range = 1 },
+                new SpellStats { Damage = 10, CooldownTime = 3f, ManaCost = 70, Range = 130 },
+                false,
                 (p) => {return new EarthSpikes(p); }),
 
                 new BaseRune("Frost Shield",
                 "Three orbs of frost that rotate around you and protect against projectiles",
                 "FrostShieldRune",
                 new SpellStats { Damage = 8, CooldownTime = 2f, ManaCost = 40, Range = 1 },
+                true,
                 (p) => {return new FrostShield(p, true, 0); })
             };
 

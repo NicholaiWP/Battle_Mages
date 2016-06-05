@@ -293,7 +293,9 @@ namespace BattleMages
                 }
                 OpenRuneGrid();
             }));
-            baseRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + currentlyEditing.GetBaseRune().TextureName, layerToUse: DrawLayer.UI));
+            BaseRune baseRune = currentlyEditing.GetBaseRune();
+            if (baseRune != null)
+                baseRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + baseRune.TextureName, layerToUse: DrawLayer.UI));
             t.AddObject(baseRuneObj);
 
             //Attribute runes
@@ -312,9 +314,7 @@ namespace BattleMages
                     }));
                 AttributeRune rune = currentlyEditing.GetAttributeRune(i);
                 if (rune != null)
-                {
                     attrRuneObj.AddComponent(new SpriteRenderer(StaticData.RuneImagePath + rune.TextureName, layerToUse: DrawLayer.UI));
-                }
                 t.AddObject(attrRuneObj);
             }
         }

@@ -82,12 +82,14 @@ namespace BattleMages
 
                     GameWorld.Scene.RemoveObject(GameObject);
                     GameWorld.SoundManager.StopSound("FrostShield");
+                    break;
                 }
                 else if (projectile != null)
                 {
                     GameWorld.Scene.RemoveObject(other.GameObject);
                     GameWorld.Scene.RemoveObject(GameObject);
                     GameWorld.SoundManager.StopSound("FrostShield");
+                    break;
                 }
             }
 
@@ -111,6 +113,9 @@ namespace BattleMages
                     float x = (float)Math.Cos(finalAngle) * radius + center.X;
                     float y = (float)Math.Sin(finalAngle) * radius + center.Y;
                     GameObject.Transform.Position = Vector2.Lerp(GameObject.Transform.Position, new Vector2(x, y), GameWorld.DeltaTime * 8);
+
+                    //Rotating the sprite
+                    spriteRenderer.Rotation = finalAngle + (float)(Math.PI / 2.0);
                 }
             }
 
@@ -121,6 +126,7 @@ namespace BattleMages
             else
             {
                 existenceTimer -= GameWorld.DeltaTime;
+                spriteRenderer.Opacity = Math.Min(1, existenceTimer);
             }
         }
     }
