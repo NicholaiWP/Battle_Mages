@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -26,6 +26,7 @@ namespace BattleMages
         protected float attackSpeed;
         protected float cooldownTimer;
         protected List<IBehaviour> behaviours = new List<IBehaviour>();
+        private float red;
 
         public int Damage { get { return damage; } }
         public int Health { get { return health; } }
@@ -65,6 +66,7 @@ namespace BattleMages
             {
                 GameWorld.Scene.AddObject(ObjectBuilder.BuildFlyingLabelText(GameObject.Transform.Position, points.ToString()));
                 health -= points;
+                red = 1;
 
                 if (health <= 0)
                 {
@@ -95,19 +97,17 @@ namespace BattleMages
             //TODO: Create animations here
         }
 
-        /// <summary>
-        /// in this method the enemy searches in the if statement after its potential target,
-        /// which in this case is the gameobject with the component "player".
-        /// When found the distance between the enemy and the player is calculated.
-        /// If the distance is less or equal to the corresponding enemy attack range,
-        /// the enemy will attempt to attack the player,
-        /// if the player isnt in the enemy's range the enemy will be put into its idle state.
-        /// </summary>
         protected virtual void Update(UpdateMsg msg)
         {
             if (canMove)
             {
                 Move();
+            }
+
+            if (red > 0)
+            {
+                red -= GameWorld.DeltaTime * 10;
+                spriteRenderer.Color = new Color(1f, 1f - red, 1f - red);
             }
         }
 
