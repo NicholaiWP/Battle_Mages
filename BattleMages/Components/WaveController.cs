@@ -68,7 +68,7 @@ namespace BattleMages
             if (challengeEnded)
             {
                 BaseRune rune = StaticData.BaseRunes[baseRuneToUnlock];
-                string text = "U has wonned a new rune: " + rune.Name;
+                string text = "You have won a new rune: " + rune.Name;
                 Vector2 offset = -font.MeasureString(text) / 2;
 
                 msg.Drawer[DrawLayer.UI].DrawString(font, text, GameWorld.Camera.Position + offset, Color.Purple);
