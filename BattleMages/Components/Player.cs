@@ -43,7 +43,6 @@ namespace BattleMages
         private float rechargeDelayTimer = 0;
         private float invincibleTimer;
         private float blinkTimer;
-        private Texture2D rangeTex;
 
         public int SelectedSpell { get { return selectedSpell; } }
         public int CurrentHealth { get; private set; } = MaxHealth;
@@ -59,7 +58,6 @@ namespace BattleMages
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
-            Listen<DrawMsg>(Draw);
         }
 
         private void Initialize(InitializeMsg msg)
@@ -69,7 +67,6 @@ namespace BattleMages
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
-            rangeTex = GameWorld.Load<Texture2D>("Textures/UI/Ingame/RangeCircle");
 
             //TODO: Create animations here
             animator.CreateAnimation("WalkRight", new Animation(priority: 2, framesCount: 25, yPos: 0, xStartFrame: 0,
@@ -159,54 +156,62 @@ namespace BattleMages
                 dashCooldown -= GameWorld.DeltaTime;
             }
 
-            //Spellcasting
-            if (canUseSpells && GameWorld.Cursor.LeftButtonHeld && cooldownTimers[selectedSpell] <= 0 && CurrentMana > 0)
+            SpellInfo spellToCast = GameWorld.State.GetSpellbarSpell(selectedSpell);
+            if (spellToCast != null)
             {
-                SpellInfo spellToCast = GameWorld.State.GetSpellbarSpell(selectedSpell);
+                SpellStats stats = spellToCast.CalcStats();
 
-                if (spellToCast != null)
+                Vector2 targetPoint = GameWorld.Cursor.Position;
+                float distToTargetPoint = Vector2.Distance(transform.Position, GameWorld.Cursor.Position);
+
+                var baseRune = spellToCast.GetBaseRune();
+                if (distToTargetPoint > stats.Range && !baseRune.CanUseOutsideRange)
                 {
-                    //Fetch base spell and runes
-                    var baseRune = spellToCast.GetBaseRune();
-                    if (baseRune != null)
+                    GameWorld.Cursor.SetCursor(CursorStyle.OutOfRange);
+                }
+
+                //Spellcasting
+                if (canUseSpells
+                    && GameWorld.Cursor.LeftButtonHeld
+                    && cooldownTimers[selectedSpell] <= 0
+                    && CurrentMana > 0
+                    && (baseRune.CanUseOutsideRange || distToTargetPoint < stats.Range))
+                {
+                    //Create spell object and add it to the world
+                    GameObject spellObject = new GameObject(transform.Position);
+                    Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(spellToCast, targetPoint, character.Velocity));
+                    spellObject.AddComponent(spellComponent);
+                    GameWorld.Scene.AddObject(spellObject);
+
+                    CurrentMana -= stats.ManaCost;
+                    cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = stats.CooldownTime;
+                    rechargeDelayTimer = ManaRechargeDelay;
+
+                    Vector2 vecToTarget = targetPoint - GameObject.Transform.Position;
+                    float angle = (float)Math.Atan2(vecToTarget.Y, vecToTarget.X);
+                    float degrees = MathHelper.ToDegrees(angle);
+
+                    if (degrees >= -45 && degrees <= 45)
                     {
-                        //Create spell object and add it to the world
-                        GameObject spellObject = new GameObject(transform.Position);
-                        Spell spellComponent = baseRune.CreateSpell(new SpellCreationParams(spellToCast, GameWorld.Cursor.Position, character.Velocity));
-                        spellObject.AddComponent(spellComponent);
-                        GameWorld.Scene.AddObject(spellObject);
-
-                        SpellStats stats = spellToCast.CalcStats();
-                        CurrentMana -= stats.ManaCost;
-                        cooldownTimers[selectedSpell] = cooldownTimersMax[selectedSpell] = stats.CooldownTime;
-                        rechargeDelayTimer = ManaRechargeDelay;
-
-                        Vector2 vecToMouse = GameWorld.Cursor.Position - GameObject.Transform.Position;
-                        float angle = (float)Math.Atan2(vecToMouse.Y, vecToMouse.X);
-                        float degrees = MathHelper.ToDegrees(angle);
-
-                        if (degrees >= -45 && degrees <= 45)
-                        {
-                            animator.PlayAnimation("CastRight");
-                            character.FDirection = FacingDirection.Right;
-                        }
-                        else if (degrees >= -135 && degrees <= -45)
-                        {
-                            animator.PlayAnimation("CastUp");
-                            character.FDirection = FacingDirection.Up;
-                        }
-                        else if (degrees >= 135 || degrees <= -135)
-                        {
-                            animator.PlayAnimation("CastLeft");
-                            character.FDirection = FacingDirection.Left;
-                        }
-                        else if (degrees >= 45 && degrees <= 135)
-                        {
-                            animator.PlayAnimation("CastDown");
-                            character.FDirection = FacingDirection.Down;
-                        }
-                        canMove = false;
+                        animator.PlayAnimation("CastRight");
+                        character.FDirection = FacingDirection.Right;
                     }
+                    else if (degrees >= -135 && degrees <= -45)
+                    {
+                        animator.PlayAnimation("CastUp");
+                        character.FDirection = FacingDirection.Up;
+                    }
+                    else if (degrees >= 135 || degrees <= -135)
+                    {
+                        animator.PlayAnimation("CastLeft");
+                        character.FDirection = FacingDirection.Left;
+                    }
+                    else if (degrees >= 45 && degrees <= 135)
+                    {
+                        animator.PlayAnimation("CastDown");
+                        character.FDirection = FacingDirection.Down;
+                    }
+                    canMove = false;
                 }
             }
 
@@ -336,17 +341,6 @@ namespace BattleMages
         {
             if (cooldownTimersMax[slot] == 0) return 0;
             return cooldownTimers[slot] / cooldownTimersMax[slot];
-        }
-
-        private void Draw(DrawMsg msg)
-        {
-            SpellStats stats = GameWorld.State.GetSpellbarSpell(selectedSpell).CalcStats();
-            float width = (stats.Range * 2);
-            float height = (stats.Range * 2);
-
-            float width2 = width / rangeTex.Width;
-            float height2 = height / rangeTex.Height;
-            msg.Drawer[DrawLayer.Foreground].Draw(rangeTex, position: GameObject.Transform.Position - new Vector2(width, height) / 2, scale: new Vector2(width2, height2));
         }
     }
 }

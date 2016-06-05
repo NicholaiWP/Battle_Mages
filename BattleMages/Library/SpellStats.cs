@@ -12,5 +12,6 @@ namespace BattleMages
         public int ManaCost { get; set; }
         public float CooldownTime { get; set; }
         public float Range { get; set; }
+        // public float EffectTime { get; set; }
     }
 }

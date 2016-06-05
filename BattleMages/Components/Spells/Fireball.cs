@@ -15,6 +15,7 @@ namespace BattleMages
         private SpriteRenderer spriteRenderer;
         private Vector2 diff;
         private SpellCreationParams p;
+        private float distanceTravelled;
 
         public Fireball(SpellCreationParams p) : base(p)
         {
@@ -48,7 +49,8 @@ namespace BattleMages
         {
             animator.PlayAnimation("", (float)Math.Atan2(velocity.Y, velocity.X));
 
-            GameObject.Transform.Position += velocity * GameWorld.DeltaTime;
+            Vector2 translation = velocity * GameWorld.DeltaTime;
+            GameObject.Transform.Position += translation;
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
                 var enemy = other.GameObject.GetComponent<Enemy>();
@@ -62,7 +64,9 @@ namespace BattleMages
                 }
             }
 
-            if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320))
+            distanceTravelled += translation.Length();
+
+            if (!Utils.InsideCircle(GameObject.Transform.Position, Vector2.Zero, 320) || distanceTravelled > Stats.Range)
             {
                 GameWorld.Scene.RemoveObject(GameObject);
             }

@@ -20,6 +20,7 @@ namespace BattleMages
         public string Description { get; }
         public string TextureName { get; }
         public SpellStats BaseStats { get; }
+        public bool CanUseOutsideRange { get; }
         public Texture2D Texture { get; private set; }
 
         /// <summary>
@@ -28,12 +29,13 @@ namespace BattleMages
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="spawnFunc"></param>
-        public BaseRune(string name, string description, string textureName, SpellStats baseStats, SpellSpawnDelegate spawnFunc)
+        public BaseRune(string name, string description, string textureName, SpellStats baseStats, bool canUseOutsideRange, SpellSpawnDelegate spawnFunc)
         {
             Name = name;
             Description = description;
             TextureName = textureName;
             BaseStats = baseStats;
+            CanUseOutsideRange = canUseOutsideRange;
             this.spawnFunc = spawnFunc;
         }
 
