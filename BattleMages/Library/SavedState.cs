@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -54,6 +54,10 @@ namespace BattleMages
 
         public void NewGame()
         {
+            if (File.Exists(databaseFileName))
+            {
+                File.Delete(databaseFileName);
+            }
             //Making the starting spells for the player
             for (int i = 0; i < 2; i++)
             {
@@ -124,15 +128,15 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
 
-                foreach (var guid in spellBar)
+                for (int i = 0; i < 4; i++)
                 {
-                    using (SQLiteCommand command = new SQLiteCommand(@"Insert into SpellBar Values(@ID, @SBID)",
+                    using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBar Values(@ID, @SBID)",
                         connection))
                     {
-                        command.Parameters.AddWithValue("@ID", spellBar.IndexOf(guid));
-                        command.Parameters.AddWithValue("@SBID", guid.ToString());
+                        cmd.Parameters.AddWithValue("@ID", i);
+                        cmd.Parameters.AddWithValue("@SBID", null);
 
-                        command.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
                     }
                 }
                 connection.Close();
@@ -210,13 +214,13 @@ namespace BattleMages
                 }
             }
 
-            foreach (var guid in spellBar)
+            for (int i = 0; i < 4; i++)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@ID", spellBar.IndexOf(guid));
-                    command.Parameters.AddWithValue("@SBID", guid.ToString());
+                    command.Parameters.AddWithValue("@ID", i);
+                    command.Parameters.AddWithValue("@SBID", spellBar[i].ToString());
 
                     command.ExecuteNonQuery();
                 }
@@ -320,6 +324,7 @@ namespace BattleMages
                     }
                 }
             }
+
             foreach (var guid in spellBar)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
