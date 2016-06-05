@@ -62,6 +62,21 @@ namespace BattleMages
                 GameWorld.ChangeScene(new PauseScene(this, () => { crowdSnd.Play(); }));
             }
 
+            int dialougeCount = 0;
+            foreach (var go in ActiveObjects)
+            {
+                if (go.GetComponent<DialougeBox>() != null)
+                {
+                    dialougeCount++;
+                }
+            }
+
+            //Spellbook opening
+            if (GameWorld.KeyPressed(Keys.Tab) && dialougeCount == 0)
+            {
+                GameWorld.ChangeScene(new SpellbookScene(GameWorld.Scene));
+            }
+
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
             //Turns volume of crowd and music up or down depending on the position of the camera

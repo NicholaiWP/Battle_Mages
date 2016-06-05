@@ -21,10 +21,9 @@ namespace BattleMages
 
         public FloatingText(string text)
         {
-            Random r = new Random();
             font = GameWorld.Instance.Content.Load<SpriteFont>("FontBM");
             this.text = text;
-            velocity = new Vector2(((float)r.NextDouble() - 0.5f) * xSpeedMax, ySpeed);
+            velocity = new Vector2(((float)GameWorld.Random.NextDouble() - 0.5f) * xSpeedMax, ySpeed);
 
             Listen<UpdateMsg>(Update);
             Listen<DrawMsg>(Draw);
