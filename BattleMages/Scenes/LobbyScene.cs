@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BattleMages
 {
@@ -29,16 +29,6 @@ namespace BattleMages
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(0, -90 - 8), new Vector2(320, 16)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(-160 - 8, 0), new Vector2(16, 180 + 32)));
             AddObject(ObjectBuilder.BuildInvisibleWall(new Vector2(160 + 8, 0), new Vector2(16, 180 + 32)));
-
-            //Door trigger
-            /* GameObject doorTriggerGameObject = new GameObject(new Vector2(0, -90 - 98 / 2));
-             doorTriggerGameObject.AddComponent(new Collider(new Vector2(38, 98)));
-             doorTriggerGameObject.AddComponent(new Interactable(() =>
-            {
-                GameWorld.ChangeScene(new ChallengeScene(this));
-                GameWorld.SoundManager.SoundVolume = 1f;
-            }));
-             AddObject(doorTriggerGameObject);*/
 
             //Door guard
             GameObject doorGuardObj = new GameObject(new Vector2(-40, -90));
@@ -77,6 +67,30 @@ namespace BattleMages
             AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
+            GameObject tutorialGuy = new GameObject(new Vector2(-90, -45));
+            tutorialGuy.AddComponent(new NPC("Textures/NPC's/TutorialGuy-Sheet", new Vector2(32, 32), 7, 7));
+            tutorialGuy.AddComponent(new Animator());
+            tutorialGuy.AddComponent(new Collider(new Vector2(15, 20), true) { Offset = new Vector2(0, 5) });
+            tutorialGuy.AddComponent(new Interactable(() =>
+            {
+                GameObject dialougeObj = new GameObject(Vector2.Zero);
+                dialougeObj.AddComponent(new DialougeBox(new[]
+                {
+                    "Welcome to the arena young mage. Let me teach you a few things about this place. Can you see the fat mage over there, yep he is the shopkeeper who sells runes."
+                },
+                () =>
+                {
+                    GameObject dialougeOb = new GameObject(Vector2.Zero);
+                    dialougeOb.AddComponent(new DialougeBox(new[]
+                    {
+                        "You can see a wizard by the door talk to him and he will give you a challenge in the arena. You can press tab to open your spellbook and edit your spells."
+                    },
+                    null));
+                    AddObject(dialougeOb);
+                }));
+                AddObject(dialougeObj);
+            }));
+            AddObject(tutorialGuy);
             //Player
             GameObject playerGameObject = ObjectBuilder.BuildPlayer(Vector2.Zero, false);
             AddObject(playerGameObject);
