@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -55,19 +55,19 @@ namespace BattleMages
         public void NewGame()
         {
             //Making the starting spells for the player
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 2; i++)
             {
                 availableBaseRunes.Add(StaticData.BaseRunes[i]);
-                if (i == 3) continue;
                 SpellInfo ps = new SpellInfo();
                 ps.SetBaseRune(i);
-                //for (int j = 0; j < i; j++)
-                //{
-                //    ps.SetAttributeRune(j, 0);
-                //}
+
                 Guid guid = Guid.NewGuid();
                 spellBook.Add(guid, ps);
                 spellBar.Add(guid);
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                SpellBar.Add(null);
             }
             CreateDatabaseFile();
         }
@@ -131,6 +131,7 @@ namespace BattleMages
                     {
                         command.Parameters.AddWithValue("@ID", spellBar.IndexOf(guid));
                         command.Parameters.AddWithValue("@SBID", guid.ToString());
+
                         command.ExecuteNonQuery();
                     }
                 }
