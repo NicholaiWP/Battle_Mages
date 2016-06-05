@@ -63,8 +63,29 @@ namespace BattleMages
                 frostBattleHL,
                  () =>
                  {
-                     GameWorld.ChangeScene(new HallwayScene("FrostBattle"));
-                     GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+                     if (oldScene is LobbyScene)
+                     {
+                         foreach (GameObject go in oldScene.ActiveObjects)
+                         {
+                             if (go.GetComponent<Player>() != null)
+                             {
+                                 GameWorld.Camera.Position = new Vector2(0, -90.83358f);
+                                 GameWorld.Camera.AllowMovement = false;
+                                 oldScene.RemoveObject(go);
+                                 GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
+                                 nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
+                                 nrPlayer.AddComponent(new Animator());
+                                 oldScene.AddObject(nrPlayer);
+                                 GameWorld.ChangeScene(oldScene);
+                             }
+
+                             if (go.GetComponent<NPC>() != null)
+                             {
+                                 go.GetComponent<NPC>().ChangeAnimation("FrostBattle");
+                                 GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+                             }
+                         }
+                     }
                  }
                  ));
 
@@ -76,8 +97,29 @@ namespace BattleMages
                 arcaneBattleHL,
                  () =>
                  {
-                     GameWorld.ChangeScene(new HallwayScene("ArcaneBattle"));
-                     GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+                     if (oldScene is LobbyScene)
+                     {
+                         foreach (GameObject go in oldScene.ActiveObjects)
+                         {
+                             if (go.GetComponent<Player>() != null)
+                             {
+                                 GameWorld.Camera.Position = new Vector2(0, -90.83358f);
+                                 GameWorld.Camera.AllowMovement = false;
+                                 oldScene.RemoveObject(go);
+                                 GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
+                                 nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
+                                 nrPlayer.AddComponent(new Animator());
+                                 oldScene.AddObject(nrPlayer);
+                                 GameWorld.ChangeScene(oldScene);
+                             }
+
+                             if (go.GetComponent<NPC>() != null)
+                             {
+                                 go.GetComponent<NPC>().ChangeAnimation("ArcaneBattle");
+                                 GameWorld.SoundManager.PlaySound("openHallwayDoor1");
+                             }
+                         }
+                     }
                  }
                  ));
         }
