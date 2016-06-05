@@ -47,7 +47,7 @@ namespace BattleMages
             enemyHealthFont = GameWorld.Load<SpriteFont>("EnemyHealthFont");
             behindUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIBackground");
             aboveUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIForeground");
-            aboveUIEnemy = GameWorld.Load<Texture2D>("Textures/UI/Ingame/enemy_healthBarUI");
+            aboveUIEnemy = GameWorld.Load<Texture2D>("Textures/UI/Ingame/healthBarUI");
             healthBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/HealthBar");
             manaBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/ManaBar");
             coinsSprite = GameWorld.Load<Texture2D>("Textures/UI/Ingame/Coin");
@@ -140,7 +140,7 @@ namespace BattleMages
                         position: GameWorld.Camera.Position + spellBarPositions[i] - new Vector2(19 / 2f, 19 / 2f),
                         sourceRectangle: new Rectangle(19 * frameToUse, 0, 19, 19));
                 }
-                //drwas enemy health bars and dmg taken.
+                //draws enemy health bars and dmg taken.
                 if(enemy != null)
                 {
                     enemyHealthbarPos = GameObject.Transform.Position = enemy.GameObject.Transform.Position + new Vector2(-10, -20);
