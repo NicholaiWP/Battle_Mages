@@ -30,6 +30,11 @@ namespace BattleMages
 
         private void Initialize(InitializeMsg message)
         {
+            if (Vector2.Distance(GameObject.Transform.Position, p.AimTarget) > Stats.Range)
+            {
+                GameWorld.Scene.RemoveObject(GameObject);
+            }
+
             GameObject.Transform.Position = p.AimTarget;
         }
 
