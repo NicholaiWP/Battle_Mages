@@ -139,8 +139,6 @@ namespace BattleMages
         {
             if (msg.AnimationName == "DeathRight" || msg.AnimationName == "DeathLeft")
             {
-                GameObject.RemoveComponent<Animator>();
-                GameObject.RemoveComponent<SpriteRenderer>();
                 GameWorld.Scene.RemoveObject(GameObject);
             }
 

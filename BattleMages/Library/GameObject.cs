@@ -73,26 +73,26 @@ namespace BattleMages
         {
             foreach (Component comp in components)
                 comp.SendMessage(message);
+        }
 
-            if (message is UpdateMsg)
-            {
-                //Add components to be added
-                //Step 1: Add to component list
-                foreach (Component comp in componentsToAdd)
-                    components.Add(comp);
+        public void ProcessComponents()
+        {
+            //Add components to be added
+            //Step 1: Add to component list
+            foreach (Component comp in componentsToAdd)
+                components.Add(comp);
 
-                List<Component> componentsToInitialize = new List<Component>(componentsToAdd);
-                //Step 2: Initialize
-                foreach (Component comp in componentsToInitialize)
-                    comp.SendMessage(new InitializeMsg());
+            List<Component> componentsToInitialize = new List<Component>(componentsToAdd);
+            //Step 2: Initialize
+            foreach (Component comp in componentsToInitialize)
+                comp.SendMessage(new InitializeMsg());
 
-                //Remove components to be removed
-                foreach (Component comp in componentsToRemove)
-                    components.Remove(comp);
+            //Remove components to be removed
+            foreach (Component comp in componentsToRemove)
+                components.Remove(comp);
 
-                componentsToAdd.Clear();
-                componentsToRemove.Clear();
-            }
+            componentsToAdd.Clear();
+            componentsToRemove.Clear();
         }
     }
 }

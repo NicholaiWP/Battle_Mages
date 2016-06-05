@@ -42,6 +42,7 @@ namespace BattleMages
                 GameObject waveControllerObj = new GameObject(Vector2.Zero);
                 waveControllerObj.AddComponent(waveController);
                 waveControllerObj.SendMessage(new UpdateMsg());
+                AddObject(waveControllerObj);
             }
         }
 

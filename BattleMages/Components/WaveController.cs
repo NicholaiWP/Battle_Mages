@@ -59,7 +59,7 @@ namespace BattleMages
 
             if (enemyCount == 0 && !challengeEnded)
             {
-                UpdateWave();
+                NextWave();
             }
         }
 
@@ -71,11 +71,11 @@ namespace BattleMages
                 string text = "U has wonned a new rune: " + rune.Name;
                 Vector2 offset = -font.MeasureString(text) / 2;
 
-                msg.Drawer[DrawLayer.UI].DrawString(font, "U have wonned", GameWorld.Camera.Position - offset, Color.Purple);
+                msg.Drawer[DrawLayer.UI].DrawString(font, text, GameWorld.Camera.Position + offset, Color.Purple);
             }
         }
 
-        public void UpdateWave()
+        public void NextWave()
         {
             if (waves.Count > WaveNumber)
             {
@@ -100,8 +100,8 @@ namespace BattleMages
                 }
 
                 challengeEnded = true;
-                GameWorld.State.Save();
-                GameWorld.ChangeScene(new LobbyScene());
+                //GameWorld.State.Save();
+                //GameWorld.ChangeScene(new LobbyScene());
             }
         }
     }

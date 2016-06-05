@@ -1430,7 +1430,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ArrowRight.png
-<<<<<<< HEAD
 
 #begin Textures/Misc/ExclamationMark.png
 /importer:TextureImporter
@@ -1442,6 +1441,3 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ExclamationMark.png
-
-=======
->>>>>>> 9a90d3d945ff72c0ce42a096f40974ca0b2b3fec
