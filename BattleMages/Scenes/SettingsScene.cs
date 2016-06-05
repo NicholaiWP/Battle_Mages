@@ -12,7 +12,7 @@ namespace BattleMages
     public class SettingsScene : Scene
     {
         private Texture2D background;
-        private const int shownButtons = 4;
+        private const int shownButtons = 3;
         private UITab resTab;
         private DisplayMode currentResolution;
         private DisplayMode resolutionHolder;
@@ -33,11 +33,13 @@ namespace BattleMages
             graphics = GameWorld.Graphics;
             var content = GameWorld.Instance.Content;
             //Back button
-            var backSpr = content.Load<Texture2D>("Textures/UI/Menu/Back");
+            var backBtn = content.Load<Texture2D>("Textures/UI/Spellbook/mediumButton");
+            var backBtnHL = content.Load<Texture2D>("Textures/UI/Spellbook/mediumButtonHL");
             AddObject(ObjectBuilder.BuildButton(
-                    new Vector2(GameWorld.Camera.Position.X + backSpr.Width / 2, GameWorld.Camera.Position.Y + backSpr.Height * 2f),
-                    backSpr,
-                    backSpr,
+                    new Vector2(GameWorld.Camera.Position.X - backBtn.Width / 2,
+                    GameWorld.Camera.Position.Y + 50),
+                    backBtn,
+                    backBtnHL,
                     () => { GameWorld.ChangeScene(new MenuScene()); }
                 ));
 
@@ -69,8 +71,8 @@ namespace BattleMages
 
             var btnResUpSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
             var btnResUpSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(33 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
-                    50 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), btnResUpSpr1, btnResUpSpr2,
+            AddObject(ObjectBuilder.BuildButton(new Vector2(50 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
+                    62 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), btnResUpSpr1, btnResUpSpr2,
                     () =>
                     {
                         if (minIndex >= 0) minIndex -= shownButtons;
@@ -83,8 +85,8 @@ namespace BattleMages
 
             var btnResDownSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
             var btnResDownSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(33 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
-                    160 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), btnResDownSpr1, btnResDownSpr2,
+            AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X + GameWorld.GameWidth / 2 - 65,
+                    62 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), btnResDownSpr1, btnResDownSpr2,
                     () =>
                     {
                         if (minIndex <= resolutionStrings.Count) minIndex += shownButtons;
@@ -96,8 +98,8 @@ namespace BattleMages
                     }));
             var fullScreenButton = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButton");
             var fullScreenbuttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButtonHL");
-            AddObject(ObjectBuilder.BuildButton(new Vector2(250 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
-                60 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), fullScreenButton, fullScreenbuttonHover,
+            AddObject(ObjectBuilder.BuildButton(new Vector2(-fullScreenButton.Width / 2 + GameWorld.Camera.Position.X,
+                100 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), fullScreenButton, fullScreenbuttonHover,
                 () =>
                 {
                     if (!graphics.IsFullScreen) graphics.IsFullScreen = true;
@@ -160,8 +162,8 @@ namespace BattleMages
         private void InsertButtons()
         {
             resTab.Clear();
-            int nX = 10;
-            int nY = 65;
+            int x = 70;
+            int y = 60;
             foreach (string res in resolutionStrings)
             {
                 if (resolutionStrings.IndexOf(res) >= minIndex &&
@@ -169,18 +171,18 @@ namespace BattleMages
                 {
                     var button = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButton");
                     var buttonHover = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/mediumButtonHL");
-                    resTab.AddObject(ObjectBuilder.BuildButton(new Vector2(nX + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
-                    nY + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), button, buttonHover,
+                    resTab.AddObject(ObjectBuilder.BuildButton(new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
+                    y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), button, buttonHover,
                         () => ElementAtNumber = resolutionStrings.IndexOf(res)));
-                    nY += 25;
+                    x += 60;
                 }
             }
         }
 
         public override void Draw(Drawer drawer)
         {
-            int x = 20;
-            int y = 70;
+            int x = 80;
+            int y = 65;
             Color color;
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
@@ -197,13 +199,7 @@ namespace BattleMages
                     drawer[DrawLayer.AboveUI].DrawString(fontBM, res, new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                     y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
 
-                    y += 25;
-
-                    if (y >= 200)
-                    {
-                        x += 60;
-                        y = 65;
-                    }
+                    x += 60;
                 }
             }
             color = Color.Black;
@@ -213,8 +209,8 @@ namespace BattleMages
                 color = Color.LightYellow;
             }
 
-            drawer[DrawLayer.AboveUI].DrawString(fontBM, "Full Screen", new Vector2(257 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
-                66 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
+            drawer[DrawLayer.AboveUI].DrawString(fontBM, "Full Screen", new Vector2(GameWorld.Camera.Position.X - 25,
+                105 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
 
             //drawer[DrawLayer.UI].DrawString(fontBM,
             //  GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),

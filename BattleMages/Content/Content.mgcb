@@ -915,17 +915,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Npc's/shopKeeper-Sheet.png
 
-#begin Textures/Misc/doorOpen-Sheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Textures/Misc/doorOpen-Sheet.png
-
 #begin Textures/Spells/lightningStrike.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1286,17 +1275,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Enemies/enemySummon-sheet.png
 
-#begin Textures/Misc/DoorSheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Textures/Misc/DoorSheet.png
-
 #begin Textures/Player/PlayerSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1430,6 +1408,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ArrowLeft.png
 
+#begin Textures/Npc's/DoorSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Npc's/DoorSheet.png
+
 #begin Textures/Misc/ArrowRight.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1440,6 +1430,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ArrowRight.png
+<<<<<<< HEAD
 
 #begin Textures/Misc/ExclamationMark.png
 /importer:TextureImporter
@@ -1452,3 +1443,5 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ExclamationMark.png
 
+=======
+>>>>>>> 9a90d3d945ff72c0ce42a096f40974ca0b2b3fec
