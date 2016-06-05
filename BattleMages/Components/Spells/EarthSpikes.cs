@@ -24,7 +24,6 @@ namespace BattleMages
             damageTimer = 0;
 
             GameWorld.SoundManager.PlaySound("Earthspikes");
-            GameWorld.SoundManager.SoundVolume = 1f;
 
             timer = 4;
             Listen<PreInitializeMsg>(PreInitialize);

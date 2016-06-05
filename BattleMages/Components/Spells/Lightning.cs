@@ -19,8 +19,7 @@ namespace BattleMages
         public Lightning(SpellCreationParams p) : base(p)
         {
             this.p = p;
-            GameWorld.SoundManager.PlaySound("lightningStrike");
-            GameWorld.SoundManager.SoundVolume = 0.7f;
+            GameWorld.SoundManager.PlaySound("lightningStrike", volume: 0.7f);
             waitTimer = 0.3f;
             existenceTimer = 0.05f;
             hadACollider = false;

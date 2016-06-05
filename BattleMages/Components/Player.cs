@@ -70,9 +70,9 @@ namespace BattleMages
 
             //TODO: Create animations here
             animator.CreateAnimation("WalkRight", new Animation(priority: 2, framesCount: 25, yPos: 0, xStartFrame: 0,
-                width: 32, height: 32, fps: 25, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 30, offset: Vector2.Zero));
             animator.CreateAnimation("WalkLeft", new Animation(priority: 2, framesCount: 25, yPos: 32, xStartFrame: 0,
-                width: 32, height: 32, fps: 25, offset: Vector2.Zero));
+                width: 32, height: 32, fps: 30, offset: Vector2.Zero));
             animator.CreateAnimation("WalkDown", new Animation(priority: 2, framesCount: 14, yPos: 64, xStartFrame: 0,
                 width: 32, height: 32, fps: 14, offset: Vector2.Zero));
             animator.CreateAnimation("WalkUp", new Animation(priority: 2, framesCount: 14, yPos: 96, xStartFrame: 0,

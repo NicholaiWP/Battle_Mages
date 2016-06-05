@@ -38,7 +38,7 @@ namespace BattleMages
         /// </summary>
         public SoundManager()
         {
-            SoundVolume = 0.20f;
+            SoundVolume = 1f;
             MusicVolume = 1f;
         }
 
@@ -92,12 +92,12 @@ namespace BattleMages
         /// Method for playing a sound by the soundName
         /// </summary>
         /// <param name="soundName"></param>
-        public SoundEffectInstance PlaySound(string soundName, bool loop = false)
+        public SoundEffectInstance PlaySound(string soundName, bool loop = false, float volume = 1f)
         {
             if (sounds.ContainsKey(soundName))
             {
                 SoundEffectInstance effect = sounds[soundName].CreateInstance();
-                effect.Volume = SoundVolume;
+                effect.Volume = volume * SoundVolume;
                 effect.IsLooped = loop;
                 effect.Play();
                 playingSounds.Add(new PlayingSound(soundName, effect));

@@ -20,8 +20,7 @@ namespace BattleMages
             this.p = p;
             spriteRenderer = new SpriteRenderer("Textures/Spells/Fireball");
             collider = new Collider(new Vector2(8, 8));
-            GameWorld.SoundManager.PlaySound("fireball");
-            GameWorld.SoundManager.SoundVolume = 0.9f;
+            GameWorld.SoundManager.PlaySound("fireball", volume: 0.9f);
 
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
