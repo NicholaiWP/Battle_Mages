@@ -12,25 +12,30 @@ namespace BattleMages
     {
         //Component caching
         private SpriteRenderer spriteRenderer;
-
         private Transform transform;
         private Collider collider;
         protected Animator animator;
         protected Character character;
+
+        private int health;
+        private int maxHealth;
         protected bool canMove;
         protected float attackRange;
         protected float targetingRange;
         protected int damage;
-        protected int health;
         protected int moneyAmount;
         protected float attackSpeed;
         protected float cooldownTimer;
         protected List<IBehaviour> behaviours = new List<IBehaviour>();
         private float red;
 
+        private Texture2D healthBarForeground;
+        private Texture2D healthBar;
+        private float healthbarEnemySize = 1f;
+
         public int Damage { get { return damage; } }
         public int Health { get { return health; } }
-        public int EnemyMaxHealth { get; set; } = 100;
+        public int MaxHealth { get; protected set; } = 100;
         public bool IsAlreadyBurned { get; set; }
         public float CooldownTimer { get { return cooldownTimer; } }
 
@@ -59,6 +64,7 @@ namespace BattleMages
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
             Listen<AnimationDoneMsg>(AnimationDone);
+            Listen<DrawMsg>(Draw);
         }
 
         public void TakeDamage(int points)
@@ -90,13 +96,16 @@ namespace BattleMages
 
         protected virtual void Initialize(InitializeMsg msg)
         {
+            health = MaxHealth;
+
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
             transform = GameObject.Transform;
             collider = GameObject.GetComponent<Collider>();
 
-            //TODO: Create animations here
+            healthBarForeground = GameWorld.Load<Texture2D>("Textures/UI/Ingame/EnemyHealthBarForeground");
+            healthBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/EnemyHealthBar");
         }
 
         protected virtual void Update(UpdateMsg msg)
@@ -111,6 +120,8 @@ namespace BattleMages
                 red -= GameWorld.DeltaTime * 10;
                 spriteRenderer.Color = new Color(1f, 1f - red, 1f - red);
             }
+
+            healthbarEnemySize = Math.Max(0, MathHelper.Lerp(healthbarEnemySize, Health / (float)MaxHealth, GameWorld.DeltaTime * 10f));
         }
 
         private void Move()
@@ -134,6 +145,17 @@ namespace BattleMages
             }
 
             animator.PlayAnimation("Idle" + character.FDirection);
+        }
+
+        private void Draw(DrawMsg msg)
+        {
+            //Draw healthbar
+            if (health < MaxHealth && health > 0)
+            {
+                Vector2 healthbarPos = GameObject.Transform.Position - Utils.HalfTexSize(healthBarForeground) + new Vector2(0, -20);
+                msg.Drawer[DrawLayer.AboveUI].Draw(healthBarForeground, position: healthbarPos);
+                msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthbarPos, scale: new Vector2(healthbarEnemySize, 1));
+            }
         }
     }
 }

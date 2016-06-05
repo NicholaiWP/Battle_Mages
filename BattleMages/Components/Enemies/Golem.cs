@@ -12,7 +12,7 @@ namespace BattleMages
         public Golem()
         {
             moneyAmount = 20;
-            health = 100;
+            MaxHealth = 100;
             damage = 25;
             cooldownTimer = 3.5f;
             attackSpeed = 0;

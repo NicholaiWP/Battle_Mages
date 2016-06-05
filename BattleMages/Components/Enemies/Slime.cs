@@ -12,7 +12,7 @@ namespace BattleMages
         public Slime()
         {
             moneyAmount = 5;
-            health = 70;
+            MaxHealth = 70;
             damage = 15;
             cooldownTimer = 1;
             attackSpeed = 0;
