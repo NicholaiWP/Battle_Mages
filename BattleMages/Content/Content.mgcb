@@ -1341,7 +1341,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Npc's/TutorialGuy-Sheet.png
 
-
 #begin Textures/Misc/ArrowDown.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1373,7 +1372,6 @@
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/LoadingSymbolSheet.png
 
@@ -1385,7 +1383,6 @@
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/UI/Ingame/EnemyHealthBar.png
 
@@ -1422,4 +1419,25 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Cursors/OutOfRange.png
 
+#begin Textures/Misc/ArrowLeft.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Textures/Misc/ArrowLeft.png
+
+#begin Textures/Misc/ArrowRight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Textures/Misc/ArrowRight.png
 
