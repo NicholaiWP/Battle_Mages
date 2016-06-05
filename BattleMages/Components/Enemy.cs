@@ -29,6 +29,7 @@ namespace BattleMages
 
         public int Damage { get { return damage; } }
         public int Health { get { return health; } }
+        public int EnemyMaxHealth { get; set; } = 100;
         public bool IsAlreadyBurned { get; set; }
         public float CooldownTimer { get { return cooldownTimer; } }
 
@@ -68,6 +69,7 @@ namespace BattleMages
 
                 if (health <= 0)
                 {
+                    health = 0;
                     //Spawns a number of coins when enemy dies
                     for (int i = 0; i < moneyAmount; i++)
                     {
