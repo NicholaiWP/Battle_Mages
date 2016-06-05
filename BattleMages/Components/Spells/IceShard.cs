@@ -82,6 +82,9 @@ namespace BattleMages
                 GameWorld.Scene.RemoveObject(GameObject);
             }
 
+            //Rotating the sprite
+            spriteRenderer.Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
+
             //Collision checking
             foreach (var other in collider.GetCollisionsAtPosition(GameObject.Transform.Position))
             {
@@ -92,6 +95,7 @@ namespace BattleMages
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking", volume: 0.7f);
 
                     GameWorld.Scene.RemoveObject(GameObject);
+                    break;
                 }
             }
 

@@ -58,6 +58,7 @@ namespace BattleMages
                     //damage of the burn effect
                     Onfire(3, enemy);
                     GameWorld.Scene.RemoveObject(GameObject);
+                    break;
                 }
             }
 
