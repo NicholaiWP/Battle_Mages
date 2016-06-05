@@ -127,7 +127,7 @@ namespace BattleMages
                 (p) => {return new FrostShield(p, true, 0); })
                     };
 
-            challenges.Add("EarthBattle", new Challenge(new List<Wave> {
+            challenges.Add("EarthBattle", new Challenge(3, new List<Wave> {
                 //wave with 1 golem, 1 orb, 1 slime
                 new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
@@ -145,21 +145,15 @@ namespace BattleMages
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Orb(), new Golem(),
                 new Slime(),new Slime(),new Slime(),new Golem()}),
 
-                  //2 orbs, 2 golems, 5 slimes
-                new Wave(new List<Vector2> { new Vector2(170,0), new Vector2(200, 35), new Vector2(180, -30),
-                new Vector2(200, 0), new Vector2(200,-45), new Vector2(170,-60),
-                new Vector2(190,0), new Vector2(115,10), new Vector2(180,0)},
-                () => new List<Enemy> { new Orb(), new Orb(), new Slime(), new Slime(), new Golem(),
-                new Slime(),new Slime(),new Slime(),new Golem()}),
-
                 //wave with 4 orbs, 1 golem, 4 slimes
                 new Wave(new List<Vector2> { new Vector2(240,0), new Vector2(200, 10), new Vector2(200, -10),
                 new Vector2(200, 20), new Vector2(200,-60), new Vector2(170,0),
                 new Vector2(190,0), new Vector2(130,0), new Vector2(180,0)},
                 () => new List<Enemy> { new Orb(), new Orb(), new Orb(), new Slime(), new Slime(),
-                new Orb(),new Slime(),new Slime(),new Golem() })}));
+                new Orb(),new Slime(),new Slime(),new Golem() })
+            }));
 
-            challenges.Add("FrostBattle", new Challenge(new List<Wave> {
+            challenges.Add("FrostBattle", new Challenge(4, new List<Wave> {
                 // wave with 2 golems, 2 orbs
                 new Wave(new List<Vector2> { new Vector2(47,88),
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
@@ -187,13 +181,13 @@ namespace BattleMages
                 new Golem(), new Golem(), new Slime(), new Slime(), new Slime(), new Slime()})}));
 
             //Goltastic
-            challenges.Add("ArcaneBattle", new Challenge(new List<Wave> {
+            challenges.Add("ArcaneBattle", new Challenge(2, new List<Wave> {
                 // wave with 4 golems
                 new Wave(new List<Vector2> { new Vector2(47,88),
                 new Vector2(-70, 60), new Vector2(100, -10), new Vector2(95,-66)},
                 () => new List<Enemy> {new Golem(), new Golem(), new Golem(), new Golem()}),
 
-                   //wave with 8 slimes, 4 orbs
+                //wave with 8 slimes, 4 orbs
                  new Wave(new List<Vector2> {new Vector2(-250, 0), new Vector2(300, 0), new Vector2(0,170),
                  new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
                 new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},
@@ -201,7 +195,7 @@ namespace BattleMages
                 () => new List<Enemy> {new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(), new Slime(),
                 new Orb(), new Orb(), new Orb(), new Orb()}),
 
-                        //wave with 5 slimes, 7 orbs
+                //wave with 5 slimes, 7 orbs
                  new Wave(new List<Vector2> {new Vector2(-250, 0), new Vector2(300, 0), new Vector2(0,170),
                  new Vector2(0, -300), new Vector2(-250, 0), new Vector2(250, 0), new Vector2(0, 250),
                 new Vector2(0, -250), new Vector2(-200, 0), new Vector2(200,0), new Vector2(0,200), new Vector2(0,-200)},

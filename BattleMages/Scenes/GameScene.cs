@@ -14,7 +14,6 @@ namespace BattleMages
     public class GameScene : Scene
     {
         private KeyboardState keyState;
-        private GameObject goWaveController;
 
         private SoundEffectInstance crowdSnd;
 
@@ -40,9 +39,9 @@ namespace BattleMages
             if (StaticData.challenges.ContainsKey(challengeName))
             {
                 WaveController waveController = StaticData.challenges[challengeName].MakeWaveController();
-                goWaveController = new GameObject(Vector2.Zero);
-                goWaveController.AddComponent(waveController);
-                goWaveController.SendMessage(new UpdateMsg());
+                GameObject waveControllerObj = new GameObject(Vector2.Zero);
+                waveControllerObj.AddComponent(waveController);
+                waveControllerObj.SendMessage(new UpdateMsg());
             }
         }
 
@@ -63,8 +62,6 @@ namespace BattleMages
 
         public override void Update()
         {
-            int enemyCount = 0;
-
             //Playing ambient sounds using SoundManager
             //GameWorld.SoundManager.PlaySound("AmbienceSound");
 
@@ -81,18 +78,6 @@ namespace BattleMages
 
             GameWorld.Camera.Update(GameWorld.DeltaTime);
 
-            foreach (GameObject go in ActiveObjects)
-            {
-                if (go.GetComponent<Enemy>() != null)
-                {
-                    enemyCount++;
-                }
-            }
-
-            if (enemyCount == 0)
-            {
-                goWaveController.GetComponent<WaveController>().UpdateWave();
-            }
             base.Update();
         }
     }
