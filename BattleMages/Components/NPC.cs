@@ -55,6 +55,7 @@ namespace BattleMages
                 {
                     animator.CreateAnimation(name, new Animation(priority: 0, framesCount: 47, yPos: ypos, xStartFrame: 0,
                         width: width, height: height, fps: fps, offset: Vector2.Zero));
+                    ypos += height;
                 }
             }
         }
