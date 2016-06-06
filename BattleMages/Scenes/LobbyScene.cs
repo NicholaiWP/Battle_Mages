@@ -40,8 +40,7 @@ namespace BattleMages
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    //"HALT-- I mean, hi!\nWho me? I don't know anything, I'm just a guard.         \n...Just pick a challenge already! "
-                    "Greetings, fellow mage. The arena awaits you.\nPick a challenge to compete against"
+                    "Hello, I'm a guard. I'll arrange a challenge for you. \nPick one and enter the arena."
                 },
                  () => { GameWorld.ChangeScene(new ChallengeScene(this)); CanPause = false; }));
 
@@ -67,6 +66,7 @@ namespace BattleMages
             AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
+            //Tutorial guy
             GameObject tutorialGuy = new GameObject(new Vector2(-90, -45));
             tutorialGuy.AddComponent(new NPC("Textures/NPC's/TutorialGuy-Sheet", new Vector2(32, 32), 7, 7));
             tutorialGuy.AddComponent(new Animator());
@@ -76,18 +76,11 @@ namespace BattleMages
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    "Welcome to the arena young mage. Let me teach you a few things about this place. Can you see the fat mage over there, yep he is the shopkeeper who sells runes."
-                },
-                () =>
-                {
-                    GameObject dialougeOb = new GameObject(Vector2.Zero);
-                    dialougeOb.AddComponent(new DialougeBox(new[]
-                    {
-                        "You can see a wizard by the door talk to him and he will give you a challenge in the arena. You can press tab to open your spellbook and edit your spells."
-                    },
-                    null));
-                    AddObject(dialougeOb);
-                }));
+                    "Are you new? Yes? No? Listen up...\nTo go into battles, talk to the guard. It'll earn" +
+                    " you money, to buy runes from the fat mage over there.",
+                    "Runes are used to enhance your spells. Once you have some, press TAB to open up your " +
+                    "Spell Book. The book has instructions inside, it's a very smart book, hoh-hoh!"
+                }, null));
                 AddObject(dialougeObj);
             }));
             AddObject(tutorialGuy);

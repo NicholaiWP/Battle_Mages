@@ -14,7 +14,10 @@ namespace BattleMages
         private int baseRuneToUnlock;
 
         private bool challengeEnded = false;
-        private SpriteFont font;
+        private SpriteFont bigFont;
+        private SpriteFont smallFont;
+
+        private bool hasRune;
 
         public WaveController(List<Wave> waves, int baseRuneToUnlock)
         {
@@ -42,7 +45,8 @@ namespace BattleMages
 
         private void Initialize(InitializeMsg msg)
         {
-            font = GameWorld.Load<SpriteFont>("TitleFont");
+            bigFont = GameWorld.Load<SpriteFont>("TitleFont");
+            smallFont = GameWorld.Load<SpriteFont>("FontBM");
         }
 
         private void Update(UpdateMsg msg)
@@ -68,9 +72,17 @@ namespace BattleMages
             if (challengeEnded)
             {
                 BaseRune rune = StaticData.BaseRunes[baseRuneToUnlock];
-                string text = "You have won a new spell: " + rune.Name;
-                Vector2 offset = -font.MeasureString(text) / 2;              
-                msg.Drawer[DrawLayer.UI].DrawString(font, text, GameWorld.Camera.Position + offset, Color.Purple);
+                string text = "Challenge completed!";
+                Vector2 offset = -bigFont.MeasureString(text) / 2;
+
+                string text2 = string.Empty;
+                if (!hasRune)
+                    text2 += "You have unlocked " + rune.Name + "! Open your spellbook to use this rune.";
+                text2 += "\nUse the arena door when you're ready to go back.";
+                Vector2 offset2 = -smallFont.MeasureString(text2) / 2;
+
+                msg.Drawer[DrawLayer.UI].DrawString(bigFont, text, GameWorld.Camera.Position + new Vector2(0, -64) + offset, Color.Purple);
+                msg.Drawer[DrawLayer.UI].DrawString(smallFont, text2, GameWorld.Camera.Position + new Vector2(0, 50) + offset2, Color.Purple);
             }
         }
 
@@ -87,7 +99,7 @@ namespace BattleMages
             }
             else
             {
-                bool hasRune = false;
+                hasRune = false;
                 foreach (BaseRune baseRune in GameWorld.State.AvailableBaseRunes)
                 {
                     if (StaticData.BaseRunes.IndexOf(baseRune) == baseRuneToUnlock) hasRune = true;
@@ -99,8 +111,15 @@ namespace BattleMages
                 }
 
                 challengeEnded = true;
-                //GameWorld.State.Save();
-                //GameWorld.ChangeScene(new LobbyScene());
+
+                GameObject doorObj = new GameObject(new Vector2(0, -368));
+                doorObj.AddComponent(new Collider(new Vector2(50, 68)));
+                doorObj.AddComponent(new Interactable(() =>
+                {
+                    GameWorld.State.Save();
+                    GameWorld.ChangeScene(new LobbyScene());
+                }));
+                GameWorld.Scene.AddObject(doorObj);
             }
         }
     }

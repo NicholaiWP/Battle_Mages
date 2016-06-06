@@ -12,7 +12,6 @@ namespace BattleMages
     internal class DialougeBox : Component
     {
         private Texture2D boxTexture;
-        private Texture2D boxTexture_larger;
         private SpriteFont textFont;
         private string[] texts;
         private Action onDone;
@@ -20,7 +19,7 @@ namespace BattleMages
         private int charactersToDraw = 0;
 
         private float timer = 0;
-        private const float charShowInterval = 0.04f;
+        private const float charShowInterval = 0.035f;
         private const float punctationShowInterval = 0.05f;
 
         private CursorLockToken cursorLock;
@@ -43,7 +42,6 @@ namespace BattleMages
             cursorLock = GameWorld.Cursor.Lock();
 
             boxTexture = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialougeBox");
-            boxTexture_larger = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialougeBoxLarger");
             textFont = GameWorld.Load<SpriteFont>("FontBM");
         }
 
@@ -54,7 +52,7 @@ namespace BattleMages
             if (charactersToDraw < texts[currentText].Length)
             {
                 timer -= GameWorld.DeltaTime;
-                while (timer <= 0 && charactersToDraw < texts[currentText].Length)
+                if (timer <= 0 && charactersToDraw < texts[currentText].Length)
                 {
                     charactersToDraw++;
                     timer += charShowInterval;
@@ -78,6 +76,7 @@ namespace BattleMages
                 else
                 {
                     currentText++;
+                    charactersToDraw = 0;
                     if (currentText >= texts.Length)
                     {
                         GameWorld.Camera.AllowMovement = true;
@@ -94,13 +93,9 @@ namespace BattleMages
         {
             if (currentText >= texts.Length) return;
 
-            Texture2D textureToUse = boxTexture;
-            if (GameWorld.Scene is IntroductionScene)
-                textureToUse = boxTexture_larger;
-
-            string warpedText = Utils.WarpText(texts[currentText].Substring(0, charactersToDraw), textureToUse.Width - 8, textFont);
-            Vector2 pos = GameWorld.Camera.Position + new Vector2(-textureToUse.Width / 2, GameWorld.GameHeight / 2 - textureToUse.Height);
-            msg.Drawer[DrawLayer.UI].Draw(textureToUse, pos, Color.White);
+            string warpedText = Utils.WarpText(texts[currentText].Substring(0, charactersToDraw), boxTexture.Width - 8, textFont);
+            Vector2 pos = GameWorld.Camera.Position + new Vector2(-boxTexture.Width / 2, GameWorld.GameHeight / 2 - boxTexture.Height);
+            msg.Drawer[DrawLayer.UI].Draw(boxTexture, pos, Color.White);
             msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
         }
     }

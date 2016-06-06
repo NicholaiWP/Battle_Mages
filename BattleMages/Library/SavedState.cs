@@ -73,7 +73,8 @@ namespace BattleMages
             {
                 SpellBar.Add(null);
             }
-            CreateDatabaseFile();
+            Thread t = new Thread(() => CreateDatabaseFile());
+            t.Start();
         }
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace BattleMages
         /// </summary>
         private void CreateDatabaseFile()
         {
+            Saving = true;
             if (!File.Exists(databaseFileName))
             {
                 SQLiteConnection.CreateFile(databaseFileName);
@@ -140,6 +142,7 @@ namespace BattleMages
                     }
                 }
                 connection.Close();
+                Saving = false;
             }
         }
 
