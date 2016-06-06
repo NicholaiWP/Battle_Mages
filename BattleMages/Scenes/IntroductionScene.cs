@@ -23,7 +23,7 @@ namespace BattleMages
             dialougeObj.AddComponent(new DialougeBox(new[] { "In the state of Irizal, the freaks, otherwise known as mages, are seen as outcasts.",
                 "Placed in the colosseum and forced to battle magical creatures they seek to gain magical power, and the favor of the masses, who see it solely as entertainment.",
                 "This is how it has been done for centuries, since the previous ruler was overthrown.",
-                "There is no salvation, no rebellion, only survival, but with enough fame, hopefully there is a brighter future.",
+                "There is no salvation, no rebellion, only survival, but with enough fame, perhaps a mage can hope his future will be brighter somehow.",
                 "In the barracks, the newest mage is preparing before a match is about to begin... " }, () =>
                 {
                     GameWorld.ChangeScene(new LobbyScene());

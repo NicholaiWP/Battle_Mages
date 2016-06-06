@@ -77,7 +77,7 @@ namespace BattleMages
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
                     "Are you new? Yes? No? Listen up...\nTo go into battles, talk to the guard. It'll earn" +
-                    " you money to buy runes from the fat mage over there.",
+                    " you money so you can buy runes from the fat mage over there.",
                     "Runes are used to enhance your spells. Once you have some, press TAB to open up your " +
                     "Spell Book. The book has instructions inside, it's a very smart book, hoh-hoh!"
                 }, null));

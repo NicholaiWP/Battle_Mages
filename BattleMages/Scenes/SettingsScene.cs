@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -100,8 +100,7 @@ namespace BattleMages
                 100 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), fullScreenButton, fullScreenbuttonHover,
                 () =>
                 {
-                    if (!graphics.IsFullScreen) graphics.IsFullScreen = true;
-                    if (graphics.IsFullScreen) graphics.IsFullScreen = false;
+                    graphics.IsFullScreen = !graphics.IsFullScreen;
                     graphics.ApplyChanges();
                 }));
 
