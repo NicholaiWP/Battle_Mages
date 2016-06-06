@@ -88,7 +88,7 @@ namespace BattleMages
 
         public void NextWave()
         {
-            /*if (waves.Count > WaveNumber)
+            if (waves.Count > WaveNumber)
             {
                 for (int i = 0; i < waves[WaveNumber].Enemies.Count; i++)
                 {
@@ -97,7 +97,7 @@ namespace BattleMages
                 }
                 WaveNumber++;
             }
-            else*/
+            else
             {
                 hasRune = false;
                 foreach (BaseRune baseRune in GameWorld.State.AvailableBaseRunes)

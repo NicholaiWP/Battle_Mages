@@ -67,6 +67,7 @@ namespace BattleMages
             AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
+            //Tutorial guy
             GameObject tutorialGuy = new GameObject(new Vector2(-90, -45));
             tutorialGuy.AddComponent(new NPC("Textures/NPC's/TutorialGuy-Sheet", new Vector2(32, 32), 7, 7));
             tutorialGuy.AddComponent(new Animator());
