@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -45,11 +45,9 @@ namespace BattleMages
 
             fontBM = content.Load<SpriteFont>("FontBM");
             background = content.Load<Texture2D>("Textures/Backgrounds/Menu");
-            DisplayMode lastResolution = null;
-            int i = 0;
+            string lastResolution = null;
             foreach (DisplayMode dmode in allResolutions)
             {
-                resolutionStrings.Add(dmode.Width + "x" + dmode.Height);
                 if (dmode.Width == GameWorld.Instance.ResScreenWidth &&
                     dmode.Height == GameWorld.Instance.ResScreenHeight)
                 {
@@ -58,13 +56,14 @@ namespace BattleMages
                     ElementAtNumber = allResolutions.IndexOf(dmode);
                 }
 
-                if (lastResolution != dmode)
+                if (lastResolution != dmode.Width + "x" + dmode.Height)
                 {
+                    resolutionStrings.Add(dmode.Width + "x" + dmode.Height);
                     resolutions.Add(dmode);
-                    i++;
                 }
-                lastResolution = dmode;
+                lastResolution = dmode.Width + "x" + dmode.Height;
             }
+            ElementAtNumber = resolutionStrings.Count - 1;
             minIndex = resolutionStrings.Count - shownButtons;
             InsertButtons();
 
@@ -101,8 +100,7 @@ namespace BattleMages
                 100 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), fullScreenButton, fullScreenbuttonHover,
                 () =>
                 {
-                    if (!graphics.IsFullScreen) graphics.IsFullScreen = true;
-                    if (graphics.IsFullScreen) graphics.IsFullScreen = false;
+                    graphics.IsFullScreen = !graphics.IsFullScreen;
                     graphics.ApplyChanges();
                 }));
 
@@ -180,9 +178,12 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
+            Color normalCol = Color.White;
+            Color selectedCol = Color.Violet;
+
+            Color color;
             int x = 80;
             int y = 65;
-            Color color;
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
 
@@ -190,10 +191,10 @@ namespace BattleMages
             {
                 if (resolutionStrings.IndexOf(res) >= minIndex && resolutionStrings.IndexOf(res) < minIndex + shownButtons)
                 {
-                    color = Color.Black;
+                    color = normalCol;
                     if (res == currentResolutionString)
                     {
-                        color = Color.LightYellow;
+                        color = selectedCol;
                     }
                     drawer[DrawLayer.AboveUI].DrawString(fontBM, res, new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                     y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
@@ -201,18 +202,21 @@ namespace BattleMages
                     x += 60;
                 }
             }
-            color = Color.Black;
+            color = normalCol;
+
+            drawer[DrawLayer.AboveUI].DrawString(fontBM, "Resolution", new Vector2(GameWorld.Camera.Position.X - 22,
+                            GameWorld.Camera.Position.Y - 48), color);
+
+            drawer[DrawLayer.UI].DrawString(fontBM, "Back", new Vector2(GameWorld.Camera.Position.X - 11,
+                            145 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
 
             if (graphics.IsFullScreen)
             {
-                color = Color.LightYellow;
+                color = selectedCol;
             }
 
             drawer[DrawLayer.AboveUI].DrawString(fontBM, "Full Screen", new Vector2(GameWorld.Camera.Position.X - 25,
                 105 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
-
-            drawer[DrawLayer.UI].DrawString(fontBM, "Back", new Vector2(GameWorld.Camera.Position.X - 11,
-                145 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), Color.Black);
 
             base.Draw(drawer);
         }

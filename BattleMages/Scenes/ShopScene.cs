@@ -44,7 +44,7 @@ namespace BattleMages
 
             var content = GameWorld.Instance.Content;
             this.oldScene = oldScene;
-            background = content.Load<Texture2D>("Backgrounds/ShopKeeperbg");
+            background = content.Load<Texture2D>("Textures/Backgrounds/ShopKeeperbg");
             font = content.Load<SpriteFont>("FontBM");
             titleFont = content.Load<SpriteFont>("TitleFont");
 

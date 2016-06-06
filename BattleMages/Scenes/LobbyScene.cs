@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleMages
 {
@@ -40,7 +40,7 @@ namespace BattleMages
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    "Hello, I'm a guard. I'll arrange a challenge for you. \nPick one and enter the arena."
+                    "Hello, mage. As a guard, it's my duty to arrange a challenge for you. \nPick one and enter the arena."
                 },
                  () => { GameWorld.ChangeScene(new ChallengeScene(this)); CanPause = false; }));
 
@@ -61,8 +61,17 @@ namespace BattleMages
             shopkeeperObj.AddComponent(new Collider(new Vector2(40, 24), true) { Offset = new Vector2(0, 12) });
             shopkeeperObj.AddComponent(new Interactable(() =>
             {
-                GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
+                GameObject dialougeObj = new GameObject(Vector2.Zero);
+                dialougeObj.AddComponent(new DialougeBox(new[]
+                {
+                    "Hey there little fellow. If you're looking to enhance your arsenal, I'm your guy! What do need?"
+                },
+                 () => { GameWorld.ChangeScene(new ShopScene(GameWorld.Scene)); }));
+
+                AddObject(dialougeObj);
+                ;
             }));
+
             AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
@@ -76,10 +85,15 @@ namespace BattleMages
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    "Are you new? Yes? No? Listen up...\nTo go into battles, talk to the guard. It'll earn" +
-                    " you money to buy runes from the fat mage over there.",
-                    "Runes are used to enhance your spells. Once you have some, press TAB to open up your " +
-                    "Spell Book. The book has instructions inside, it's a very smart book, hoh-hoh!"
+                    "Greetings, mage. Are you new? Yes? No? You'll need some help anyhow. Listen up...",
+                    "Use WASD to move around. You can also do a quick dash by clicking your RIGHT MOUSE BUTTON.",
+                    "When in combat, you can LEFT CLICK to use a spell. Use the NUMBER BUTTONS or your SCROLL WHEEL to change what spell you're using.",
+                    "Spells are your most valuable equipment. To open your spellbook and modify them, press TAB. The book has instructions inside, it's a very smart book, hoh-hoh!",
+                    "A spell is a combination of two types of runes: Base Runes and Attribute Runes. I will try to explain them both!",
+                    "Base Runes define a spell's fundemental ability. I see you already have Fireball and Ice Shards. You can earn more of these by winning in combat!",
+                    "Atribute Runes are used to enhance your spells further. They can be bought with gold from the fat wizard to the right.",
+                    "How do you get in combat, you ask? Simply talk to the guard above me. It'll earn you plenty of gold!",
+                    "That should be all you need. Now get going!"
                 }, null));
                 AddObject(dialougeObj);
             }));

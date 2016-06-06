@@ -43,6 +43,7 @@ namespace BattleMages
         private float rechargeDelayTimer = 0;
         private float invincibleTimer;
         private float blinkTimer;
+        private MouseState prevMouseState = Mouse.GetState();
 
         public int SelectedSpell { get { return selectedSpell; } }
         public int CurrentHealth { get; private set; } = MaxHealth;
@@ -229,6 +230,23 @@ namespace BattleMages
                 selectedSpell = 2;
             if (kbState.IsKeyDown(GameWorld.PlayerControls.GetBinding(PlayerBind.Spell4)))
                 selectedSpell = 3;
+
+            MouseState mState = Mouse.GetState();
+
+            if (mState.ScrollWheelValue < prevMouseState.ScrollWheelValue)
+            {
+                selectedSpell++;
+                if (selectedSpell > 3)
+                    selectedSpell = 0;
+            }
+            if (mState.ScrollWheelValue > prevMouseState.ScrollWheelValue)
+            {
+                selectedSpell--;
+                if (selectedSpell < 0)
+                    selectedSpell = 3;
+            }
+
+            prevMouseState = mState;
 
             if (canMove)
             {

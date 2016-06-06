@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -19,8 +19,9 @@ namespace BattleMages
         private bool isDoor;
         private CursorLockToken token;
         private int ypos;
+        private DrawLayer layer;
 
-        public NPC(string imagePath, Vector2 size, int frames, int fps, bool isDoor = false, int ypos = 0)
+        public NPC(string imagePath, Vector2 size, int frames, int fps, bool isDoor = false, int ypos = 0, DrawLayer layer = DrawLayer.Gameplay)
         {
             this.ypos = ypos;
             this.imagePath = imagePath;
@@ -29,6 +30,7 @@ namespace BattleMages
             this.frames = frames;
             this.fps = fps;
             this.isDoor = isDoor;
+            this.layer = layer;
             Listen<PreInitializeMsg>(Preinitialize);
             Listen<InitializeMsg>(Initialize);
             Listen<UpdateMsg>(Update);
@@ -37,7 +39,7 @@ namespace BattleMages
 
         private void Preinitialize(PreInitializeMsg message)
         {
-            GameObject.AddComponent(new SpriteRenderer(imagePath, true)
+            GameObject.AddComponent(new SpriteRenderer(imagePath, true, layer)
             { Rectangle = new Rectangle(0, 0, width, height) });
         }
 

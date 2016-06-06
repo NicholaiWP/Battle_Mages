@@ -75,11 +75,6 @@ namespace BattleMages
         /// </summary>
         public void PlayMusic(string soundName)
         {
-            if (MediaPlayer.Volume > 0.5f)
-            {
-                MediaPlayer.Volume = 0.5f;
-            }
-
             if (musicCurrentlyPlaying != soundName)
             {
                 MediaPlayer.Volume = MusicVolume;
