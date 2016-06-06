@@ -41,7 +41,7 @@ namespace BattleMages
             GameWorld.Camera.AllowMovement = false;
             cursorLock = GameWorld.Cursor.Lock();
 
-            boxTexture = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialougeBox");
+            boxTexture = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialogueBox");
             textFont = GameWorld.Load<SpriteFont>("FontBM");
         }
 
