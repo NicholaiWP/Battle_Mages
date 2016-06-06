@@ -87,18 +87,6 @@ namespace BattleMages
             {
                 SQLiteConnection.CreateFile(databaseFileName);
                 connection.Open();
-                using (SQLiteCommand command = new SQLiteCommand("create table SpellBook(ID string primary key, BaseRuneID int)",
-                    connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-
-                using (SQLiteCommand command = new SQLiteCommand("create table AttributeRunes(ID integer primary key, RuneID integer, SpellBookID string REFERENCES SpellBook(ID))",
-                    connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-
                 using (SQLiteCommand command = new SQLiteCommand("create table AvailableBaseRunes(BaseRuneID int primary key) ",
                     connection))
                 {
@@ -106,6 +94,17 @@ namespace BattleMages
                 }
 
                 using (SQLiteCommand command = new SQLiteCommand("create table AvailableRunes(RuneID int primary key)",
+                    connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+                using (SQLiteCommand command = new SQLiteCommand("create table SpellBook(ID string primary key, BaseRuneID int references AvailableBaseRunes(BaseRuneID))",
+                    connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                using (SQLiteCommand command = new SQLiteCommand("create table AttributeRunes(ID integer primary key, RuneID integer references AvailableRunes(RuneID), SpellBookID string REFERENCES SpellBook(ID))",
                     connection))
                 {
                     command.ExecuteNonQuery();
