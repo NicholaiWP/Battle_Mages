@@ -142,7 +142,7 @@ namespace BattleMages
                     }
                 }
                 connection.Close();
-                Saving = false;
+                DatabaseInform();
             }
         }
 
