@@ -73,7 +73,8 @@ namespace BattleMages
             {
                 SpellBar.Add(null);
             }
-            CreateDatabaseFile();
+            Thread t = new Thread(() => CreateDatabaseFile());
+            t.Start();
         }
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace BattleMages
         /// </summary>
         private void CreateDatabaseFile()
         {
+            Saving = true;
             if (!File.Exists(databaseFileName))
             {
                 SQLiteConnection.CreateFile(databaseFileName);
@@ -97,13 +99,13 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("create table AvailableBaseRunes(BaseRuneID int) ",
+                using (SQLiteCommand command = new SQLiteCommand("create table AvailableBaseRunes(BaseRuneID int primary key) ",
                     connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("create table AvailableRunes(RuneID int)",
+                using (SQLiteCommand command = new SQLiteCommand("create table AvailableRunes(RuneID int primary key)",
                     connection))
                 {
                     command.ExecuteNonQuery();
@@ -140,6 +142,7 @@ namespace BattleMages
                     }
                 }
                 connection.Close();
+                Saving = false;
             }
         }
 

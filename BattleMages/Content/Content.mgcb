@@ -463,18 +463,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Runes/Rune9.png
 
-#begin Textures/Spells/EarthSpikes.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Spells/EarthSpikes.png
-
 #begin Textures/Spells/Fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1521,7 +1509,6 @@
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Npc's/DoorSheet.png
 
@@ -1549,7 +1536,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ExclamationMark.png
 
-#begin Textures/Backgrounds/Intro.png
+#begin Textures/Spells/EarthSpikes.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1557,7 +1544,16 @@
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Textures/Spells/EarthSpikes.png
+
+#begin Textures/Backgrounds/Intro.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Backgrounds/Intro.png
-
