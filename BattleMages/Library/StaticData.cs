@@ -46,7 +46,7 @@ namespace BattleMages
                 (s) => {
                     s.Damage = s.Damage * 1.05f;
                     s.ManaCost = s.ManaCost * 0.9f;
-                    s.CooldownTime = s.CooldownTime * 0.95f;
+                    s.CooldownTime = s.CooldownTime * 0.96f;
                     s.Range = s.Range * 1.05f;
                     return s;
                 }),
