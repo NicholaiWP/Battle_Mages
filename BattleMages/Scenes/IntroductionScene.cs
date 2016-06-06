@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace BattleMages
 {
@@ -15,6 +15,7 @@ namespace BattleMages
     {
         private Texture2D background;
         private float scroll;
+        private float scrollSpeed;
 
         public IntroductionScene()
         {
@@ -23,14 +24,15 @@ namespace BattleMages
                 "Placed in the colosseum and forced to battle magical creatures they seek to gain magical power, and the favor of the masses, who see it solely as entertainment.",
                 "This is how it has been done for centuries, since the previous ruler was overthrown.",
                 "There is no salvation, no rebellion, only survival, but with enough fame, hopefully there is a brighter future.",
-                "In the barracks, the newest mage is preparing before a match is about to begin... " }, () => {
-					GameWorld.ChangeScene(new LobbyScene());
-					
+                "In the barracks, the newest mage is preparing before a match is about to begin... " }, () =>
+                {
+                    GameWorld.ChangeScene(new LobbyScene());
+
                     GameObject exclamation = new GameObject(new Vector2(-91, -65));
                     exclamation.AddComponent(new Animator());
                     exclamation.AddComponent(new NPC("Textures/Misc/ExclamationMark", new Vector2(6, 10), 1, 1));
                     GameWorld.Scene.AddObject(exclamation);
-					}));
+                }));
             AddObject(dialougeObj);
 
             background = GameWorld.Load<Texture2D>("Textures/Backgrounds/Intro");
@@ -38,7 +40,8 @@ namespace BattleMages
 
         public override void Update()
         {
-            scroll = Math.Min(scroll + GameWorld.DeltaTime * 16, background.Height - GameWorld.GameHeight);
+            scrollSpeed = Math.Min(scrollSpeed + GameWorld.DeltaTime * 0.5f, 1);
+            scroll = Math.Min(scroll + GameWorld.DeltaTime * scrollSpeed * 16, background.Height - GameWorld.GameHeight);
 
             base.Update();
         }

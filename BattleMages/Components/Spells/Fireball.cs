@@ -56,7 +56,7 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(Stats.Damage);
+                    enemy.TakeDamage((int)Stats.Damage);
                     //damage of the burn effect
                     Onfire(3, enemy);
                     GameWorld.Scene.RemoveObject(GameObject);

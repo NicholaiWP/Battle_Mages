@@ -39,47 +39,59 @@ namespace BattleMages
             //Add new attribute runes to this array
             attributeRunes = new AttributeRune[]
             {
+                new AttributeRune("Rune of Versatility",
+                "Increases most stats a little.",
+                "rune0",
+                0,
+                (s) => {
+                    s.Damage = s.Damage * 1.05f;
+                    s.ManaCost = s.ManaCost * 0.9f;
+                    s.CooldownTime = s.CooldownTime * 0.95f;
+                    s.Range = s.Range * 1.05f;
+                    return s;
+                }),
+
                 new AttributeRune("Rune of Might",
                 "Increases the damage of a spell.",
                 "rune1",
-                50,
-                (s) => { s.Damage = (int)(s.Damage * 1.25f); return s;}),
+                100,
+                (s) => { s.Damage = s.Damage * 1.25f; return s;}),
 
                 new AttributeRune("Rune of Efficiency",
                 "Makes a spell use less mana.",
                 "rune2",
-                50,
-                (s) => { s.ManaCost = (int)(s.ManaCost * 0.85f); return s;}),
+                100,
+                (s) => { s.ManaCost = s.ManaCost * 0.85f; return s;}),
 
                 new AttributeRune("Rune of Haste",
                 "Lets you cast a spell faster.",
                 "rune3",
-                50,
+                100,
                 (s) => {s.CooldownTime = s.CooldownTime * 0.80f; return s; }),
 
                 new AttributeRune("Rune of Reach",
                 "Increases the range of a spell.",
                 "rune4",
-                50,
+                100,
                 (s) => { s.Range *= 1.15f; return s; }),
+
+                new AttributeRune("Rune of Kings",
+                "Higher damage, but slower cooldown time.",
+                "rune5",
+                200,
+                (s) => { s.Damage = s.Damage * 2f; s.CooldownTime *= 1.20f; return s; }),
+
+                new  AttributeRune("Rune of Queens",
+                "Lower cooldown, mana cost, and damage.",
+                "rune6",
+                200,
+                (s) => {s.Damage = s.Damage * 0.5f; s.ManaCost = s.ManaCost * 0.5f; s.CooldownTime *= 0.7f; return s; }),
 
                 /*new AttributeRune("Rune of Speed",
                 "Makes your spells move or act faster.",
                 "rune5",
                 50,
                 (s) => { return s; }),*/
-
-                new AttributeRune("Rune of Charisma",
-                "Increases most stats a little.",
-                "rune6",
-                100,
-                (s) => {
-                    s.Damage = (int)(s.Damage * 1.1);
-                    s.ManaCost = (int)(s.ManaCost * 0.9);
-                    s.CooldownTime = s.CooldownTime * 0.95f;
-                    s.Range = s.Range * 1.05f;
-                    return s;
-                }),
 
                 //new AttributeRune("Projectile block",
                 //"your spells can block enemy projectiles",
@@ -89,12 +101,11 @@ namespace BattleMages
 
             //Add new base runes to this array
             baseRunes = new BaseRune[]
-                    {
+            {
                 new BaseRune("Fireball",
                 "A ball of fire with a chance of igniting the enemy with fire",
                 "FireballRune",
                 new SpellStats { Damage = 12, CooldownTime = 0.7f, ManaCost = 20, Range = 150 },
-
                 true,
                 (p) => { return new Fireball(p); }),
 

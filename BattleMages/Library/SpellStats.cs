@@ -8,8 +8,8 @@ namespace BattleMages
 {
     public struct SpellStats
     {
-        public int Damage { get; set; }
-        public int ManaCost { get; set; }
+        public float Damage { get; set; }
+        public float ManaCost { get; set; }
         public float CooldownTime { get; set; }
         public float Range { get; set; }
         // public float EffectTime { get; set; }

@@ -91,7 +91,7 @@ namespace BattleMages
                 var enemy = other.GameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(Stats.Damage);
+                    enemy.TakeDamage((int)Stats.Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking", volume: 0.7f);
 
                     GameWorld.Scene.RemoveObject(GameObject);

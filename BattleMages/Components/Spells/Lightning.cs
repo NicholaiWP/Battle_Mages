@@ -53,7 +53,7 @@ namespace BattleMages
                     var enemy = other.GameObject.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(Stats.Damage / others.Count);
+                        enemy.TakeDamage((int)(Stats.Damage / others.Count));
                     }
                 }
             }

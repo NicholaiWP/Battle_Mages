@@ -34,7 +34,7 @@ namespace BattleMages
 
         private void PreInitialize(PreInitializeMsg msg)
         {
-            spriteRenderer = new SpriteRenderer("Textures/Spells/EarthSpikes", true) { Rectangle = new Rectangle(0, 0, 32, 32) };
+            spriteRenderer = new SpriteRenderer("Textures/Spells/EarthSpikes", true) { Rectangle = new Rectangle(0, 0, 64, 64) };
             GameObject.AddComponent(spriteRenderer);
 
             animator = new Animator();
@@ -65,7 +65,7 @@ namespace BattleMages
                 if (enemy != null && damageTimer <= 0)
                 {
                     damageTimer = 0.6f;
-                    enemy.TakeDamage(Stats.Damage);
+                    enemy.TakeDamage((int)Stats.Damage);
                 }
             }
 
