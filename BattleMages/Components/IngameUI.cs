@@ -20,6 +20,7 @@ namespace BattleMages
 
         private float healthbarSize = 1f;
         private float manabarSize = 1f;
+        private bool manabarEmpty = false;
 
         private Player player;
 
@@ -75,7 +76,9 @@ namespace BattleMages
             if (player != null)
             {
                 healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / (float)Player.MaxHealth, GameWorld.DeltaTime * 10f));
-                manabarSize = Math.Max(0, MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f));
+                manabarSize = MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f);
+
+                manabarEmpty = manabarSize < 0f;
             }
 
             for (int i = 0; i < spellInfoRenderers.Length; i++)
@@ -100,7 +103,15 @@ namespace BattleMages
             if (player != null)
             {
                 msg.Drawer[DrawLayer.UI].Draw(healthBar, position: healthBarPos, scale: new Vector2(healthbarSize, 1));
-                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(manabarSize, 1));
+
+                Color manabarColor = Color.White;
+                float finalManabarSize = manabarSize;
+                if (manabarEmpty)
+                {
+                    manabarColor = Color.FromNonPremultiplied(255, 255, 255, 128);
+                    finalManabarSize = -manabarSize;
+                }
+                msg.Drawer[DrawLayer.UI].Draw(manaBar, position: manaBarPos, scale: new Vector2(finalManabarSize, 1), color: manabarColor);
                 //Draws currency with spritefont
 
                 msg.Drawer[DrawLayer.AboveUI].DrawString(haxFont, GameWorld.State.PlayerGold.ToString(), new Vector2(topRight.X - GameWorld.State.PlayerGold.ToString().Length * 7 - (coinsSprite.Width + offset), topRight.Y + 3.5f), Color.LightYellow);
