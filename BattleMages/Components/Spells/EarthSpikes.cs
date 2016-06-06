@@ -38,11 +38,11 @@ namespace BattleMages
             GameObject.AddComponent(spriteRenderer);
 
             animator = new Animator();
-            animator.CreateAnimation("Up", new Animation(0, 8, 0, 0, 32, 32, 20, Vector2.Zero));
-            animator.CreateAnimation("Down", new Animation(0, 8, 0, 8, 32, 32, 20, Vector2.Zero));
+            animator.CreateAnimation("Up", new Animation(0, 8, 0, 0, 64, 64, 20, Vector2.Zero));
+            animator.CreateAnimation("Down", new Animation(0, 8, 0, 8, 64, 64, 20, Vector2.Zero));
             GameObject.AddComponent(animator);
 
-            collider = new Collider(new Vector2(48, 48));
+            collider = new Collider(new Vector2(64, 64));
             GameObject.AddComponent(collider);
         }
 
