@@ -62,7 +62,6 @@ namespace BattleMagesTests
         public void Tes2()
         {
             Character character = new Character();
-           
         }
     }
 }
