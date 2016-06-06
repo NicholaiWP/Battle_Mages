@@ -64,7 +64,10 @@ namespace BattleMages
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    "Hey there little fellow. If you're looking to enhance your arsenal, I'm your guy! What do need?"
+                    "Greetings little fellow. Interested in some of my fine wares? *coughs*",
+                    "If I've got runes? you bet I do!",
+                    "Purchasing one of these will improve your arsenal, simply just apply the rune to your desired spell.",
+                    "Here, take a look"
                 },
                  () => { GameWorld.ChangeScene(new ShopScene(GameWorld.Scene)); }));
 
@@ -86,14 +89,15 @@ namespace BattleMages
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
                     "Greetings, mage. Are you new? Yes? No? You'll need some help anyhow. Listen up...",
-                    "Use WASD to move around. You can also do a quick dash by clicking your RIGHT MOUSE BUTTON.",
+                    "Use WASD to move around. You can also perform a dash by clicking your RIGHT MOUSE BUTTON.",
                     "When in combat, you can LEFT CLICK to use a spell. Use the NUMBER BUTTONS or your SCROLL WHEEL to change what spell you're using.",
                     "Spells are your most valuable equipment. To open your spellbook and modify them, press TAB. The book has instructions inside, it's a very smart book, hoh-hoh!",
+                    "Please note that you can not modify your spells and runes while being in the arena.",
                     "A spell is a combination of two types of runes: Base Runes and Attribute Runes. I will try to explain them both!",
                     "Base Runes define a spell's fundemental ability. I see you already have Fireball and Ice Shards. You can earn more of these by winning in combat!",
-                    "Atribute Runes are used to enhance your spells further. They can be bought with gold from the fat wizard to the right.",
+                    "Atribute Runes are used to enhance your spells further. They can be bought with gold from the shop keeper to the right.",
                     "How do you get in combat, you ask? Simply talk to the guard above me. It'll earn you plenty of gold!",
-                    "That should be all you need. Now get going!"
+                    "That should be all you need. Now get going, and may the odds ever be in your favour!"
                 }, null));
                 AddObject(dialougeObj);
             }));
