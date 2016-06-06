@@ -178,9 +178,12 @@ namespace BattleMages
 
         public override void Draw(Drawer drawer)
         {
+            Color normalCol = Color.White;
+            Color selectedCol = Color.Violet;
+
+            Color color;
             int x = 80;
             int y = 65;
-            Color color;
             drawer[DrawLayer.Background].Draw(background, new Vector2(GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2));
 
@@ -188,10 +191,10 @@ namespace BattleMages
             {
                 if (resolutionStrings.IndexOf(res) >= minIndex && resolutionStrings.IndexOf(res) < minIndex + shownButtons)
                 {
-                    color = Color.Black;
+                    color = normalCol;
                     if (res == currentResolutionString)
                     {
-                        color = Color.LightYellow;
+                        color = selectedCol;
                     }
                     drawer[DrawLayer.AboveUI].DrawString(fontBM, res, new Vector2(x + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                     y + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
@@ -199,18 +202,21 @@ namespace BattleMages
                     x += 60;
                 }
             }
-            color = Color.Black;
+            color = normalCol;
+
+            drawer[DrawLayer.AboveUI].DrawString(fontBM, "Resolution", new Vector2(GameWorld.Camera.Position.X - 22,
+                            GameWorld.Camera.Position.Y - 48), color);
+
+            drawer[DrawLayer.UI].DrawString(fontBM, "Back", new Vector2(GameWorld.Camera.Position.X - 11,
+                            145 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
 
             if (graphics.IsFullScreen)
             {
-                color = Color.LightYellow;
+                color = selectedCol;
             }
 
             drawer[DrawLayer.AboveUI].DrawString(fontBM, "Full Screen", new Vector2(GameWorld.Camera.Position.X - 25,
                 105 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
-
-            drawer[DrawLayer.UI].DrawString(fontBM, "Back", new Vector2(GameWorld.Camera.Position.X - 11,
-                145 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), Color.Black);
 
             base.Draw(drawer);
         }

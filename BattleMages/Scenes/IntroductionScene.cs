@@ -30,12 +30,12 @@ namespace BattleMages
 
                     GameObject exclamation = new GameObject(new Vector2(-91, -65));
                     exclamation.AddComponent(new Animator());
-                    exclamation.AddComponent(new NPC("Textures/Misc/ExclamationMark", new Vector2(6, 10), 1, 1));
+                    exclamation.AddComponent(new NPC("Textures/Misc/ExclamationMark", new Vector2(6, 10), 1, 1, layer: DrawLayer.UI));
                     GameWorld.Scene.AddObject(exclamation);
                 }));
             AddObject(dialougeObj);
 
-            background = GameWorld.Load<Texture2D>("Textures/Backgrounds/Intro");
+            background = GameWorld.Load<Texture2D>("Textures/Backgrounds/Menu");
         }
 
         public override void Update()
