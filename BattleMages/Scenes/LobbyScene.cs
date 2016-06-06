@@ -40,7 +40,7 @@ namespace BattleMages
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    "Hello, I'm a guard. I'll arrange a challenge for you. \nPick one and enter the arena."
+                    "Hello, mage. As a guard, it's my duty to arrange a challenge for you. \nPick one and enter the arena."
                 },
                  () => { GameWorld.ChangeScene(new ChallengeScene(this)); CanPause = false; }));
 
@@ -61,8 +61,17 @@ namespace BattleMages
             shopkeeperObj.AddComponent(new Collider(new Vector2(40, 24), true) { Offset = new Vector2(0, 12) });
             shopkeeperObj.AddComponent(new Interactable(() =>
             {
-                GameWorld.ChangeScene(new ShopScene(GameWorld.Scene));
+                GameObject dialougeObj = new GameObject(Vector2.Zero);
+                dialougeObj.AddComponent(new DialougeBox(new[]
+                {
+                    "Hey there little fellow. If you're looking to enhance your arsenal, I'm your guy! What do need?"
+                },
+                 () => { GameWorld.ChangeScene(new ShopScene(GameWorld.Scene)); }));
+
+                AddObject(dialougeObj);
+                ;
             }));
+
             AddObject(shopkeeperObj);
             GameWorld.SoundManager.PlayMusic("HubMusic");
 
