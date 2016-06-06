@@ -33,7 +33,7 @@ namespace BattleMages
             base.Initialize(msg);
             MoveSpeed = 20;
             behaviours.Add(new Hunt(this, attackRange, targetingRange));
-            behaviours.Add(new AreaAttack(this, 85, 1f, 0.6f, 3f, 80, 25));
+            behaviours.Add(new AreaAttack(this, 80, 1f, 0.6f, 3f, 80, 25));
             behaviours.Add(new Attack(this, attackRange, targetingRange));
 
             animator.CreateAnimation("GroundRight", new Animation(priority: 1, framesCount: 30, yPos: 0, xStartFrame: 0, width: 32,
