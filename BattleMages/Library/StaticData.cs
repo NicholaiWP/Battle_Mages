@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -76,16 +76,16 @@ namespace BattleMages
                 (s) => { s.Range *= 1.15f; return s; }),
 
                 new AttributeRune("Rune of Kings",
-                "Higher damage, but slower cooldown time.",
+                "Higher damage, but higher cooldown time.",
                 "rune5",
                 200,
-                (s) => { s.Damage = s.Damage * 2f; s.CooldownTime *= 1.20f; return s; }),
+                (s) => { s.Damage = s.Damage * 1.5f; s.CooldownTime *= 1.60f; return s; }),
 
                 new  AttributeRune("Rune of Queens",
                 "Lower cooldown, mana cost, and damage.",
                 "rune6",
                 200,
-                (s) => {s.Damage = s.Damage * 0.5f; s.ManaCost = s.ManaCost * 0.5f; s.CooldownTime *= 0.7f; return s; }),
+                (s) => {s.Damage = s.Damage * 0.8f; s.ManaCost = s.ManaCost * 0.85f; s.CooldownTime *= 0.9f; return s; }),
 
                 /*new AttributeRune("Rune of Speed",
                 "Makes your spells move or act faster.",

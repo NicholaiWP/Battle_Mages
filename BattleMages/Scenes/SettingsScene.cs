@@ -45,11 +45,9 @@ namespace BattleMages
 
             fontBM = content.Load<SpriteFont>("FontBM");
             background = content.Load<Texture2D>("Textures/Backgrounds/Menu");
-            DisplayMode lastResolution = null;
-            int i = 0;
+            string lastResolution = null;
             foreach (DisplayMode dmode in allResolutions)
             {
-                resolutionStrings.Add(dmode.Width + "x" + dmode.Height);
                 if (dmode.Width == GameWorld.Instance.ResScreenWidth &&
                     dmode.Height == GameWorld.Instance.ResScreenHeight)
                 {
@@ -58,13 +56,14 @@ namespace BattleMages
                     ElementAtNumber = allResolutions.IndexOf(dmode);
                 }
 
-                if (lastResolution != dmode)
+                if (lastResolution != dmode.Width + "x" + dmode.Height)
                 {
+                    resolutionStrings.Add(dmode.Width + "x" + dmode.Height);
                     resolutions.Add(dmode);
-                    i++;
                 }
-                lastResolution = dmode;
+                lastResolution = dmode.Width + "x" + dmode.Height;
             }
+            ElementAtNumber = resolutionStrings.Count - 1;
             minIndex = resolutionStrings.Count - shownButtons;
             InsertButtons();
 

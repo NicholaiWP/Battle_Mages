@@ -35,14 +35,7 @@ namespace BattleMages
                         {
                             if (go.GetComponent<Player>() != null)
                             {
-                                GameWorld.Camera.Position = new Vector2(0, -90.83358f);
-                                GameWorld.Camera.AllowMovement = false;
-                                oldScene.RemoveObject(go);
-                                GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
-                                nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
-                                nrPlayer.AddComponent(new Animator());
-                                oldScene.AddObject(nrPlayer);
-                                GameWorld.ChangeScene(oldScene);
+                                InsertLikePlayer(go);
                             }
 
                             if (go.GetComponent<NPC>() != null)
@@ -69,14 +62,7 @@ namespace BattleMages
                          {
                              if (go.GetComponent<Player>() != null)
                              {
-                                 GameWorld.Camera.Position = new Vector2(0, -90.83358f);
-                                 GameWorld.Camera.AllowMovement = false;
-                                 oldScene.RemoveObject(go);
-                                 GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
-                                 nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
-                                 nrPlayer.AddComponent(new Animator());
-                                 oldScene.AddObject(nrPlayer);
-                                 GameWorld.ChangeScene(oldScene);
+                                 InsertLikePlayer(go);
                              }
 
                              if (go.GetComponent<NPC>() != null)
@@ -103,14 +89,7 @@ namespace BattleMages
                          {
                              if (go.GetComponent<Player>() != null)
                              {
-                                 GameWorld.Camera.Position = new Vector2(0, -90.83358f);
-                                 GameWorld.Camera.AllowMovement = false;
-                                 oldScene.RemoveObject(go);
-                                 GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
-                                 nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
-                                 nrPlayer.AddComponent(new Animator());
-                                 oldScene.AddObject(nrPlayer);
-                                 GameWorld.ChangeScene(oldScene);
+                                 InsertLikePlayer(go);
                              }
 
                              if (go.GetComponent<NPC>() != null)
@@ -122,6 +101,18 @@ namespace BattleMages
                      }
                  }
                  ));
+        }
+
+        private void InsertLikePlayer(GameObject go)
+        {
+            GameWorld.Camera.Position = new Vector2(0, -90.83358f);
+            GameWorld.Camera.AllowMovement = false;
+            oldScene.RemoveObject(go);
+            GameObject nrPlayer = new GameObject(new Vector2(0, -90.83358f));
+            nrPlayer.AddComponent(new NPC("Textures/Player/PlayerSheet", new Vector2(32, 32), 1, 1, false, 96));
+            nrPlayer.AddComponent(new Animator());
+            oldScene.AddObject(nrPlayer);
+            GameWorld.ChangeScene(oldScene);
         }
 
         public override void Update()

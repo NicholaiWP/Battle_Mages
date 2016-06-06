@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -186,7 +186,7 @@ namespace BattleMages
                 using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from AvailableBaseRunes where BaseRuneID = @ID",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@ID", availableBaseRunes.IndexOf(bR));
+                    command.Parameters.AddWithValue("@ID", StaticData.BaseRunes.IndexOf(bR));
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         if (!reader.Read())
@@ -194,7 +194,7 @@ namespace BattleMages
                             using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AvailableBaseRunes Values(@ID)",
                                 connection))
                             {
-                                cmd.Parameters.AddWithValue("@ID", availableBaseRunes.IndexOf(bR));
+                                cmd.Parameters.AddWithValue("@ID", StaticData.BaseRunes.IndexOf(bR));
                                 cmd.ExecuteNonQuery();
                             }
                         }
