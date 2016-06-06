@@ -17,8 +17,8 @@ namespace BattleMages
         public MenuScene()
         {
             //Play button
-            var playSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Menu/PlayGame");
-            var playSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Menu/PlayGame_Hover");
+            var playSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Menu/NewGame");
+            var playSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Menu/NewGame_Hover");
             AddObject(ObjectBuilder.BuildButton(
                 new Vector2(GameWorld.Camera.Position.X - playSpr1.Width / 2, GameWorld.Camera.Position.Y + playSpr1.Height * -1f),
                 playSpr1,
