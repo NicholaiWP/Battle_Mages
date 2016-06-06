@@ -99,13 +99,13 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("create table AvailableBaseRunes(BaseRuneID int) ",
+                using (SQLiteCommand command = new SQLiteCommand("create table AvailableBaseRunes(BaseRuneID int primary key) ",
                     connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("create table AvailableRunes(RuneID int)",
+                using (SQLiteCommand command = new SQLiteCommand("create table AvailableRunes(RuneID int primary key)",
                     connection))
                 {
                     command.ExecuteNonQuery();
