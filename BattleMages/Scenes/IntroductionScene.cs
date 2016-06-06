@@ -13,34 +13,39 @@ namespace BattleMages
 {
     public class IntroductionScene : Scene
     {
+        private Texture2D background;
+        private float scroll;
+
         public IntroductionScene()
         {
-            var content = GameWorld.Instance.Content;
-
-            var continueButton = content.Load<Texture2D>("Textures/UI/Menu/Continue");
-            var continueButton2 = content.Load<Texture2D>("Textures/UI/Menu/Continue_Hover");
-            AddObject(ObjectBuilder.BuildButton(
-                new Vector2(GameWorld.Camera.Position.X - continueButton.Width / 2, GameWorld.Camera.Position.Y + continueButton.Height * -2.5f),
-                continueButton,
-                continueButton2,
-                () =>
-                {
-                    GameWorld.ChangeScene(new LobbyScene());
+            GameObject dialougeObj = new GameObject(Vector2.Zero);
+            dialougeObj.AddComponent(new DialougeBox(new[] { "In the state of Irizal, the freaks, otherwise known as mages, are seen as outcasts.",
+                "Placed in the colloseum and forced to battle magical creatures they seek to gain magical power, and the favor of the masses, who see it solely as entertainment.",
+                "You find yourself preparing in the barracks, before a match is about to begin." }, () => {
+					GameWorld.ChangeScene(new LobbyScene());
+					
                     GameObject exclamation = new GameObject(new Vector2(-91, -65));
                     exclamation.AddComponent(new Animator());
                     exclamation.AddComponent(new NPC("Textures/Misc/ExclamationMark", new Vector2(6, 10), 1, 1));
                     GameWorld.Scene.AddObject(exclamation);
-                },
-                null,
-                false
-                ));
-
-            GameObject dialougeObj = new GameObject(Vector2.Zero);
-            dialougeObj.AddComponent(new DialougeBox(new[] { "In the state of Irizal, the freaks, otherwise known as mages" +
-                ", are seen as outcasts. Placed in the colloseum and Forced to battle magical creatures they seek to gain magical power," +
-                " and the favor of the masses, who see it solely as entertainment," +
-                " You find yourself preparing in the barracks, before a match is about to begin." }, null));
+					}));
             AddObject(dialougeObj);
+
+            background = GameWorld.Load<Texture2D>("Textures/Backgrounds/Intro");
+        }
+
+        public override void Update()
+        {
+            scroll = Math.Min(scroll + GameWorld.DeltaTime * 16, background.Height - GameWorld.GameHeight);
+
+            base.Update();
+        }
+
+        public override void Draw(Drawer drawer)
+        {
+            drawer[DrawLayer.Background].Draw(background, position: GameWorld.Camera.Position - new Vector2(GameWorld.GameWidth / 2, GameWorld.GameHeight / 2) - new Vector2(0, scroll));
+
+            base.Draw(drawer);
         }
     }
 }
