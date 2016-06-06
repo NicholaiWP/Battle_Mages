@@ -17,6 +17,9 @@ namespace BattleMages
         private SpriteFont bigFont;
         private SpriteFont smallFont;
 
+        private float newWaveTimer = 0;
+        private const float newWaveTimerTarget = 0.3f;
+
         private bool hasRune;
 
         public WaveController(List<Wave> waves, int baseRuneToUnlock)
@@ -51,19 +54,28 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            int enemyCount = 0;
-
+            bool waveDone = true;
             foreach (GameObject go in GameWorld.Scene.ActiveObjects)
             {
-                if (go.GetComponent<Enemy>() != null)
+                if (go.GetComponent<Enemy>() != null || go.GetComponent<EnemySummoner>() != null)
                 {
-                    enemyCount++;
+                    waveDone = false;
+                    break;
                 }
             }
 
-            if (enemyCount == 0 && !challengeEnded)
+            if (waveDone && !challengeEnded)
             {
-                NextWave();
+                newWaveTimer += GameWorld.DeltaTime;
+                if (newWaveTimer > newWaveTimerTarget)
+                {
+                    NextWave();
+                    newWaveTimer = 0;
+                }
+            }
+            else
+            {
+                newWaveTimer = 0;
             }
         }
 
@@ -92,8 +104,20 @@ namespace BattleMages
             {
                 for (int i = 0; i < waves[WaveNumber].Enemies.Count; i++)
                 {
-                    GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[WaveNumber].positions[i],
-                        waves[WaveNumber].Enemies[i]));
+                    int thisIndex = i;
+                    int thisWaveNumber = WaveNumber;
+
+                    GameObject summoner = new GameObject(waves[waveNumber].positions[thisIndex]);
+                    summoner.AddComponent(new SpriteRenderer("Textures/Enemies/EnemySummonSheet", true) { Rectangle = new Rectangle(0, 0, 32, 32) });
+                    Animator animator = new Animator();
+                    animator.CreateAnimation("", new Animation(0, 25, 0, 0, 32, 32, 15, Vector2.Zero));
+                    summoner.AddComponent(animator);
+                    summoner.AddComponent(new EnemySummoner(() =>
+                    {
+                        GameWorld.Scene.AddObject(ObjectBuilder.BuildEnemy(waves[thisWaveNumber].positions[thisIndex],
+                                                waves[thisWaveNumber].Enemies[thisIndex]));
+                    }));
+                    GameWorld.Scene.AddObject(summoner);
                 }
                 WaveNumber++;
             }

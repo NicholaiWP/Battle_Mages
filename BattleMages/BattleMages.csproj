@@ -71,6 +71,7 @@
     <Compile Include="Components\Enemies\Golem.cs" />
     <Compile Include="Components\Enemies\Orb.cs" />
     <Compile Include="Components\Enemies\Slime.cs" />
+    <Compile Include="Components\EnemySummoner.cs" />
     <Compile Include="Components\FadeOut.cs" />
     <Compile Include="Components\FloatingText.cs" />
     <Compile Include="Components\IngameUI.cs" />
