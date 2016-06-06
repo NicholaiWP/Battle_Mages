@@ -15,7 +15,7 @@ namespace BattleMagesTests
         //anticipation: passed test as there's already added waves.
         public void TestWaveNumberIsNotNull()
         {
-            WaveController waveController = new WaveController(new System.Collections.Generic.List<Wave>());
+            WaveController waveController = new WaveController(new System.Collections.Generic.List<Wave>(), 1);
 
             Assert.IsNotNull(waveController.WaveNumber);
         }
@@ -24,7 +24,7 @@ namespace BattleMagesTests
         //anticipated failed test, cant be null if waves exists.
         public void TestWaveNumberIsNull()
         {
-            WaveController waveController = new WaveController(new System.Collections.Generic.List<Wave>());
+            WaveController waveController = new WaveController(new System.Collections.Generic.List<Wave>(), 2);
 
             Assert.IsNull(waveController.WaveNumber);
         }
