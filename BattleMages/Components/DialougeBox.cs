@@ -41,7 +41,7 @@ namespace BattleMages
             GameWorld.Camera.AllowMovement = false;
             cursorLock = GameWorld.Cursor.Lock();
 
-            boxTexture = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialougeBox");
+            boxTexture = GameWorld.Load<Texture2D>("Textures/UI/Ingame/DialogueBox");
             textFont = GameWorld.Load<SpriteFont>("FontBM");
         }
 
@@ -93,10 +93,10 @@ namespace BattleMages
         {
             if (currentText >= texts.Length) return;
 
-            string warpedText = Utils.WarpText(texts[currentText].Substring(0, charactersToDraw), boxTexture.Width - 8, textFont);
+            string warpedText = Utils.WarpText(texts[currentText].Substring(0, charactersToDraw), boxTexture.Width - 12, textFont);
             Vector2 pos = GameWorld.Camera.Position + new Vector2(-boxTexture.Width / 2, GameWorld.GameHeight / 2 - boxTexture.Height);
             msg.Drawer[DrawLayer.UI].Draw(boxTexture, pos, Color.White);
-            msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(4, 2), Color.White);
+            msg.Drawer[DrawLayer.UI].DrawString(textFont, warpedText, pos + new Vector2(6, 6), Color.White);
         }
     }
 }
