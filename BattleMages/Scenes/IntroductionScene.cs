@@ -20,8 +20,10 @@ namespace BattleMages
         {
             GameObject dialougeObj = new GameObject(Vector2.Zero);
             dialougeObj.AddComponent(new DialougeBox(new[] { "In the state of Irizal, the freaks, otherwise known as mages, are seen as outcasts.",
-                "Placed in the colloseum and forced to battle magical creatures they seek to gain magical power, and the favor of the masses, who see it solely as entertainment.",
-                "You find yourself preparing in the barracks, before a match is about to begin." }, () => {
+                "Placed in the colosseum and forced to battle magical creatures they seek to gain magical power, and the favor of the masses, who see it solely as entertainment.",
+                "This is how it has been done for centuries, since the previous ruler was overthrown.",
+                "There is no salvation, no rebellion, only survival, but with enough fame, hopefully there is a brighter future.",
+                "In the barracks, the newest mage is preparing before a match is about to begin... " }, () => {
 					GameWorld.ChangeScene(new LobbyScene());
 					
                     GameObject exclamation = new GameObject(new Vector2(-91, -65));
