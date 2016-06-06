@@ -70,7 +70,7 @@ namespace BattleMages
                 (s) => { return s; }),*/
 
                 new AttributeRune("Rune of Charisma",
-                "Makes your spell a little better in every way.",
+                "Increases most stats a little.",
                 "rune6",
                 100,
                 (s) => {
