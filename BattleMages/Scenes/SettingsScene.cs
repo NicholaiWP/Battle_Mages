@@ -66,11 +66,10 @@ namespace BattleMages
                 lastResolution = dmode;
             }
             minIndex = resolutionStrings.Count - shownButtons;
-            //minIndex = resolutionStrings.Count - resIndex;
             InsertButtons();
 
-            var btnResUpSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
-            var btnResUpSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+            var btnResUpSpr1 = GameWorld.Load<Texture2D>("Textures/Misc/ArrowLeft");
+            var btnResUpSpr2 = GameWorld.Load<Texture2D>("Textures/Misc/ArrowLeft");
             AddObject(ObjectBuilder.BuildButton(new Vector2(50 + GameWorld.Camera.Position.X - GameWorld.GameWidth / 2,
                     62 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), btnResUpSpr1, btnResUpSpr2,
                     () =>
@@ -83,8 +82,8 @@ namespace BattleMages
                         InsertButtons();
                     }));
 
-            var btnResDownSpr1 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButton");
-            var btnResDownSpr2 = GameWorld.Load<Texture2D>("Textures/UI/Spellbook/smallButtonHL");
+            var btnResDownSpr1 = GameWorld.Load<Texture2D>("Textures/Misc/ArrowRight");
+            var btnResDownSpr2 = GameWorld.Load<Texture2D>("Textures/Misc/ArrowRight");
             AddObject(ObjectBuilder.BuildButton(new Vector2(GameWorld.Camera.Position.X + GameWorld.GameWidth / 2 - 65,
                     62 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), btnResDownSpr1, btnResDownSpr2,
                     () =>
@@ -212,9 +211,8 @@ namespace BattleMages
             drawer[DrawLayer.AboveUI].DrawString(fontBM, "Full Screen", new Vector2(GameWorld.Camera.Position.X - 25,
                 105 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), color);
 
-            //drawer[DrawLayer.UI].DrawString(fontBM,
-            //  GameWorld.PlayerControls.KeyToString(GameWorld.PlayerControls.GetBinding(PlayerBind.Up)),
-            //  new Vector2(GameWorld.Camera.Position.X + 64, GameWorld.Camera.Position.Y - 72), Color.Black);
+            drawer[DrawLayer.UI].DrawString(fontBM, "Back", new Vector2(GameWorld.Camera.Position.X - 11,
+                145 + GameWorld.Camera.Position.Y - GameWorld.GameHeight / 2), Color.Black);
 
             base.Draw(drawer);
         }
