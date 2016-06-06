@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -85,7 +85,7 @@ namespace BattleMages
                 "Lower cooldown, mana cost, and damage.",
                 "rune6",
                 200,
-                (s) => {s.Damage = s.Damage * 0.5f; s.ManaCost = s.ManaCost * 0.5f; s.CooldownTime *= 0.7f; return s; }),
+                (s) => {s.Damage = s.Damage * 0.8f; s.ManaCost = s.ManaCost * 0.85f; s.CooldownTime *= 0.9f; return s; }),
 
                 /*new AttributeRune("Rune of Speed",
                 "Makes your spells move or act faster.",

@@ -64,6 +64,7 @@ namespace BattleMages
                 if (attrRune != null)
                     stats = attrRune.ApplyChanges(stats);
             }
+            if (stats.Damage < 1) stats.Damage = 1;
             return stats;
         }
     }
