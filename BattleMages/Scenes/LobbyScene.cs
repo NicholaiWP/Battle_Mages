@@ -58,16 +58,13 @@ namespace BattleMages
             GameObject shopkeeperObj = new GameObject(new Vector2(138, -6));
             shopkeeperObj.AddComponent(new NPC("Textures/Npc's/shopKeeper-Sheet", new Vector2(48, 48), 12, 6));
             shopkeeperObj.AddComponent(new Animator());
-            shopkeeperObj.AddComponent(new Collider(new Vector2(40, 24), true) { Offset = new Vector2(0, 12) });
+            shopkeeperObj.AddComponent(new Collider(new Vector2(40, 32), true) { Offset = new Vector2(0, 8) });
             shopkeeperObj.AddComponent(new Interactable(() =>
             {
                 GameObject dialougeObj = new GameObject(Vector2.Zero);
                 dialougeObj.AddComponent(new DialougeBox(new[]
                 {
-                    "Greetings little fellow. Interested in some of my fine wares? *coughs*",
-                    "If I've got runes? you bet I do!",
-                    "Purchasing one of these will improve your arsenal, simply just apply the rune to your desired spell.",
-                    "Here, take a look"
+                    "Greetings little fellow. Interested in some of my fine wares? My runes will make your spells the best in the land!",
                 },
                  () => { GameWorld.ChangeScene(new ShopScene(GameWorld.Scene)); }));
 
@@ -92,12 +89,12 @@ namespace BattleMages
                     "Use WASD to move around. You can also perform a dash by clicking your RIGHT MOUSE BUTTON.",
                     "When in combat, you can LEFT CLICK to use a spell. Use the NUMBER BUTTONS or your SCROLL WHEEL to change what spell you're using.",
                     "Spells are your most valuable equipment. To open your spellbook and modify them, press TAB. The book has instructions inside, it's a very smart book, hoh-hoh!",
-                    "Please note that you can not modify your spells and runes while being in the arena.",
+                    "Please note that you can not modify your spells and runes while fighting in the arena.",
                     "A spell is a combination of two types of runes: Base Runes and Attribute Runes. I will try to explain them both!",
                     "Base Runes define a spell's fundemental ability. I see you already have Fireball and Ice Shards. You can earn more of these by winning in combat!",
                     "Atribute Runes are used to enhance your spells further. They can be bought with gold from the shop keeper to the right.",
                     "How do you get in combat, you ask? Simply talk to the guard above me. It'll earn you plenty of gold!",
-                    "That should be all you need. Now get going, and may the odds ever be in your favour!"
+                    "That should be all you need. Now get going!"
                 }, null));
                 AddObject(dialougeObj);
             }));

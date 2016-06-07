@@ -79,18 +79,6 @@
 /processorParam:Quality=Best
 /build:Music/Hub.mp3
 
-#begin Textures/Backgrounds/Death.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Backgrounds/Death.png
-
 #begin Textures/Backgrounds/Lobby.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -463,18 +451,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Spells/EarthSpikes.png
 
-#begin Textures/Spells/Fireball.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Spells/Fireball.png
-
 #begin Textures/Spells/IceShard.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -727,78 +703,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/UI/Spellbook/RuneGrid.png
 
-#begin Textures/UI/TestButtons/Intermediate.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/TestButtons/Intermediate.png
-
-#begin Textures/UI/TestButtons/Intermediate_Hover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/TestButtons/Intermediate_Hover.png
-
-#begin Textures/UI/TestButtons/Novice.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/TestButtons/Novice.png
-
-#begin Textures/UI/TestButtons/Novice_Hover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/TestButtons/Novice_Hover.png
-
-#begin Textures/UI/TestButtons/Skilled.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/TestButtons/Skilled.png
-
-#begin Textures/UI/TestButtons/Skilled_Hover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/TestButtons/Skilled_Hover.png
-
 #begin Textures/UI/Menu/Forfeit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -919,18 +823,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Backgrounds/Hallway.png
 
-#begin Textures/UI/Spellbook/DeleteSpell.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/Spellbook/DeleteSpell.png
-
 #begin Textures/Misc/coin.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -942,18 +834,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/coin.png
-
-#begin Textures/UI/Spellbook/EditSpell.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/Spellbook/EditSpell.png
 
 #begin Sounds/CoinDropSound.wav
 /importer:WavImporter
@@ -1080,18 +960,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/UI/Spellbook/buyButtonHL.png
-
-#begin Textures/UI/Spellbook/enemyLarge.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/UI/Spellbook/enemyLarge.png
 
 #begin Textures/UI/Spellbook/longButton.png
 /importer:TextureImporter
@@ -1260,18 +1128,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Spells/fireball-Sheet.png
-
-#begin Textures/Spells/iceSHard-Sheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Spells/iceSHard-Sheet.png
 
 #begin Textures/Npc's/TutorialGuy-Sheet.png
 /importer:TextureImporter
