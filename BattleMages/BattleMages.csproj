@@ -152,7 +152,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BMIcon.ico" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
