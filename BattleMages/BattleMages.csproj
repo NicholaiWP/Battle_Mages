@@ -56,7 +56,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>BMIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\Behaviours\AreaAttack.cs" />
@@ -152,6 +152,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BMIcon.ico" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
