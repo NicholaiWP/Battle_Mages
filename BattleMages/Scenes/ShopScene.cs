@@ -22,12 +22,7 @@ namespace BattleMages
         private UITab lowerLeftTab;
         private UITab lowerRightTab;
 
-        //bool for returning to the lobby after entering the shop
-        private bool cPressed;
-
         private string descriptionText;
-
-        private KeyboardState prevState = Keyboard.GetState();
 
         //TO DO:
         //connect "currentMoney" to master's "playerGold".

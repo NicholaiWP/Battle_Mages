@@ -21,7 +21,6 @@ namespace BattleMages
 
         //Timing
         private readonly float attackDelay;
-
         private readonly float attackTime;
         private readonly float rechargeTime;
 
@@ -36,7 +35,6 @@ namespace BattleMages
 
         //Current state of attack
         private AtkState state;
-
         private float timer;
 
         private Character character;

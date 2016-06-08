@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace BattleMages
 {
@@ -10,7 +10,6 @@ namespace BattleMages
     {
         //Fields
         private float fps;
-
         private Vector2 offset;
 
         //Array
@@ -18,7 +17,6 @@ namespace BattleMages
 
         //Properties
         public float Fps { get { return fps; } }
-
         public Vector2 Offset { get { return offset; } }
         public Rectangle[] Frames { get { return frames; } }
         public int Priority { get; set; }

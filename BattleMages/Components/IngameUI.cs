@@ -25,7 +25,6 @@ namespace BattleMages
         private Player player;
 
         private SpriteFont haxFont;
-        private SpriteFont enemyHealthFont;
         private Vector2[] spellBarPositions;
         private GameObject[] spellInfoRenderers;
 
@@ -39,7 +38,6 @@ namespace BattleMages
         private void Initialize(InitializeMsg msg)
         {
             haxFont = GameWorld.Load<SpriteFont>("FontBM");
-            enemyHealthFont = GameWorld.Load<SpriteFont>("EnemyHealthFont");
             behindUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIBackground");
             aboveUI = GameWorld.Load<Texture2D>("Textures/UI/Ingame/UIForeground");
             healthBar = GameWorld.Load<Texture2D>("Textures/UI/Ingame/HealthBar");
@@ -72,11 +70,16 @@ namespace BattleMages
 
         private void Update(UpdateMsg msg)
         {
-            player = GameWorld.Scene.ActiveObjects.Select(a => a.GetComponent<Player>()).Where(a => a != null).FirstOrDefault();
+            player = GameWorld.Scene.ActiveObjects.Select(a => a.GetComponent<Player>())
+                .Where(a => a != null)
+                .FirstOrDefault();
+
             if (player != null)
             {
-                healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth / (float)Player.MaxHealth, GameWorld.DeltaTime * 10f));
-                manabarSize = MathHelper.Lerp(manabarSize, player.CurrentMana / Player.MaxMana, GameWorld.DeltaTime * 10f);
+                healthbarSize = Math.Max(0, MathHelper.Lerp(healthbarSize, player.CurrentHealth
+                    / (float)Player.MaxHealth, GameWorld.DeltaTime * 10f));
+                manabarSize = MathHelper.Lerp(manabarSize, player.CurrentMana
+                    / Player.MaxMana, GameWorld.DeltaTime * 10f);
 
                 manabarEmpty = manabarSize < 0f;
             }

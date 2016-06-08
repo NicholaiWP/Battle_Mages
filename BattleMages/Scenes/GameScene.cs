@@ -13,8 +13,6 @@ namespace BattleMages
 {
     public class GameScene : Scene
     {
-        private KeyboardState keyState;
-
         private SoundEffectInstance crowdSnd;
 
         public GameScene(string challengeName)
@@ -68,8 +66,6 @@ namespace BattleMages
 
             if (crowdSnd.Volume < 1)
                 crowdSnd.Volume = MathHelper.Min(crowdSnd.Volume + GameWorld.DeltaTime, 0.5f);
-
-            keyState = Keyboard.GetState();
 
             //If the key P is down then we change to the pause scene
             if (GameWorld.KeyPressed(Keys.Escape))

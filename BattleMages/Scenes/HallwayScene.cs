@@ -14,7 +14,6 @@ namespace BattleMages
     {
         private Texture2D hallwayTex;
         private Vector2 hallwayTexPosition;
-        private KeyboardState keyState;
 
         private SoundEffectInstance crowdSnd;
         private float crowdVolume;
@@ -54,8 +53,6 @@ namespace BattleMages
 
         public override void Update()
         {
-            keyState = Keyboard.GetState();
-
             if (GameWorld.KeyPressed(Keys.Escape))
             {
                 crowdSnd.Pause();
