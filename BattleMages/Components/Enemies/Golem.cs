@@ -25,7 +25,6 @@ namespace BattleMages
             base.PreInitialize(msg);
             GameObject.AddComponent(new SpriteRenderer("Textures/Enemies/golemSpriteSheet", true)
             { Rectangle = new Rectangle(0, 0, 32, 32) });
-            GameObject.AddComponent(new Animator());
         }
 
         protected override void Initialize(InitializeMsg msg)

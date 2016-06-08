@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -52,7 +52,7 @@ namespace BattleMages
         public void SendMessage<T>(T message) where T : Msg
         {
             object result;
-            if (handlers.TryGetValue(message.GetType(),out result))
+            if (handlers.TryGetValue(message.GetType(), out result))
             {
                 MsgHandler<T> castedResult = (MsgHandler<T>)result;
                 castedResult(message);
