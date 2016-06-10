@@ -1261,18 +1261,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Misc/ArrowRight.png
 
-#begin Textures/Misc/ExclamationMark.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Misc/ExclamationMark.png
-
 #begin Textures\Enemies\EnemySummonSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1296,6 +1284,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/UI/Ingame/DialogueBox.png
+
+#begin Textures/Misc/ExclamationMark.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Misc/ExclamationMark.png
 
 #begin Textures\UI\Menu\NewGame.png
 /importer:TextureImporter
@@ -1344,4 +1344,3 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures\Backgrounds\Menu.png
-
