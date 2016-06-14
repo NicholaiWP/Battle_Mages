@@ -33,7 +33,8 @@ namespace BattleMages
         /// <param name="component"></param>
         public void AddComponent(Component component)
         {
-            if (!components.Any(a => a.GetType() == component.GetType()))
+            if (!components.Any(a => a.GetType() == component.GetType()) &&
+                !componentsToAdd.Any(a => a.GetType() == component.GetType()))
             {
                 componentsToAdd.Add(component);
                 component.GameObject = this;
