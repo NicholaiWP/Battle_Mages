@@ -113,5 +113,28 @@ namespace BattleMagesTests
             //An InvalidOperationException should be thrown here
             obj.AddComponent(new DummyComponent());
         }
+
+        [TestMethod]
+        public void RemoveComponent()
+        {
+            GameObject obj = new GameObject(testPos);
+
+            //Component to test removal of
+            DummyComponent comp = new DummyComponent();
+
+            //Add the component first
+            obj.AddComponent(comp);
+
+            //Process components to get it on the object list
+            obj.ProcessComponents();
+
+            //Now try to remove it
+            obj.RemoveComponent<DummyComponent>();
+
+            //The component should stay on the list until ProcessComponents is called
+            Assert.IsNotNull(obj.GetComponent<DummyComponent>());
+            obj.ProcessComponents();
+            Assert.IsNull(obj.GetComponent<DummyComponent>());
+        }
     }
 }
