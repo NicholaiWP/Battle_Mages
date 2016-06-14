@@ -20,7 +20,7 @@ namespace BattleMages
 
         private Dictionary<Guid, SpellInfo> spellBook = new Dictionary<Guid, SpellInfo>();
         private List<Guid?> spellBar = new List<Guid?>();
-        private SQLiteConnection connection = new SQLiteConnection("Data Source = SavedGame.db; Version = 3;");
+        private SQLiteConnection connection = new SQLiteConnection("Data Source = SavedGame.db; Version = 3; foreign keys = true;");
         private string databaseFileName = "SavedGame.db";
         private List<AttributeRune> availableRunes = new List<AttributeRune>();
         public List<AttributeRune> AvailableRunes { get { return availableRunes; } }
@@ -112,7 +112,7 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("create table AttributeRunes(ID integer primary key, RuneID integer references AvailableRunes(RuneID), SpellBookID string REFERENCES SpellBook(ID))",
+                using (SQLiteCommand command = new SQLiteCommand("create table AttributeRunes(ID integer primary key, RuneID integer references AvailableRunes(RuneID), SpellBookID string REFERENCES SpellBook(ID) ON DELETE CASCADE ON UPDATE CASCADE)",
                     connection))
                 {
                     command.ExecuteNonQuery();
@@ -131,7 +131,7 @@ namespace BattleMages
                     command.ExecuteNonQuery();
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("create table SpellBar(ID integer primary key, SpellBookID string REFERENCES SpellBook(ID))",
+                using (SQLiteCommand command = new SQLiteCommand("create table SpellBar(ID integer primary key, SpellBookID string REFERENCES SpellBook(ID)  ON DELETE CASCADE ON UPDATE CASCADE)",
                     connection))
                 {
                     command.ExecuteNonQuery();
@@ -229,18 +229,6 @@ namespace BattleMages
                 }
             }
 
-            for (int i = 0; i < 4; i++)
-            {
-                using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
-                    connection))
-                {
-                    command.Parameters.AddWithValue("@ID", i);
-                    command.Parameters.AddWithValue("@SBID", spellBar[i].ToString());
-
-                    command.ExecuteNonQuery();
-                }
-            }
-
             using (SQLiteCommand command = new SQLiteCommand(@"Select ID from SpellBook",
                 connection))
             {
@@ -255,12 +243,6 @@ namespace BattleMages
                                 connection))
                             {
                                 cmd.Parameters.AddWithValue("@ID", potentialKey);
-                                cmd.ExecuteNonQuery();
-                            }
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Delete from AttributeRunes where SpellBookID = @SBID",
-                                connection))
-                            {
-                                cmd.Parameters.AddWithValue("@SBID", potentialKey);
                                 cmd.ExecuteNonQuery();
                             }
                         }
@@ -304,7 +286,14 @@ namespace BattleMages
                                 using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AttributeRunes Values(null, @runeID, @SBID)",
                                     connection))
                                 {
-                                    cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[t]);
+                                    if (pair.Value.AttrRuneIDs[t] != -1)
+                                    {
+                                        cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[t]);
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.AddWithValue("@runeID", null);
+                                    }
                                     cmd.Parameters.AddWithValue("@SBID", pair.Key.ToString());
                                     cmd.ExecuteNonQuery();
                                 }
@@ -323,13 +312,20 @@ namespace BattleMages
 
                         while (reader.Read())
                         {
-                            if (pair.Value.AttrRuneIDs[runePos] != reader.GetInt32(0))
+                            if (reader.IsDBNull(0) || pair.Value.AttrRuneIDs[runePos] != reader.GetInt32(0))
                             {
                                 using (SQLiteCommand cmd = new SQLiteCommand(@"Update AttributeRunes Set RuneID = @runeID where ID like @ID",
                                     connection))
                                 {
                                     cmd.Parameters.AddWithValue("@ID", attrRuneID);
-                                    cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[runePos]);
+                                    if (pair.Value.AttrRuneIDs[runePos] == -1)
+                                    {
+                                        cmd.Parameters.AddWithValue("@runeID", null);
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[runePos]);
+                                    }
                                     cmd.ExecuteReader();
                                 }
                             }
@@ -339,15 +335,42 @@ namespace BattleMages
                     }
                 }
             }
-
+            int i = 0;
             foreach (var guid in sbar)
             {
+                i++;
+                using (SQLiteCommand command = new SQLiteCommand("Select Count (*) from SpellBar",
+                    connection))
+                {
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            if (i > reader.GetInt32(0))
+                            {
+                                using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBar Values(@ID, @SBID)",
+                                    connection))
+                                {
+                                    cmd.Parameters.AddWithValue("@ID", sbar.IndexOf(guid));
+                                    cmd.Parameters.AddWithValue("@SBID", null);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+                }
                 using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@ID", spellBar.IndexOf(guid));
-                    command.Parameters.AddWithValue("@SBID", guid.ToString());
-
+                    command.Parameters.AddWithValue("@ID", sbar.IndexOf(guid));
+                    if (guid == null)
+                    {
+                        command.Parameters.AddWithValue("@SBID", null);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@SBID", guid.ToString());
+                    }
                     command.ExecuteNonQuery();
                 }
             }
@@ -418,7 +441,14 @@ namespace BattleMages
                                 {
                                     while (read.Read())
                                     {
-                                        si.SetAttributeRune(runePos, read.GetInt32(0));
+                                        if (read.IsDBNull(0))
+                                        {
+                                            si.SetAttributeRune(runePos, -1);
+                                        }
+                                        else
+                                        {
+                                            si.SetAttributeRune(runePos, read.GetInt32(0));
+                                        }
                                         runePos++;
                                     }
                                     runePos = 0;
@@ -436,8 +466,7 @@ namespace BattleMages
                     {
                         while (reader.Read())
                         {
-                            string s = reader.GetString(0);
-                            if (reader.GetString(0) == string.Empty)
+                            if (reader.IsDBNull(0))
                             {
                                 spellBar.Add(null);
                             }
