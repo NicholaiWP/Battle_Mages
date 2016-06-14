@@ -110,5 +110,25 @@ namespace BattleMages
         {
             return new Vector2(tex.Width, tex.Height) / 2f;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lifeToHeal"></param>
+        public static void HealOnHit(int lifeToHeal)
+        {
+            foreach (GameObject go in GameWorld.Scene.ActiveObjects)
+            {
+                var player = go.GetComponent<Player>();
+                if(player != null)
+                {
+                    int chance = GameWorld.Random.Next(1, 101);
+                    if(chance <= 18)
+                    {
+                        go.GetComponent<Player>().Heal(lifeToHeal);
+                    }
+                }
+            }
+        }
     }
 }

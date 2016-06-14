@@ -347,6 +347,15 @@ namespace BattleMages
             }
         }
 
+        public void Heal(int healPoints)
+        {
+            CurrentHealth += healPoints;
+            if(CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+        }
+
         public float GetCooldownTimer(int slot)
         {
             if (cooldownTimersMax[slot] == 0) return 0;

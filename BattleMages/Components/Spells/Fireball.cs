@@ -57,6 +57,7 @@ namespace BattleMages
                 if (enemy != null)
                 {
                     enemy.TakeDamage((int)Stats.Damage);
+                    Utils.HealOnHit((int)(Stats.Damage * Stats.LifeSteal));
                     //damage of the burn effect
                     Onfire(3, enemy);
                     GameWorld.Scene.RemoveObject(GameObject);
