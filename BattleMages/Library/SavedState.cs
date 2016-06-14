@@ -172,6 +172,11 @@ namespace BattleMages
             //it is the indicator of the id in the table.
             int attrRuneID = 1;
 
+            List<BaseRune> abr = new List<BaseRune>(availableBaseRunes);
+            List<AttributeRune> aar = new List<AttributeRune>(availableRunes);
+            Dictionary<Guid, SpellInfo> sb = new Dictionary<Guid, SpellInfo>(spellBook);
+            List<Guid?> sbar = new List<Guid?>(spellBar);
+
             connection.Open();
 
             using (SQLiteCommand command = new SQLiteCommand(@"Update PlayerGold set Gold = @gold",
@@ -181,7 +186,7 @@ namespace BattleMages
                 command.ExecuteNonQuery();
             }
 
-            foreach (BaseRune bR in availableBaseRunes)
+            foreach (BaseRune bR in abr)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from AvailableBaseRunes where BaseRuneID = @ID",
                     connection))
@@ -202,7 +207,7 @@ namespace BattleMages
                 }
             }
 
-            foreach (AttributeRune aR in availableRunes)
+            foreach (AttributeRune aR in aar)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AvailableRunes where RuneID = @ID",
                     connection))
@@ -263,7 +268,7 @@ namespace BattleMages
                 }
             }
 
-            foreach (var pair in spellBook)
+            foreach (var pair in sb)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
                     connection))
@@ -335,7 +340,7 @@ namespace BattleMages
                 }
             }
 
-            foreach (var guid in spellBar)
+            foreach (var guid in sbar)
             {
                 using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
                     connection))
