@@ -9,11 +9,13 @@ namespace BattleMagesTests
     {
         public bool PreInitialized { get; private set; }
         public bool Initialized { get; private set; }
+        public int UpdateCalls { get; private set; }
 
         public DummyComponent()
         {
             Listen<PreInitializeMsg>(PreInitialize);
             Listen<InitializeMsg>(Initialize);
+            Listen<UpdateMsg>(Update);
         }
 
         private void PreInitialize(PreInitializeMsg msg)
@@ -24,6 +26,11 @@ namespace BattleMagesTests
         private void Initialize(InitializeMsg msg)
         {
             Initialized = true;
+        }
+
+        private void Update(UpdateMsg msg)
+        {
+            UpdateCalls++;
         }
     }
 
@@ -135,6 +142,57 @@ namespace BattleMagesTests
             Assert.IsNotNull(obj.GetComponent<DummyComponent>());
             obj.ProcessComponents();
             Assert.IsNull(obj.GetComponent<DummyComponent>());
+        }
+
+        [TestMethod]
+        public void AddRemoveComponentInSameFrame()
+        {
+            //When a component is added and then removed during the same frame, it should be removed
+            GameObject obj = new GameObject(testPos);
+
+            obj.AddComponent(new DummyComponent());
+            obj.RemoveComponent<DummyComponent>();
+
+            Assert.IsNull(obj.GetComponent<DummyComponent>());
+        }
+
+        [TestMethod]
+        public void RemoveMissingComponent()
+        {
+            GameObject obj = new GameObject(testPos);
+
+            //Removing a nonexistant component should not cause any problems.
+            obj.RemoveComponent<DummyComponent>();
+
+            obj.ProcessComponents();
+        }
+
+        [TestMethod]
+        public void SendUpdateMessage()
+        {
+            //All messages are sent the same way so this should validate that all message types work correctly.
+            GameObject obj = new GameObject(testPos);
+
+            DummyComponent comp = new DummyComponent();
+            obj.AddComponent(comp);
+
+            //The dummy component is now added, but not processed, ie put on the component list
+            //Send a message and make sure it didn't arrive
+            obj.SendMessage(new UpdateMsg());
+
+            int expected = 0;
+            int actual = comp.UpdateCalls;
+            Assert.AreEqual(expected, actual);
+
+            //Now, process components and try again
+            obj.ProcessComponents();
+
+            obj.SendMessage(new UpdateMsg());
+
+            //Check if the message was properly forwarded to the dummy component
+            int expected2 = 1;
+            int actual2 = comp.UpdateCalls;
+            Assert.AreEqual(expected2, actual2);
         }
     }
 }
