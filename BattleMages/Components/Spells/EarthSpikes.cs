@@ -66,6 +66,7 @@ namespace BattleMages
                 {
                     damageTimer = 0.6f;
                     enemy.TakeDamage((int)Stats.Damage);
+                    Utils.HealOnHit((int)(Stats.Damage * Stats.LifeSteal));
                 }
             }
 

@@ -77,6 +77,7 @@ namespace BattleMages
                 {
                     enemy.TakeDamage((int)Stats.Damage);
                     GameWorld.SoundManager.PlaySound("iceshardsbreaking", volume: 0.7f);
+                    Utils.HealOnHit((int)(Stats.Damage * Stats.LifeSteal));
 
                     GameWorld.Scene.RemoveObject(GameObject);
                     GameWorld.SoundManager.StopSound("FrostShield");

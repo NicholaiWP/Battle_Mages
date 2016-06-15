@@ -54,6 +54,7 @@ namespace BattleMages
                     if (enemy != null)
                     {
                         enemy.TakeDamage((int)(Stats.Damage / others.Count));
+                        Utils.HealOnHit((int)(Stats.Damage * Stats.LifeSteal));
                     }
                 }
             }
