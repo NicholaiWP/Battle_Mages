@@ -53,13 +53,13 @@ namespace BattleMages
 
                  new AttributeRune("Rune of Efficiency",
                 "Makes a spell use less mana.",
-                "rune2",
+                "rune1",
                 100,
                 (s) => { s.ManaCost = s.ManaCost * 0.85f; return s;}),
 
                 new AttributeRune("Rune of Might",
                 "Increases the damage of a spell.",
-                "rune1",
+                "rune2",
                 100,
                 (s) => { s.Damage = s.Damage * 1.25f; return s;}),
 
@@ -69,29 +69,47 @@ namespace BattleMages
                 100,
                 (s) => {s.CooldownTime = s.CooldownTime * 0.80f; return s; }),
 
+                 new AttributeRune("Rune of Speed",
+                "Lets you cast a spell even faster.",
+                "rune4",
+                150,
+                (s) => {s.CooldownTime = s.CooldownTime * 0.69f; return s; }),
+
+                  new AttributeRune("Rune of Desctruction",
+                " Upgraded version of rune of might",
+                "rune5",
+                150,
+                (s) => { s.Damage = s.Damage * 1.35f; s.CooldownTime *= 1.1f; return s;}),
+
+                   new AttributeRune("Rune of Surplus",
+                "Makes a spell use way less mana.",
+                "rune6",
+                150,
+                (s) => { s.ManaCost = s.ManaCost * 0.60f; return s;}),
+
                 new AttributeRune("Rune of Reach",
                 "Increases the range of a spell.",
-                "rune4",
+                "rune7",
                 200,
                 (s) => { s.Range *= 1.15f; return s; }),
 
                  new  AttributeRune("Rune of life",
                 "Chance of regaining health on hit.",
-                "rune7",
+                "rune8",
                 200,
                 (s) => {s.LifeSteal += 0.125f; return s;}),
 
                   new  AttributeRune("Rune of Queens",
                 "Lower cooldown, mana cost, and damage.",
-                "rune6",
+                "rune9",
                 300,
-                (s) => {s.Damage = s.Damage * 0.7f; s.ManaCost = s.ManaCost * 0.85f; s.CooldownTime *= 0.6f; return s; }),
+                (s) => {s.Damage = s.Damage * 0.7f; s.ManaCost = s.ManaCost * 0.85f; s.CooldownTime *= 0.7f; return s; }),
 
                 new AttributeRune("Rune of Kings",
                 "Higher damage, but higher cooldown time.",
-                "rune5",
+                "rune10",
                 300,
-                (s) => { s.Damage = s.Damage * 1.5f; s.CooldownTime *= 1.60f; return s; }),
+                (s) => { s.Damage = s.Damage * 1.6f; s.CooldownTime *= 1.60f; return s; }),
 
 
                 /*new AttributeRune("Rune of Speed",
