@@ -70,10 +70,10 @@ namespace BattleMages
                 (s) => {s.CooldownTime = s.CooldownTime * 0.80f; return s; }),
 
                  new AttributeRune("Rune of Speed",
-                "Lets you cast a spell even faster.",
+                "Less cooldown, more mana cost",
                 "rune4",
                 150,
-                (s) => {s.CooldownTime = s.CooldownTime * 0.69f; return s; }),
+                (s) => {s.CooldownTime = s.CooldownTime * 0.69f; s.ManaCost = s.ManaCost * 1.1f; return s; }),
 
                   new AttributeRune("Rune of Desctruction",
                 " Upgraded version of rune of might",
@@ -82,10 +82,10 @@ namespace BattleMages
                 (s) => { s.Damage = s.Damage * 1.35f; s.CooldownTime *= 1.1f; return s;}),
 
                    new AttributeRune("Rune of Surplus",
-                "Makes a spell use way less mana.",
+                "Less mana cost and a small reduce of damage",
                 "rune6",
                 150,
-                (s) => { s.ManaCost = s.ManaCost * 0.60f; return s;}),
+                (s) => { s.ManaCost = s.ManaCost * 0.60f; s.Damage = s.Damage * 0.9f; return s;}),
 
                 new AttributeRune("Rune of Reach",
                 "Increases the range of a spell.",
