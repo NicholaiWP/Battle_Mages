@@ -270,9 +270,14 @@ namespace BattleMages
 
                 () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
+                //Boss
+                //new Wave(new List<Vector2> { new Vector2(-300, 0)},
+                //() => new List<Enemy> { new Boss()});
+
+                
         }
 
-        public static void LoadContent()
+    public static void LoadContent()
         {
             foreach (AttributeRune attrRune in attributeRunes)
             {

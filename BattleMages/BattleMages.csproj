@@ -68,6 +68,7 @@
     <Compile Include="Components\DialougeBox.cs" />
     <Compile Include="Components\DragDropPoint.cs" />
     <Compile Include="Components\DragDropItem.cs" />
+    <Compile Include="Components\Enemies\Boss.cs" />
     <Compile Include="Components\Enemies\Golem.cs" />
     <Compile Include="Components\Enemies\Orb.cs" />
     <Compile Include="Components\Enemies\Slime.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Library\Msg.cs" />
     <Compile Include="Messages\PreInitializeMsg.cs" />
     <Compile Include="Messages\UpdateMsg.cs" />
+    <Compile Include="Scenes\BossDialogueScene.cs" />
     <Compile Include="Scenes\ChallengeScene.cs" />
     <Compile Include="Scenes\DeathScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />

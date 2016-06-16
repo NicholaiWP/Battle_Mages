@@ -35,7 +35,7 @@ namespace BattleMages
 
         public int Damage { get { return damage; } }
         public int Health { get { return health; } }
-        public int MaxHealth { get; protected set; } = 100;
+        public int MaxHealth { get; protected set; } = 10000;
         public bool IsAlreadyBurned { get; set; }
         public float CooldownTimer { get { return cooldownTimer; } }
 
@@ -97,7 +97,6 @@ namespace BattleMages
         protected virtual void Initialize(InitializeMsg msg)
         {
             health = MaxHealth;
-
             animator = GameObject.GetComponent<Animator>();
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>();
             character = GameObject.GetComponent<Character>();
