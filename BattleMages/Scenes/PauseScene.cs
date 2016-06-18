@@ -40,7 +40,7 @@ namespace BattleMages
                 GameWorld.Camera.Position + new Vector2(-QuitSpr1.Width / 2, 0),
                 QuitSpr1,
                 QuitSpr2,
-                () => { GameWorld.Instance.Exit(); }
+                () => { GameWorld.ChangeScene(new MenuScene()); }
                 ));
 
             if (oldScene is GameScene)
