@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BattleMages
 {
@@ -40,7 +40,11 @@ namespace BattleMages
                 GameWorld.Camera.Position + new Vector2(-QuitSpr1.Width / 2, 0),
                 QuitSpr1,
                 QuitSpr2,
-                () => { GameWorld.ChangeScene(new MenuScene()); }
+                () =>
+                {
+                    GameWorld.ChangeScene(new MenuScene()); GameWorld.State.AvailableBaseRunes.Clear();
+                    GameWorld.State.AvailableRunes.Clear(); GameWorld.State.SpellBook.Clear(); GameWorld.State.SpellBar.Clear();
+                }
                 ));
 
             if (oldScene is GameScene)
