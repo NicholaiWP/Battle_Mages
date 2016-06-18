@@ -82,7 +82,7 @@ namespace BattleMages
                 (s) => { s.Damage = s.Damage * 1.35f; s.CooldownTime *= 1.1f; return s;}),
 
                    new AttributeRune("Rune of Surplus",
-                "Less mana cost and a small reduce of damage",
+                "Less mana cost, small reduce of damage",
                 "rune6",
                 150,
                 (s) => { s.ManaCost = s.ManaCost * 0.60f; s.Damage = s.Damage * 0.9f; return s;}),
