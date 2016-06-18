@@ -76,7 +76,7 @@ namespace BattleMages
                 (s) => {s.CooldownTime = s.CooldownTime * 0.69f; s.ManaCost = s.ManaCost * 1.1f; return s; }),
 
                   new AttributeRune("Rune of Desctruction",
-                " Upgraded version of rune of might",
+                " More damage, increase of cooldown",
                 "rune5",
                 150,
                 (s) => { s.Damage = s.Damage * 1.35f; s.CooldownTime *= 1.1f; return s;}),
