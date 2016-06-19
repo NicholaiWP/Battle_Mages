@@ -79,7 +79,7 @@ namespace BattleMages
                 " More damage, increase of cooldown",
                 "rune5",
                 150,
-                (s) => { s.Damage = s.Damage * 1.35f; s.CooldownTime *= 1.1f; return s;}),
+                (s) => { s.Damage = s.Damage * 1.35f; s.CooldownTime *= 1.35f; return s;}),
 
                    new AttributeRune("Rune of Surplus",
                 "Less mana cost, small reduce of damage",
