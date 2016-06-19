@@ -423,38 +423,44 @@ namespace BattleMages
                     }
                 }
 
-                using (SQLiteCommand command = new SQLiteCommand("Select ID, BaseRuneID from SpellBook",
+                using (SQLiteCommand command = new SQLiteCommand("Select SpellBookID, RuneID from AttributeRunes Inner join SpellBook on SpellBookID = SpellBook.ID",
                     connection))
                 {
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
+                        SpellInfo si = new SpellInfo();
                         while (reader.Read())
                         {
-                            SpellInfo si = new SpellInfo();
-                            si.SetBaseRune(reader.GetInt32(1));
-                            string SBID = reader.GetString(0);
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Select RuneID from AttributeRunes Where SpellBookID = @SBID",
+                            using (SQLiteCommand cmd = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
                                 connection))
                             {
-                                cmd.Parameters.AddWithValue("@SBID", SBID);
-                                using (SQLiteDataReader read = cmd.ExecuteReader())
+                                cmd.Parameters.AddWithValue("@ID", reader.GetString(0));
+                                using (SQLiteDataReader newReader = cmd.ExecuteReader())
                                 {
-                                    while (read.Read())
+                                    if (newReader.Read())
                                     {
-                                        if (read.IsDBNull(0))
+                                        if (!SpellBook.ContainsKey(Guid.Parse(reader.GetString(0))))
                                         {
-                                            si.SetAttributeRune(runePos, -1);
+                                            si.SetBaseRune(newReader.GetInt32(0));
+                                            SpellBook.Add(Guid.Parse(reader.GetString(0)), si);
                                         }
-                                        else
-                                        {
-                                            si.SetAttributeRune(runePos, read.GetInt32(0));
-                                        }
-                                        runePos++;
                                     }
-                                    runePos = 0;
                                 }
                             }
-                            spellBook.Add(Guid.Parse(SBID), si);
+                            if (reader.IsDBNull(1))
+                            {
+                                si.SetAttributeRune(runePos, -1);
+                            }
+                            else
+                            {
+                                si.SetAttributeRune(runePos, reader.GetInt32(1));
+                            }
+                            runePos++;
+                            if (runePos >= 4)
+                            {
+                                runePos = 0;
+                                si = new SpellInfo();
+                            }
                         }
                     }
                 }
