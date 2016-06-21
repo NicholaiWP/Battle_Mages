@@ -111,7 +111,6 @@ namespace BattleMages
                 300,
                 (s) => { s.Damage = s.Damage * 1.6f; s.CooldownTime *= 1.60f; return s; }),
 
-
                 /*new AttributeRune("Rune of Speed",
                 "Makes your spells move or act faster.",
                 "rune5",
@@ -167,7 +166,7 @@ namespace BattleMages
                 //wave with 1 golem, 1 orb, 1 slime
                 new Wave(new List<Vector2> { new Vector2(25,30),
                 new Vector2(-20, -30), new Vector2(120, 90)},
-                () =>  new List<Enemy> { new Golem(), new Orb(), new Slime() }),
+                () => new List<Enemy> { new Golem(), new Orb(), new Slime() }),
 
                 //wave with 4 golems
                 new Wave(new List<Vector2> { new Vector2(300, 0), new Vector2(0, 300),
@@ -270,14 +269,12 @@ namespace BattleMages
 
                 () => new List<Enemy> { new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem(),
                 new Golem(), new Golem(), new Golem(), new Golem(), new Golem(), new Golem()})}));
-                //Boss
-                //new Wave(new List<Vector2> { new Vector2(-300, 0)},
-                //() => new List<Enemy> { new Boss()});
-
-                
+            //Boss
+            //new Wave(new List<Vector2> { new Vector2(-300, 0)},
+            //() => new List<Enemy> { new Boss()});
         }
 
-    public static void LoadContent()
+        public static void LoadContent()
         {
             foreach (AttributeRune attrRune in attributeRunes)
             {

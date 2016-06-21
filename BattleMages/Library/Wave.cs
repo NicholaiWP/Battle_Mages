@@ -18,7 +18,7 @@ namespace BattleMages
         {
             get
             {
-                return enemyListCreater.Invoke();
+                return enemyListCreater?.Invoke();
             }
         }
 

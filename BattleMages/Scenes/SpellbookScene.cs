@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BattleMages
 {
@@ -16,12 +16,14 @@ namespace BattleMages
 
         //Positions on rune grid
         private Vector2 baseRunePosition;
+
         private Vector2[] attrRunePositions;
 
         private Scene oldScene;
 
         //Holds objects in a tab to delete them on tab change
         private UITab leftTab;
+
         private UITab rightTab;
 
         //NULL if no spell is being edited.
@@ -29,6 +31,7 @@ namespace BattleMages
 
         //Selected runes/spells (These are used when runes/spells are being dragged around)
         private BaseRune selectedBaseRune;
+
         private AttributeRune selectedAttrRune;
         private Guid? selectedPlayerSpell;
 
@@ -318,7 +321,8 @@ namespace BattleMages
 
         public override void Update()
         {
-            if (GameWorld.KeyPressed(Keys.Tab))
+            if (GameWorld.KeyPressed(Keys.Tab) &&
+            (currentlyEditing == null || currentlyEditing.GetBaseRune() != null))
             {
                 GameWorld.State.Save();
                 GameWorld.ChangeScene(oldScene);

@@ -17,7 +17,7 @@ namespace BattleMages
     public class SavedState
     {
         private GameObject savingGo;
-
+        private object tLock;
         private Dictionary<Guid, SpellInfo> spellBook = new Dictionary<Guid, SpellInfo>();
         private List<Guid?> spellBar = new List<Guid?>();
         private SQLiteConnection connection = new SQLiteConnection("Data Source = SavedGame.db; Version = 3; foreign keys = true;");
@@ -34,6 +34,7 @@ namespace BattleMages
 
         public SavedState()
         {
+            tLock = new object();
             savingGo = new GameObject(Vector2.Zero);
             savingGo.AddComponent(new Animator());
             savingGo.AddComponent(new ShowSaving());
@@ -90,7 +91,6 @@ namespace BattleMages
         /// </summary>
         private void CreateDatabaseFile()
         {
-            Saving = true;
             if (!File.Exists(databaseFileName))
             {
                 SQLiteConnection.CreateFile(databaseFileName);
@@ -158,224 +158,224 @@ namespace BattleMages
         /// </summary>
         public void Save()
         {
-            if (!Saving)
-            {
-                Thread t = new Thread(() => DatabaseInform());
-                t.Start();
-            }
+            Thread t = new Thread(() => DatabaseInform());
+            t.Start();
         }
 
         private void DatabaseInform()
         {
-            Saving = true;
-            //This int is used for updating the RuneIDs in the table AttributeRunes,
-            //it is the indicator of the id in the table.
-            int attrRuneID = 1;
-
-            List<BaseRune> abr = new List<BaseRune>(availableBaseRunes);
-            List<AttributeRune> aar = new List<AttributeRune>(availableRunes);
-            Dictionary<Guid, SpellInfo> sb = new Dictionary<Guid, SpellInfo>(spellBook);
-            List<Guid?> sbar = new List<Guid?>(spellBar);
-
-            connection.Open();
-
-            using (SQLiteCommand command = new SQLiteCommand(@"Update PlayerGold set Gold = @gold",
-                connection))
+            lock (tLock)
             {
-                command.Parameters.AddWithValue("@gold", PlayerGold);
-                command.ExecuteNonQuery();
-            }
+                Saving = true;
+                //This int is used for updating the RuneIDs in the table AttributeRunes,
+                //it is the indicator of the id in the table.
+                int attrRuneID = 1;
 
-            foreach (BaseRune bR in abr)
-            {
-                using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from AvailableBaseRunes where BaseRuneID = @ID",
+                List<BaseRune> abr = new List<BaseRune>(availableBaseRunes);
+                List<AttributeRune> aar = new List<AttributeRune>(availableRunes);
+                Dictionary<Guid, SpellInfo> sb = new Dictionary<Guid, SpellInfo>(spellBook);
+                List<Guid?> sbar = new List<Guid?>(spellBar);
+
+                connection.Open();
+
+                using (SQLiteCommand command = new SQLiteCommand(@"Update PlayerGold set Gold = @gold",
                     connection))
                 {
-                    command.Parameters.AddWithValue("@ID", StaticData.BaseRunes.IndexOf(bR));
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    command.Parameters.AddWithValue("@gold", PlayerGold);
+                    command.ExecuteNonQuery();
+                }
+
+                foreach (BaseRune bR in abr)
+                {
+                    using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from AvailableBaseRunes where BaseRuneID = @ID",
+                        connection))
                     {
-                        if (!reader.Read())
+                        command.Parameters.AddWithValue("@ID", StaticData.BaseRunes.IndexOf(bR));
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AvailableBaseRunes Values(@ID)",
-                                connection))
+                            if (!reader.Read())
                             {
-                                cmd.Parameters.AddWithValue("@ID", StaticData.BaseRunes.IndexOf(bR));
-                                cmd.ExecuteNonQuery();
+                                using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AvailableBaseRunes Values(@ID)",
+                                    connection))
+                                {
+                                    cmd.Parameters.AddWithValue("@ID", StaticData.BaseRunes.IndexOf(bR));
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            foreach (AttributeRune aR in aar)
-            {
-                using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AvailableRunes where RuneID = @ID",
-                    connection))
+                foreach (AttributeRune aR in aar)
                 {
-                    command.Parameters.AddWithValue("@ID", StaticData.AttributeRunes.IndexOf(aR));
-
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AvailableRunes where RuneID = @ID",
+                        connection))
                     {
-                        if (!reader.Read())
+                        command.Parameters.AddWithValue("@ID", StaticData.AttributeRunes.IndexOf(aR));
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AvailableRunes Values(@ID)",
-                                connection))
+                            if (!reader.Read())
                             {
-                                cmd.Parameters.AddWithValue("@ID", StaticData.AttributeRunes.IndexOf(aR));
-                                cmd.ExecuteNonQuery();
+                                using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AvailableRunes Values(@ID)",
+                                    connection))
+                                {
+                                    cmd.Parameters.AddWithValue("@ID", StaticData.AttributeRunes.IndexOf(aR));
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            using (SQLiteCommand command = new SQLiteCommand(@"Select ID from SpellBook",
-                connection))
-            {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (SQLiteCommand command = new SQLiteCommand(@"Select ID from SpellBook",
+                    connection))
                 {
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        string potentialKey = reader.GetString(0);
-                        if (!spellBook.ContainsKey(Guid.Parse(potentialKey)))
+                        while (reader.Read())
                         {
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Delete from SpellBook where ID = @ID",
-                                connection))
+                            string potentialKey = reader.GetString(0);
+                            if (!spellBook.ContainsKey(Guid.Parse(potentialKey)))
                             {
-                                cmd.Parameters.AddWithValue("@ID", potentialKey);
-                                cmd.ExecuteNonQuery();
+                                using (SQLiteCommand cmd = new SQLiteCommand(@"Delete from SpellBook where ID = @ID",
+                                    connection))
+                                {
+                                    cmd.Parameters.AddWithValue("@ID", potentialKey);
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            foreach (var pair in sb)
-            {
-                using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
-                    connection))
+                foreach (var pair in sb)
                 {
-                    command.Parameters.AddWithValue("@ID", pair.Key.ToString());
-
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (SQLiteCommand command = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
+                        connection))
                     {
-                        if (reader.Read())
+                        command.Parameters.AddWithValue("@ID", pair.Key.ToString());
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            if (pair.Value.BaseRuneID != reader.GetInt32(0))
+                            if (reader.Read())
                             {
-                                using (SQLiteCommand cmd = new SQLiteCommand(@"Update SpellBook Set BaseRuneID = @BaseRuneID where ID = @ID ",
+                                if (pair.Value.BaseRuneID != reader.GetInt32(0))
+                                {
+                                    using (SQLiteCommand cmd = new SQLiteCommand(@"Update SpellBook Set BaseRuneID = @BaseRuneID where ID = @ID ",
+                                        connection))
+                                    {
+                                        cmd.Parameters.AddWithValue("@ID", pair.Key.ToString());
+                                        cmd.Parameters.AddWithValue("@BaseRuneID", pair.Value.BaseRuneID);
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBook Values(@ID, @baseRuneID)",
                                     connection))
                                 {
                                     cmd.Parameters.AddWithValue("@ID", pair.Key.ToString());
-                                    cmd.Parameters.AddWithValue("@BaseRuneID", pair.Value.BaseRuneID);
+                                    cmd.Parameters.AddWithValue("@baseRuneID", pair.Value.BaseRuneID);
                                     cmd.ExecuteNonQuery();
                                 }
+                                for (int t = 0; t < pair.Value.AttrRuneIDs.Length; t++)
+                                {
+                                    using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AttributeRunes Values(null, @runeID, @SBID)",
+                                        connection))
+                                    {
+                                        if (pair.Value.AttrRuneIDs[t] != -1)
+                                        {
+                                            cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[t]);
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.AddWithValue("@runeID", null);
+                                        }
+                                        cmd.Parameters.AddWithValue("@SBID", pair.Key.ToString());
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
                             }
+                        }
+                    }
+                    using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AttributeRunes where SpellBookID = @SBID",
+                        connection))
+                    {
+                        command.Parameters.AddWithValue("@SBID", pair.Key.ToString());
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            //This int is the runePos in Attribute rune ids from the spellbook
+                            int runePos = 0;
+
+                            while (reader.Read())
+                            {
+                                if (reader.IsDBNull(0) || pair.Value.AttrRuneIDs[runePos] != reader.GetInt32(0))
+                                {
+                                    using (SQLiteCommand cmd = new SQLiteCommand(@"Update AttributeRunes Set RuneID = @runeID where ID like @ID",
+                                        connection))
+                                    {
+                                        cmd.Parameters.AddWithValue("@ID", attrRuneID);
+                                        if (pair.Value.AttrRuneIDs[runePos] == -1)
+                                        {
+                                            cmd.Parameters.AddWithValue("@runeID", null);
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[runePos]);
+                                        }
+                                        cmd.ExecuteReader();
+                                    }
+                                }
+                                attrRuneID++;
+                                runePos++;
+                            }
+                        }
+                    }
+                }
+                int i = 0;
+                foreach (var guid in sbar)
+                {
+                    i++;
+                    using (SQLiteCommand command = new SQLiteCommand("Select Count (*) from SpellBar",
+                        connection))
+                    {
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                if (i > reader.GetInt32(0))
+                                {
+                                    using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBar Values(@ID, @SBID)",
+                                        connection))
+                                    {
+                                        cmd.Parameters.AddWithValue("@ID", sbar.IndexOf(guid));
+                                        cmd.Parameters.AddWithValue("@SBID", null);
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
+                        connection))
+                    {
+                        command.Parameters.AddWithValue("@ID", sbar.IndexOf(guid));
+                        if (guid == null)
+                        {
+                            command.Parameters.AddWithValue("@SBID", null);
                         }
                         else
                         {
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBook Values(@ID, @baseRuneID)",
-                                connection))
-                            {
-                                cmd.Parameters.AddWithValue("@ID", pair.Key.ToString());
-                                cmd.Parameters.AddWithValue("@baseRuneID", pair.Value.BaseRuneID);
-                                cmd.ExecuteNonQuery();
-                            }
-                            for (int t = 0; t < pair.Value.AttrRuneIDs.Length; t++)
-                            {
-                                using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into AttributeRunes Values(null, @runeID, @SBID)",
-                                    connection))
-                                {
-                                    if (pair.Value.AttrRuneIDs[t] != -1)
-                                    {
-                                        cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[t]);
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.AddWithValue("@runeID", null);
-                                    }
-                                    cmd.Parameters.AddWithValue("@SBID", pair.Key.ToString());
-                                    cmd.ExecuteNonQuery();
-                                }
-                            }
+                            command.Parameters.AddWithValue("@SBID", guid.ToString());
                         }
+                        command.ExecuteNonQuery();
                     }
                 }
-                using (SQLiteCommand command = new SQLiteCommand(@"Select RuneID from AttributeRunes where SpellBookID = @SBID",
-                    connection))
-                {
-                    command.Parameters.AddWithValue("@SBID", pair.Key.ToString());
-                    using (SQLiteDataReader reader = command.ExecuteReader())
-                    {
-                        //This int is the runePos in Attribute rune ids from the spellbook
-                        int runePos = 0;
-
-                        while (reader.Read())
-                        {
-                            if (reader.IsDBNull(0) || pair.Value.AttrRuneIDs[runePos] != reader.GetInt32(0))
-                            {
-                                using (SQLiteCommand cmd = new SQLiteCommand(@"Update AttributeRunes Set RuneID = @runeID where ID like @ID",
-                                    connection))
-                                {
-                                    cmd.Parameters.AddWithValue("@ID", attrRuneID);
-                                    if (pair.Value.AttrRuneIDs[runePos] == -1)
-                                    {
-                                        cmd.Parameters.AddWithValue("@runeID", null);
-                                    }
-                                    else
-                                    {
-                                        cmd.Parameters.AddWithValue("@runeID", pair.Value.AttrRuneIDs[runePos]);
-                                    }
-                                    cmd.ExecuteReader();
-                                }
-                            }
-                            attrRuneID++;
-                            runePos++;
-                        }
-                    }
-                }
+                connection.Close();
+                Saving = false;
             }
-            int i = 0;
-            foreach (var guid in sbar)
-            {
-                i++;
-                using (SQLiteCommand command = new SQLiteCommand("Select Count (*) from SpellBar",
-                    connection))
-                {
-                    using (SQLiteDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            if (i > reader.GetInt32(0))
-                            {
-                                using (SQLiteCommand cmd = new SQLiteCommand(@"Insert into SpellBar Values(@ID, @SBID)",
-                                    connection))
-                                {
-                                    cmd.Parameters.AddWithValue("@ID", sbar.IndexOf(guid));
-                                    cmd.Parameters.AddWithValue("@SBID", null);
-                                    cmd.ExecuteNonQuery();
-                                }
-                            }
-                        }
-                    }
-                }
-                using (SQLiteCommand command = new SQLiteCommand(@"Update SpellBar set SpellBookID = @SBID where ID = @ID",
-                    connection))
-                {
-                    command.Parameters.AddWithValue("@ID", sbar.IndexOf(guid));
-                    if (guid == null)
-                    {
-                        command.Parameters.AddWithValue("@SBID", null);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@SBID", guid.ToString());
-                    }
-                    command.ExecuteNonQuery();
-                }
-            }
-            connection.Close();
-            Saving = false;
         }
 
         public void Load()
@@ -431,15 +431,15 @@ namespace BattleMages
                         SpellInfo si = new SpellInfo();
                         while (reader.Read())
                         {
-                            using (SQLiteCommand cmd = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
-                                connection))
+                            if (!SpellBook.ContainsKey(Guid.Parse(reader.GetString(0))))
                             {
-                                cmd.Parameters.AddWithValue("@ID", reader.GetString(0));
-                                using (SQLiteDataReader newReader = cmd.ExecuteReader())
+                                using (SQLiteCommand cmd = new SQLiteCommand(@"Select BaseRuneID from SpellBook where ID = @ID",
+                                connection))
                                 {
-                                    if (newReader.Read())
+                                    cmd.Parameters.AddWithValue("@ID", reader.GetString(0));
+                                    using (SQLiteDataReader newReader = cmd.ExecuteReader())
                                     {
-                                        if (!SpellBook.ContainsKey(Guid.Parse(reader.GetString(0))))
+                                        if (newReader.Read())
                                         {
                                             si.SetBaseRune(newReader.GetInt32(0));
                                             SpellBook.Add(Guid.Parse(reader.GetString(0)), si);
